@@ -36,7 +36,8 @@ const DESCRIPTION =
 const TITLE = "Awas — check a job ad before anyone boards";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://awas.vercel.app"),
+  // The project's production domain (awas.vercel.app belongs to someone else).
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://awas-cek.vercel.app"),
   title: TITLE,
   description: DESCRIPTION,
   applicationName: "Awas",
@@ -47,9 +48,10 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     siteName: "Awas",
     type: "website",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Awas: every line is a URL and a verified quote" }],
+    // Bump ?v= whenever og-image.png changes: platforms cache cards by URL.
+    images: [{ url: "/og-image.png?v=2", width: 1200, height: 630, alt: "Awas: every line is a URL and a verified quote" }],
   },
-  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: ["/og-image.png"] },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: ["/og-image.png?v=2"] },
 };
 
 export const viewport: Viewport = {

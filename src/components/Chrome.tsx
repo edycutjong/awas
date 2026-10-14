@@ -20,7 +20,7 @@ export function JudgeStrip() {
         Tanpa login, tanpa batas harian · no login, no daily cap. Disimpan 75 hari, tidak diindeks · kept 75 days, not indexed.
       </p>
       <p>
-        <a href={REPO}>source</a> · <a href={`${REPO}/blob/main/DEMO.md`}>DEMO.md</a> · <Link href="/integrations">/integrations</Link> · <Link href="/judge">/judge</Link>
+        <a href={REPO}>source</a> · <a href={`${REPO}/blob/main/DEMO.md`}>DEMO.md</a> · <Link href="/integrations">/integrations</Link> · <Link href="/judge">/judge</Link> · <a href="/about">/about</a> · <a href="/pitch">/pitch</a>
       </p>
       <p>
         Every quote is re-checkable: <code>python3 scripts/verify_quotes.py &lt;case-url&gt;</code>

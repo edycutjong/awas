@@ -129,6 +129,11 @@ h2 {
   clip-path: polygon(0 2px, 8% 0, 22% 3px, 40% 0, 61% 2px, 79% 0, 100% 3px, 100% calc(100% - 2px), 86% 100%, 63% calc(100% - 3px), 38% 100%, 17% calc(100% - 2px), 0 100%);
 }
 
+/* Not found */
+.notfound p {
+  margin: 0 0 10px;
+}
+
 /* Paste */
 textarea.clip {
   font: 400 18px/1.5 var(--font-body);
@@ -647,6 +652,13 @@ textarea.clip::placeholder {
   }
   .stamp .w {
     font-size: 40px;
+  }
+  /* The stamp lands on the clipping's corner, never on the ad's words: the first lines wrap around it. */
+  .file:has(.stamp) .ad::before {
+    content: "";
+    float: right;
+    width: 200px;
+    height: 72px;
   }
 }
 
