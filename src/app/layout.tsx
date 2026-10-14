@@ -35,6 +35,9 @@ const DESCRIPTION =
 
 const TITLE = "Awas — check a job ad before anyone boards";
 
+// Cards clip descriptions on mobile beyond ~125 characters.
+const OG_DESCRIPTION = "Paste a job ad: published pages, quotes checked word for word in code, then STOP or VERIFY FIRST.";
+
 export const metadata: Metadata = {
   // The project's production domain (awas.vercel.app belongs to someone else).
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://awas-cek.vercel.app"),
@@ -45,13 +48,14 @@ export const metadata: Metadata = {
   icons: { icon: "/icon.svg" },
   openGraph: {
     title: TITLE,
-    description: DESCRIPTION,
+    description: OG_DESCRIPTION,
+    url: "/",
     siteName: "Awas",
     type: "website",
     // Bump ?v= whenever og-image.png changes: platforms cache cards by URL.
     images: [{ url: "/og-image.png?v=2", width: 1200, height: 630, alt: "Awas: every line is a URL and a verified quote" }],
   },
-  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: ["/og-image.png?v=2"] },
+  twitter: { card: "summary_large_image", title: TITLE, description: OG_DESCRIPTION, images: ["/og-image.png?v=2"] },
 };
 
 export const viewport: Viewport = {
