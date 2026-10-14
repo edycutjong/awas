@@ -6,6 +6,9 @@
 
   <br/>
 
+  [![Live app](https://img.shields.io/badge/▶_Live-awas--cek.vercel.app-1C2333?style=for-the-badge)](https://awas-cek.vercel.app)
+  [![Story page](https://img.shields.io/badge/📰_Story-/about-B42318?style=for-the-badge)](https://awas-cek.vercel.app/about)
+  [![Pitch deck](https://img.shields.io/badge/🖥️_Pitch-deck-4B2C8F?style=for-the-badge)](https://awas-cek.vercel.app/pitch)
   [![Measured Results](https://img.shields.io/badge/📊_Measured-Results-f59e0b?style=for-the-badge)](DEMO.md)
   [![Nebius Feedback](https://img.shields.io/badge/📝_Nebius-Feedback-76B900?style=for-the-badge)](FEEDBACK.md)
   [![Built for Nebius](https://img.shields.io/badge/Nebius-Global_AI_Hackathon-8b5cf6?style=for-the-badge)](https://nebiusglobalaihackathon.devpost.com/)
@@ -17,7 +20,7 @@
   ![Nebius Token Factory](https://img.shields.io/badge/Nebius-Token_Factory-6057F7?style=flat)
   ![NVIDIA Nemotron](https://img.shields.io/badge/NVIDIA-Nemotron-76B900?style=flat)
   ![Tavily](https://img.shields.io/badge/Tavily-search_+_extract-0ea5e9?style=flat)
-  ![Tests](https://img.shields.io/badge/tests-119_passing-10B981?style=flat)
+  ![Tests](https://img.shields.io/badge/tests-122_passing-10B981?style=flat)
   [![License](https://img.shields.io/badge/License-MIT-yellow)](https://opensource.org/licenses/MIT)
 
 </div>
@@ -32,7 +35,9 @@
 
 **No credentials needed to read a case:** `/judge` and `/case/[id]` replay recorded evidence files without keys once samples are recorded (none are in the repo yet), and live checks need no login (60 per hour per IP). Run locally with the commands in [Getting Started](#-getting-started).
 
-> **Status at this commit:** the app, gate, verdict and recorded-case replay are built and unit-tested; the deployed URL, recorded samples and screenshots are not yet in this repo. Nothing below is shown as a result until [`DEMO.md`](DEMO.md) holds it.
+**Live:** [awas-cek.vercel.app](https://awas-cek.vercel.app) (the app) · [/about](https://awas-cek.vercel.app/about) (the story page, with the rules and the quote gate running in your browser) · [/pitch](https://awas-cek.vercel.app/pitch) (the deck).
+
+> **Status at this commit:** the app is deployed; one real run of its rubric stage is recorded in [`docs/proof/rubric-stage-2026-10-15.json`](docs/proof/rubric-stage-2026-10-15.json) (no model call). Full checks, recorded samples and the benchmark have not run yet. Nothing below is shown as a result until [`DEMO.md`](DEMO.md) holds it.
 
 ## 💡 The Problem & Solution
 
@@ -73,7 +78,7 @@ flowchart LR
 | Layer | Choice |
 |---|---|
 | App | Next.js 15, TypeScript, Tailwind 4 |
-| Model | NVIDIA Nemotron 3 Super (`nvidia/nemotron-3-super-120b-a12b`) on Nebius Token Factory for all three calls; Nemotron Lightning was spiked (`scripts/spike.py`) and is selectable per call via `MODEL_CALL_n`, not used by default |
+| Model | NVIDIA Nemotron 3 Super (`nvidia/nemotron-3-super-120b-a12b`) on Nebius Token Factory for all three calls; Nemotron Lightning is selectable per call via `MODEL_CALL_n` and not used by default; `scripts/spike.py` compares the two models and has not been run yet |
 | Retrieval | Tavily `/search` and `/extract` |
 | State | Nebius Object Storage (S3 API, SigV4): evidence packs (rewritten as each step completes), per-IP rate slots (conditional create); a 75-day expiry rule on `cases/` is intended, its receipt is pending |
 | Nebius libraries | `src/lib/nebius/` (SigV4, Object Storage, service-account auth, Serverless Jobs), copied from the same author's earlier project, [faultline](https://github.com/edycutjong/faultline) |
@@ -95,8 +100,8 @@ The one extension no sponsor ships is the **quote gate**: two generic APIs becom
 
 | Metric | Value |
 |---|---|
-| Unit tests | **119 passing** (`npm test`, 10 files) |
-| Browser tests | **36 passing** (`npm run e2e`: 18 checks × phone and desktop projects; credential-free paths only: home, `/judge`, `/integrations`, guards, no horizontal scroll at 375/768/1440 px) |
+| Unit tests | **122 passing** (`npm test`, 11 files) |
+| Browser tests | **56 passing** (`npm run e2e`: 28 checks × phone and desktop projects; credential-free paths only: home, `/judge`, `/integrations`, `/about`, `/pitch`, guards, the in-page quote gate and rules, no horizontal scroll at 375/768/1440 px) |
 | Benchmark protocol | written before any row was collected: [`bench/PROTOCOL.md`](bench/PROTOCOL.md), with two dated amendments |
 | Stage-T scoring rules | pre-registered before labels or model runs: [`bench/STAGE-T.md`](bench/STAGE-T.md) |
 | Headline: scam ads stopped, company-matched (tranche 2, n/25) | **not yet measured** |
@@ -135,9 +140,9 @@ npm run dev               # http://localhost:3000
 ## 🧪 Testing & CI
 
 ```bash
-npm test          # 119 vitest tests: quote gate, verdict, rubric, masking, SigV4 vectors, clients, store, pipeline
+npm test          # 122 vitest tests: quote gate, verdict, rubric, masking, SigV4 vectors, clients, store, pipeline, landing lab
 npm run typecheck && npm run lint
-npm run build && npm run e2e   # 36 Playwright tests, no credentials needed
+npm run build && npm run e2e   # 56 Playwright tests, no credentials needed
 ```
 
 `.github/workflows/ci.yml` runs lint, typecheck, unit tests, `npm audit`, a gitleaks scan of pushed commits (full history is scanned before the repo goes public), the production build and the browser tests. Dependabot (grouped, monthly) and CodeQL are configured; CodeQL needs the repository to be public. Details: [`CONTRIBUTING.md`](CONTRIBUTING.md), [`SECURITY.md`](SECURITY.md).
@@ -152,7 +157,8 @@ src/lib/nebius/ SigV4, Object Storage, auth, Serverless Jobs
 src/app/        paste screen, /judge, /case/[id], /integrations, /api/*
 e2e/            Playwright specs (no credentials)
 bench/          PROTOCOL.md · STAGE-T.md (pre-registered)
-scripts/        bench.py · collect.py · stage_t.py · verify_quotes.py
+scripts/        bench.py · collect.py · stage_t.py · verify_quotes.py · build-lab.mjs (the /about lab bundle)
+public/         landing/ (/about) · pitch/ (/pitch) · fonts/ (OFL, self-hosted)
 docs/           SOURCES.md · assets/
 ```
 
@@ -163,7 +169,8 @@ docs/           SOURCES.md · assets/
 - [x] Benchmark and stage-T protocols written before data
 - [ ] Frozen benchmark run and the numbers in [`DEMO.md`](DEMO.md)
 - [ ] Recorded sample cases and screenshots of the live app
-- [ ] Deployed URL, landing page, pitch deck, demo video
+- [x] Deployed URL, story page (`/about`) and pitch deck (`/pitch`)
+- [ ] Demo video
 
 ## 📄 License
 
