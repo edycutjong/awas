@@ -118,26 +118,26 @@ export const FLAG_LABELS: Record<FlagId, { id: string; en: string }> = {
 /* Pay and destination                                                                         */
 /* ------------------------------------------------------------------------------------------ */
 
-/** Monthly pay figures in an ad, in IDR. Amounts in USD are converted at `PAY.usdToIdr` (a recorded constant). */
-export function payFigures(text: string): { idr: number; span: Span }[] {
-  const out: { idr: number; span: Span }[] = [];
+/** Pay figures in an ad, in their own currency (rupiah or US dollars). No conversion: each has its own cited threshold. */
+export function payFigures(text: string): { amount: number; currency: "IDR" | "USD"; span: Span }[] {
+  const out: { amount: number; currency: "IDR" | "USD"; span: Span }[] = [];
   const num = (raw: string): number => {
     const s = raw.trim();
     // "15.000.000" / "15,000,000" are thousands separators; "9,5" / "9.5" with 1–2 decimals is a decimal.
     if (/^\d{1,3}([.,]\d{3})+$/.test(s)) return Number(s.replace(/[.,]/g, ""));
     return Number(s.replace(",", "."));
   };
-  const push = (m: RegExpMatchArray, idr: number) => {
-    if (Number.isFinite(idr) && idr > 0) out.push({ idr, span: { text: m[0], start: m.index ?? 0, end: (m.index ?? 0) + m[0].length } });
+  const push = (m: RegExpMatchArray, amount: number, currency: "IDR" | "USD") => {
+    if (Number.isFinite(amount) && amount > 0) out.push({ amount, currency, span: { text: m[0], start: m.index ?? 0, end: (m.index ?? 0) + m[0].length } });
   };
   for (const m of text.matchAll(/\brp\.?\s?(\d{1,3}(?:[.,]\d{3})+|\d+(?:[.,]\d{1,2})?)\s*(jt|juta|jutaan|rb|ribu|k)?\b/giu)) {
     const unit = (m[2] ?? "").toLowerCase();
     const mult = unit.startsWith("j") ? 1_000_000 : unit === "rb" || unit === "ribu" || unit === "k" ? 1_000 : 1;
-    push(m, num(m[1]) * mult);
+    push(m, num(m[1]) * mult, "IDR");
   }
-  for (const m of text.matchAll(/(?<!rp\.?\s?)\b(\d+(?:[.,]\d{1,2})?)\s*(jt|juta)\b/giu)) push(m, num(m[1]) * 1_000_000);
-  for (const m of text.matchAll(/(?:\busd|\bus\$|\$)\s?(\d{1,3}(?:[.,]\d{3})+|\d+)/giu)) push(m, num(m[1]) * PAY.usdToIdr);
-  for (const m of text.matchAll(/\b(\d{1,3}(?:[.,]\d{3})+|\d{3,})\s*(?:usd|us\s?dollars?|dollars?|dolar)\b/giu)) push(m, num(m[1]) * PAY.usdToIdr);
+  for (const m of text.matchAll(/(?<!rp\.?\s?)\b(\d+(?:[.,]\d{1,2})?)\s*(jt|juta)\b/giu)) push(m, num(m[1]) * 1_000_000, "IDR");
+  for (const m of text.matchAll(/(?:\busd|\bus\$|\$)\s?(\d{1,3}(?:[.,]\d{3})+|\d+)/giu)) push(m, num(m[1]), "USD");
+  for (const m of text.matchAll(/\b(\d{1,3}(?:[.,]\d{3})+|\d{3,})\s*(?:usd|us\s?dollars?|dollars?|dolar)\b/giu)) push(m, num(m[1]), "USD");
   return out;
 }
 
@@ -303,7 +303,7 @@ function highPayHits(text: string, ex: Extraction | null): Hit[] {
   const noExp = patternHits("high_pay_no_experience", text);
   const modelNoExp = (ex?.promises ?? []).filter((p) => PATTERNS.high_pay_no_experience.some((re) => new RegExp(re.source, "iu").test(p.text)));
   if (noExp.length === 0 && modelNoExp.length === 0) return [];
-  const high = payFigures(text).filter((p) => p.idr >= PAY.thresholdIdr);
+  const high = payFigures(text).filter((p) => (p.currency === "IDR" ? p.amount >= PAY.thresholdIdr : p.amount >= PAY.thresholdUsd));
   if (high.length === 0) return [];
   const hits: Hit[] = [];
   if (noExp.length > 0) hits.push({ span: noExp[0].span, via: "pattern" });

@@ -24,6 +24,7 @@ import sys
 import time
 import unicodedata
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -52,6 +53,20 @@ AMENDMENT_1 = [
     ("kompas-tppo-kamboja-5-10", "https://www.kompas.com/tag/tppo-kamboja", lambda b, p: b if p == 1 else f"{b}?page={p}", 5, 10),
 ]
 
+# PROTOCOL.md Amendment 2 — permissive outlets only (robots.txt + on-page terms checked 2026-10-15)
+DETIK_QUERIES = ["tppo kamboja", "tppo myanmar", "online scam kamboja", "lowongan kerja luar negeri tppo"]
+AMENDMENT_2 = [
+    *[(f"detik-search-{q.replace(' ', '-')}", "https://www.detik.com/search/searchall",
+       (lambda q: lambda b, p: f"{b}?query={urllib.parse.quote_plus(q)}&siteid=2&sortby=time&page={p}")(q), 1, 8) for q in DETIK_QUERIES],
+    ("merdeka-tppo", "https://www.merdeka.com/tag/tppo", lambda b, p: b if p == 1 else f"{b}?page={p}", 1, 10),
+    ("jpnn-tppo", "https://www.jpnn.com/tag/tppo", lambda b, p: b if p == 1 else f"{b}?page={p}", 1, 10),
+    ("suara-tppo", "https://www.suara.com/tag/tppo", lambda b, p: b if p == 1 else f"{b}?page={p}", 1, 8),
+    ("okezone-tppo", "https://www.okezone.com/tag/tppo", lambda b, p: b, 1, 1),
+    ("idntimes-tppo", "https://www.idntimes.com/tag/tppo", lambda b, p: b if p == 1 else f"{b}?page={p}", 1, 8),
+    ("rri-tppo", "https://www.rri.co.id/tag/tppo", lambda b, p: b if p == 1 else f"{b}?page={p}", 1, 10),
+]
+WITHDRAWN = ("antaranews.com", "kompas.com")
+
 OFFER_WORDS = re.compile(
     r"\b(dijanjikan|diiming-imingi|iming-iming|ditawari|ditawarkan|tawaran|menawarkan|lowongan|loker|iklan|gaji|upah|"
     r"direkrut|merekrut|perekrut|tergiur|bekerja sebagai|kerja di)\b",
@@ -66,6 +81,14 @@ ARTICLE = {
     "liputan6.com": re.compile(r'href="(https://www\.liputan6\.com/[a-z-]+/read/\d+/[a-z0-9-]+)"'),
     "cnnindonesia.com": re.compile(r'href="(https://www\.cnnindonesia\.com/[a-z-]+/\d{14}-\d+-\d+/[a-z0-9-]+)"'),
 }
+ARTICLE.update({
+    "merdeka.com": re.compile(r'href="(https://www\.merdeka\.com/[a-z-]+/read/\d+/[a-z0-9-]+)"'),
+    "jpnn.com": re.compile(r'href="(https://www\.jpnn\.com/news/[a-z0-9-]+)"'),
+    "suara.com": re.compile(r'href="(https://[a-z]+\.suara\.com/(?:news|read)/\d{4}/\d{2}/\d{2}/\d+/[a-z0-9-]+)"'),
+    "okezone.com": re.compile(r'href="(https://[a-z]+\.okezone\.com/read/\d{4}/\d{2}/\d{2}/\d+/\d+/[a-z0-9-]+)"'),
+    "idntimes.com": re.compile(r'href="(https://(?:[a-z]+\.)?idntimes\.com/news/[a-z-]+/[a-z0-9-]+)(?:\?[^"]*)?"'),
+    "rri.co.id": re.compile(r'href="(https://(?:www\.)?rri\.co\.id/[a-z-]+/(?:[a-z-]+/)+\d{6,}/[a-z0-9-]+)"'),
+})
 
 ON_TOPIC = re.compile(
     r"\b(tppo|perdagangan orang|online scam|online scamming|penipuan daring|penipuan online|scammer|scamming|"
@@ -183,13 +206,38 @@ def cmd_listings_a1(cache: Path) -> None:
     print(f"{len(out)} article URLs in total -> {path}")
 
 
+def cmd_listings_a2(cache: Path) -> None:
+    """Amendment 2: crawl the permissive listings and APPEND new links."""
+    path = cache / "listings.json"
+    out = json.loads(path.read_text())
+    seen = {r["url"] for r in out}
+    for name, base, page_url, first, last in AMENDMENT_2:
+        dom = "rri.co.id" if "rri.co.id" in base else domain(base)
+        pattern = ARTICLE[dom]
+        for p in range(first, last + 1):
+            url = page_url(base, p)
+            status, _, raw = fetch(url)
+            links = list(dict.fromkeys(pattern.findall(raw)))
+            added = 0
+            for link in links:
+                if link in seen:
+                    continue
+                seen.add(link)
+                out.append({"listing": name, "listing_page": p, "listing_position": len(out) + 1, "url": link, "amendment": 2})
+                added += 1
+            print(f"{status} {url}: {len(links)} links, {added} new", file=sys.stderr)
+            time.sleep(0.8)
+    path.write_text(json.dumps(out, indent=1, ensure_ascii=False))
+    print(f"{len(out)} article URLs in total -> {path}")
+
+
 def cmd_fetch(cache: Path) -> None:
     pages = cache / "pages"
     pages.mkdir(exist_ok=True)
     rows = json.loads((cache / "listings.json").read_text())
     for i, row in enumerate(rows, 1):
         dest = pages / f"{cache_key(row['url'])}.json"
-        if dest.exists():
+        if dest.exists() or any(w in row["url"] for w in WITHDRAWN):
             continue
         status, final, raw = fetch(row["url"])
         text, title, published = page_text(raw) if status == 200 else ("", None, None)
@@ -200,7 +248,8 @@ def cmd_fetch(cache: Path) -> None:
 
 
 def cmd_prefilter(cache: Path, amendment: int = 0) -> None:
-    rows = [r for r in json.loads((cache / "listings.json").read_text()) if r.get("amendment", 0) == amendment]
+    rows = [r for r in json.loads((cache / "listings.json").read_text())
+            if r.get("amendment", 0) == amendment and not any(w in r["url"] for w in WITHDRAWN)]
     candidates, rejects = [], []
     for row in rows:
         page = json.loads((cache / "pages" / f"{cache_key(row['url'])}.json").read_text())
@@ -400,7 +449,7 @@ def cmd_split(rows_path: Path, out: Path) -> None:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("command", choices=["listings", "listings-a1", "fetch", "prefilter", "prefilter-a1", "negatives", "verify", "split"])
+    ap.add_argument("command", choices=["listings", "listings-a1", "listings-a2", "fetch", "prefilter", "prefilter-a1", "prefilter-a2", "negatives", "verify", "split"])
     ap.add_argument("--cache", type=Path, required=True)
     ap.add_argument("--rows", type=Path)
     ap.add_argument("--out", type=Path, default=Path("bench"))
@@ -417,6 +466,10 @@ def main() -> int:
         cmd_prefilter(a.cache)
     elif a.command == "prefilter-a1":
         cmd_prefilter(a.cache, amendment=1)
+    elif a.command == "listings-a2":
+        cmd_listings_a2(a.cache)
+    elif a.command == "prefilter-a2":
+        cmd_prefilter(a.cache, amendment=2)
     elif a.command == "negatives":
         cmd_negatives(a.cache, a.want)
     elif a.command == "verify":

@@ -22,10 +22,16 @@ describe("the mockup ad", () => {
     expect(got).not.toContain("fee_before_contract");
   });
 
-  it("fires the advisory destination and high-pay flags when their sources are recorded", () => {
+  it("fires the advisory destination and high-pay flags", () => {
     const got = ids(MOCK_AD);
-    if (RULE_SOURCES.advisory.places.length > 0) expect(got).toContain("advisory_destination");
-    if (Number.isFinite(RULE_SOURCES.pay.thresholdIdr) && RULE_SOURCES.pay.thresholdIdr <= 15_000_000) expect(got).toContain("high_pay_no_experience");
+    expect(got).toContain("advisory_destination");
+    expect(got).toContain("high_pay_no_experience");
+  });
+
+  it("every NEVER rule has a recorded official source, so it can STOP on its own", () => {
+    for (const f of evaluateRubric(MOCK_AD, null).filter((f) => f.id === "tourist_visa")) expect(f).toMatchObject({ class: "NEVER", sourced: true });
+    expect(RULE_SOURCES.flags.fee_before_contract?.domain).toBe("kemnaker.go.id");
+    expect(RULE_SOURCES.flags.passport_retention?.domain).toBe("humas.polri.go.id");
   });
 });
 
@@ -151,11 +157,19 @@ describe("personal recruiter", () => {
 
 describe("pay figures", () => {
   it("reads rupiah in its common written forms and dollars", () => {
-    const v = (t: string) => payFigures(t).map((p) => p.idr);
-    expect(v("Gaji Rp 15 jt/bulan")).toEqual([15_000_000]);
-    expect(v("gaji Rp12.800.000 per bulan")).toEqual([12_800_000]);
-    expect(v("gaji 9,5 juta")).toEqual([9_500_000]);
-    if (RULE_SOURCES.pay.usdToIdr > 0) expect(v("salary USD 1,000")).toEqual([1000 * RULE_SOURCES.pay.usdToIdr]);
+    const v = (t: string) => payFigures(t).map((p) => `${p.amount} ${p.currency}`);
+    expect(v("Gaji Rp 15 jt/bulan")).toEqual(["15000000 IDR"]);
+    expect(v("gaji Rp12.800.000 per bulan")).toEqual(["12800000 IDR"]);
+    expect(v("gaji 9,5 juta")).toEqual(["9500000 IDR"]);
+    expect(v("salary USD 1,000 a month")).toEqual(["1000 USD"]);
+  });
+
+  it("high pay is judged against the two cited figures (Rp 6 juta, USD 700), never converted", () => {
+    expect(ids("Tanpa pengalaman, gaji Rp 6 juta per bulan")).toContain("high_pay_no_experience");
+    expect(ids("Tanpa pengalaman, gaji Rp 5 juta per bulan")).not.toContain("high_pay_no_experience");
+    expect(ids("No experience needed, salary USD 800")).toContain("high_pay_no_experience");
+    expect(ids("No experience needed, salary USD 500")).not.toContain("high_pay_no_experience");
+    expect(ids("Gaji Rp 15 juta, pengalaman minimal 2 tahun")).not.toContain("high_pay_no_experience");
   });
 });
 

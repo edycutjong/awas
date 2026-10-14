@@ -9,6 +9,7 @@
  */
 
 import { mentionsCompany, maskAll } from "./mask";
+import { OFFICIAL_CHECKS } from "./rule-sources";
 import { CALL_SETTINGS } from "./settings";
 import { normalise } from "./text";
 import { chat } from "./tf";
@@ -79,6 +80,8 @@ export function verifySteps(flags: Flag[]): Steps {
     id.push("Minta nama perusahaan dan nomor izinnya, jangan hanya lewat nomor pribadi.");
     en.push("Ask for the company's name and licence number, not just a personal number.");
   }
+  id.push(`Ragu? Tanya Call Center KP2MI ${OFFICIAL_CHECKS.callCenter}.`);
+  en.push(`Unsure? Ask the KP2MI call centre: ${OFFICIAL_CHECKS.callCenter}.`);
   return { id, en };
 }
 
