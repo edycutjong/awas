@@ -33,11 +33,23 @@ const atkinsonMono = localFont({
 const DESCRIPTION =
   "Paste a job ad. Awas builds an evidence file: every line is a URL plus a quote code found verbatim on that page. Then it says STOP or VERIFY FIRST.";
 
+const TITLE = "Awas — check a job ad before anyone boards";
+
 export const metadata: Metadata = {
-  title: "Awas — check a job ad before anyone boards",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://awas.vercel.app"),
+  title: TITLE,
   description: DESCRIPTION,
   applicationName: "Awas",
   authors: [{ name: "Edy Cu" }],
+  icons: { icon: "/icon.svg" },
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    siteName: "Awas",
+    type: "website",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Awas: every line is a URL and a verified quote" }],
+  },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: ["/og-image.png"] },
 };
 
 export const viewport: Viewport = {
