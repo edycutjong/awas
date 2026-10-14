@@ -1,0 +1,48 @@
+# The live app must stay up, free and unrestricted for judges through 2026-12-15. This runs unattended twice a day.
+# It is also the spend alarm: when this month's Tavily credits reach the alarm line (900, 90 % of the free tier), the
+# job fails — GitHub then emails the repository owner — so a budget decision never waits on someone checking a page.
+
+name: Uptime
+
+on:
+  schedule:
+    - cron: "23 */12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Judge paths answer without credentials
+        env:
+          BASE_URL: ${{ vars.AWAS_BASE_URL || 'https://awas-cek.vercel.app' }}
+        run: |
+          set -uo pipefail
+          fail=0
+          for path in "/" "/judge" "/integrations" "/api/samples" "/api/healthz"; do
+            code=$(curl -sS -o /tmp/body -w "%{http_code}" --max-time 40 "${BASE_URL}${path}" || echo 000)
+            echo "${path} -> ${code}"
+            [ "$code" = "200" ] || { echo "::error::${path} returned ${code}"; fail=1; }
+          done
+          samples=$(curl -sS --max-time 40 "${BASE_URL}/api/samples" | python3 -c "import json,sys; print(json.load(sys.stdin).get('count',0))" || echo 0)
+          echo "recorded samples: ${samples}"
+          [ "${samples}" -ge 1 ] || { echo "::error::no recorded samples are served"; fail=1; }
+          exit $fail
+
+      - name: Spend alarm (Tavily credits this month)
+        env:
+          BASE_URL: ${{ vars.AWAS_BASE_URL || 'https://awas-cek.vercel.app' }}
+        run: |
+          set -uo pipefail
+          curl -sS --max-time 40 "${BASE_URL}/api/integrations" > /tmp/i.json
+          python3 - <<'PY'
+          import json
+          d = json.load(open("/tmp/i.json"))
+          used, line = d["tavilyCreditsThisMonth"], d["creditAlarm"]["threshold"]
+          print(f"{d['month']}: {used} Tavily credits (alarm at {line})")
+          if d["creditAlarm"]["tripped"]:
+              raise SystemExit(f"::error::Tavily credits {used} >= {line} this month — top up or switch access before judges are affected")
+          PY
