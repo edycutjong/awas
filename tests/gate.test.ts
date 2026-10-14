@@ -112,3 +112,11 @@ describe("text-fragment link", () => {
     expect(fragmentUrl("https://x.example/a", "dengan visa kunjungan untuk bekerja")).toBe("https://x.example/a#:~:text=dengan%20visa%20kunjungan%20untuk%20bekerja");
   });
 });
+
+describe("guard terms match anywhere in the quote (spec rule; tuned on the dev set only)", () => {
+  it("'palsu' anywhere marks a guard", () => {
+    const c: Corpus = new Map();
+    addToCorpus(c, URL_A, "company", { pageText: "PT Sinar Harapan Abadi merekrut korban melalui lowongan palsu di Kamboja." });
+    expect(gateLine({ url: URL_A, quote: "PT Sinar Harapan Abadi merekrut korban melalui lowongan palsu", claim: "" }, c, ctx).guard).toBe(true);
+  });
+});

@@ -48,6 +48,13 @@ export const MAX_EXTRACT_URLS = 5;
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
+/** `retry-after` in seconds (an explicit 0 means "now"); the fallback applies only when the header is absent. */
+export function retryAfterMs(header: string | null, fallbackMs: number, capMs: number): number {
+  if (header === null || header.trim() === "") return fallbackMs;
+  const s = Number(header);
+  return Number.isFinite(s) && s >= 0 ? Math.min(s * 1000, capMs) : fallbackMs;
+}
+
 async function post<T extends { usage?: { credits?: number }; request_id?: string }>(
   cfg: TavilyConfig,
   method: TavilyReceipt["method"],
@@ -78,8 +85,7 @@ async function post<T extends { usage?: { credits?: number }; request_id?: strin
       return { ok: false, body: null, receipt };
     }
     if (res.status === 429 && attempt === 1) {
-      const retryAfter = Number(res.headers.get("retry-after"));
-      await sleep((Number.isFinite(retryAfter) && retryAfter > 0 ? Math.min(retryAfter, 30) : 5) * 1000);
+      await sleep(retryAfterMs(res.headers.get("retry-after"), 5_000, 30_000));
       continue;
     }
     if (!res.ok) {

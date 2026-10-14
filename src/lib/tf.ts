@@ -10,6 +10,7 @@
  */
 
 import type { TokenFactoryConfig } from "./nebius/config";
+import { retryAfterMs } from "./tavily";
 import type { TfCallReceipt } from "./types";
 
 export type ResponseFormatVariant = "json_schema_raw" | "json_schema_named" | "json_object" | "text";
@@ -134,8 +135,7 @@ export async function chat<T = unknown>(tf: TokenFactoryConfig, c: ChatCall, fet
         continue;
       }
       if ((res.status === 429 || res.status >= 500) && attempt < 3) {
-        const retryAfter = Number(res.headers.get("retry-after"));
-        await sleep(Number.isFinite(retryAfter) && retryAfter > 0 ? Math.min(retryAfter, 20) * 1000 : 1200 * attempt);
+        await sleep(retryAfterMs(res.headers.get("retry-after"), 1200 * attempt, 20_000));
         continue;
       }
       return done({ error: lastError });
