@@ -94,7 +94,7 @@ flowchart LR
 
 **Honest count: 4 distinct methods from 2 vendors**, with NVIDIA as the model family. A fifth (running the benchmark as a Nebius Serverless Job, [`jobs.ts`](src/lib/nebius/jobs.ts)) is counted only once its receipt exists; the client code is present, a run is not yet claimed.
 
-The one extension no sponsor ships is the **quote gate**: two generic APIs become an evidence standard a reader can re-check. The model chooses where to look and what to quote; code decides what is shown.
+The one extension no sponsor ships is the **quote gate**: two generic APIs become an evidence standard a reader can re-check. The model reads the ad and proposes what to quote; code builds the searches, checks every quote and decides what is shown.
 
 ## 📊 Engineering Rigor
 

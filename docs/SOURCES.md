@@ -42,6 +42,5 @@ browser — a plain `curl` returns an empty shell; kemlu.go.id articles need the
 | About 297,000 recorded placements a year | [KP2MI, 2026-01-31](https://kp2mi.go.id/statistik-detail/data-penempatan-dan-pelindungan-pekerja-migran-indonesia-periode-tahun-2025) | "Pada tahun 2025, terdapat 296.948 layanan penempatan, menurun 0,16% dibandingkan tahun sebelumnya." |
 
 **Honest framing.** The embassy's "cases" include Indonesians who ran scams, not only victims (KBRI Phnom Penh, same
-page: "kegiatan penipuan daring dilakukan oleh WNI dan menargetkan masyarakat Indonesia di tanah air"), and officials
-say some later stay willingly. Awas's claim is narrower: the ads that recruit people follow a pattern a family can
+page: "kegiatan penipuan daring dilakukan oleh WNI dan menargetkan masyarakat Indonesia di tanah air"). Awas's claim is narrower: the ads that recruit people follow a pattern a family can
 check before anyone leaves.
