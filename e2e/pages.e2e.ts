@@ -18,7 +18,7 @@ test("/about: the hero highlighter is set by the quote gate running in the page"
   page.on("pageerror", (e) => errors.push(String(e)));
   await page.goto("/about");
   await expect(page.locator("#hero-hl")).not.toHaveClass(/\boff\b/);
-  await expect(page.locator("#hero-frag")).toHaveAttribute("href", /#:~:text=/);
+  await expect(page.locator("a.hero-frag").first()).toHaveAttribute("href", /#:~:text=/);
   expect(errors).toEqual([]);
 });
 
@@ -29,6 +29,8 @@ test("/about: the gate drops a flipped clause and keeps the page's own sentence"
   await page.getByRole("button", { name: "The page’s own sentence" }).click();
   await expect(page.locator("#gate-result .gate-card.verified a")).toHaveAttribute("href", /#:~:text=/);
   await expect(page.locator("#page-text mark")).toContainText("Dokumen bermasalah");
+  await page.getByRole("button", { name: "Cut short" }).click();
+  await expect(page.locator("#gate-result .gate-card.verified .cut")).toContainText("Cut from a longer sentence");
 });
 
 test("/about: the rules lab fires no rule on a negated ad and STOP on the composite", async ({ page }) => {
