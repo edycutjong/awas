@@ -156,3 +156,27 @@ idntimes.com, rri.co.id.
 19. `https://www.rri.co.id/tag/tppo` pages 1–10
 
 The Q2 pre-screen of Amendment 1 applies to these listings. Rules §2–§6 are unchanged.
+
+## Amendment 3 — cross-batch duplicates, same-prefix pairs, outcome (2026-10-15, before any model call)
+
+Applied before the split and written down with it; no model had seen any row.
+
+**Q5 across batches.** Readers applied Q5 inside their own batch. One more reader compared all 112 qualifying rows
+across batches (victims, suspects' initials, dates, places, police units; both pages opened when the summaries were not
+enough): 18 groups, whose 24 later rows are logged `duplicate_case`. Four pairs stayed doubtful (same suspect or same
+repatriation, link unproven); they are treated as the same case and the later row is dropped (3 rows), so one case can
+never sit in two sets. **85 positives** remain; with the 40 negatives, 125 rows were split by §5 (15 positives and 15
+negatives beyond the caps are `unused`).
+
+**Same-prefix pairs (§3).** Only two positives name a company ("PT CVGen dan PT SHB", "PT Mapan Jaya Sentosa"). The
+official P3MI list (`siskop2mi.bp2mi.go.id/profil/lembaga/list_lembaga/p3mi`, 534 agencies, fetched 2026-10-15) has no
+agency whose name shares its leading tokens with either, so the benchmark has **0 same-prefix pairs**. The entity-match
+rule ("PT Mega" is not "PT Megah Karya") is covered by unit tests instead.
+
+**What the rows are.** Every positive is a reporter's or an official's description of the offer (`paraphrased: true`);
+no qualifying report reproduced the ad itself. Reports almost never name the recruiting company: the positives that
+name one in their offer text (x, computed by `seed.py --check`) are 1 in dev, 0 in tranche 1 and 1 in tranche 2.
+
+**Collection log.** `collection-log.jsonl` lists every link the named listings produced and every board record read,
+in listing order, with its outcome (`row:<id>`, `unused:<id>`, a reject reason, or `withdrawn`). URLs and reason codes
+only; the readers' notes stay out of the repository because they can name people.
