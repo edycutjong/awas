@@ -255,7 +255,12 @@ export async function runCheck(input: CheckInput, deps: Deps, emit: Emit = () =>
     }
     pack.lines = lines;
     const picked = pickSentences(sources, ex).map((p) => gateLine(p, corpus, ctx)).filter((l) => l.status === "verified");
-    pack.picker = { lines: picked.map((l) => ({ url: l.url, quote: l.quote })), companyMatched: picked.some(isCompanyMatched) };
+    pack.picker = {
+      lines: picked.map((l) => ({ url: l.url, quote: l.quote })),
+      companyMatched: picked.some(isCompanyMatched),
+      // Same verdict function, same flags and failed steps, with the picker's lines in place of call 2's.
+      verdict: decide(pack.flags, picked, failed.filter((f) => !f.startsWith("evidence proposal"))).verdict,
+    };
     await save();
   }
 

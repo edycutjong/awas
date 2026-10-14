@@ -125,6 +125,8 @@ export interface Receipt {
 export interface PickerResult {
   lines: { url: string; quote: string }[];
   companyMatched: boolean;
+  /** The verdict the same code would give if call 2 were replaced by the sentence-picker. */
+  verdict: Verdict;
 }
 
 export interface EvidencePack {
