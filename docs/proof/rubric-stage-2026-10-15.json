@@ -1,0 +1,276 @@
+{
+  "what": "One real run of the deployed app's rubric stage (ablation column 1: the rules on the raw ad text; no model call, no Tavily call) on the composite ad that tests/rubric.test.ts pins as MOCK_AD.",
+  "why": "The landing page and the pitch deck show this run: its flags, its verdict, its stream. No full check (Token Factory + Tavily) has run yet; those numbers are pending in DEMO.md.",
+  "request": {
+    "method": "POST",
+    "url": "https://awas-cek.vercel.app/api/check",
+    "headers": {
+      "content-type": "application/json",
+      "x-awas-bench": "<bench secret, not recorded>"
+    },
+    "body": {
+      "adText": "Dibutuhkan CS online untuk Kamboja. Gaji Rp 15 jt/bulan, tanpa pengalaman.\nVisa turis diurus, tiket ditanggung. Biaya admin Rp 3 jt sebelum berangkat.",
+      "lang": "id",
+      "stage": "rubric"
+    }
+  },
+  "response": {
+    "status": 200,
+    "curl_time_total_s": 1.978,
+    "content_type": "text/event-stream",
+    "events": [
+      {
+        "event": "started",
+        "data": {
+          "caseId": "yeliyt2ij7pjskljxyegkykq3u",
+          "mode": "bench",
+          "stage": "rubric"
+        }
+      },
+      {
+        "event": "flags",
+        "data": {
+          "flags": [
+            {
+              "id": "tourist_visa",
+              "class": "NEVER",
+              "sourced": true,
+              "via": "pattern",
+              "span": {
+                "text": "Visa turis",
+                "start": 75,
+                "end": 85
+              },
+              "label": "The ad offers a tourist or visit visa for work",
+              "source": {
+                "url": "https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo",
+                "domain": "humas.polri.go.id",
+                "title": "Waspada Penipuan Lowongan Kerja Luar Negeri (TPPO)",
+                "date": "2026-02-04",
+                "quote": "Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah."
+              }
+            },
+            {
+              "id": "fee_before_departure",
+              "class": "CAUTION",
+              "sourced": true,
+              "via": "pattern",
+              "span": {
+                "text": "Biaya admin Rp 3 jt sebelum berangkat",
+                "start": 112,
+                "end": 149
+              },
+              "label": "The ad asks for a fee before departure",
+              "source": {
+                "url": "https://www.kemnaker.go.id/news/detail/kemnaker-imbau-masyarakat-waspada-penipuan-lowongan-pekerjaan",
+                "domain": "kemnaker.go.id",
+                "title": "Kemnaker Imbau Masyarakat Waspada Penipuan Lowongan Pekerjaan",
+                "date": "2024-10-10",
+                "quote": "Jangan pernah memberikan apapun untuk mendapatkan pekerjaan."
+              }
+            },
+            {
+              "id": "high_pay_no_experience",
+              "class": "CAUTION",
+              "sourced": true,
+              "via": "pattern",
+              "span": {
+                "text": "tanpa pengalaman",
+                "start": 57,
+                "end": 73
+              },
+              "label": "High pay with no experience needed",
+              "source": {
+                "url": "https://www.kemlu.go.id/berita/kasus-wni-di-kamboja-meningkat-tajam-di-awal-2025?type=publication",
+                "domain": "kemlu.go.id",
+                "title": "Kasus WNI di Kamboja Meningkat Tajam di Awal 2025",
+                "date": "2025-03-21",
+                "quote": "menghimbau agar WNI lebih waspada terhadap tawaran pekerjaan di luar negeri yang tidak memerlukan skill atau kualifikasi, tapi menjanjikan gaji yang tinggi."
+              }
+            },
+            {
+              "id": "advisory_destination",
+              "class": "CAUTION",
+              "sourced": true,
+              "via": "pattern",
+              "span": {
+                "text": "Kamboja",
+                "start": 27,
+                "end": 34
+              },
+              "label": "The destination is named in an official warning",
+              "source": {
+                "url": "https://www.kemlu.go.id/publikasi/siaran-pers/transkrip-press-briefing-menlu-ri-online-scams,-evakuasi-sudan,-ktt-ke-42-asean-jakarta,-5-mei-2023?type=publication",
+                "domain": "kemlu.go.id",
+                "title": "Transkrip Press Briefing Menlu RI: Online Scams (5 Mei 2023)",
+                "date": "2023-05-05",
+                "quote": "Untuk korban Indonesia, tercatat berada di Myanmar, Kamboja, Thailand, Vietnam, Laos dan Filipina."
+              }
+            }
+          ]
+        }
+      },
+      {
+        "event": "rule_stop",
+        "data": {
+          "flags": [
+            "tourist_visa"
+          ]
+        }
+      },
+      {
+        "event": "verdict",
+        "data": {
+          "verdict": "STOP",
+          "rule": "STOP — rule: tourist or visit visa offered for work",
+          "reasons": [
+            "rule: tourist or visit visa offered for work"
+          ],
+          "steps": [
+            "Cek nama perusahaan di daftar resmi P3MI (siskop2mi.bp2mi.go.id) — hubungi perusahaan lewat kontak di daftar itu, bukan nomor di iklan.",
+            "Jangan bayar biaya apa pun sebelum ada perjanjian kerja tertulis.",
+            "Tanyakan jenis visanya: bekerja di luar negeri harus dengan visa kerja, bukan visa turis atau kunjungan.",
+            "Ragu? Tanya Call Center KP2MI 08001000."
+          ]
+        }
+      },
+      {
+        "event": "receipt",
+        "data": {
+          "receipt": {
+            "models": [],
+            "tfCalls": 0,
+            "tfTokens": 0,
+            "tavilyCredits": 0,
+            "ms": 332,
+            "failedSteps": [],
+            "tf": []
+          }
+        }
+      },
+      {
+        "event": "done",
+        "data": {
+          "caseId": "yeliyt2ij7pjskljxyegkykq3u"
+        }
+      }
+    ]
+  },
+  "stored_pack": {
+    "url": "https://awas-cek.vercel.app/api/case/yeliyt2ij7pjskljxyegkykq3u",
+    "page": "https://awas-cek.vercel.app/case/yeliyt2ij7pjskljxyegkykq3u",
+    "pack": {
+      "id": "yeliyt2ij7pjskljxyegkykq3u",
+      "createdAt": "2026-10-14T19:53:27.675Z",
+      "mode": "bench",
+      "stage": "rubric",
+      "lang": "id",
+      "adSha256": "120d430d86f77402d7851409c3756f17ddfc93d6b220adcfb0380c8472c390b6",
+      "adTextMasked": "Dibutuhkan CS online untuk Kamboja. Gaji Rp 15 jt/bulan, tanpa pengalaman.\nVisa turis diurus, tiket ditanggung. Biaya admin Rp 3 jt sebelum berangkat.",
+      "extraction": null,
+      "flags": [
+        {
+          "id": "tourist_visa",
+          "class": "NEVER",
+          "sourced": true,
+          "via": "pattern",
+          "span": {
+            "text": "Visa turis",
+            "start": 75,
+            "end": 85
+          },
+          "label": "The ad offers a tourist or visit visa for work",
+          "source": {
+            "url": "https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo",
+            "domain": "humas.polri.go.id",
+            "title": "Waspada Penipuan Lowongan Kerja Luar Negeri (TPPO)",
+            "date": "2026-02-04",
+            "quote": "Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah."
+          }
+        },
+        {
+          "id": "fee_before_departure",
+          "class": "CAUTION",
+          "sourced": true,
+          "via": "pattern",
+          "span": {
+            "text": "Biaya admin Rp 3 jt sebelum berangkat",
+            "start": 112,
+            "end": 149
+          },
+          "label": "The ad asks for a fee before departure",
+          "source": {
+            "url": "https://www.kemnaker.go.id/news/detail/kemnaker-imbau-masyarakat-waspada-penipuan-lowongan-pekerjaan",
+            "domain": "kemnaker.go.id",
+            "title": "Kemnaker Imbau Masyarakat Waspada Penipuan Lowongan Pekerjaan",
+            "date": "2024-10-10",
+            "quote": "Jangan pernah memberikan apapun untuk mendapatkan pekerjaan."
+          }
+        },
+        {
+          "id": "high_pay_no_experience",
+          "class": "CAUTION",
+          "sourced": true,
+          "via": "pattern",
+          "span": {
+            "text": "tanpa pengalaman",
+            "start": 57,
+            "end": 73
+          },
+          "label": "High pay with no experience needed",
+          "source": {
+            "url": "https://www.kemlu.go.id/berita/kasus-wni-di-kamboja-meningkat-tajam-di-awal-2025?type=publication",
+            "domain": "kemlu.go.id",
+            "title": "Kasus WNI di Kamboja Meningkat Tajam di Awal 2025",
+            "date": "2025-03-21",
+            "quote": "menghimbau agar WNI lebih waspada terhadap tawaran pekerjaan di luar negeri yang tidak memerlukan skill atau kualifikasi, tapi menjanjikan gaji yang tinggi."
+          }
+        },
+        {
+          "id": "advisory_destination",
+          "class": "CAUTION",
+          "sourced": true,
+          "via": "pattern",
+          "span": {
+            "text": "Kamboja",
+            "start": 27,
+            "end": 34
+          },
+          "label": "The destination is named in an official warning",
+          "source": {
+            "url": "https://www.kemlu.go.id/publikasi/siaran-pers/transkrip-press-briefing-menlu-ri-online-scams,-evakuasi-sudan,-ktt-ke-42-asean-jakarta,-5-mei-2023?type=publication",
+            "domain": "kemlu.go.id",
+            "title": "Transkrip Press Briefing Menlu RI: Online Scams (5 Mei 2023)",
+            "date": "2023-05-05",
+            "quote": "Untuk korban Indonesia, tercatat berada di Myanmar, Kamboja, Thailand, Vietnam, Laos dan Filipina."
+          }
+        }
+      ],
+      "tavily": [],
+      "lines": [],
+      "verdict": "STOP",
+      "rule": "STOP — rule: tourist or visit visa offered for work",
+      "verifySteps": [
+        "Cek nama perusahaan di daftar resmi P3MI (siskop2mi.bp2mi.go.id) — hubungi perusahaan lewat kontak di daftar itu, bukan nomor di iklan.",
+        "Jangan bayar biaya apa pun sebelum ada perjanjian kerja tertulis.",
+        "Tanyakan jenis visanya: bekerja di luar negeri harus dengan visa kerja, bukan visa turis atau kunjungan.",
+        "Ragu? Tanya Call Center KP2MI 08001000."
+      ],
+      "messageId": "",
+      "messageEn": "",
+      "explanationEn": "",
+      "messageSource": null,
+      "receipt": {
+        "models": [],
+        "tfCalls": 0,
+        "tfTokens": 0,
+        "tavilyCredits": 0,
+        "ms": 332,
+        "failedSteps": [],
+        "tf": []
+      },
+      "done": true
+    }
+  },
+  "ad_provenance": "Composite of the recruitment-ad pattern written for the UI mock and the rubric tests; not a real ad, names no company or person."
+}
