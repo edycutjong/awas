@@ -96,6 +96,7 @@ The one extension no sponsor ships is the **quote gate**: two generic APIs becom
 | Metric | Value |
 |---|---|
 | Unit tests | **119 passing** (`npm test`, 10 files) |
+| Browser tests | **36 passing** (`npm run e2e`: 18 checks × phone and desktop projects; credential-free paths only: home, `/judge`, `/integrations`, guards, no horizontal scroll at 375/768/1440 px) |
 | Benchmark protocol | written before any row was collected: [`bench/PROTOCOL.md`](bench/PROTOCOL.md), with two dated amendments |
 | Stage-T scoring rules | pre-registered before labels or model runs: [`bench/STAGE-T.md`](bench/STAGE-T.md) |
 | Headline: scam ads stopped, company-matched (tranche 2, n/25) | **not yet measured** |
@@ -136,7 +137,10 @@ npm run dev               # http://localhost:3000
 ```bash
 npm test          # 119 vitest tests: quote gate, verdict, rubric, masking, SigV4 vectors, clients, store, pipeline
 npm run typecheck && npm run lint
+npm run build && npm run e2e   # 36 Playwright tests, no credentials needed
 ```
+
+`.github/workflows/ci.yml` runs lint, typecheck, unit tests, `npm audit`, a full-history gitleaks scan, the production build and the browser tests. Dependabot (grouped, monthly) and CodeQL are configured; CodeQL needs the repository to be public. Details: [`CONTRIBUTING.md`](CONTRIBUTING.md), [`SECURITY.md`](SECURITY.md).
 
 The quote gate is also checkable by hand: `python3 scripts/verify_quotes.py <case.json>`.
 
@@ -146,6 +150,7 @@ The quote gate is also checkable by hand: `python3 scripts/verify_quotes.py <cas
 src/lib/        gate.ts · verdict.ts · rubric.ts · pipeline.ts · tavily.ts · tf.ts · mask.ts · store.ts
 src/lib/nebius/ SigV4, Object Storage, auth, Serverless Jobs
 src/app/        paste screen, /judge, /case/[id], /integrations, /api/*
+e2e/            Playwright specs (no credentials)
 bench/          PROTOCOL.md · STAGE-T.md (pre-registered)
 scripts/        bench.py · collect.py · stage_t.py · verify_quotes.py
 docs/           SOURCES.md · assets/
