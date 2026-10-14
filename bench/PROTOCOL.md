@@ -104,3 +104,24 @@ The 25 dev texts carry hand labels for stage T (company, destination, job, visa,
 `stage-t-labels.jsonl` and hashed into `MANIFEST.json` **before any model sees a dev row**. Labels drafted by the
 build agent are marked `labeller: agent (DRAFT-UNREVIEWED)`; every stage-T number says "vs agent labels,
 unreviewed" until a human has reviewed them.
+
+## Amendment 1 — more listings (2026-10-15, before any model call)
+
+**Why:** the first pass (listings 1–8) gave 254 article links → 164 on-topic candidates → about 22 qualifying rows.
+Most tag-page articles are repatriation, policy or digest pieces, and the same few cases are reported many times.
+Twenty-odd positives cannot fill dev (20) plus two tranches. Listing limitations found in pass 1 (no server-rendered
+article links): `detik.com` tag pages 2–3, `cnnindonesia.com/tag/tppo-kamboja`, and `liputan6.com` tag pages (their
+server-rendered links are site-wide widgets dated today, all outside the date range).
+
+**Added listings**, crawled after listings 1–8, in this order. Links already collected are skipped, so pass-1
+positions do not change.
+
+9. `https://www.antaranews.com/tag/tppo` pages 1–30
+10. `https://www.kompas.com/tag/tppo` pages 1–15
+11. `https://www.antaranews.com/tag/pmi-ilegal` pages 1–8
+12. `https://www.kompas.com/tag/tppo-kamboja` pages 5–10
+
+**Q2 pre-screen (added listings only):** a candidate in which none of the offer words occur — dijanjikan,
+diiming-imingi, iming-iming, ditawari, ditawarkan, tawaran, menawarkan, lowongan, loker, iklan, gaji, upah, direkrut,
+merekrut, perekrut, tergiur, "bekerja sebagai", "kerja di" — is rejected as `no_offer_detail` without being read.
+The rules in §2 and the split in §5 are unchanged.
