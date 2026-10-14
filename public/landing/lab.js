@@ -1,0 +1,1090 @@
+/* Awas lab: src/lib compiled for the browser by scripts/build-lab.mjs (MIT).
+* lab-sources: src/lib/text.ts src/lib/rubric.ts src/lib/rule-sources.ts src/lib/gate.ts src/lib/verdict.ts src/lib/types.ts scripts/lab/entry.ts scripts/lab/sha256.ts
+* source-sha256: 3ddbcb3a83a291c945408e7605b73251cce82ed420d11c4bf27e365a74525ed2 */
+var AwasLab = (function(exports) {
+	Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
+	//#region src/lib/text.ts
+	const ZERO_WIDTH = /[​-‍⁠﻿­]/;
+	const SINGLE_QUOTES = /[‘’‚‛′ʼ`´]/;
+	const DOUBLE_QUOTES = /[“”„‟″«»]/;
+	const DASHES = /[‐-―−⸺⸻]/;
+	/** Indices of markdown syntax characters to drop: `[text](url)` → text, `**x**` / `_x_` → x. */
+	function markdownDrops(raw) {
+		const drop = /* @__PURE__ */ new Set();
+		for (const m of raw.matchAll(/\[([^\]\n]{1,300})\]\(([^)\s]{1,500})\)/g)) {
+			const start = m.index ?? 0;
+			drop.add(start);
+			const close = start + 1 + m[1].length;
+			for (let i = close; i < start + m[0].length; i++) drop.add(i);
+		}
+		for (const m of raw.matchAll(/(\*{1,3}|_{1,3})/g)) {
+			const i = m.index ?? 0;
+			const before = i === 0 ? " " : raw[i - 1];
+			const after = i + m[0].length >= raw.length ? " " : raw[i + m[0].length];
+			const wordBefore = /[\p{L}\p{N}]/u.test(before);
+			const wordAfter = /[\p{L}\p{N}]/u.test(after);
+			if (wordBefore !== wordAfter || !wordBefore && !wordAfter) for (let k = 0; k < m[0].length; k++) drop.add(i + k);
+		}
+		return drop;
+	}
+	function normaliseWithMap(raw) {
+		const drop = markdownDrops(raw);
+		const out = [];
+		const map = [];
+		let pendingSpace = false;
+		for (let i = 0; i < raw.length; i++) {
+			if (drop.has(i)) continue;
+			const ch = raw[i];
+			if (ZERO_WIDTH.test(ch)) continue;
+			let mapped = ch.normalize("NFKC").toLowerCase();
+			if (SINGLE_QUOTES.test(ch)) mapped = "'";
+			else if (DOUBLE_QUOTES.test(ch)) mapped = "\"";
+			else if (DASHES.test(ch)) mapped = "-";
+			if (/^\s+$/u.test(mapped)) {
+				if (out.length > 0) pendingSpace = true;
+				continue;
+			}
+			if (pendingSpace) {
+				out.push(" ");
+				map.push(i);
+				pendingSpace = false;
+			}
+			for (const c of mapped) {
+				out.push(c);
+				map.push(i);
+			}
+		}
+		return {
+			text: out.join(""),
+			map
+		};
+	}
+	function normalise(raw) {
+		return normaliseWithMap(raw).text;
+	}
+	/** Word tokens of normalised text: letter/digit runs (hyphenated words stay whole, e.g. "kerja-kerja"). */
+	function words(s) {
+		return normalise(s).match(/[\p{L}\p{N}]+(?:[-'][\p{L}\p{N}]+)*/gu) ?? [];
+	}
+	/**
+	* A clause: the stretch of text around `index` bounded by clause punctuation (. , ; : ! ?) or a newline. The rubric's
+	* negation guard and the fee flag's contract condition never look across these boundaries.
+	*/
+	function clauseAround(text, start, end = start) {
+		let a = start;
+		while (a > 0 && !isClauseBoundary(text, a - 1)) a--;
+		let b = end;
+		while (b < text.length && !isClauseBoundary(text, b)) b++;
+		return {
+			start: a,
+			end: b,
+			text: text.slice(a, b)
+		};
+	}
+	/** Abbreviations whose full stop does not end a clause ("PT. Maju", "Rp. 5 juta", "s.d."). */
+	const ABBREVIATIONS = /* @__PURE__ */ new Set([
+		"pt",
+		"cv",
+		"rp",
+		"no",
+		"tbk",
+		"ltd",
+		"co",
+		"inc",
+		"jl",
+		"kab",
+		"kec",
+		"dll",
+		"dsb",
+		"s",
+		"d",
+		"u",
+		"a",
+		"n",
+		"mr",
+		"mrs",
+		"dr"
+	]);
+	/** Is `text[i]` clause punctuation? A "." or "," between two digits ("15.000.000", "9,5") is part of a number. */
+	function isClauseBoundary(text, i) {
+		const c = text[i];
+		if (c === "\n" || c === "\r" || c === ";" || c === ":" || c === "!" || c === "?") return true;
+		if (c !== "." && c !== ",") return false;
+		if (/\d/.test(text[i - 1] ?? "") && /\d/.test(text[i + 1] ?? "")) return false;
+		if (c === ".") {
+			const m = text.slice(Math.max(0, i - 6), i).match(/([\p{L}]+)$/u);
+			if (m && ABBREVIATIONS.has(m[1].toLowerCase())) return false;
+		}
+		return true;
+	}
+	/** Digits only. */
+	function digits(s) {
+		return s.replace(/\D/g, "");
+	}
+	//#endregion
+	//#region src/lib/rule-sources.ts
+	const POLRI_CHECKLIST = {
+		url: "https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo",
+		domain: "humas.polri.go.id",
+		title: "Waspada Penipuan Lowongan Kerja Luar Negeri (TPPO)",
+		date: "2026-02-04"
+	};
+	const KEMNAKER_FEES = {
+		url: "https://www.kemnaker.go.id/news/detail/kemnaker-imbau-masyarakat-waspada-penipuan-lowongan-pekerjaan",
+		domain: "kemnaker.go.id",
+		title: "Kemnaker Imbau Masyarakat Waspada Penipuan Lowongan Pekerjaan",
+		date: "2024-10-10"
+	};
+	const RULE_SOURCES = {
+		flags: {
+			tourist_visa: {
+				...POLRI_CHECKLIST,
+				quote: "Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah."
+			},
+			visit_visa_holder: {
+				...POLRI_CHECKLIST,
+				quote: "Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah."
+			},
+			fee_before_contract: {
+				...KEMNAKER_FEES,
+				quote: "Jangan pernah memberikan apapun untuk mendapatkan pekerjaan."
+			},
+			fee_before_departure: {
+				...KEMNAKER_FEES,
+				quote: "Jangan pernah memberikan apapun untuk mendapatkan pekerjaan."
+			},
+			passport_retention: {
+				...POLRI_CHECKLIST,
+				quote: "M-enolak, apabila diminta menyerahkan dokumen asli seperti paspor atau KTP kepada pihak perorangan yang tidak jelas."
+			},
+			personal_recruiter: {
+				...POLRI_CHECKLIST,
+				quote: "Identitas perusahaan tidak jelas, alamat kantor tidak pasti dan komunikasi hanya dilakukan melalui media sosial atau WhatsApp tanpa pertemuan langsung di kantor resmi."
+			},
+			high_pay_no_experience: {
+				url: "https://www.kemlu.go.id/berita/kasus-wni-di-kamboja-meningkat-tajam-di-awal-2025?type=publication",
+				domain: "kemlu.go.id",
+				title: "Kasus WNI di Kamboja Meningkat Tajam di Awal 2025",
+				date: "2025-03-21",
+				quote: "menghimbau agar WNI lebih waspada terhadap tawaran pekerjaan di luar negeri yang tidak memerlukan skill atau kualifikasi, tapi menjanjikan gaji yang tinggi."
+			},
+			advisory_destination: {
+				url: "https://www.kemlu.go.id/publikasi/siaran-pers/transkrip-press-briefing-menlu-ri-online-scams,-evakuasi-sudan,-ktt-ke-42-asean-jakarta,-5-mei-2023?type=publication",
+				domain: "kemlu.go.id",
+				title: "Transkrip Press Briefing Menlu RI: Online Scams (5 Mei 2023)",
+				date: "2023-05-05",
+				quote: "Untuk korban Indonesia, tercatat berada di Myanmar, Kamboja, Thailand, Vietnam, Laos dan Filipina."
+			}
+		},
+		pay: {
+			thresholdIdr: 6e6,
+			thresholdUsd: 700,
+			source: {
+				url: "https://humas.polri.go.id/news/detail/2275569-polri-repatriasi-249-wni-dari-kamboja-korban-rekrutmen-scam-online",
+				domain: "humas.polri.go.id",
+				title: "Polri Repatriasi 249 WNI dari Kamboja Korban Rekrutmen Scam Online",
+				date: "2026-02-09",
+				quote: "iming-iming gaji Rp 6 juta sampai Rp 8 juta per bulan."
+			},
+			usdSource: {
+				url: "https://www.kemlu.go.id/berita/kementerian-luar-negeri-dan-kbri-phnom-penh-fasilitasi-pemulangan-jenazah-dari-kamboja?type=publication",
+				domain: "kemlu.go.id",
+				title: "Kementerian Luar Negeri dan KBRI Phnom Penh Fasilitasi Pemulangan Jenazah dari Kamboja",
+				date: "2023-12-29",
+				quote: "awalnya dijanjikan pekerjaan di Thailand sebagai pekerja kantoran dengan gaji USD 700, tetapi justru dikirim ke Kamboja."
+			}
+		},
+		advisory: {
+			places: [
+				{
+					name: "Kamboja",
+					pattern: "kamboja|cambodia|phnom\\s+penh|sihanoukville"
+				},
+				{
+					name: "Myanmar",
+					pattern: "myanmar|burma|myawaddy"
+				},
+				{
+					name: "Thailand",
+					pattern: "thailand|thailan"
+				},
+				{
+					name: "Vietnam",
+					pattern: "vietnam|viet\\s+nam|ho\\s+chi\\s+minh"
+				},
+				{
+					name: "Laos",
+					pattern: "laos"
+				},
+				{
+					name: "Filipina",
+					pattern: "filipina|philippines|manila"
+				}
+			],
+			source: {
+				url: "https://www.kemlu.go.id/publikasi/siaran-pers/transkrip-press-briefing-menlu-ri-online-scams,-evakuasi-sudan,-ktt-ke-42-asean-jakarta,-5-mei-2023?type=publication",
+				domain: "kemlu.go.id",
+				title: "Transkrip Press Briefing Menlu RI: Online Scams (5 Mei 2023)",
+				date: "2023-05-05",
+				quote: "Untuk korban Indonesia, tercatat berada di Myanmar, Kamboja, Thailand, Vietnam, Laos dan Filipina."
+			}
+		}
+	};
+	//#endregion
+	//#region src/lib/rubric.ts
+	/**
+	* The red-flag rubric — deterministic code, not the model.
+	*
+	* Every flag fires on the model's extracted field OR a keyword/regex rule over the raw ad text, so a prompt-injected
+	* or mis-extracted ad cannot silently drop a flag. Every Indonesian rule has an English twin (English pastes are
+	* invited). NEVER-class rules stop the check on their own, but only when an official source is recorded for them in
+	* `RULE_SOURCES`; a NEVER rule without one is drawn and counted as CAUTION.
+	*
+	* Negation guard (NEVER rules and the fee flags): no match when a negator directly governs the phrase — it ends right
+	* before the phrase, optionally followed by one filler word ("tanpa biaya", "bukan visa turis", "No placement fee",
+	* "tidak pakai visa turis", "not a tourist visa"). The guard never looks across clause punctuation or a newline, so
+	* "tanpa pengalaman. Visa turis diurus" still fires. The fee flags also have a post-head guard: costs the ad says are
+	* covered in the same clause ("Semua biaya ditanggung perusahaan sebelum berangkat") do not fire — unless the clause
+	* says the worker bears them ("ditanggung oleh pekerja"). The visa flag has no post-head guard on purpose:
+	* "visa turis ditanggung perusahaan" is still a tourist visa for work.
+	*/
+	const NEGATORS_1 = /* @__PURE__ */ new Set([
+		"tanpa",
+		"tidak",
+		"tak",
+		"bukan",
+		"non",
+		"bebas",
+		"gratis",
+		"jangan",
+		"dilarang",
+		"no",
+		"not",
+		"never",
+		"without",
+		"zero",
+		"nil"
+	]);
+	const NEGATORS_2 = /* @__PURE__ */ new Set([
+		"tidak ada",
+		"free of",
+		"do not",
+		"does not",
+		"don t",
+		"doesn t",
+		"will not",
+		"won t"
+	]);
+	const FILLERS = /* @__PURE__ */ new Set([
+		"a",
+		"an",
+		"the",
+		"any",
+		"pakai",
+		"memakai",
+		"menggunakan",
+		"perlu",
+		"ada",
+		"dengan",
+		"untuk",
+		"use",
+		"using",
+		"need",
+		"require",
+		"required"
+	]);
+	function tokensOf(s) {
+		return s.toLowerCase().match(/[\p{L}\p{N}]+/gu) ?? [];
+	}
+	function endsWithNegator(toks) {
+		const n = toks.length;
+		if (n >= 1 && NEGATORS_1.has(toks[n - 1])) return true;
+		if (n >= 2 && NEGATORS_2.has(`${toks[n - 2]} ${toks[n - 1]}`)) return true;
+		return false;
+	}
+	/** Is the phrase starting at `start` governed by a negator right before it, inside the same clause? */
+	function negatedBefore(text, start) {
+		const clause = clauseAround(text, start);
+		const toks = tokensOf(text.slice(clause.start, start));
+		if (endsWithNegator(toks)) return true;
+		if (toks.length >= 2 && FILLERS.has(toks[toks.length - 1]) && endsWithNegator(toks.slice(0, -1))) return true;
+		return false;
+	}
+	const COVERED = /\b(ditanggung|dibebaskan|gratis|free|covered)\b|\brp\.?\s?0\b(?![.,]?\d)|\bpaid by (the )?(employer|company)\b/i;
+	const BORNE_BY_WORKER = /\b(ditanggung|dibayar|dibebankan)\s+(oleh\s+)?(pekerja|pmi|cpmi|calon|sendiri|pelamar|peserta|anda|kamu)\b|\bpaid by (the )?(worker|applicant|candidate|you)\b/i;
+	/** Costs the ad itself says are covered, after the phrase head and inside the same clause (fee flags only). */
+	function coveredAfter(text, start, end) {
+		const clause = clauseAround(text, start, end);
+		const tail = text.slice(start, clause.end);
+		return COVERED.test(tail) && !BORNE_BY_WORKER.test(tail);
+	}
+	const FEE_HEAD_ID = String.raw`(?:uang|biaya)\s+(?:penempatan|pendaftaran|administrasi|admin|proses|pengurusan|pemberangkatan|jasa|muka|jaminan)?\s*`;
+	const FEE_HEAD_EN = String.raw`\b(?:placement|recruitment|processing|agency|service|admin|administration|registration|visa)?\s*(?:fee|fees|deposit|charge|charges|payment)\b`;
+	/** The rule set. Order is the display order. */
+	const PATTERNS = {
+		tourist_visa: [
+			/\bvisa\s+(?:turis|kunjungan|wisata|pelancong|liburan)\b/giu,
+			/\btourist\s+visas?\b/giu,
+			/\bvisit\s+visas?\b(?!\s+holders?)/giu
+		],
+		fee_before_contract: [new RegExp(String.raw`\b${FEE_HEAD_ID}.{0,30}?\b(?:sebelum|dulu|di\s*muka)\b`, "giu"), new RegExp(String.raw`${FEE_HEAD_EN}.{0,30}?\bbefore\b`, "giu")],
+		passport_retention: [
+			/\bpaspor\b.{0,20}?\b(?:ditahan|disimpan|diserahkan|dititipkan|dipegang|diambil)\b/giu,
+			/\bpassports?\b.{0,20}?\b(?:held|kept|surrendered|handed\s+over|retained|confiscated)\b/giu,
+			/\b(?:hold|keep|retain|confiscate)s?\b.{0,20}?\bpassports?\b/giu
+		],
+		fee_before_departure: [new RegExp(String.raw`\b${FEE_HEAD_ID}.{0,30}?\bsebelum\s+(?:berangkat|keberangkatan|pemberangkatan|terbang)\b`, "giu"), new RegExp(String.raw`${FEE_HEAD_EN}.{0,30}?\bbefore\s+(?:departure|departing|flying|you\s+fly|leaving)\b`, "giu")],
+		high_pay_no_experience: [/\b(?:tanpa|tidak\s+(?:perlu|butuh|harus|wajib)|tak\s+perlu|bebas)\s+(?:ada\s+)?pengalaman\b|\bpengalaman\s+tidak\s+(?:diperlukan|dibutuhkan|wajib|harus)\b|\bfresh\s*graduate\b/giu, /\bno\s+(?:prior\s+|previous\s+|work\s+)?experience\b|\bwithout\s+(?:any\s+)?experience\b|\bexperience\s+(?:is\s+)?not\s+(?:required|needed|necessary)\b/giu],
+		advisory_destination: [],
+		personal_recruiter: [],
+		visit_visa_holder: [/\bvisit\s+visas?\s+holders?\b/giu]
+	};
+	const CONTRACT_WORDS = /\b(kontrak|tanda\s*tangan|ttd|dp|uang\s+jaminan|contract|deposit|signing|signed)\b/i;
+	const DEPARTURE_WORDS = /\b(berangkat|keberangkatan|pemberangkatan|departure|departing|flying)\b/i;
+	const NEVER_RULES = [
+		"tourist_visa",
+		"fee_before_contract",
+		"passport_retention"
+	];
+	const FLAG_LABELS = {
+		tourist_visa: {
+			id: "Iklan menawarkan visa turis/kunjungan untuk bekerja",
+			en: "The ad offers a tourist or visit visa for work"
+		},
+		fee_before_contract: {
+			id: "Iklan meminta biaya sebelum ada kontrak",
+			en: "The ad asks for a fee before a contract is signed"
+		},
+		passport_retention: {
+			id: "Iklan menyebut paspor ditahan atau diserahkan",
+			en: "The ad says the passport is held or handed over"
+		},
+		fee_before_departure: {
+			id: "Iklan meminta biaya sebelum berangkat",
+			en: "The ad asks for a fee before departure"
+		},
+		high_pay_no_experience: {
+			id: "Gaji tinggi tanpa perlu pengalaman",
+			en: "High pay with no experience needed"
+		},
+		advisory_destination: {
+			id: "Negara tujuan disebut dalam peringatan resmi",
+			en: "The destination is named in an official warning"
+		},
+		personal_recruiter: {
+			id: "Perekrut hanya nomor pribadi, tanpa nama perusahaan",
+			en: "The recruiter is a personal number with no company named"
+		},
+		visit_visa_holder: {
+			id: "Iklan menerima pemegang visa kunjungan",
+			en: "The ad accepts visit-visa holders"
+		}
+	};
+	/** Pay figures in an ad, in their own currency (rupiah or US dollars). No conversion: each has its own cited threshold. */
+	function payFigures(text) {
+		const out = [];
+		const num = (raw) => {
+			const s = raw.trim();
+			if (/^\d{1,3}([.,]\d{3})+$/.test(s)) return Number(s.replace(/[.,]/g, ""));
+			return Number(s.replace(",", "."));
+		};
+		const push = (m, amount, currency) => {
+			if (Number.isFinite(amount) && amount > 0) out.push({
+				amount,
+				currency,
+				span: {
+					text: m[0],
+					start: m.index ?? 0,
+					end: (m.index ?? 0) + m[0].length
+				}
+			});
+		};
+		for (const m of text.matchAll(/\brp\.?\s?(\d{1,3}(?:[.,]\d{3})+|\d+(?:[.,]\d{1,2})?)\s*(jt|juta|jutaan|rb|ribu|k)?\b/giu)) {
+			const unit = (m[2] ?? "").toLowerCase();
+			const mult = unit.startsWith("j") ? 1e6 : unit === "rb" || unit === "ribu" || unit === "k" ? 1e3 : 1;
+			push(m, num(m[1]) * mult, "IDR");
+		}
+		for (const m of text.matchAll(/(?<!rp\.?\s?)\b(\d+(?:[.,]\d{1,2})?)\s*(jt|juta)\b/giu)) push(m, num(m[1]) * 1e6, "IDR");
+		for (const m of text.matchAll(/(?:\busd|\bus\$|\$)\s?(\d{1,3}(?:[.,]\d{3})+|\d+)/giu)) push(m, num(m[1]), "USD");
+		for (const m of text.matchAll(/\b(\d{1,3}(?:[.,]\d{3})+|\d{3,})\s*(?:usd|us\s?dollars?|dollars?|dolar)\b/giu)) push(m, num(m[1]), "USD");
+		return out;
+	}
+	/** The "high pay" constant. Its source and value live in rule-sources.ts. */
+	const PAY = RULE_SOURCES.pay;
+	const ADVISORY = RULE_SOURCES.advisory;
+	function advisoryMatches(text) {
+		const out = [];
+		for (const place of ADVISORY.places) {
+			const re = new RegExp(String.raw`\b${place.pattern}\b`, "giu");
+			for (const m of text.matchAll(re)) out.push({
+				text: m[0],
+				start: m.index ?? 0,
+				end: (m.index ?? 0) + m[0].length
+			});
+		}
+		return out.sort((a, b) => a.start - b.start);
+	}
+	const LEGAL_COMPANY = /\b(?:PT|CV)\.?\s+[A-Z0-9][\p{L}\p{N}&.'-]*/u;
+	const FOREIGN_COMPANY = /\b[A-Z][\p{L}&'-]+(?:\s+[A-Z][\p{L}&'-]+)*\s+(?:Co\.?,?\s*Ltd\.?|Ltd\.?|Inc\.?|LLC|Sdn\.?\s*Bhd\.?|Group|Company|Corporation)\b/u;
+	const CONTACT = /(?:\+?62|\b0)8\d{1,3}[\s.-]?\d{3,4}[\s.-]?\d{3,5}|\b(?:wa|whatsapp|whats\s?app|hubungi|telp|telepon|hp|dm|inbox)\b/giu;
+	function patternHits(id, text) {
+		const hits = [];
+		for (const re of PATTERNS[id]) for (const m of text.matchAll(re)) {
+			const start = m.index ?? 0;
+			const end = start + m[0].length;
+			if (!guardsPass(id, text, start, end)) continue;
+			hits.push({
+				span: {
+					text: m[0],
+					start,
+					end
+				},
+				via: "pattern"
+			});
+		}
+		return hits;
+	}
+	/** The negation / clause conditions for one candidate match. */
+	function guardsPass(id, text, start, end) {
+		const clause = clauseAround(text, start, end);
+		switch (id) {
+			case "tourist_visa":
+			case "visit_visa_holder": return !negatedBefore(text, start);
+			case "passport_retention": {
+				if (negatedBefore(text, start)) return false;
+				const inside = text.slice(start, end);
+				if (/\b(tidak|tak|bukan|jangan|dilarang|not|never|no)\b/i.test(inside)) return false;
+				if (/\b(own|sendiri)\b/i.test(text.slice(start, clause.end))) return false;
+				return true;
+			}
+			case "fee_before_contract": return !negatedBefore(text, start) && !coveredAfter(text, start, end) && CONTRACT_WORDS.test(clause.text);
+			case "fee_before_departure": return !negatedBefore(text, start) && !coveredAfter(text, start, end);
+			case "high_pay_no_experience": return true;
+			default: return true;
+		}
+	}
+	/** The model's extracted fields, read through the same guards (the field's span sits inside the ad). */
+	function modelHits(id, text, ex) {
+		if (!ex) return [];
+		const hits = [];
+		const add = (span, ok) => {
+			if (span && ok) hits.push({
+				span,
+				via: "model"
+			});
+		};
+		switch (id) {
+			case "tourist_visa":
+				add(ex.visa, !!ex.visa && /\b(turis|kunjungan|wisata|pelancong|liburan|tourist|visit|on\s+arrival|voa)\b/i.test(ex.visa.text) && !/\bholders?\b/i.test(ex.visa.text) && !negatedBefore(text, ex.visa.start));
+				break;
+			case "fee_before_contract":
+			case "fee_before_departure":
+				for (const fee of ex.fees) {
+					const clause = clauseAround(text, fee.start, fee.end);
+					const before = /\b(sebelum|dulu|di\s*muka|before|upfront|in\s+advance)\b/i.test(clause.text);
+					const kind = id === "fee_before_contract" ? CONTRACT_WORDS.test(clause.text) : DEPARTURE_WORDS.test(clause.text);
+					add(fee, before && kind && !negatedBefore(text, fee.start) && !coveredAfter(text, fee.start, fee.end));
+				}
+				break;
+			case "advisory_destination": add(ex.destination, !!ex.destination && advisoryMatches(ex.destination.text).length > 0);
+		}
+		return hits;
+	}
+	function sourceFor(id) {
+		return RULE_SOURCES.flags[id] ?? null;
+	}
+	function makeFlag(id, hits) {
+		if (hits.length === 0) return null;
+		hits.sort((a, b) => a.span.start - b.span.start);
+		const vias = new Set(hits.map((h) => h.via));
+		const source = sourceFor(id);
+		const declared = NEVER_RULES.includes(id) ? "NEVER" : "CAUTION";
+		const sourced = source !== null;
+		return {
+			id,
+			class: declared === "NEVER" && sourced ? "NEVER" : "CAUTION",
+			sourced,
+			via: vias.size === 2 ? "both" : hits[0].via,
+			span: hits[0].span,
+			label: FLAG_LABELS[id].en,
+			source
+		};
+	}
+	/**
+	* Evaluate every flag over the raw ad text (and the model's extraction, when there is one).
+	* `extraction` is null for the rubric-only ablation column and when the extraction call failed.
+	*/
+	function evaluateRubric(adText, extraction) {
+		const flags = [];
+		for (const id of [
+			"tourist_visa",
+			"fee_before_contract",
+			"passport_retention",
+			"fee_before_departure",
+			"high_pay_no_experience",
+			"advisory_destination",
+			"personal_recruiter",
+			"visit_visa_holder"
+		]) {
+			let hits;
+			if (id === "high_pay_no_experience") hits = highPayHits(adText, extraction);
+			else if (id === "advisory_destination") hits = [...advisoryMatches(adText).map((span) => ({
+				span,
+				via: "pattern"
+			})), ...modelHits(id, adText, extraction)];
+			else if (id === "personal_recruiter") hits = personalRecruiterHits(adText, extraction);
+			else hits = [...patternHits(id, adText), ...modelHits(id, adText, extraction)];
+			const flag = makeFlag(id, dedupeHits(hits));
+			if (flag) flags.push(flag);
+		}
+		if (flags.some((f) => f.id === "fee_before_contract")) return flags.filter((f) => !(f.id === "fee_before_departure" && overlapsFlag(f, flags.find((g) => g.id === "fee_before_contract"))));
+		return flags;
+	}
+	function overlapsFlag(a, b) {
+		return !!b && a.span.start < b.span.end && b.span.start < a.span.end;
+	}
+	function dedupeHits(hits) {
+		const seen = /* @__PURE__ */ new Set();
+		return hits.filter((h) => {
+			const k = `${h.span.start}:${h.span.end}:${h.via}`;
+			if (seen.has(k)) return false;
+			seen.add(k);
+			return true;
+		});
+	}
+	function highPayHits(text, ex) {
+		const noExp = patternHits("high_pay_no_experience", text);
+		const modelNoExp = (ex?.promises ?? []).filter((p) => PATTERNS.high_pay_no_experience.some((re) => new RegExp(re.source, "iu").test(p.text)));
+		if (noExp.length === 0 && modelNoExp.length === 0) return [];
+		if (payFigures(text).filter((p) => p.currency === "IDR" ? p.amount >= PAY.thresholdIdr : p.amount >= PAY.thresholdUsd).length === 0) return [];
+		const hits = [];
+		if (noExp.length > 0) hits.push({
+			span: noExp[0].span,
+			via: "pattern"
+		});
+		if (modelNoExp.length > 0) hits.push({
+			span: modelNoExp[0],
+			via: "model"
+		});
+		return hits;
+	}
+	function personalRecruiterHits(text, ex) {
+		const hits = [];
+		const contacts = [...text.matchAll(CONTACT)];
+		if (!(LEGAL_COMPANY.test(text) || FOREIGN_COMPANY.test(text)) && contacts.length > 0) {
+			const m = contacts[0];
+			hits.push({
+				span: {
+					text: m[0],
+					start: m.index ?? 0,
+					end: (m.index ?? 0) + m[0].length
+				},
+				via: "pattern"
+			});
+		}
+		if (ex && !ex.company && ex.phones.length > 0) hits.push({
+			span: ex.phones[0],
+			via: "model"
+		});
+		return hits;
+	}
+	/** Normalised company name tokens (legal forms "PT." → "pt"), used by Tavily queries and the gate. */
+	function companyTokens(company) {
+		return normalise(company).replace(/\b(pt|cv)\./g, "$1").match(/[\p{L}\p{N}]+/gu) ?? [];
+	}
+	//#endregion
+	//#region scripts/lab/sha256.ts
+	/**
+	* Browser stand-in for `node:crypto` in the landing lab bundle. The gate hashes a verified page's chunks with
+	* createHash("sha256"); browsers have no synchronous SHA-256, so this is the FIPS 180-4 algorithm in plain code.
+	* tests/lab.test.ts checks it against node:crypto.
+	*/
+	const K = new Uint32Array([
+		1116352408,
+		1899447441,
+		3049323471,
+		3921009573,
+		961987163,
+		1508970993,
+		2453635748,
+		2870763221,
+		3624381080,
+		310598401,
+		607225278,
+		1426881987,
+		1925078388,
+		2162078206,
+		2614888103,
+		3248222580,
+		3835390401,
+		4022224774,
+		264347078,
+		604807628,
+		770255983,
+		1249150122,
+		1555081692,
+		1996064986,
+		2554220882,
+		2821834349,
+		2952996808,
+		3210313671,
+		3336571891,
+		3584528711,
+		113926993,
+		338241895,
+		666307205,
+		773529912,
+		1294757372,
+		1396182291,
+		1695183700,
+		1986661051,
+		2177026350,
+		2456956037,
+		2730485921,
+		2820302411,
+		3259730800,
+		3345764771,
+		3516065817,
+		3600352804,
+		4094571909,
+		275423344,
+		430227734,
+		506948616,
+		659060556,
+		883997877,
+		958139571,
+		1322822218,
+		1537002063,
+		1747873779,
+		1955562222,
+		2024104815,
+		2227730452,
+		2361852424,
+		2428436474,
+		2756734187,
+		3204031479,
+		3329325298
+	]);
+	const rotr = (x, n) => x >>> n | x << 32 - n;
+	function sha256Hex(bytes) {
+		const H = new Uint32Array([
+			1779033703,
+			3144134277,
+			1013904242,
+			2773480762,
+			1359893119,
+			2600822924,
+			528734635,
+			1541459225
+		]);
+		const size = Math.ceil((bytes.length + 9) / 64) * 64;
+		const m = new Uint8Array(size);
+		m.set(bytes);
+		m[bytes.length] = 128;
+		const view = new DataView(m.buffer);
+		const bits = bytes.length * 8;
+		view.setUint32(size - 8, Math.floor(bits / 4294967296));
+		view.setUint32(size - 4, bits >>> 0);
+		const w = /* @__PURE__ */ new Uint32Array(64);
+		for (let off = 0; off < size; off += 64) {
+			for (let i = 0; i < 16; i++) w[i] = view.getUint32(off + i * 4);
+			for (let i = 16; i < 64; i++) {
+				const s0 = rotr(w[i - 15], 7) ^ rotr(w[i - 15], 18) ^ w[i - 15] >>> 3;
+				const s1 = rotr(w[i - 2], 17) ^ rotr(w[i - 2], 19) ^ w[i - 2] >>> 10;
+				w[i] = w[i - 16] + s0 + w[i - 7] + s1 >>> 0;
+			}
+			let a = H[0], b = H[1], c = H[2], d = H[3], e = H[4], f = H[5], g = H[6], h = H[7];
+			for (let i = 0; i < 64; i++) {
+				const t1 = h + (rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25)) + (e & f ^ ~e & g) + K[i] + w[i] >>> 0;
+				const t2 = (rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22)) + (a & b ^ a & c ^ b & c) >>> 0;
+				h = g;
+				g = f;
+				f = e;
+				e = d + t1 >>> 0;
+				d = c;
+				c = b;
+				b = a;
+				a = t1 + t2 >>> 0;
+			}
+			H[0] += a;
+			H[1] += b;
+			H[2] += c;
+			H[3] += d;
+			H[4] += e;
+			H[5] += f;
+			H[6] += g;
+			H[7] += h;
+		}
+		return Array.from(H, (x) => x.toString(16).padStart(8, "0")).join("");
+	}
+	/** The one call shape gate.ts uses: createHash("sha256").update(text, "utf8").digest("hex"). */
+	function createHash(algorithm) {
+		if (algorithm !== "sha256") throw new Error(`lab bundle: unsupported hash ${algorithm}`);
+		const parts = [];
+		const hash = {
+			update(text) {
+				parts.push(text);
+				return hash;
+			},
+			digest() {
+				return sha256Hex(new TextEncoder().encode(parts.join("")));
+			}
+		};
+		return hash;
+	}
+	//#endregion
+	//#region src/lib/verdict.ts
+	/** A published report of harm. Matched on word boundaries over the normalised quote. */
+	const NEGATIVE_TERMS = [
+		{
+			term: "penipuan",
+			re: /\bpenipu(an)?\b/
+		},
+		{
+			term: "TPPO",
+			re: /\btppo\b/
+		},
+		{
+			term: "perdagangan orang",
+			re: /\bperdagangan orang\b/
+		},
+		{
+			term: "korban",
+			re: /\bkorban\b/
+		},
+		{
+			term: "ilegal",
+			re: /\bilegal\b/
+		},
+		{
+			term: "tidak terdaftar",
+			re: /\btidak terdaftar\b/
+		},
+		{
+			term: "scam",
+			re: /\bscam(mer|mers|ming)?\b/
+		},
+		{
+			term: "trafficking",
+			re: /\btrafficking\b|\btrafficked\b/
+		}
+	];
+	/** The page says the name was misused by others, or denied. */
+	const GUARD_TERMS = [
+		{
+			term: "mengatasnamakan",
+			re: /\bmengatasnamakan\b/
+		},
+		{
+			term: "mencatut",
+			re: /\bmencatut\b/
+		},
+		{
+			term: "palsu",
+			re: /\bpalsu\b/
+		},
+		{
+			term: "membantah",
+			re: /\bmembantah\b/
+		},
+		{
+			term: "tidak terlibat",
+			re: /\btidak terlibat\b/
+		}
+	];
+	function negativeTerms(normalisedQuote) {
+		return NEGATIVE_TERMS.filter((t) => t.re.test(normalisedQuote)).map((t) => t.term);
+	}
+	function guardTerms(normalisedQuote) {
+		return GUARD_TERMS.filter((t) => t.re.test(normalisedQuote)).map((t) => t.term);
+	}
+	/** A line the verdict may use: verified and found by the company, phone or advisory lookups (not the pattern search). */
+	function isVerdictInput(line) {
+		return line.status === "verified" && line.purpose !== "pattern";
+	}
+	function isCompanyMatched(line) {
+		return isVerdictInput(line) && line.entity && !line.entityCapped && line.entityKind === "company" && line.negative && !line.guard;
+	}
+	const FLAG_REASON = {
+		tourist_visa: "tourist or visit visa offered for work",
+		fee_before_contract: "a fee asked before a contract is signed",
+		passport_retention: "the passport is held or handed over",
+		fee_before_departure: "a fee asked before departure",
+		high_pay_no_experience: "high pay with no experience needed",
+		advisory_destination: "the destination is named in an official warning",
+		personal_recruiter: "the recruiter is a personal number with no company named",
+		visit_visa_holder: "the ad accepts visit-visa holders"
+	};
+	function decide(flags, lines, failedSteps) {
+		const never = flags.filter((f) => f.class === "NEVER");
+		const matched = lines.filter(isCompanyMatched);
+		const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+		if (never.length > 0 || matched.length > 0) {
+			const reasons = [...never.map((f) => `rule: ${FLAG_REASON[f.id]}`), ...matched.length > 0 ? [plural(new Set(matched.map((l) => l.url)).size, "published report naming this company", "published reports naming this company")] : []];
+			return {
+				verdict: "STOP",
+				rule: `STOP — ${reasons.join(" + ")}`,
+				reasons
+			};
+		}
+		const caution = flags.filter((f) => f.class === "CAUTION");
+		const entityOnly = lines.filter((l) => isVerdictInput(l) && l.entity && !isCompanyMatched(l));
+		if (caution.length > 0 || entityOnly.length > 0 || failedSteps.length > 0) {
+			const reasons = [
+				...caution.map((f) => f.sourced || ![
+					"tourist_visa",
+					"fee_before_contract",
+					"passport_retention"
+				].includes(f.id) ? FLAG_REASON[f.id] : `${FLAG_REASON[f.id]} (no official source recorded for this rule)`),
+				...entityOnly.some((l) => l.guard) ? ["a page says this name was used by others or denied"] : [],
+				...entityOnly.some((l) => !l.guard && !l.entityCapped && !l.negative) ? ["a page names this company without reporting harm"] : [],
+				...entityOnly.some((l) => !l.guard && l.entityCapped) ? [entityOnly.some((l) => l.entityKind === "phone") ? "a page mentions this phone number" : "a page mentions a similar or generic name — check the licence number"] : [],
+				...failedSteps.map((s) => `step not completed: ${s}`)
+			];
+			return {
+				verdict: "VERIFY_FIRST",
+				rule: `VERIFY FIRST — ${reasons.join("; ")}`,
+				reasons
+			};
+		}
+		return {
+			verdict: "NO_RED_FLAGS_FOUND",
+			rule: "NO RED FLAGS FOUND — every step completed and no rule fired. This is not a guarantee.",
+			reasons: []
+		};
+	}
+	//#endregion
+	//#region src/lib/gate.ts
+	/**
+	* The quote gate — the mechanism. The model chooses where to look; code decides what is shown.
+	*
+	* A proposed evidence line `{url, quote, claim}` is VERIFIED only if (architecture.md contract):
+	*   - the URL is one Tavily returned in THIS run,
+	*   - the quote has at least 6 words,
+	*   - normalise(quote) is a substring of normalise(c) for ONE chunk c Tavily returned for that URL:
+	*       search raw_content (include_raw_content:"text") is one chunk — the whole page text;
+	*       search `content` and extract `raw_content` (query-ranked) are split on the "[...]" separator.
+	* A line that fails is dropped and shown greyed. Only the quote is gated; the claim is "Awas's reading".
+	*
+	* For a verified line the gate also computes the three facts the verdict reads:
+	*   entity   — the quote names the ad's company (full name incl. legal form, contiguous on token boundaries, not
+	*              continued by another capitalised word in the raw page text) or contains an extracted phone's last
+	*              9 digits inside one number. Phone-only, generic-word names and ALL-CAPS text are "capped": they can
+	*              raise VERIFY FIRST but never STOP.
+	*   negative — a negative-event term (verdict.ts NEGATIVE_TERMS).
+	*   guard    — a guard term anywhere, or "bukan" within 5 words before the company name (misused or denied).
+	*/
+	const MIN_QUOTE_WORDS = 6;
+	/** Words that do not make a company name distinctive on their own (beyond its legal form). Tuned on the dev set. */
+	const GENERIC_NAME_WORDS = /* @__PURE__ */ new Set([
+		"sejahtera",
+		"jaya",
+		"abadi",
+		"mandiri",
+		"global",
+		"indonesia",
+		"international",
+		"internasional",
+		"makmur",
+		"sentosa",
+		"utama",
+		"maju",
+		"bersama",
+		"sukses",
+		"karya",
+		"putra",
+		"putri",
+		"mulia",
+		"persada",
+		"nusantara",
+		"group",
+		"grup",
+		"perkasa",
+		"raya",
+		"sakti",
+		"agung",
+		"baru",
+		"prima",
+		"cipta",
+		"mitra",
+		"sarana",
+		"lestari",
+		"bersaudara",
+		"mega"
+	]);
+	const LEGAL_FORMS = /* @__PURE__ */ new Set([
+		"pt",
+		"cv",
+		"tbk",
+		"ud",
+		"ltd",
+		"co",
+		"inc",
+		"llc",
+		"sdn",
+		"bhd",
+		"plc",
+		"corp",
+		"company",
+		"corporation"
+	]);
+	const PURPOSE_RANK = {
+		company: 0,
+		phone: 1,
+		advisory: 2,
+		pattern: 3
+	};
+	/** Add Tavily text to the run's corpus. `rankedText` is split on the "[...]" separator. */
+	function addToCorpus(corpus, url, purpose, opts) {
+		const doc = corpus.get(url) ?? {
+			url,
+			title: opts.title,
+			chunks: [],
+			purpose
+		};
+		if (PURPOSE_RANK[purpose] < PURPOSE_RANK[doc.purpose]) doc.purpose = purpose;
+		if (!doc.title && opts.title) doc.title = opts.title;
+		const push = (text, basis) => {
+			const t = text.trim();
+			if (t && !doc.chunks.some((c) => c.text === t && c.basis === basis)) doc.chunks.push({
+				text: t,
+				basis
+			});
+		};
+		if (opts.pageText) push(opts.pageText, "page");
+		if (opts.rankedText) for (const part of opts.rankedText.split("[...]")) push(part, "ranked");
+		corpus.set(url, doc);
+	}
+	function sha256(s) {
+		return createHash("sha256").update(s, "utf8").digest("hex");
+	}
+	function chunkSetHash(doc, basis) {
+		return sha256(doc.chunks.filter((c) => c.basis === basis).map((c) => c.text).join("\n[...]\n"));
+	}
+	function dropped(p, reason, purpose) {
+		return {
+			url: p.url,
+			quote: p.quote,
+			claim: p.claim,
+			status: "dropped",
+			reason,
+			entity: false,
+			entityCapped: false,
+			entityKind: null,
+			negative: false,
+			guard: false,
+			chunkBasis: "page",
+			purpose
+		};
+	}
+	function gateLine(p, corpus, ctx) {
+		const doc = corpus.get(p.url);
+		if (!doc) return dropped(p, "url_not_returned");
+		if (words(p.quote).length < 6) return dropped(p, "too_short", doc.purpose);
+		const nq = normalise(p.quote);
+		if (!nq) return dropped(p, "too_short", doc.purpose);
+		for (const chunk of doc.chunks) {
+			const nc = normaliseWithMap(chunk.text);
+			const at = nc.text.indexOf(nq);
+			if (at < 0) continue;
+			const rawStart = nc.map[at];
+			const rawEnd = nc.map[at + nq.length - 1] + 1;
+			const rawQuote = chunk.text.slice(rawStart, rawEnd);
+			const entity = entityMatch(nq, at, nc, chunk.text, ctx);
+			return {
+				url: p.url,
+				title: doc.title,
+				quote: rawQuote,
+				claim: p.claim,
+				status: "verified",
+				entity: entity.matched,
+				entityCapped: entity.capped,
+				entityKind: entity.kind,
+				negative: negativeTerms(nq).length > 0,
+				guard: guardTerms(nq).length > 0 || entity.bukanBefore,
+				chunkBasis: chunk.basis,
+				pageSha256: chunkSetHash(doc, chunk.basis),
+				matchOffset: rawStart,
+				fragmentUrl: fragmentUrl(p.url, rawQuote),
+				purpose: doc.purpose
+			};
+		}
+		return dropped(p, normalise(doc.chunks.map((c) => c.text).join(" ")).includes(nq) ? "spans_chunks" : "not_in_page", doc.purpose);
+	}
+	/** Token runs with their offsets in a normalised string. */
+	function tokenise(s) {
+		return [...s.matchAll(/[\p{L}\p{N}]+/gu)].map((m) => ({
+			t: m[0],
+			start: m.index ?? 0,
+			end: (m.index ?? 0) + m[0].length
+		}));
+	}
+	function entityMatch(nq, at, nc, rawChunk, ctx) {
+		let best = {
+			matched: false,
+			capped: false,
+			kind: null,
+			bukanBefore: false
+		};
+		if (ctx.company) {
+			const name = companyTokens(ctx.company);
+			const qt = tokenise(nq);
+			if (name.length > 0) for (let i = 0; i + name.length <= qt.length; i++) {
+				if (!name.every((tok, k) => qt[i + k].t === tok)) continue;
+				const last = qt[i + name.length - 1];
+				const rawFrom = nc.map[at + qt[i].start];
+				const rawTo = nc.map[at + last.end - 1] + 1;
+				const occurrence = rawChunk.slice(rawFrom, rawTo);
+				const nextWord = rawChunk.slice(rawTo).match(/^([ \t ]+)([\p{L}][\p{L}\p{N}]*)/u)?.[2] ?? "";
+				const allCaps = !/\p{Ll}/u.test(occurrence) && (nextWord === "" || !/\p{Ll}/u.test(nextWord));
+				if (!allCaps && /^\p{Lu}/u.test(nextWord)) continue;
+				const distinctive = name.filter((t) => !LEGAL_FORMS.has(t));
+				const generic = distinctive.length === 0 || distinctive.every((t) => GENERIC_NAME_WORDS.has(t));
+				const before = qt.slice(Math.max(0, i - 5), i).map((x) => x.t);
+				const result = {
+					matched: true,
+					capped: allCaps || generic,
+					kind: "company",
+					bukanBefore: before.includes("bukan")
+				};
+				if (!result.capped) return result;
+				if (!best.matched) best = result;
+			}
+		}
+		for (const phone of ctx.phones) {
+			const last9 = digits(phone).slice(-9);
+			if (last9.length < 9) continue;
+			for (const m of nq.matchAll(/\+?\d[\d\s.-]{6,}\d/g)) if (digits(m[0]).includes(last9)) return best.matched ? best : {
+				matched: true,
+				capped: true,
+				kind: "phone",
+				bukanBefore: false
+			};
+		}
+		return best;
+	}
+	/**
+	* A text-fragment link: `url#:~:text=<start>,<end>`, the first and last ~4 words of the quote as it appears in the
+	* page text, percent-encoded (the "-" and "," of text-fragment syntax are escaped, so hyphenated Indonesian words
+	* like "iming-iming" survive). The browser scrolls to and highlights the quote; if the rendered page differs, it
+	* simply opens the page top — the Playwright check (scripts) records which links actually highlight.
+	*/
+	function fragmentUrl(url, rawQuote) {
+		const enc = (s) => encodeURIComponent(s).replace(/-/g, "%2D").replace(/,/g, "%2C").replace(/&/g, "%26");
+		const w = rawQuote.split(/\s+/).filter(Boolean);
+		const base = url.split("#")[0];
+		if (w.length <= 8) return `${base}#:~:text=${enc(w.join(" "))}`;
+		return `${base}#:~:text=${enc(w.slice(0, 4).join(" "))},${enc(w.slice(-4).join(" "))}`;
+	}
+	//#endregion
+	exports.FLAG_LABELS = FLAG_LABELS;
+	exports.MIN_QUOTE_WORDS = MIN_QUOTE_WORDS;
+	exports.addToCorpus = addToCorpus;
+	exports.decide = decide;
+	exports.evaluateRubric = evaluateRubric;
+	exports.fragmentUrl = fragmentUrl;
+	exports.gateLine = gateLine;
+	exports.normalise = normalise;
+	exports.words = words;
+	return exports;
+})({});
