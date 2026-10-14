@@ -125,3 +125,34 @@ positions do not change.
 diiming-imingi, iming-iming, ditawari, ditawarkan, tawaran, menawarkan, lowongan, loker, iklan, gaji, upah, direkrut,
 merekrut, perekrut, tergiur, "bekerja sebagai", "kerja di" — is rejected as `no_offer_detail` without being read.
 The rules in §2 and the split in §5 are unchanged.
+
+## Amendment 2 — publisher terms (2026-10-15, before any model call)
+
+**Withdrawn.** Every article page of antaranews.com carries the notice *"Dilarang keras mengambil konten, melakukan
+crawling atau pengindeksan otomatis untuk AI di situs web ini tanpa izin tertulis dari Kantor Berita ANTARA"*, and its
+robots.txt disallows ClaudeBot. The robots.txt of kompas.com states that automated data mining, use for AI / LLM
+development and *"creating or providing archived or cached data sets containing our content"* are prohibited without
+written permission. A benchmark built by our own crawler from their pages would be exactly that, so listings 1–5 and
+9–12 are withdrawn: their 53 qualifying rows are discarded and their cached pages deleted, before any model saw a row.
+One pass-1 row survives (detik.com). The live product does not crawl: it shows short, attributed quotes from what the
+Tavily search API returns for one user's check (see DEMO.md).
+
+**Source rule from here on.** A listing is used only if, checked on 2026-10-15, its robots.txt allows generic agents,
+blocks no AI crawler (GPTBot, ClaudeBot, CCBot, Google-Extended, …) and states no AI / data-mining clause, and one of
+its article pages carries no such notice. Checked and **excluded** under this rule: tribunnews.com, tvrinews.com,
+metrotvnews.com, beritasatu.com, mediaindonesia.com, tempo.co, bbc.com (each blocks AI crawlers or states anti-AI
+terms). Checked and **allowed**: detik.com, cnnindonesia.com, merdeka.com, jpnn.com, suara.com, okezone.com,
+idntimes.com, rri.co.id.
+
+**Added listings**, in this order (pass-1 listings 6–8 stay; links already collected are skipped):
+
+13. `https://www.detik.com/search/searchall?siteid=2&sortby=time&query=…` for the queries "tppo kamboja",
+    "tppo myanmar", "online scam kamboja", "lowongan kerja luar negeri tppo" — pages 1–8 each
+14. `https://www.merdeka.com/tag/tppo` pages 1–10
+15. `https://www.jpnn.com/tag/tppo` pages 1–10
+16. `https://www.suara.com/tag/tppo` pages 1–8
+17. `https://www.okezone.com/tag/tppo` page 1 (later pages are not server-rendered)
+18. `https://www.idntimes.com/tag/tppo` pages 1–8
+19. `https://www.rri.co.id/tag/tppo` pages 1–10
+
+The Q2 pre-screen of Amendment 1 applies to these listings. Rules §2–§6 are unchanged.
