@@ -140,7 +140,7 @@ npm run typecheck && npm run lint
 npm run build && npm run e2e   # 36 Playwright tests, no credentials needed
 ```
 
-`.github/workflows/ci.yml` runs lint, typecheck, unit tests, `npm audit`, a full-history gitleaks scan, the production build and the browser tests. Dependabot (grouped, monthly) and CodeQL are configured; CodeQL needs the repository to be public. Details: [`CONTRIBUTING.md`](CONTRIBUTING.md), [`SECURITY.md`](SECURITY.md).
+`.github/workflows/ci.yml` runs lint, typecheck, unit tests, `npm audit`, a gitleaks scan of pushed commits (full history is scanned before the repo goes public), the production build and the browser tests. Dependabot (grouped, monthly) and CodeQL are configured; CodeQL needs the repository to be public. Details: [`CONTRIBUTING.md`](CONTRIBUTING.md), [`SECURITY.md`](SECURITY.md).
 
 The quote gate is also checkable by hand: `python3 scripts/verify_quotes.py <case.json>`.
 

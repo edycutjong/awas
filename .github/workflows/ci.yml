@@ -47,7 +47,7 @@ jobs:
         run: npm run audit
 
   secrets:
-    name: Secret scan (full history)
+    name: Secret scan (pushed commits)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

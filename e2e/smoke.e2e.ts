@@ -57,7 +57,9 @@ test("the benchmark and judge-only controls refuse a stranger", async ({ request
   expect(res.status()).toBe(403);
 });
 
-test("a case id that does not exist is a 404 and is not indexable", async ({ request }) => {
-  const res = await request.get("/case/does-not-exist");
-  expect(res.status()).toBe(404);
+test("a case that does not exist is a 404 and the API marks it noindex", async ({ request }) => {
+  expect((await request.get("/case/does-not-exist")).status()).toBe(404);
+  const api = await request.get("/api/case/does-not-exist");
+  expect(api.status()).toBe(404);
+  expect(api.headers()["x-robots-tag"]).toBe("noindex");
 });
