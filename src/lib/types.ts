@@ -88,6 +88,8 @@ export interface EvidenceLine {
   fragmentUrl?: string;
   gloss?: string;
   glossStatus?: "ok" | "unavailable";
+  /** Set by scripts/fragment_check (Playwright) when the text-fragment link was seen to highlight the quote. */
+  fragmentFoundAt?: string;
   purpose?: TavilyReceipt["purpose"];
 }
 

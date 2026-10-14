@@ -10,7 +10,8 @@ const abril = localFont({
   weight: "400",
   variable: "--font-abril",
   display: "swap",
-  fallback: ["Bodoni 72", "Didot", "Georgia", "serif"],
+  // "Bodoni 72" must stay quoted (a digit token): it lives in the CSS stack, not here.
+  fallback: ["Didot", "Georgia", "serif"],
 });
 
 const atkinson = localFont({
