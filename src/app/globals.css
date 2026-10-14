@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+/* Design tokens — specs/design.md §4 verbatim ("kliping-dossier"). No green anywhere: Awas never says "safe". */
+:root {
+  --bg: #fbfaf5; /* HVS folio paper */
+  --ink: #1c2333; /* ballpoint blue-black, 15.0:1 on --bg */
+  --muted: #586071; /* pencil annotation, 6.0:1 on --bg */
+  --before: #878c95; /* state: proposed, unverified — struck text only, never body */
+  --after: #ffe14d; /* state: verified quote — highlighter, ONLY behind a quote code found on the page */
+  --stop: #b42318; /* STOP stamp red, 6.3:1 */
+  --check: #4b2c8f; /* VERIFY FIRST stamp violet, 9.8:1 */
+  --rule: #c7d5e8; /* folio blue ruling */
+  --margin: #e9a6a1; /* folio red margin line, decorative */
+  --card: #ffffff; /* the clipping */
+  --font-display: var(--font-abril), "Abril Fatface", "Bodoni 72", "Didot", Georgia, serif;
+  --font-body: var(--font-atkinson), "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", system-ui, sans-serif;
+  --font-data: var(--font-atkinson-mono), "Atkinson Hyperlegible Mono", ui-monospace, Menlo, monospace;
+}
+
+html {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+body {
+  margin: 0;
+  font: 400 18px/1.5 var(--font-body);
+  -webkit-text-size-adjust: 100%;
+}

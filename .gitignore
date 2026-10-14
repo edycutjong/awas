@@ -1,0 +1,24 @@
+.env
+.env.*
+!.env.example
+node_modules/
+__pycache__/
+.next/
+dist/
+coverage/
+.DS_Store
+
+# Local evidence store used when no bucket env vars are set (a judge's local run)
+/data/
+
+# Dev-only Tavily response cache (scripts/dev_cache.py) — never committed, never read by src/
+/.dev-cache/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+*.tsbuildinfo
+.vercel

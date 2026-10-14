@@ -1,0 +1,6 @@
+# Only the app deploys; benchmark rows, scripts and tests stay in the repo.
+scripts/
+tests/
+e2e/
+bench/
+docs/
