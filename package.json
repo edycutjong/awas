@@ -14,7 +14,10 @@
     "test:watch": "vitest",
     "e2e": "playwright test",
     "audit": "npm audit --omit=dev --audit-level=high",
-    "ci": "npm run lint && npm run typecheck && npm run test && npm run audit"
+    "ci": "npm run lint && npm run typecheck && npm run test && npm run audit",
+    "lint:fix": "eslint . --fix",
+    "e2e:ui": "playwright test --ui",
+    "lighthouse": "npx --yes @lhci/cli@0.14.x autorun"
   },
   "dependencies": {
     "next": "^15.5.27",
