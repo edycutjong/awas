@@ -10,7 +10,7 @@
 
 import { mentionsCompany, maskAll } from "./mask";
 import { OFFICIAL_CHECKS } from "./rule-sources";
-import { CALL_SETTINGS } from "./settings";
+import { callSetting } from "./settings";
 import { normalise } from "./text";
 import { chat } from "./tf";
 import type { TokenFactoryConfig } from "./nebius/config";
@@ -192,7 +192,7 @@ export async function writeMessage(tf: TokenFactoryConfig | null, input: Message
   };
   if (!tf) return fromTemplate(null, "Token Factory is not configured");
 
-  const s = CALL_SETTINGS.message;
+  const s = callSetting("message");
   const numbered = input.lines.map((l, i) => `[${i + 1}] “${l.quote}” — ${domainOf(l.url)}`).join("\n");
   const user = [
     `Verdict (decided by code): ${input.verdict.replace(/_/g, " ")}`,

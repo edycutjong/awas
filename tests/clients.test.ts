@@ -65,6 +65,13 @@ describe("Token Factory call", () => {
     expect(JSON.parse(String(seen[1].init.body)).response_format).toEqual({ type: "json_object" });
   });
 
+  it("falls back to json_object when the endpoint rejects json_schema with a 422 (as Token Factory answers a schema it refuses)", async () => {
+    const seen: { url: string; init: RequestInit }[] = [];
+    const out = await chat(tf, { ...base, schema: { name: "n", schema: {} }, format: "json_schema_named", reasoning: "default" }, fakeFetch([{ status: 422, body: { detail: "unsupported" } }, { body: completion('{"ok":true}') }], seen));
+    expect(out.ok).toBe(true);
+    expect(JSON.parse(String(seen[1].init.body)).response_format).toEqual({ type: "json_object" });
+  });
+
   it("retries a reply that fails validation once, then reports the schema error", async () => {
     const validate = (v: unknown) => ((v as { a?: unknown }).a === 1 ? null : "a must be 1");
     const out = await chat(tf, { ...base, format: "json_object", reasoning: "default", validate }, fakeFetch([{ body: completion('{"a":2}') }, { body: completion('{"a":3}') }]));

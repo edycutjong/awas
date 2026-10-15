@@ -4,7 +4,7 @@
  * company name Tavily searches for is always one the ad itself contains.
  */
 
-import { CALL_SETTINGS } from "./settings";
+import { callSetting } from "./settings";
 import { normalise, normaliseWithMap } from "./text";
 import { chat, type ChatOutcome } from "./tf";
 import type { TokenFactoryConfig } from "./nebius/config";
@@ -140,7 +140,7 @@ export interface ExtractOutcome {
 }
 
 export async function extractFields(tf: TokenFactoryConfig, adText: string, fetchImpl: typeof fetch = fetch): Promise<ExtractOutcome> {
-  const s = CALL_SETTINGS.extract;
+  const s = callSetting("extract");
   const out: ChatOutcome<RawExtraction> = await chat<RawExtraction>(
     tf,
     {

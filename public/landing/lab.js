@@ -1,6 +1,6 @@
 /* Awas lab: src/lib compiled for the browser by scripts/build-lab.mjs (MIT).
 * lab-sources: src/lib/text.ts src/lib/rubric.ts src/lib/rule-sources.ts src/lib/gate.ts src/lib/verdict.ts src/lib/types.ts scripts/lab/entry.ts scripts/lab/sha256.ts
-* source-sha256: 3ddbcb3a83a291c945408e7605b73251cce82ed420d11c4bf27e365a74525ed2 */
+* source-sha256: 97728b6ed8cf3ef09b1d0d9fe1e6cd9a4b848810b6c0fd29ab0812aa8fc6aec6 */
 var AwasLab = (function(exports) {
 	Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
 	//#region src/lib/text.ts

@@ -12,7 +12,7 @@
  */
 
 import { companyTokens } from "./rubric";
-import { CALL_SETTINGS } from "./settings";
+import { callSetting } from "./settings";
 import { digits, normalise } from "./text";
 import { chat } from "./tf";
 import type { Corpus, Proposal } from "./gate";
@@ -160,7 +160,7 @@ export async function proposeLines(
   sources: FilteredSource[],
   fetchImpl: typeof fetch = fetch,
 ): Promise<ProposeOutcome> {
-  const s = CALL_SETTINGS.propose;
+  const s = callSetting("propose");
   const excerpts = sources.map((src) => `[${src.id}] ${src.title ?? ""} — ${src.url}\n${src.paragraphs.join("\n")}`).join("\n\n");
   const out = await chat<RawLines>(
     tf,

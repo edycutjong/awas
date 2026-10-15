@@ -128,8 +128,9 @@ export async function chat<T = unknown>(tf: TokenFactoryConfig, c: ChatCall, fet
     if (!res.ok) {
       const text = await res.text().catch(() => "");
       lastError = `Token Factory returned ${res.status}${text ? `: ${text.slice(0, 200)}` : ""}`;
-      // A format the endpoint rejects outright (400) is retried once as json_object.
-      if (res.status === 400 && format !== "json_object" && format !== "text" && !formatRetried) {
+      // A format the endpoint rejects outright (400, or 422 as Token Factory answers a schema it refuses — day-0
+      // spike) is retried once as json_object.
+      if ((res.status === 400 || res.status === 422) && format !== "json_object" && format !== "text" && !formatRetried) {
         format = "json_object";
         formatRetried = true;
         continue;
