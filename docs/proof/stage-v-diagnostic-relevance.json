@@ -1,0 +1,193 @@
+{
+  "kind": "post-gate diagnostic — dev set, in-sample, not a gate re-run",
+  "reader": "agent (unreviewed)",
+  "definition": "RELEVANT = an item (judge by its title, URL, and any verified quote from it) that EITHER (a) reports a case or pattern of Indonesians deceived by an overseas job offer into trafficking / online-scam work / illegal placement, matching THIS case's destination country (the offered or the actual one) OR its job type (e.g. \"admin/marketing/customer service in Thailand/Cambodia/Myanmar\", \"ABK/bartender in Spain\", \"ferienjob in Germany\"); OR (b) is an official warning (government ministry, KBRI/embassy, KP2MI/BP2MI, police, Kemnaker, Kemlu, Imigrasi) about deceptive overseas job offers in general. NOT relevant: generic job-scam tips about domestic fake vacancies (e.g. a bank's \"ciri-ciri lowongan kerja palsu\"), unrelated fraud (investment, VAT, visa scams in other countries' contexts), items about other countries' citizens, items whose title/quote gives no sign of the above. An Instagram/Facebook/YouTube item counts if its title or verified quote clearly meets (a) or (b); a bare \"Instagram\" title with no verified quote does not count.",
+  "cases": [
+    {
+      "id": "d-p06",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.instagram.com/reel/DeexyaEIZl8",
+        "title": "Instagram"
+      },
+      "kind": "b",
+      "why": "KBRI Moskow appeal after a deceptive security-guard job offer: embassy warning on deceptive overseas offers (destination-agnostic). No Dubai item; others are Cambodia/Myanmar patterns."
+    },
+    {
+      "id": "d-p07",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.kompas.id/artikel/penipuan-lowongan-kerja-daring-jadi-ancaman-negara-negara-di-asean",
+        "title": "Penipuan Lowongan Kerja Daring Jadi Ancaman Negara- ..."
+      },
+      "kind": "a",
+      "why": "Kompas.id ASEAN online job-vacancy fraud piece (Indonesians forced into scam work; same URL lists Malaysia, Cambodia). Region-level match to actual destination; moderate confidence."
+    },
+    {
+      "id": "d-p08",
+      "relevant": true,
+      "best_item": {
+        "url": "https://kp2mi.go.id/berita-detail/kolaborasi-bp2mi-dengan-stakeholders-terkait-penanganan-kasus-pmi-di-myanmar",
+        "title": "Kolaborasi BP2MI dengan Stakeholders Terkait ..."
+      },
+      "kind": "a",
+      "why": "Official BP2MI item: 21 WNI in Myawaddy defrauded by online-scammer job offers; matches Myanmar and job type. Setneg and Instagram 554-WNI items corroborate."
+    },
+    {
+      "id": "d-p09",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.kompas.id/artikel/saat-pintu-apartemen-terbuka-mimpi-kerja-itu-tertutup-seketika",
+        "title": "Info dari Facebook Dijanjikan Kerja di Malaysia, Malah Dijadikan Penipu di Kamboja"
+      },
+      "kind": "a",
+      "why": "Kompas.id: Indonesian promised Malaysia work via Facebook admin-staff ad, instead made to scam in Cambodia. Matches offered destination Malaysia."
+    },
+    {
+      "id": "d-p10",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.facebook.com/metrotv/posts/sebanyak-49-warga-negara-indonesia-wni-diduga-menjadi-korban-penipuan-lowongan-k/1671954560967119",
+        "title": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga ..."
+      },
+      "kind": "a",
+      "why": "Metro TV Facebook snippet: victims promised decent work via social media, then in Saudi Arabia 'justru...' (truncated). Saudi match; snippet differs from title; moderate."
+    },
+    {
+      "id": "d-p11",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.instagram.com/reel/DIi_9HJyOcY",
+        "title": "JANGAN KABUR! JANGAN TERGIUR! WInDu, sekarang ..."
+      },
+      "kind": "b",
+      "why": "WInDu reel warns of overseas job-offer scams; same row has KJRI Dubai #WinDu appeal and Bareskrim Dubai job-vacancy scam report. Dubai matched."
+    },
+    {
+      "id": "d-p12",
+      "relevant": false,
+      "best_item": null,
+      "kind": null,
+      "why": "Single hit: CekFakta page on a fake Bea Cukai vacancy hoax, a domestic job scam; nothing on Indonesians deceived by overseas offers."
+    },
+    {
+      "id": "d-p13",
+      "relevant": false,
+      "best_item": null,
+      "kind": null,
+      "why": "Empty result set; Tavily returned nothing for the plantation Malaysia query."
+    },
+    {
+      "id": "d-p14",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.setneg.go.id/baca/index/pemerintah_pulangkan_554_wni_korban_tppo_di_myanmar",
+        "title": "Pemerintah Pulangkan 554 WNI Korban TPPO di Myanmar | Sekretariat Negara"
+      },
+      "kind": "a",
+      "why": "Setneg: 554 WNI TPPO victims repatriated from Myanmar; Thai help noted; Foreign Minister urges official channels. Official source, matches Myanmar/Thailand; several corroborating items."
+    },
+    {
+      "id": "d-p15",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.kompas.id/artikel/saat-pintu-apartemen-terbuka-mimpi-kerja-itu-tertutup-seketika",
+        "title": "Info dari Facebook Dijanjikan Kerja di Malaysia, Malah Dijadikan Penipu di Kamboja"
+      },
+      "kind": "a",
+      "why": "Kompas.id: Indonesian promised Malaysia work via Facebook ad, instead made to scam in Cambodia. Matches offered destination Malaysia; KBRI Moskow warning also present (b)."
+    },
+    {
+      "id": "d-p16",
+      "relevant": false,
+      "best_item": null,
+      "kind": null,
+      "why": "Empty result set; Tavily returned nothing for the Thailand query."
+    },
+    {
+      "id": "d-p17",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.bbc.com/indonesia/dunia-65426839",
+        "title": "WNI korban 'sindikat penipuan online' di Laos, Kemlu ..."
+      },
+      "kind": "a",
+      "why": "BBC Indonesia: Indonesians victims of online-scam syndicate in Laos, eight unable to leave as passports held; Kemlu involved. Exact Laos match."
+    },
+    {
+      "id": "d-p18",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.kompas.id/artikel/penipuan-lowongan-kerja-daring-jadi-ancaman-negara-negara-di-asean",
+        "title": "Penipuan Lowongan Kerja Daring Jadi Ancaman Negara-negara di ASEAN"
+      },
+      "kind": "a",
+      "why": "Kompas.id ASEAN piece: 760 WNI victims of online job fraud in seven countries incl. Malaysia. KBRI Moskow warning (b) also present; match is list-level."
+    },
+    {
+      "id": "d-p19",
+      "relevant": false,
+      "best_item": null,
+      "kind": null,
+      "why": "Empty result set; Tavily returned nothing for the Thailand query."
+    },
+    {
+      "id": "d-p20",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.kompas.id/artikel/penipuan-lowongan-kerja-daring-jadi-ancaman-negara-negara-di-asean",
+        "title": "Penipuan Lowongan Kerja Daring Jadi Ancaman Negara-negara di ASEAN"
+      },
+      "kind": "a",
+      "why": "Kompas.id ASEAN piece: 760 WNI victims of online job fraud in seven countries incl. Malaysia. KBRI Moskow warning (b) also present; match is list-level."
+    },
+    {
+      "id": "d-p21",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.youtube.com/watch?v=ksemhgg2TVQ",
+        "title": "Tertipu Lowongan Kerja, Korban Disiksa Jika Tak Capai Target | Rosi"
+      },
+      "kind": "a",
+      "why": "Kompas TV/YouTube (Rosi): 20 TKI held in Myawaddy after being promised customer-service work in Thailand. Exact Thailand and job-type match; BBC 12-WNI item agrees."
+    },
+    {
+      "id": "d-p22",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.bbc.com/indonesia/articles/c4nrkynp8evo",
+        "title": "Kesaksian mahasiswa Indonesia, korban eksploitasi magang di Eropa - BBC News Indonesia"
+      },
+      "kind": "a",
+      "why": "BBC Indonesia: Indonesian students promised Munich-airport internships, moved to factory work in Germany (Ferienjob). Exact match; DW Indonesia item agrees."
+    },
+    {
+      "id": "d-p23",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.kompas.id/artikel/saat-pintu-apartemen-terbuka-mimpi-kerja-itu-tertutup-seketika",
+        "title": "Info dari Facebook Dijanjikan Kerja di Malaysia, Malah Dijadikan Penipu di Kamboja"
+      },
+      "kind": "a",
+      "why": "Kompas.id: Indonesian promised Malaysia admin-staff work via Facebook ad, instead made to scam in Cambodia. Matches Malaysia and office-admin job type."
+    },
+    {
+      "id": "d-p24",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.kompas.id/artikel/saat-pintu-apartemen-terbuka-mimpi-kerja-itu-tertutup-seketika",
+        "title": "Info dari Facebook Dijanjikan Kerja di Malaysia, Malah Dijadikan Penipu di Kamboja"
+      },
+      "kind": "a",
+      "why": "Kompas.id: Indonesian promised Malaysia work via Facebook ad, instead made to scam in Cambodia. Matches Malaysia; official Kemenp2mi job-ad fraud post (b) also present."
+    },
+    {
+      "id": "d-p25",
+      "relevant": false,
+      "best_item": null,
+      "kind": null,
+      "why": "No Spain or bartender/ABK item: Madagascar case, Kemlu online-scam statistics without job-offer content, Spain country page on lottery scams, Japan form, Kompas promo."
+    }
+  ],
+  "relevant_count": 15
+}

@@ -1,0 +1,530 @@
+{
+ "kind": "post-gate diagnostic — dev set, in-sample, NOT a gate re-run",
+ "query": "WNI korban penipuan lowongan kerja <destination as extracted>",
+ "params": "topic general, country indonesia, basic, max 5, source domain excluded, near-duplicate titles dropped",
+ "credits": 20,
+ "rows": [
+  {
+   "id": "d-p06",
+   "query": "WNI korban penipuan lowongan kerja di luar negeri",
+   "results": [
+    {
+     "url": "https://www.instagram.com/p/Dc5eKgJj6BK",
+     "title": "[🚨 WASPADA PENIPUAN KERJA LUAR NEGERI! ...",
+     "snippet": "] ​Ribuan WNI telah menjadi korban penipuan lowongan kerja online di luar negeri (Kamboja). Korban umumnya terjebak akibat tergiur iming-iming"
+    },
+    {
+     "url": "http://johorejo.desa.id/kabardetail/MUE4M0pLbDlSUUhUUjFFcXVReERMUT09/hati-hati-penipuan-lowongan-kerja-di-luar-negeri-.html",
+     "title": "Johorejo - Hati-Hati Penipuan Lowongan Kerja Di Luar Negeri",
+     "snippet": "Ingatkah kamu, beberapa waktu lalu, sekitar 150 orang Warga Negara Indonesia (WNI) menjadi korban penyekapan di Kamboja. Mereka rata-rata anak muda yang dijanjikan bekerja di sektor perikanan dan kelautan di luar negeri oleh pengerah tenaga kerja ilegal dan tidak berijin.\n\nKesemua WNI korban penyeka"
+    },
+    {
+     "url": "https://www.facebook.com/metrotv/posts/sebanyak-49-warga-negara-indonesia-wni-diduga-menjadi-korban-penipuan-lowongan-k/1671954560967119",
+     "title": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga ...",
+     "snippet": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga menjadi korban penipuan lowongan kerja (loker) bodong dan Tindak Pidana Perdagangan Orang"
+    },
+    {
+     "url": "https://kp2mi.go.id/berita-detail/kolaborasi-bp2mi-dengan-stakeholders-terkait-penanganan-kasus-pmi-di-myanmar",
+     "title": "Kolaborasi BP2MI dengan Stakeholders Terkait ...",
+     "snippet": "“Ada 21 orang WNI yang saat ini berada di Myawaddy. Mereka terindikasi menjadi korban penipuan lowongan pekerjaan untuk posisi online scammer, dan saat ini"
+    },
+    {
+     "url": "https://www.instagram.com/reel/DeexyaEIZl8",
+     "title": "Instagram",
+     "snippet": "HATI-HATI! TAWARAN GAJI TINGGI BISA BERUJUNG MALAPETAKA  \n  \nSeorang WNI ditawari pekerjaan sebagai petugas keamanan. Namun setibanya di sana, ia justru diminta menandatangani kontrak dinas militer dan terancam dikirim ke medan perang.  \n  \nBelajar dari kasus ini, KBRI Moskow mengimbau seluruh WNI u"
+    }
+   ]
+  },
+  {
+   "id": "d-p07",
+   "query": "WNI korban penipuan lowongan kerja Bali",
+   "results": [
+    {
+     "url": "https://www.facebook.com/radarbali.id/posts/awalnya-mereka-datang-ke-bali-karena-dijanjikan-kerja-legal-sebagai-staf-adminis/1703048371823033",
+     "title": "Awalnya mereka datang ke Bali karena dijanjikan kerja ...",
+     "snippet": "Setelah dinyatakan diterima bekerja, korban diminta menyerahkan uang sebesar Rp4 juta dengan alasan untuk biaya pembuatan seragam kerja. Korban"
+    },
+    {
+     "url": "https://www.facebook.com/humaspemdadiy/videos/puspa-perempuan-muda-dari-yogyakarta-menjadi-saksi-bagaimana-kerasnya-hidup-seba/1659412284719849",
+     "title": "Puspa, perempuan muda dari Yogyakarta, menjadi saksi ...",
+     "snippet": "Ia mengaku menjadi korban dugaan penipuan lowongan kerja yang berujung penyekapan, penganiayaan, hingga permintaan uang tebusan kepada"
+    },
+    {
+     "url": "https://www.youtube.com/watch?v=SwtPDXXwhBA",
+     "title": "Tertipu Lowongan Kerja di Medsos, 49 WNI Ditahan di ...",
+     "snippet": "MetroTV, Sebanyak 49 Warga Negara Indonesia (WNI) ditahan oleh aparat keamanan Gendarmerie Nasional di Antananarivo, Madagaskar,"
+    },
+    {
+     "url": "https://www.kompas.id/artikel/penipuan-lowongan-kerja-daring-jadi-ancaman-negara-negara-di-asean",
+     "title": "Penipuan Lowongan Kerja Daring Jadi Ancaman Negara- ...",
+     "snippet": "”Para korban diminta untuk membuat akun media sosial palsu dan diberi daftar target penipuan dengan target penghasilan Rp 60 juta per orang."
+    },
+    {
+     "url": "https://www.instagram.com/reel/DcQVXxLh59L",
+     "title": "Instagram",
+     "snippet": "indonesiaindubai's profile picture\nVideo by KJRI Dubai on August 20, 2026. May be an image of poster and text that says 'KonsulatJenderalRepublk.indonesia Konsulat Jenderal Republik ndonesia Dubai IMBAUAN UNTUK #WINC.! രാനുത്ര്ര ACU f KJRI Dubai Indonesiaindubai Indonesianindubai Indonesianindubai/k"
+    }
+   ]
+  },
+  {
+   "id": "d-p08",
+   "query": "WNI korban penipuan lowongan kerja Myanmar",
+   "results": [
+    {
+     "url": "https://www.instagram.com/p/DHXn6hQB6ZA",
+     "title": "Sebanyak 554 warga negara Indonesia (WNI) ...",
+     "snippet": "Sebanyak 554 warga negara Indonesia (WNI) yang menjadi korban penipuan kerja atau online scam di Myanmar akhirnya berhasil dipulangkan ke Tanah"
+    },
+    {
+     "url": "https://kp2mi.go.id/berita-detail/kolaborasi-bp2mi-dengan-stakeholders-terkait-penanganan-kasus-pmi-di-myanmar",
+     "title": "Kolaborasi BP2MI dengan Stakeholders Terkait ...",
+     "snippet": "“Ada 21 orang WNI yang saat ini berada di Myawaddy. Mereka terindikasi menjadi korban penipuan lowongan pekerjaan untuk posisi online scammer, dan saat ini"
+    },
+    {
+     "url": "https://www.setneg.go.id/baca/index/pemerintah_pulangkan_554_wni_korban_tppo_di_myanmar",
+     "title": "Pemerintah Pulangkan 554 WNI Korban TPPO di Myanmar | Sekretariat Negara",
+     "snippet": "Pemerintah berhasil memulangkan 554 warga negara Indonesia (WNI) korban tindak pidana perdagangan orang (TPPO) penipuan daring (online scamming) dari Myawaddy, Myanmar. Kepulangan ratusan WNI ini berlangsung dalam dua tahap, yaitu sebanyak 400 orang pada tahap pertama, Selasa (18/03/2025)  dan 154 o"
+    },
+    {
+     "url": "https://www.facebook.com/metrotv/posts/sebanyak-49-warga-negara-indonesia-wni-diduga-menjadi-korban-penipuan-lowongan-k/1671954560967119",
+     "title": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga ...",
+     "snippet": "Kedua korban diduga menjadi korban penyekapan dan penyiksaan setelah dijanjikan pekerjaan di sebuah restoran di Myanmar, namun kemudian dipaksa"
+    },
+    {
+     "url": "https://www.instagram.com/reel/DQbw2h_EpXN",
+     "title": "Instagram",
+     "snippet": "Photo by Direktorat Siber Pelindungan PMI KP2MI/BP2MI on October 05, 2026.\nPhoto by Direktorat Siber Pelindungan PMI KP2MI/BP2MI on October 06, 2025.\nVideo by Direktorat Siber Pelindungan PMI KP2MI/BP2MI on October 14, 2026. May be a cartoon of map, magazine, poster and text.\nVideo by Direktorat Sib"
+    }
+   ]
+  },
+  {
+   "id": "d-p09",
+   "query": "WNI korban penipuan lowongan kerja Malaysia",
+   "results": [
+    {
+     "url": "https://www.facebook.com/metrotv/posts/sebanyak-49-warga-negara-indonesia-wni-diduga-menjadi-korban-penipuan-lowongan-k/1671954560967119",
+     "title": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga ...",
+     "snippet": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga menjadi korban penipuan lowongan kerja (loker) bodong dan Tindak Pidana Perdagangan Orang"
+    },
+    {
+     "url": "https://www.instagram.com/p/Dd1PyUynfXg",
+     "title": "Instagram",
+     "snippet": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga menjadi korban penipuan lowongan kerja (loker) bodong dan Tindak Pidana Perdagangan Orang (TPPO) di Madagaskar. Para WNI tersebut kini dalam kondisi tertahan di markas gendarmerie nasional di Antananarivo setelah lokasi tempat mereka bekerja dirazia ol"
+    },
+    {
+     "url": "https://www.kompas.id/artikel/saat-pintu-apartemen-terbuka-mimpi-kerja-itu-tertutup-seketika",
+     "title": "Info dari Facebook Dijanjikan Kerja di Malaysia, Malah Dijadikan Penipu di Kamboja",
+     "snippet": "Baca JugaWNI Terus Dikirim ke Kamboja untuk Dijadikan Penipu Daring\n\nKisah kelam RNF bermula di awal September 2025. Lama menganggur, harapannya bekerja muncul saat melihat lowongan kerja di media sosial Facebook. Dalam lowongan kerja itu disebutkan ada satu tempat untuk posisi staf administrasi di "
+    },
+    {
+     "url": "https://www.instagram.com/reel/DeexyaEIZl8",
+     "title": "Instagram",
+     "snippet": "HATI-HATI! TAWARAN GAJI TINGGI BISA BERUJUNG MALAPETAKA  \n  \nSeorang WNI ditawari pekerjaan sebagai petugas keamanan. Namun setibanya di sana, ia justru diminta menandatangani kontrak dinas militer dan terancam dikirim ke medan perang.  \n  \nBelajar dari kasus ini, KBRI Moskow mengimbau seluruh WNI u"
+    },
+    {
+     "url": "https://peduliwni.kemlu.go.id/pengaduan/form.html",
+     "title": "Peduli WNI - Kemenlu",
+     "snippet": "Buku Panduan\n\n#### Ubah Sandi\n\n#### Peringatan\n\nAnda Sudah Tidak Bisa Mengakses Layanan\n\n#### Peringatan\n\nData tidak boleh ada yang kosong!\n\n#### Informasi\n\n#### Nomor Pengaduan Tidak Ditemukan\n\nPelayanan dan Pelindungan WNI di Luar Negeri Kementerian Luar Negeri Republik Indonesia\n\nBuku Panduan Vid"
+    }
+   ]
+  },
+  {
+   "id": "d-p10",
+   "query": "WNI korban penipuan lowongan kerja Saudi Arabia",
+   "results": [
+    {
+     "url": "https://www.instagram.com/p/DIs_YyjyP4e",
+     "title": "Hati-hati Penipuan Kerja Luar Negeri Ilegal! Nasib tragis ...",
+     "snippet": "Nasib tragis dialami seorang WNI yang menjadi korban penipuan kerja di Myanmar. WE ARE HIRING! 🩺💉 PERAWAT FOR SAUDI ARABIA Punya. WhatsApp: +62"
+    },
+    {
+     "url": "https://www.facebook.com/metrotv/posts/sebanyak-49-warga-negara-indonesia-wni-diduga-menjadi-korban-penipuan-lowongan-k/1671954560967119",
+     "title": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga ...",
+     "snippet": "Korban awalnya dijanjikan pekerjaan yang layak oleh seseorang yang berinisial NN melalui media sosial, sesampai di Arab Saudi mereka justru"
+    },
+    {
+     "url": "https://www.youtube.com/watch?v=yKp-AGnOgq8",
+     "title": "Modus Lowongan Kerja Palsu, 8 WNI Terjebak Jadi ...",
+     "snippet": "DPR pun mengonfirmasi para WNI tersebut diduga menjadi korban modus penipuan lowongan kerja oleh pihak ketiga."
+    },
+    {
+     "url": "https://kp2mi.go.id/index.php/berita-detail/pulang-dari-kamboja-di-antara-stigma-scammer-dan-harapan-hidup-baru",
+     "title": "Pulang dari Kamboja: Antara Stigma Scammer dan ...",
+     "snippet": "Ia juga menjelaskan alasan para WNI yang terjerat penipuan daring di Kamboja tidak bisa disebut sebagai Pekerja Migran Indonesia. ... Saudi Arabia"
+    },
+    {
+     "url": "https://peduliwni.kemlu.go.id/pengaduan/form.html",
+     "title": "Peduli WNI - Kemenlu",
+     "snippet": "Buku Panduan\n\n#### Ubah Sandi\n\n#### Peringatan\n\nAnda Sudah Tidak Bisa Mengakses Layanan\n\n#### Peringatan\n\nData tidak boleh ada yang kosong!\n\n#### Informasi\n\n#### Nomor Pengaduan Tidak Ditemukan\n\nPelayanan dan Pelindungan WNI di Luar Negeri Kementerian Luar Negeri Republik Indonesia\n\nBuku Panduan Vid"
+    }
+   ]
+  },
+  {
+   "id": "d-p11",
+   "query": "WNI korban penipuan lowongan kerja Dubai",
+   "results": [
+    {
+     "url": "https://www.facebook.com/metrotv/posts/sebanyak-823-warga-negara-indonesia-wni-menjadi-korban-penipuan-online-jaringan-/1040854520743796",
+     "title": "Sebanyak 823 warga negara Indonesia (WNI) menjadi ...",
+     "snippet": "Sebanyak 823 warga negara Indonesia (WNI) menjadi korban penipuan online jaringan internasional dengan modus lowongan kerja paruh waktu."
+    },
+    {
+     "url": "https://www.instagram.com/p/Dd1PyUynfXg",
+     "title": "Instagram",
+     "snippet": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga menjadi korban penipuan lowongan kerja (loker) bodong dan Tindak Pidana Perdagangan Orang (TPPO) di Madagaskar. Para WNI tersebut kini dalam kondisi tertahan di markas gendarmerie nasional di Antananarivo setelah lokasi tempat mereka bekerja dirazia ol"
+    },
+    {
+     "url": "https://www.instagram.com/reel/DIi_9HJyOcY",
+     "title": "JANGAN KABUR! JANGAN TERGIUR! WInDu, sekarang ...",
+     "snippet": "Waspada terhadap penipuan berkedok lowongan kerja luar negeri! Tawaran gaji tinggi, permintaan transfer uang, hingga permintaan data pribadi"
+    },
+    {
+     "url": "https://www.youtube.com/watch?v=fh-e7Ux7leM",
+     "title": "Bareskrim Polri Ungkap Jaringan Scam Online dengan ...",
+     "snippet": "Bareskrim Polri berhasil membongkar kasus scam online berjaringan internasional dengan modus lowongan kerja paruh waktu di Dubai."
+    },
+    {
+     "url": "https://www.instagram.com/reel/DcQVXxLh59L",
+     "title": "Instagram",
+     "snippet": "indonesiaindubai's profile picture\nVideo by KJRI Dubai on August 20, 2026. May be an image of poster and text that says 'KonsulatJenderalRepublk.indonesia Konsulat Jenderal Republik ndonesia Dubai IMBAUAN UNTUK #WINC.! രാനുത്ര്ര ACU f KJRI Dubai Indonesiaindubai Indonesianindubai Indonesianindubai/k"
+    }
+   ]
+  },
+  {
+   "id": "d-p12",
+   "query": "WNI korban penipuan lowongan kerja Arab Saudi, Malaysia, Oman, Singapura, Laos, China, Korea Selatan dan Taiwan",
+   "results": [
+    {
+     "url": "https://cekfakta.com/institusi/19",
+     "title": "CekFakta",
+     "snippet": "RI membuka lowongan kerja Bea Cukai 2026 dengan cara mendaftarkan diri pada tautan bio Facebook adalah tidak benar dan terindikasi penipuan. Baca juga:Hoaks Purbaya Bongkar Fakta Hidden Debt dan IKN Terancam Dijual 100 | 2026-02-06 | [...] seleksi baru akan benar-benar selesai pada 4 Agustus 2025. P"
+    }
+   ]
+  },
+  {
+   "id": "d-p13",
+   "query": "WNI korban penipuan lowongan kerja perkebunan Malaysia",
+   "results": []
+  },
+  {
+   "id": "d-p14",
+   "query": "WNI korban penipuan lowongan kerja Thailand",
+   "results": [
+    {
+     "url": "https://www.kompas.id/artikel/penipuan-lowongan-kerja-daring-jadi-ancaman-negara-negara-di-asean",
+     "title": "Penipuan Lowongan Kerja Daring Jadi Ancaman Negara-negara di ASEAN",
+     "snippet": "Pada periode Januari-Oktober 2023, terdapat 760 WNI yang menjadi korban penipuan tenaga kerja secara daring di Filipina, Laos, Myanmar, Thailand, Kamboja, Vietnam, dan Malaysia. Korban penipuan tenaga kerja secara daring paling banyak berasal dari Sumatera Utara, Sulawesi Utara, Jawa Tengah, dan Kal"
+    },
+    {
+     "url": "https://www.instagram.com/p/DHXn6hQB6ZA",
+     "title": "Instagram",
+     "snippet": "Sebanyak 554 warga negara Indonesia (WNI) yang menjadi korban penipuan kerja atau online scam di Myanmar akhirnya berhasil dipulangkan ke Tanah Air. Upaya ini merupakan hasil kerja sama pemerintah Indonesia melalui berbagai kementerian dan lembaga terkait demi melindungi serta memastikan keselamatan"
+    },
+    {
+     "url": "https://www.setneg.go.id/baca/index/pemerintah_pulangkan_554_wni_korban_tppo_di_myanmar",
+     "title": "Pemerintah Pulangkan 554 WNI Korban TPPO di Myanmar | Sekretariat Negara",
+     "snippet": "“Terima kasih kepada pemerintah Thailand dan beberapa unsur dari pemerintah Myanmar yang membantu pelaksanaan proses pemulangan saudara-saudara kita ini,” kata Menlu.  \n  \nLebih lanjut, Sugiono mengimbau para WNI yang memiliki keinginan bekerja di luar negeri untuk menggunakan jalur resmi serta lebi"
+    },
+    {
+     "url": "https://kp2mi.go.id/berita-detail/kolaborasi-bp2mi-dengan-stakeholders-terkait-penanganan-kasus-pmi-di-myanmar",
+     "title": "Kolaborasi BP2MI dengan Stakeholders Terkait ...",
+     "snippet": "Jakarta, BP2MI (27/9) - Balai Pelayanan Pelindungan Pekerja Migran Indonesia (BP3MI) Banten hadir dalam rapat koordinasi tindak lanjut laporan pencegahan"
+    },
+    {
+     "url": "https://www.instagram.com/reel/DQbw2h_EpXN",
+     "title": "Instagram",
+     "snippet": "Photo by Direktorat Siber Pelindungan PMI KP2MI/BP2MI on October 10, 2026.\nVideo by Direktorat Siber Pelindungan PMI KP2MI/BP2MI on October 09, 2026. May be a meme of poster, magazine and text.\nPhoto by Direktorat Siber Pelindungan PMI KP2MI/BP2MI on October 08, 2026.\nPhoto by Direktorat Siber Pelin"
+    }
+   ]
+  },
+  {
+   "id": "d-p15",
+   "query": "WNI korban penipuan lowongan kerja Malaysia",
+   "results": [
+    {
+     "url": "https://www.facebook.com/metrotv/posts/sebanyak-49-warga-negara-indonesia-wni-diduga-menjadi-korban-penipuan-lowongan-k/1671954560967119",
+     "title": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga ...",
+     "snippet": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga menjadi korban penipuan lowongan kerja (loker) bodong dan Tindak Pidana Perdagangan Orang"
+    },
+    {
+     "url": "https://www.instagram.com/p/Dd1PyUynfXg",
+     "title": "Instagram",
+     "snippet": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga menjadi korban penipuan lowongan kerja (loker) bodong dan Tindak Pidana Perdagangan Orang (TPPO) di Madagaskar. Para WNI tersebut kini dalam kondisi tertahan di markas gendarmerie nasional di Antananarivo setelah lokasi tempat mereka bekerja dirazia ol"
+    },
+    {
+     "url": "https://www.kompas.id/artikel/saat-pintu-apartemen-terbuka-mimpi-kerja-itu-tertutup-seketika",
+     "title": "Info dari Facebook Dijanjikan Kerja di Malaysia, Malah Dijadikan Penipu di Kamboja",
+     "snippet": "Baca JugaWNI Terus Dikirim ke Kamboja untuk Dijadikan Penipu Daring\n\nKisah kelam RNF bermula di awal September 2025. Lama menganggur, harapannya bekerja muncul saat melihat lowongan kerja di media sosial Facebook. Dalam lowongan kerja itu disebutkan ada satu tempat untuk posisi staf administrasi di "
+    },
+    {
+     "url": "https://www.instagram.com/reel/DeexyaEIZl8",
+     "title": "Instagram",
+     "snippet": "HATI-HATI! TAWARAN GAJI TINGGI BISA BERUJUNG MALAPETAKA  \n  \nSeorang WNI ditawari pekerjaan sebagai petugas keamanan. Namun setibanya di sana, ia justru diminta menandatangani kontrak dinas militer dan terancam dikirim ke medan perang.  \n  \nBelajar dari kasus ini, KBRI Moskow mengimbau seluruh WNI u"
+    },
+    {
+     "url": "https://peduliwni.kemlu.go.id/pengaduan/form.html",
+     "title": "Peduli WNI - Kemenlu",
+     "snippet": "Buku Panduan\n\n#### Ubah Sandi\n\n#### Peringatan\n\nAnda Sudah Tidak Bisa Mengakses Layanan\n\n#### Peringatan\n\nData tidak boleh ada yang kosong!\n\n#### Informasi\n\n#### Nomor Pengaduan Tidak Ditemukan\n\nPelayanan dan Pelindungan WNI di Luar Negeri Kementerian Luar Negeri Republik Indonesia\n\nBuku Panduan Vid"
+    }
+   ]
+  },
+  {
+   "id": "d-p16",
+   "query": "WNI korban penipuan lowongan kerja Thailand",
+   "results": []
+  },
+  {
+   "id": "d-p17",
+   "query": "WNI korban penipuan lowongan kerja Laos",
+   "results": [
+    {
+     "url": "https://www.facebook.com/metrotv/posts/sebanyak-49-warga-negara-indonesia-wni-diduga-menjadi-korban-penipuan-lowongan-k/1671954560967119",
+     "title": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga ...",
+     "snippet": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga menjadi korban penipuan lowongan kerja (loker) bodong dan Tindak Pidana Perdagangan Orang"
+    },
+    {
+     "url": "https://www.bbc.com/indonesia/dunia-65426839",
+     "title": "WNI korban 'sindikat penipuan online' di Laos, Kemlu ...",
+     "snippet": "Namun demikian, sejauh ini ada delapan WNI yang dilaporkan \"belum dapat keluar dari Laos\", karena paspornya masih ditahan pihak perusahaan."
+    },
+    {
+     "url": "https://www.kompas.id/artikel/fenomena-lapar-kerja-picu-warga-rentan-terjebak-sindikat-scammer-online",
+     "title": "Fenomena ”Lapar Kerja” Picu Warga Rentan Terjebak ...",
+     "snippet": "Migrant Care mencatat, dalam periode 2022-2023, ada 261 pengaduan WNI menjadi korban TPPO yang dipekerjakan sebagai online scammer dan operator"
+    },
+    {
+     "url": "https://www.instagram.com/p/DYzAbPSIFPe",
+     "title": "Instagram",
+     "snippet": "bersama)   \nmodus mereka menggunakan website palsu, kemudian menyatakan berkas visa tidak granted/ditolak (dalam kasus saya).   \nmereka merupakan komplotan yang sudah memakan tidak sedikit korban, sekali lagi harap ekstra hati hati dan waspada atas semua lowongan kerja ke luar negeri dari oknum oknu"
+    },
+    {
+     "url": "https://www.instagram.com/reel/DQbw2h_EpXN",
+     "title": "Instagram",
+     "snippet": "Photo by Direktorat Siber Pelindungan PMI KP2MI/BP2MI on October 10, 2026.\nVideo by Direktorat Siber Pelindungan PMI KP2MI/BP2MI on October 09, 2026. May be a meme of poster, magazine and text.\nPhoto by Direktorat Siber Pelindungan PMI KP2MI/BP2MI on October 08, 2026.\nPhoto by Direktorat Siber Pelin"
+    }
+   ]
+  },
+  {
+   "id": "d-p18",
+   "query": "WNI korban penipuan lowongan kerja Malaysia",
+   "results": [
+    {
+     "url": "https://www.kompas.id/artikel/penipuan-lowongan-kerja-daring-jadi-ancaman-negara-negara-di-asean",
+     "title": "Penipuan Lowongan Kerja Daring Jadi Ancaman Negara-negara di ASEAN",
+     "snippet": "Pada periode Januari-Oktober 2023, terdapat 760 WNI yang menjadi korban penipuan tenaga kerja secara daring di Filipina, Laos, Myanmar, Thailand, Kamboja, Vietnam, dan Malaysia. Korban penipuan tenaga kerja secara daring paling banyak berasal dari Sumatera Utara, Sulawesi Utara, Jawa Tengah, dan Kal"
+    },
+    {
+     "url": "https://www.youtube.com/watch?v=SwtPDXXwhBA",
+     "title": "Tertipu Lowongan Kerja di Medsos, 49 WNI Ditahan di Madagaskar - [Metro Hari Ini]",
+     "snippet": "Sebanyak 49 Warga Negara Indonesia (WNI) ditahan oleh aparat keamanan Gendarmerie Nasional di Antananarivo, Madagaskar, dan saat ini tengah meminta pendampingan serta perlindungan kepada Pemerintah RI. Para WNI yang di antaranya berasal dari Aceh dan Medan tersebut diduga kuat menjadi korban penipua"
+    },
+    {
+     "url": "https://www.instagram.com/p/Dd1PyUynfXg",
+     "title": "Instagram",
+     "snippet": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga menjadi korban penipuan lowongan kerja (loker) bodong dan Tindak Pidana Perdagangan Orang (TPPO) di Madagaskar. Para WNI tersebut kini dalam kondisi tertahan di markas gendarmerie nasional di Antananarivo setelah lokasi tempat mereka bekerja dirazia ol"
+    },
+    {
+     "url": "https://www.instagram.com/reel/DeexyaEIZl8",
+     "title": "Instagram",
+     "snippet": "HATI-HATI! TAWARAN GAJI TINGGI BISA BERUJUNG MALAPETAKA  \n  \nSeorang WNI ditawari pekerjaan sebagai petugas keamanan. Namun setibanya di sana, ia justru diminta menandatangani kontrak dinas militer dan terancam dikirim ke medan perang.  \n  \nBelajar dari kasus ini, KBRI Moskow mengimbau seluruh WNI u"
+    },
+    {
+     "url": "https://peduliwni.kemlu.go.id/pengaduan/form.html",
+     "title": "Peduli WNI - Kemenlu",
+     "snippet": "Buku Panduan\n\n#### Ubah Sandi\n\n#### Peringatan\n\nAnda Sudah Tidak Bisa Mengakses Layanan\n\n#### Peringatan\n\nData tidak boleh ada yang kosong!\n\n#### Informasi\n\n#### Nomor Pengaduan Tidak Ditemukan\n\nPelayanan dan Pelindungan WNI di Luar Negeri Kementerian Luar Negeri Republik Indonesia\n\nBuku Panduan Vid"
+    }
+   ]
+  },
+  {
+   "id": "d-p19",
+   "query": "WNI korban penipuan lowongan kerja Thailand",
+   "results": []
+  },
+  {
+   "id": "d-p20",
+   "query": "WNI korban penipuan lowongan kerja Malaysia",
+   "results": [
+    {
+     "url": "https://www.kompas.id/artikel/penipuan-lowongan-kerja-daring-jadi-ancaman-negara-negara-di-asean",
+     "title": "Penipuan Lowongan Kerja Daring Jadi Ancaman Negara-negara di ASEAN",
+     "snippet": "Pada periode Januari-Oktober 2023, terdapat 760 WNI yang menjadi korban penipuan tenaga kerja secara daring di Filipina, Laos, Myanmar, Thailand, Kamboja, Vietnam, dan Malaysia. Korban penipuan tenaga kerja secara daring paling banyak berasal dari Sumatera Utara, Sulawesi Utara, Jawa Tengah, dan Kal"
+    },
+    {
+     "url": "https://www.youtube.com/watch?v=SwtPDXXwhBA",
+     "title": "Tertipu Lowongan Kerja di Medsos, 49 WNI Ditahan di Madagaskar - [Metro Hari Ini]",
+     "snippet": "Sebanyak 49 Warga Negara Indonesia (WNI) ditahan oleh aparat keamanan Gendarmerie Nasional di Antananarivo, Madagaskar, dan saat ini tengah meminta pendampingan serta perlindungan kepada Pemerintah RI. Para WNI yang di antaranya berasal dari Aceh dan Medan tersebut diduga kuat menjadi korban penipua"
+    },
+    {
+     "url": "https://www.instagram.com/p/Dd1PyUynfXg",
+     "title": "Instagram",
+     "snippet": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga menjadi korban penipuan lowongan kerja (loker) bodong dan Tindak Pidana Perdagangan Orang (TPPO) di Madagaskar. Para WNI tersebut kini dalam kondisi tertahan di markas gendarmerie nasional di Antananarivo setelah lokasi tempat mereka bekerja dirazia ol"
+    },
+    {
+     "url": "https://www.instagram.com/reel/DeexyaEIZl8",
+     "title": "Instagram",
+     "snippet": "HATI-HATI! TAWARAN GAJI TINGGI BISA BERUJUNG MALAPETAKA  \n  \nSeorang WNI ditawari pekerjaan sebagai petugas keamanan. Namun setibanya di sana, ia justru diminta menandatangani kontrak dinas militer dan terancam dikirim ke medan perang.  \n  \nBelajar dari kasus ini, KBRI Moskow mengimbau seluruh WNI u"
+    },
+    {
+     "url": "https://peduliwni.kemlu.go.id/pengaduan/form.html",
+     "title": "Peduli WNI - Kemenlu",
+     "snippet": "Buku Panduan\n\n#### Ubah Sandi\n\n#### Peringatan\n\nAnda Sudah Tidak Bisa Mengakses Layanan\n\n#### Peringatan\n\nData tidak boleh ada yang kosong!\n\n#### Informasi\n\n#### Nomor Pengaduan Tidak Ditemukan\n\nPelayanan dan Pelindungan WNI di Luar Negeri Kementerian Luar Negeri Republik Indonesia\n\nBuku Panduan Vid"
+    }
+   ]
+  },
+  {
+   "id": "d-p21",
+   "query": "WNI korban penipuan lowongan kerja Thailand",
+   "results": [
+    {
+     "url": "https://www.youtube.com/watch?v=ksemhgg2TVQ",
+     "title": "Tertipu Lowongan Kerja, Korban Disiksa Jika Tak Capai Target | Rosi",
+     "snippet": "Posted: 2023-05-06\nJAKARTA, KOMPAS.TV - Sebanyak 20 TKI disekap di Myawaddy, Myanmar. Mereka adalah korban penipuan kerja palsu yang awalnya dijanjikan bekerja sebagai customer service di Thailand. Kasus ini terungkap saat video Indah viral. Joko Supriyatno adalah ayah dari Noviana Indah. Sebelum In"
+    },
+    {
+     "url": "https://www.bbc.com/indonesia/articles/c703kdwd8zxo",
+     "title": "Myanmar: Kemenlu bebaskan 12 WNI diduga korban TPPO Myanmar – Cerita WNI korban sindikat perdagangan orang di Myanmar diduga 'disekap, disiksa dan dimintai tebusan ratusan juta Rupiah'  - BBC News Indonesia",
+     "snippet": "Mereka telah diberangkatkan dari Myanmar menuju Thailand pada Selasa (15/10) dan saat ini sedang menjalani proses keimigrasian di Thailand.\n\nKemenlu mengungkapkan para korban berangkat ke Thailand dalam kurun waktu Maret hingga Juli 2024 setelah dijanjikan pekerjaan di Thailand. Namun mereka mengaku"
+    },
+    {
+     "url": "https://www.instagram.com/p/DHXn6hQB6ZA",
+     "title": "Instagram",
+     "snippet": "Sebanyak 554 warga negara Indonesia (WNI) yang menjadi korban penipuan kerja atau online scam di Myanmar akhirnya berhasil dipulangkan ke Tanah Air. Upaya ini merupakan hasil kerja sama pemerintah Indonesia melalui berbagai kementerian dan lembaga terkait demi melindungi serta memastikan keselamatan"
+    },
+    {
+     "url": "https://www.setneg.go.id/baca/index/pemerintah_pulangkan_554_wni_korban_tppo_di_myanmar",
+     "title": "Pemerintah Pulangkan 554 WNI Korban TPPO di Myanmar | Sekretariat Negara",
+     "snippet": "“Terima kasih kepada pemerintah Thailand dan beberapa unsur dari pemerintah Myanmar yang membantu pelaksanaan proses pemulangan saudara-saudara kita ini,” kata Menlu.  \n  \nLebih lanjut, Sugiono mengimbau para WNI yang memiliki keinginan bekerja di luar negeri untuk menggunakan jalur resmi serta lebi"
+    },
+    {
+     "url": "https://www.instagram.com/reel/DQbw2h_EpXN",
+     "title": "Instagram",
+     "snippet": "Photo by Direktorat Siber Pelindungan PMI KP2MI/BP2MI on October 10, 2026.\nVideo by Direktorat Siber Pelindungan PMI KP2MI/BP2MI on October 09, 2026. May be a meme of poster, magazine and text.\nPhoto by Direktorat Siber Pelindungan PMI KP2MI/BP2MI on October 08, 2026.\nPhoto by Direktorat Siber Pelin"
+    }
+   ]
+  },
+  {
+   "id": "d-p22",
+   "query": "WNI korban penipuan lowongan kerja Jerman",
+   "results": [
+    {
+     "url": "https://www.bbc.com/indonesia/articles/c4nrkynp8evo",
+     "title": "Kesaksian mahasiswa Indonesia, korban eksploitasi magang di Eropa - BBC News Indonesia",
+     "snippet": "Awalnya, Nita dan rekan-rekannya mengeklaim dijanjikan magang di Bandara Munich. Namun, ternyata begitu sampai di Jerman, menurut mereka, program magang di bandara itu tidak ada di daftar magang Ferienjob.\n\nMereka mengeklaim dipindahkan ke situs kerja lain – sebuah pabrik.\n\n“Itu pun kami enggak lang"
+    },
+    {
+     "url": "https://www.facebook.com/dw.indonesia/videos/korban-modus-magang-di-jerman-dipindah-pindah-kerja-hingga-jadi-kuli-bangunan/1058661365238911",
+     "title": "Korban Modus Magang di Jerman: Dipindah-pindah Kerja ...",
+     "snippet": "Ramayana Monica adalah salah satu dari seribuan mahasiswa ‍ dari 33 universitas di Indonesia yang menjadi korban dugaan penipuan dan"
+    },
+    {
+     "url": "https://www.instagram.com/reel/DK9RVsSzrKM",
+     "title": "Hallo #SobatMigran! 👋 Pernah lihat lowongan kerja ke luar ...",
+     "snippet": "Waspada ya.. Itu adalah ciri-ciri umum penipuan berkedok lowongan kerja luar negeri. Banyak calon Pekerja Migran Indonesia (PMI) tertipu karena"
+    },
+    {
+     "url": "https://www.facebook.com/IndonesianEmbassyPhnomPenh/posts/sahabat-berhati-hatilah-dalam-menerima-tawaran-pekerjaan-di-luar-negeripastikan-/950733460395712",
+     "title": "https://kemlu.go.id/phnompenh/id/news/28794/scam-alert- ...",
+     "snippet": "https://kemlu.go.id/phnompenh/id/news/28794/scam-alert-lowongan-kerja-di-luar-negeri-dengan-persyaratan-minim-dan-gaji-tinggi Sahabat"
+    },
+    {
+     "url": "https://peduliwni.kemlu.go.id/pengaduan/form.html",
+     "title": "Peduli WNI - Kemenlu",
+     "snippet": "Anda saat ini tercatat sedang mengajukan perubahan status Tujuan Menetap - SSW(Specified Skilled Worker). Anda tidak bisa mengajukan pelayanan sementara sebelum Andamelakukan konfirmasi status visa kerja Anda.  \n Silakan Diterima SSW - jika pengajuan SSW Anda telah diterima oleh Pemerintah Jepang da"
+    }
+   ]
+  },
+  {
+   "id": "d-p23",
+   "query": "WNI korban penipuan lowongan kerja Malaysia",
+   "results": [
+    {
+     "url": "https://www.facebook.com/metrotv/posts/sebanyak-49-warga-negara-indonesia-wni-diduga-menjadi-korban-penipuan-lowongan-k/1671954560967119",
+     "title": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga ...",
+     "snippet": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga menjadi korban penipuan lowongan kerja (loker) bodong dan Tindak Pidana Perdagangan Orang"
+    },
+    {
+     "url": "https://www.instagram.com/p/Dd1PyUynfXg",
+     "title": "Instagram",
+     "snippet": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga menjadi korban penipuan lowongan kerja (loker) bodong dan Tindak Pidana Perdagangan Orang (TPPO) di Madagaskar. Para WNI tersebut kini dalam kondisi tertahan di markas gendarmerie nasional di Antananarivo setelah lokasi tempat mereka bekerja dirazia ol"
+    },
+    {
+     "url": "https://www.kompas.id/artikel/saat-pintu-apartemen-terbuka-mimpi-kerja-itu-tertutup-seketika",
+     "title": "Info dari Facebook Dijanjikan Kerja di Malaysia, Malah Dijadikan Penipu di Kamboja",
+     "snippet": "Baca JugaWNI Terus Dikirim ke Kamboja untuk Dijadikan Penipu Daring\n\nKisah kelam RNF bermula di awal September 2025. Lama menganggur, harapannya bekerja muncul saat melihat lowongan kerja di media sosial Facebook. Dalam lowongan kerja itu disebutkan ada satu tempat untuk posisi staf administrasi di "
+    },
+    {
+     "url": "https://www.instagram.com/reel/DeexyaEIZl8",
+     "title": "Instagram",
+     "snippet": "HATI-HATI! TAWARAN GAJI TINGGI BISA BERUJUNG MALAPETAKA  \n  \nSeorang WNI ditawari pekerjaan sebagai petugas keamanan. Namun setibanya di sana, ia justru diminta menandatangani kontrak dinas militer dan terancam dikirim ke medan perang.  \n  \nBelajar dari kasus ini, KBRI Moskow mengimbau seluruh WNI u"
+    },
+    {
+     "url": "https://peduliwni.kemlu.go.id/pengaduan/form.html",
+     "title": "Peduli WNI - Kemenlu",
+     "snippet": "Buku Panduan\n\n#### Ubah Sandi\n\n#### Peringatan\n\nAnda Sudah Tidak Bisa Mengakses Layanan\n\n#### Peringatan\n\nData tidak boleh ada yang kosong!\n\n#### Informasi\n\n#### Nomor Pengaduan Tidak Ditemukan\n\nPelayanan dan Pelindungan WNI di Luar Negeri Kementerian Luar Negeri Republik Indonesia\n\nBuku Panduan Vid"
+    }
+   ]
+  },
+  {
+   "id": "d-p24",
+   "query": "WNI korban penipuan lowongan kerja Malaysia",
+   "results": [
+    {
+     "url": "https://www.youtube.com/watch?v=SwtPDXXwhBA",
+     "title": "Tertipu Lowongan Kerja di Medsos, 49 WNI Ditahan di Madagaskar - [Metro Hari Ini]",
+     "snippet": "Sebanyak 49 Warga Negara Indonesia (WNI) ditahan oleh aparat keamanan Gendarmerie Nasional di Antananarivo, Madagaskar, dan saat ini tengah meminta pendampingan serta perlindungan kepada Pemerintah RI. Para WNI yang di antaranya berasal dari Aceh dan Medan tersebut diduga kuat menjadi korban penipua"
+    },
+    {
+     "url": "https://www.instagram.com/p/Dd1PyUynfXg",
+     "title": "Instagram",
+     "snippet": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga menjadi korban penipuan lowongan kerja (loker) bodong dan Tindak Pidana Perdagangan Orang (TPPO) di Madagaskar. Para WNI tersebut kini dalam kondisi tertahan di markas gendarmerie nasional di Antananarivo setelah lokasi tempat mereka bekerja dirazia ol"
+    },
+    {
+     "url": "https://www.kompas.id/artikel/saat-pintu-apartemen-terbuka-mimpi-kerja-itu-tertutup-seketika",
+     "title": "Info dari Facebook Dijanjikan Kerja di Malaysia, Malah Dijadikan Penipu di Kamboja",
+     "snippet": "Baca JugaWNI Terus Dikirim ke Kamboja untuk Dijadikan Penipu Daring\n\nKisah kelam RNF bermula di awal September 2025. Lama menganggur, harapannya bekerja muncul saat melihat lowongan kerja di media sosial Facebook. Dalam lowongan kerja itu disebutkan ada satu tempat untuk posisi staf administrasi di "
+    },
+    {
+     "url": "https://www.instagram.com/reel/DeexyaEIZl8",
+     "title": "Instagram",
+     "snippet": "HATI-HATI! TAWARAN GAJI TINGGI BISA BERUJUNG MALAPETAKA  \n  \nSeorang WNI ditawari pekerjaan sebagai petugas keamanan. Namun setibanya di sana, ia justru diminta menandatangani kontrak dinas militer dan terancam dikirim ke medan perang.  \n  \nBelajar dari kasus ini, KBRI Moskow mengimbau seluruh WNI u"
+    },
+    {
+     "url": "https://www.facebook.com/kemenp2mi/posts/buat-kamu-yang-sedang-baca-iniberhenti-sebentarkami-ingin-kamu-menyimak-cerita-i/1136978981789730",
+     "title": "Buat kamu yang sedang baca ini...Berhenti sebentar ...",
+     "snippet": "Kami ingin kamu menyimak cerita ini, cerita tentang Heni yang hampir jadi korban penipuan pekerja migran ilegal. Semuanya berawal dari iklan"
+    }
+   ]
+  },
+  {
+   "id": "d-p25",
+   "query": "WNI korban penipuan lowongan kerja Spanyol",
+   "results": [
+    {
+     "url": "https://www.facebook.com/metrotv/posts/sebanyak-49-warga-negara-indonesia-wni-diduga-menjadi-korban-penipuan-lowongan-k/1671954560967119",
+     "title": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga ...",
+     "snippet": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga menjadi korban penipuan lowongan kerja (loker) bodong dan Tindak Pidana Perdagangan Orang"
+    },
+    {
+     "url": "https://makassar.antaranews.com/berita/461589/kemenlu-jumlah-wni-korban-online-scam-di-luar-negeri-meningkat",
+     "title": "Kemenlu: Jumlah WNI korban \"online scam\" di luar negeri ...",
+     "snippet": "Direktur Perlindungan WNI dan BHI Kemlu RI Judha Nugraha mengungkapkan bahwa pada 2022 tercatat 1.185 WNI yang menjadi korban perusahaan daring. Para korban itu"
+    },
+    {
+     "url": "https://siskop2mi.bp2mi.go.id/profil/negara/detail/ES",
+     "title": "Spanyol",
+     "snippet": "Jika Anda telah menjadi korban dari penipuan bermotif lotere, kami menyarankan Anda agar tidak melakukan perjalanan untuk mencari ganti rugi."
+    },
+    {
+     "url": "https://peduliwni.kemlu.go.id/pengaduan/form.html",
+     "title": "Peduli WNI - Kemenlu",
+     "snippet": "Anda saat ini tercatat sedang mengajukan perubahan status Tujuan Menetap - SSW(Specified Skilled Worker). Anda tidak bisa mengajukan pelayanan sementara sebelum Andamelakukan konfirmasi status visa kerja Anda.  \n Silakan Diterima SSW - jika pengajuan SSW Anda telah diterima oleh Pemerintah Jepang da"
+    },
+    {
+     "url": "https://www.instagram.com/p/CyV3Kq2M4b6?hl=hr",
+     "title": "Instagram",
+     "snippet": "Ingin membaca artikel lebih lanjut di Kompas.id, tetapi belum berlangganan? Kami menghadirkan promo berlangganan Kompas.id selama 12 bulan hanya 180 ribu Rupiah. Klaim aksesnya, cek info tautannya di salindia (slide) kedua.  \n  \n#HarianKompas #Kompasid #SosokKompas [...] ## Još nema komentara.\n\nZapo"
+    }
+   ]
+  }
+ ]
+}
