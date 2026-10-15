@@ -1,0 +1,1566 @@
+{
+ "rules": "bench/STAGE-T.md",
+ "labels": "bench/stage-t-labels.jsonl",
+ "labeller": "agent (DRAFT-UNREVIEWED)",
+ "note": "Every number here is vs agent labels, unreviewed. One run per model configuration, temperature 1.0, top_p 0.95, response_format json_schema {name, schema, strict}, through the app's own extraction code (POST /api/check, bench mode, stage extract).",
+ "runs": {
+  "nvidia/nemotron-3-super-120b-a12b": {
+   "recorded_at": "2026-10-14T23:44:22+00:00",
+   "score": {
+    "field_accuracy_pct": 70.7,
+    "correct": 70,
+    "labelled": 99,
+    "false_fill_rate_pct": 1.4,
+    "false_fills": 1,
+    "empty_label_slots": 73,
+    "company_accuracy_pct": 33.3,
+    "company_labelled": 6,
+    "company_false_fill_rate_pct": 0.0,
+    "company_empty_labels": 19,
+    "list_precision_pct": 79.1,
+    "list_recall_pct": 72.3,
+    "per_field": {
+     "company": {
+      "correct": 2,
+      "labelled": 6,
+      "pct": 33.3
+     },
+     "destination": {
+      "correct": 21,
+      "labelled": 24,
+      "pct": 87.5
+     },
+     "job": {
+      "correct": 12,
+      "labelled": 20,
+      "pct": 60.0
+     },
+     "visa": {
+      "correct": 1,
+      "labelled": 2,
+      "pct": 50.0
+     },
+     "fees": {
+      "correct": 1,
+      "labelled": 5,
+      "pct": 20.0
+     },
+     "promises": {
+      "correct": 33,
+      "labelled": 42,
+      "pct": 78.6
+     }
+    }
+   },
+   "seconds_p50": 2.14,
+   "rows": [
+    {
+     "id": "d-n01",
+     "seconds": 2.69,
+     "pred": {
+      "company": "HJ INTERNATIONAL CO. LTD.",
+      "destination": "Taiwan",
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": []
+     },
+     "dropped_fields": [],
+     "tokens": 841,
+     "error": null
+    },
+    {
+     "id": "d-n02",
+     "seconds": 2.14,
+     "pred": {
+      "company": "YUAN SHENG INTERNATIONAL MANAGEMENT CONSULTANT CO.LTD Taiwan",
+      "destination": "Taiwan",
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "Akomodasi",
+       "Komunikasi",
+       "Libur",
+       "Konsumsi"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 957,
+     "error": null
+    },
+    {
+     "id": "d-n03",
+     "seconds": 3.05,
+     "pred": {
+      "company": "SINLIN INTERNATIONAL BUSINESS LTD. Taiwan",
+      "destination": "Taiwan",
+      "job": "Worker",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "Penginapan",
+       "Komunikasi",
+       "Cuti",
+       "Libur"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 1130,
+     "error": null
+    },
+    {
+     "id": "d-n04",
+     "seconds": 2.14,
+     "pred": {
+      "company": "HOMASTER INTERNATIONAL CO.LTD. Taiwan",
+      "destination": "Taiwan",
+      "job": "Worker",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "Akomodasi"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 953,
+     "error": null
+    },
+    {
+     "id": "d-n05",
+     "seconds": 3.52,
+     "pred": {
+      "company": "TEKAD JAYA ABADI",
+      "destination": "LOMBOK BARAT",
+      "job": "Plantation Worker",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "uang lembur, asuransi, dll",
+       "1700.00"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 1267,
+     "error": null
+    },
+    {
+     "id": "d-p06",
+     "seconds": 2.11,
+     "pred": {
+      "company": null,
+      "destination": null,
+      "job": "pekerja kantor yang berhubungan dengan komputer",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji 3.500 dirham atau sebesar Rp 15 juta per bulan"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 860,
+     "error": null
+    },
+    {
+     "id": "d-p07",
+     "seconds": 2.33,
+     "pred": {
+      "company": null,
+      "destination": "Bali",
+      "job": "keuangan",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji pokok sekitar Rp4 juta rupiah"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 863,
+     "error": null
+    },
+    {
+     "id": "d-p08",
+     "seconds": 1.69,
+     "pred": {
+      "company": null,
+      "destination": "Myanmar",
+      "job": "trading",
+      "visa": null,
+      "fees": [],
+      "promises": []
+     },
+     "dropped_fields": [],
+     "tokens": 776,
+     "error": null
+    },
+    {
+     "id": "d-p09",
+     "seconds": 2.33,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji yang besar yaitu 20 juta/bulan"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 882,
+     "error": null
+    },
+    {
+     "id": "d-p10",
+     "seconds": 2.56,
+     "pred": {
+      "company": null,
+      "destination": "Saudi Arabia",
+      "job": "bartender, supir, dan pekerja restoran",
+      "visa": null,
+      "fees": [
+       "Rp19-20 juta"
+      ],
+      "promises": [
+       "kemudahan",
+       "gaji besar"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 980,
+     "error": null
+    },
+    {
+     "id": "d-p11",
+     "seconds": 3.89,
+     "pred": {
+      "company": null,
+      "destination": "Dubai",
+      "job": null,
+      "visa": null,
+      "fees": [
+       "meminta sejumlah uang untuk mengurus dokumen dan tiket bus ke Subang, Jawa Barat."
+      ],
+      "promises": [
+       "gaji tinggi",
+       "bebas biaya pengurusan dokumen",
+       "bebas biaya keberangkatan"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 1175,
+     "error": null
+    },
+    {
+     "id": "d-p12",
+     "seconds": 1.77,
+     "pred": {
+      "company": null,
+      "destination": null,
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": []
+     },
+     "dropped_fields": [],
+     "tokens": 770,
+     "error": null
+    },
+    {
+     "id": "d-p13",
+     "seconds": 1.86,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": "staf kebersihan di kebun Malaysia",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji tinggi",
+       "gaji jika dirupiahkan Rp 9-10 juta"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 850,
+     "error": null
+    },
+    {
+     "id": "d-p14",
+     "seconds": 2.46,
+     "pred": {
+      "company": null,
+      "destination": "Thailand",
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": []
+     },
+     "dropped_fields": [],
+     "tokens": 877,
+     "error": null
+    },
+    {
+     "id": "d-p15",
+     "seconds": 2.06,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": []
+     },
+     "dropped_fields": null,
+     "tokens": 0,
+     "error": null,
+     "recovered_from_pack": "dqn3djfxdmfqoxp5uu5dbkispq (is_job_offer false; read back from Object Storage)"
+    },
+    {
+     "id": "d-p16",
+     "seconds": 2.02,
+     "pred": {
+      "company": null,
+      "destination": "Thailand",
+      "job": "bidang e-commerce bagian penjualan barang",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji Rp 16 juta per bulan"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 867,
+     "error": null
+    },
+    {
+     "id": "d-p17",
+     "seconds": 2.69,
+     "pred": {
+      "company": null,
+      "destination": "Laos",
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "pekerjaan dengan gaji tinggi",
+       "gaji besar"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 935,
+     "error": null
+    },
+    {
+     "id": "d-p18",
+     "seconds": 2.07,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": "lady companion (LC)",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji belasan juta",
+       "dengan gaji Rp15.000.000 per bulan"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 875,
+     "error": null
+    },
+    {
+     "id": "d-p19",
+     "seconds": 1.97,
+     "pred": {
+      "company": null,
+      "destination": "Thailand",
+      "job": "scammer",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "upah Rp 12 juta per bulan"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 777,
+     "error": null
+    },
+    {
+     "id": "d-p20",
+     "seconds": 2.27,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": null,
+      "visa": null,
+      "fees": [
+       "Rp12 juta",
+       "Rp16 juta"
+      ],
+      "promises": [
+       "pekerjaan di luar negeri"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 951,
+     "error": null
+    },
+    {
+     "id": "d-p21",
+     "seconds": 1.95,
+     "pred": {
+      "company": null,
+      "destination": null,
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": []
+     },
+     "dropped_fields": [],
+     "tokens": 777,
+     "error": null
+    },
+    {
+     "id": "d-p22",
+     "seconds": 3.48,
+     "pred": {
+      "company": "PT CVGen dan PT SHB",
+      "destination": "Jerman",
+      "job": null,
+      "visa": "paspor dan visa",
+      "fees": [],
+      "promises": [
+       "gratis",
+       "ada yang bantu dana talangan",
+       "nanti pasti ketutup dengan gaji di Jerman",
+       "agen menjanjikan sudah ada pekerjaan yang menunggunya di Jerman"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 1212,
+     "error": null
+    },
+    {
+     "id": "d-p23",
+     "seconds": 4.58,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": "asisten rumah tangga, cleaning service, dan admin kantor",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji tinggi",
+       "penghasilan berkisar antara Rp 6,1 juta hingga Rp 6,5 juta per bulan",
+       "menanggung seluruh akomodasi termasuk tiket bus, kapal, dan pengurusan paspor",
+       "[nama] tidak memungut biaya awal dari korban."
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 1398,
+     "error": null
+    },
+    {
+     "id": "d-p24",
+     "seconds": 1.74,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": "kilang",
+      "visa": null,
+      "fees": [],
+      "promises": []
+     },
+     "dropped_fields": [],
+     "tokens": 790,
+     "error": null
+    },
+    {
+     "id": "d-p25",
+     "seconds": 1.48,
+     "pred": {
+      "company": null,
+      "destination": "Spanyol",
+      "job": "bartender",
+      "visa": "surat izin tinggalnya",
+      "fees": [],
+      "promises": [
+       "gaji sebanyak 1.200 euro (Rp 22,5 juta) per bulan",
+       "diurus surat izin tinggalnya",
+       "menggunakan paspor dan visa kunjungan sementara"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 802,
+     "error": null
+    }
+   ],
+   "reasoning": "low_effort (chat_template_kwargs enable_thinking + low_effort)"
+  },
+  "nvidia/Nemotron-3-Ultra-550b-a55b": {
+   "recorded_at": "2026-10-14T23:45:41+00:00",
+   "score": {
+    "field_accuracy_pct": 84.8,
+    "correct": 84,
+    "labelled": 99,
+    "false_fill_rate_pct": 5.5,
+    "false_fills": 4,
+    "empty_label_slots": 73,
+    "company_accuracy_pct": 16.7,
+    "company_labelled": 6,
+    "company_false_fill_rate_pct": 5.3,
+    "company_empty_labels": 19,
+    "list_precision_pct": 85.1,
+    "list_recall_pct": 85.1,
+    "per_field": {
+     "company": {
+      "correct": 1,
+      "labelled": 6,
+      "pct": 16.7
+     },
+     "destination": {
+      "correct": 24,
+      "labelled": 24,
+      "pct": 100.0
+     },
+     "job": {
+      "correct": 18,
+      "labelled": 20,
+      "pct": 90.0
+     },
+     "visa": {
+      "correct": 1,
+      "labelled": 2,
+      "pct": 50.0
+     },
+     "fees": {
+      "correct": 4,
+      "labelled": 5,
+      "pct": 80.0
+     },
+     "promises": {
+      "correct": 36,
+      "labelled": 42,
+      "pct": 85.7
+     }
+    }
+   },
+   "seconds_p50": 5.47,
+   "rows": [
+    {
+     "id": "d-n01",
+     "seconds": 7.7,
+     "pred": {
+      "company": "HJ INTERNATIONAL CO. LTD. Taiwan",
+      "destination": "Taiwan",
+      "job": "Worker",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "Akomodasi"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 2811,
+     "error": null
+    },
+    {
+     "id": "d-n02",
+     "seconds": 3.4,
+     "pred": {
+      "company": "YUAN SHENG INTERNATIONAL MANAGEMENT CONSULTANT CO.LTD Taiwan",
+      "destination": "Taiwan",
+      "job": "Nursing Home",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "Akomodasi",
+       "Komunikasi",
+       "Libur",
+       "Konsumsi"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 1720,
+     "error": null
+    },
+    {
+     "id": "d-n03",
+     "seconds": 7.08,
+     "pred": {
+      "company": "SINLIN INTERNATIONAL BUSINESS LTD. Taiwan",
+      "destination": "Taiwan",
+      "job": "Worker",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "Penginapan",
+       "Komunikasi",
+       "Cuti",
+       "Libur"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 2785,
+     "error": null
+    },
+    {
+     "id": "d-n04",
+     "seconds": 3.73,
+     "pred": {
+      "company": "HOMASTER INTERNATIONAL CO.LTD. Taiwan",
+      "destination": "Taiwan",
+      "job": "Worker",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "Akomodasi"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 1834,
+     "error": null
+    },
+    {
+     "id": "d-n05",
+     "seconds": 9.24,
+     "pred": {
+      "company": "PAMOL PLANTATIONS SDN BHD Malaysia",
+      "destination": "Malaysia",
+      "job": "Plantation Worker",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "1700.00",
+       "Gaji :\n1700.00",
+       "uang lembur, asuransi, dll"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 3667,
+     "error": null
+    },
+    {
+     "id": "d-p06",
+     "seconds": 3.55,
+     "pred": {
+      "company": null,
+      "destination": "di luar negeri",
+      "job": "pekerja kantor yang berhubungan dengan komputer",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji 3.500 dirham atau sebesar Rp 15 juta per bulan"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 1483,
+     "error": null
+    },
+    {
+     "id": "d-p07",
+     "seconds": 11.32,
+     "pred": {
+      "company": null,
+      "destination": "di Bali",
+      "job": "keuangan",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji gede",
+       "gaji pokok sekitar Rp4 juta rupiah",
+       "tiket pesawat menuju Malaysia"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 4076,
+     "error": null
+    },
+    {
+     "id": "d-p08",
+     "seconds": 3.09,
+     "pred": {
+      "company": null,
+      "destination": "Myanmar",
+      "job": "trading",
+      "visa": null,
+      "fees": [],
+      "promises": []
+     },
+     "dropped_fields": [],
+     "tokens": 1270,
+     "error": null
+    },
+    {
+     "id": "d-p09",
+     "seconds": 2.14,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "iming-iming gaji yang besar yaitu 20 juta/bulan"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 958,
+     "error": null
+    },
+    {
+     "id": "d-p10",
+     "seconds": 5.51,
+     "pred": {
+      "company": null,
+      "destination": "Saudi Arabia",
+      "job": "bartender, supir, dan pekerja restoran",
+      "visa": null,
+      "fees": [
+       "biaya yang cukup besar, antara Rp19-20 juta"
+      ],
+      "promises": [
+       "iming-iming kemudahan dan gaji besar"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 2104,
+     "error": null
+    },
+    {
+     "id": "d-p11",
+     "seconds": 10.88,
+     "pred": {
+      "company": null,
+      "destination": "Dubai",
+      "job": null,
+      "visa": null,
+      "fees": [
+       "sejumlah uang untuk mengurus dokumen dan tiket bus ke Subang, Jawa Barat"
+      ],
+      "promises": [
+       "gaji tinggi",
+       "bebas biaya pengurusan dokumen",
+       "bebas biaya keberangkatan"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 4283,
+     "error": null
+    },
+    {
+     "id": "d-p12",
+     "seconds": 2.91,
+     "pred": {
+      "company": "CPMI non-prosedural",
+      "destination": "Arab Saudi, Malaysia, Oman, Singapura, Laos, China, Korea Selatan dan Taiwan",
+      "job": "operator scamming, asisten rumah tangga (ART), pekerja perkebunan, admin judi online, hingga pegawai restoran",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "janji manis"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 1406,
+     "error": null
+    },
+    {
+     "id": "d-p13",
+     "seconds": 6.48,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": "staf kebersihan",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "legal dengan gaji tinggi",
+       "gaji jika dirupiahkan Rp 9-10 juta"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 2551,
+     "error": null
+    },
+    {
+     "id": "d-p14",
+     "seconds": 4.58,
+     "pred": {
+      "company": null,
+      "destination": "Thailand",
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "ditanggung biaya pesawat sampai di Myanmar"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 1745,
+     "error": null
+    },
+    {
+     "id": "d-p15",
+     "seconds": 4.66,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": "kerja di tempat biliard",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji Rp 10 juta per 10 hari"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 1644,
+     "error": null
+    },
+    {
+     "id": "d-p16",
+     "seconds": 2.61,
+     "pred": {
+      "company": null,
+      "destination": "Thailand",
+      "job": "bidang e-commerce bagian penjualan barang",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji Rp 16 juta per bulan"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 1218,
+     "error": null
+    },
+    {
+     "id": "d-p17",
+     "seconds": 4.53,
+     "pred": {
+      "company": null,
+      "destination": "Laos",
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji tinggi",
+       "gaji besar"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 1613,
+     "error": null
+    },
+    {
+     "id": "d-p18",
+     "seconds": 5.47,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": "lady companion (LC)",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji belasan juta",
+       "gaji Rp15.000.000 per bulan"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 1857,
+     "error": null
+    },
+    {
+     "id": "d-p19",
+     "seconds": 3.15,
+     "pred": {
+      "company": null,
+      "destination": "Thailand",
+      "job": "scammer",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "upah Rp 12 juta per bulan"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 1320,
+     "error": null
+    },
+    {
+     "id": "d-p20",
+     "seconds": 5.51,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": null,
+      "visa": null,
+      "fees": [
+       "Rp12 juta hingga Rp16 juta per orang"
+      ],
+      "promises": []
+     },
+     "dropped_fields": [],
+     "tokens": 1824,
+     "error": null
+    },
+    {
+     "id": "d-p21",
+     "seconds": 2.91,
+     "pred": {
+      "company": null,
+      "destination": "Thailand",
+      "job": "marketing",
+      "visa": null,
+      "fees": [],
+      "promises": []
+     },
+     "dropped_fields": [],
+     "tokens": 1091,
+     "error": null
+    },
+    {
+     "id": "d-p22",
+     "seconds": 8.94,
+     "pred": {
+      "company": "PT CVGen dan PT SHB",
+      "destination": "Jerman",
+      "job": null,
+      "visa": "visa",
+      "fees": [
+       "dana talangan"
+      ],
+      "promises": [
+       "Katanya gratis",
+       "sudah ada pekerjaan yang menunggunya di Jerman"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 2862,
+     "error": null
+    },
+    {
+     "id": "d-p23",
+     "seconds": 7.11,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": "asisten rumah tangga, cleaning service, dan admin kantor",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji tinggi",
+       "penghasilan berkisar antara Rp 6,1 juta hingga Rp 6,5 juta per bulan",
+       "tidak memungut biaya awal dari korban",
+       "menanggung seluruh akomodasi termasuk tiket bus, kapal, dan pengurusan paspor"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 2300,
+     "error": null
+    },
+    {
+     "id": "d-p24",
+     "seconds": 6.26,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": "kilang",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "dijanjikan berangkat kerja ke Malaysia",
+       "bidang pekerjaannya kilang"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 2097,
+     "error": null
+    },
+    {
+     "id": "d-p25",
+     "seconds": 6.36,
+     "pred": {
+      "company": null,
+      "destination": "Spanyol",
+      "job": "bartender",
+      "visa": "visa kunjungan sementara",
+      "fees": [],
+      "promises": [
+       "gaji sebanyak 1.200 euro (Rp 22,5 juta) per bulan",
+       "diurus surat izin tinggalnya"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 2374,
+     "error": null
+    }
+   ],
+   "reasoning": "low_effort (chat_template_kwargs enable_thinking + low_effort)"
+  },
+  "nvidia/Nemotron-3_5-Lightning (reasoning off)": {
+   "recorded_at": "2026-10-14T23:49:50+00:00",
+   "score": {
+    "field_accuracy_pct": 59.6,
+    "correct": 59,
+    "labelled": 99,
+    "false_fill_rate_pct": 4.1,
+    "false_fills": 3,
+    "empty_label_slots": 73,
+    "company_accuracy_pct": 33.3,
+    "company_labelled": 6,
+    "company_false_fill_rate_pct": 0.0,
+    "company_empty_labels": 19,
+    "list_precision_pct": 72.7,
+    "list_recall_pct": 51.1,
+    "per_field": {
+     "company": {
+      "correct": 2,
+      "labelled": 6,
+      "pct": 33.3
+     },
+     "destination": {
+      "correct": 19,
+      "labelled": 24,
+      "pct": 79.2
+     },
+     "job": {
+      "correct": 13,
+      "labelled": 20,
+      "pct": 65.0
+     },
+     "visa": {
+      "correct": 1,
+      "labelled": 2,
+      "pct": 50.0
+     },
+     "fees": {
+      "correct": 3,
+      "labelled": 5,
+      "pct": 60.0
+     },
+     "promises": {
+      "correct": 21,
+      "labelled": 42,
+      "pct": 50.0
+     }
+    }
+   },
+   "seconds_p50": 1.54,
+   "rows": [
+    {
+     "id": "d-n01",
+     "seconds": 2.88,
+     "pred": {
+      "company": "TRIAS INSAN MADANI",
+      "destination": "Taiwan",
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "Akomodasi"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 809,
+     "error": null
+    },
+    {
+     "id": "d-n02",
+     "seconds": 1.18,
+     "pred": {
+      "company": "YUAN SHENG INTERNATIONAL MANAGEMENT CONSULTANT CO.LTD Taiwan",
+      "destination": null,
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "Akomodasi",
+       "Komunikasi",
+       "Libur",
+       "Konsumsi"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 851,
+     "error": null
+    },
+    {
+     "id": "d-n03",
+     "seconds": 1.53,
+     "pred": {
+      "company": "INSAN KARYA MANDIRI UTAMA",
+      "destination": null,
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": []
+     },
+     "dropped_fields": [],
+     "tokens": 812,
+     "error": null
+    },
+    {
+     "id": "d-n04",
+     "seconds": 1.5,
+     "pred": {
+      "company": "HOMASTER INTERNATIONAL CO.LTD.",
+      "destination": "Taiwan",
+      "job": "Worker",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "Akomodasi"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 805,
+     "error": null
+    },
+    {
+     "id": "d-n05",
+     "seconds": 1.71,
+     "pred": {
+      "company": "PAMOL PLANTATIONS SDN BHD Malaysia",
+      "destination": "LOMBOK BARAT",
+      "job": "Plantation Worker",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "uang lembur",
+       "asuransi"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 847,
+     "error": null
+    },
+    {
+     "id": "d-p06",
+     "seconds": 1.71,
+     "pred": {
+      "company": null,
+      "destination": "luar negeri",
+      "job": "pekerja kantor",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji 3.500 dirham",
+       "sebesar Rp 15 juta per bulan"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 690,
+     "error": null
+    },
+    {
+     "id": "d-p07",
+     "seconds": 1.51,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": "keuangan",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji pokok sekitar Rp4 juta rupiah"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 717,
+     "error": null
+    },
+    {
+     "id": "d-p08",
+     "seconds": 1.32,
+     "pred": {
+      "company": null,
+      "destination": "Myanmar",
+      "job": "trading",
+      "visa": null,
+      "fees": [],
+      "promises": []
+     },
+     "dropped_fields": [],
+     "tokens": 635,
+     "error": null
+    },
+    {
+     "id": "d-p09",
+     "seconds": 1.51,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji yang besar yaitu 20 juta/bulan"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 670,
+     "error": null
+    },
+    {
+     "id": "d-p10",
+     "seconds": 1.82,
+     "pred": {
+      "company": null,
+      "destination": "Saudi Arabia",
+      "job": "bartender, supir, dan pekerja restoran",
+      "visa": null,
+      "fees": [
+       "biaya yang cukup besar, antara Rp19-20 juta"
+      ],
+      "promises": [
+       "iming-iming kemudahan dan gaji besar"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 757,
+     "error": null
+    },
+    {
+     "id": "d-p11",
+     "seconds": 1.54,
+     "pred": {
+      "company": null,
+      "destination": "Dubai",
+      "job": null,
+      "visa": null,
+      "fees": [
+       "sejumlah uang untuk mengurus dokumen dan tiket bus ke Subang, Jawa Barat"
+      ],
+      "promises": []
+     },
+     "dropped_fields": [],
+     "tokens": 749,
+     "error": null
+    },
+    {
+     "id": "d-p12",
+     "seconds": 1.99,
+     "pred": {
+      "company": null,
+      "destination": "Arab Saudi, Malaysia, Oman, Singapura, Laos, China, Korea Selatan dan Taiwan",
+      "job": "operator scamming, asisten rumah tangga (ART), pekerja perkebunan, admin judi online, hingga pegawai restoran",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "janji manis"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 748,
+     "error": null
+    },
+    {
+     "id": "d-p13",
+     "seconds": 1.57,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": "staf kebersihan",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji jika dirupiahkan Rp 9-10 juta"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 744,
+     "error": null
+    },
+    {
+     "id": "d-p14",
+     "seconds": 1.38,
+     "pred": {
+      "company": null,
+      "destination": "Thailand",
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "penempatannya berada di Thailand"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 698,
+     "error": null
+    },
+    {
+     "id": "d-p15",
+     "seconds": 1.57,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji Rp 10 juta per 10 hari"
+      ]
+     },
+     "dropped_fields": [
+      "job"
+     ],
+     "tokens": 675,
+     "error": null
+    },
+    {
+     "id": "d-p16",
+     "seconds": 1.8,
+     "pred": {
+      "company": null,
+      "destination": "Thailand",
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji Rp 16 juta per bulan"
+      ]
+     },
+     "dropped_fields": [
+      "job"
+     ],
+     "tokens": 689,
+     "error": null
+    },
+    {
+     "id": "d-p17",
+     "seconds": 1.33,
+     "pred": {
+      "company": null,
+      "destination": "Laos",
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji tinggi"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 691,
+     "error": null
+    },
+    {
+     "id": "d-p18",
+     "seconds": 1.72,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": "lady companion (LC)",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji Rp15.000.000 per bulan"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 683,
+     "error": null
+    },
+    {
+     "id": "d-p19",
+     "seconds": 1.54,
+     "pred": {
+      "company": null,
+      "destination": "Thailand",
+      "job": "scammer",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "upah Rp 12 juta per bulan"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 659,
+     "error": null
+    },
+    {
+     "id": "d-p20",
+     "seconds": 1.62,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": "pekerjaan",
+      "visa": null,
+      "fees": [
+       "Rp12 juta hingga Rp16 juta per orang"
+      ],
+      "promises": []
+     },
+     "dropped_fields": [],
+     "tokens": 730,
+     "error": null
+    },
+    {
+     "id": "d-p21",
+     "seconds": 1.3,
+     "pred": {
+      "company": null,
+      "destination": "Thailand",
+      "job": "marketing",
+      "visa": null,
+      "fees": [],
+      "promises": []
+     },
+     "dropped_fields": [],
+     "tokens": 633,
+     "error": null
+    },
+    {
+     "id": "d-p22",
+     "seconds": 1.5,
+     "pred": {
+      "company": null,
+      "destination": "Jerman",
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": []
+     },
+     "dropped_fields": [],
+     "tokens": 751,
+     "error": null
+    },
+    {
+     "id": "d-p23",
+     "seconds": 2.25,
+     "pred": {
+      "company": null,
+      "destination": "Malaysia",
+      "job": "asisten rumah tangga, cleaning service, dan admin kantor",
+      "visa": null,
+      "fees": [],
+      "promises": [
+       "gaji tinggi",
+       "penghasilan berkisar antara Rp 6,1 juta hingga Rp 6,5 juta per bulan",
+       "tiket bus",
+       "kapal",
+       "pengurusan paspor",
+       "akomodasi"
+      ]
+     },
+     "dropped_fields": [],
+     "tokens": 833,
+     "error": null
+    },
+    {
+     "id": "d-p24",
+     "seconds": 1.26,
+     "pred": {
+      "company": null,
+      "destination": null,
+      "job": null,
+      "visa": null,
+      "fees": [],
+      "promises": []
+     },
+     "dropped_fields": [],
+     "tokens": 691,
+     "error": null
+    },
+    {
+     "id": "d-p25",
+     "seconds": 2.31,
+     "pred": {
+      "company": null,
+      "destination": "Spanyol",
+      "job": "bartender",
+      "visa": "visa kunjungan sementara",
+      "fees": [],
+      "promises": [
+       "gaji sebanyak 1.200 euro (Rp 22,5 juta) per bulan",
+       "akan diberikan diurus surat izin tinggalnya",
+       "lowongan ABK sedang tutup"
+      ]
+     },
+     "dropped_fields": [
+      "promises"
+     ],
+     "tokens": 803,
+     "error": null
+    }
+   ],
+   "reasoning": "off"
+  },
+  "nvidia/Nemotron-3_5-Lightning (low_effort)": {
+   "reasoning": "low_effort",
+   "stopped_after_rows": 2,
+   "result": "no answer on 2 of 2 rows: each extraction spent its whole 4,096-token budget reasoning, twice (8,192 reasoning tokens, ~100 s), and returned empty content — the run was stopped; this configuration cannot extract",
+   "rows": [
+    {
+     "id": "d-n01",
+     "seconds": 101.0,
+     "error": "extraction: no answer (reasoning budget exhausted)"
+    },
+    {
+     "id": "d-n02",
+     "seconds": 98.8,
+     "error": "extraction: no answer (reasoning budget exhausted)"
+    }
+   ]
+  }
+ },
+ "regex_baseline_company": {
+  "field_accuracy_pct": 0.0,
+  "correct": 0,
+  "labelled": 6,
+  "false_fill_rate_pct": 0.0,
+  "false_fills": 0,
+  "empty_label_slots": 144,
+  "company_accuracy_pct": 0.0,
+  "company_labelled": 6,
+  "company_false_fill_rate_pct": 0.0,
+  "company_empty_labels": 19,
+  "list_precision_pct": null,
+  "list_recall_pct": null,
+  "per_field": {
+   "company": {
+    "correct": 0,
+    "labelled": 6,
+    "pct": 0.0
+   },
+   "destination": {
+    "correct": 0,
+    "labelled": 0,
+    "pct": null
+   },
+   "job": {
+    "correct": 0,
+    "labelled": 0,
+    "pct": null
+   },
+   "visa": {
+    "correct": 0,
+    "labelled": 0,
+    "pct": null
+   },
+   "fees": {
+    "correct": 0,
+    "labelled": 0,
+    "pct": null
+   },
+   "promises": {
+    "correct": 0,
+    "labelled": 0,
+    "pct": null
+   }
+  }
+ },
+ "gate": {
+  "best_model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+  "best_field_accuracy_pct": 84.8,
+  "threshold_pct": 80,
+  "result": "pass"
+ },
+ "routing": {
+  "call_1": "nvidia/Nemotron-3-Ultra-550b-a55b",
+  "call_2": "nvidia/nemotron-3-super-120b-a12b",
+  "call_3": "nvidia/nemotron-3-super-120b-a12b",
+  "why": "architecture.md: the better extractor ships and Super takes all calls if Lightning's stage-T accuracy is below 80 % (Lightning 59.6 % with reasoning off, no answers with low_effort); Ultra is the best extractor (84.8 % vs Super's). Call 2 moves to Ultra only if it beats Super on dev company-matched lines within 45 s (stage V)."
+ },
+ "recorded_at": "2026-10-14T23:50:55+00:00"
+}

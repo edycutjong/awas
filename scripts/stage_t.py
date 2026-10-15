@@ -81,8 +81,9 @@ def check(base: str, secret: str, ad: str) -> dict:
     secs = time.time() - t0
     case_id = None
     for block in body.split("\n\n"):
-        if block.startswith("event: done"):
-            case_id = json.loads(block.split("data: ", 1)[1]).get("caseId")
+        # `started` carries the case id too; a stream without `done` (an app bug fixed 2026-10-15) still resolves.
+        if block.startswith("event: done") or (block.startswith("event: started") and not case_id):
+            case_id = json.loads(block.split("data: ", 1)[1]).get("caseId") or case_id
     if not case_id:
         return {"error": "no case id", "seconds": secs}
     with urllib.request.urlopen(f"{base}/api/case/{case_id}", timeout=30) as r:

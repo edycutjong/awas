@@ -99,7 +99,7 @@ def parse_json(text: str):
         return None
 
 
-def spike_tf(key: str) -> dict:
+def spike_tf(key: str, models: list[str] = MODELS, formats: list[str] = FORMATS) -> dict:
     out: dict = {"models_endpoint": None, "runs": []}
     st, _, raw, secs = http("GET", f"{TF}/models", {"Authorization": f"Bearer {key}"})
     ids = []
@@ -109,8 +109,8 @@ def spike_tf(key: str) -> dict:
         pass
     out["models_endpoint"] = {"status": st, "seconds": round(secs, 2), "count": len(ids),
                               "nvidia": [i for i in ids if "nemotron" in i.lower() or i.lower().startswith("nvidia/")]}
-    for model in MODELS:
-        for fmt in FORMATS:
+    for model in models:
+        for fmt in formats:
             for knob in KNOBS:
                 body = tf_body(model, fmt, knob)
                 st, _, raw, secs = http("POST", f"{TF}/chat/completions",
@@ -213,12 +213,16 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True)
     ap.add_argument("--skip-tf", action="store_true")
+    ap.add_argument("--tf-only", action="store_true", help="Token Factory only (a follow-up probe, e.g. a model listed later)")
+    ap.add_argument("--models", nargs="*", default=MODELS)
+    ap.add_argument("--formats", nargs="*", default=FORMATS)
     a = ap.parse_args()
     report = {"recorded_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "ad": "composite mockup ad (not a benchmark row)"}
     tf_key = os.environ.get("TOKENFACTORY_API_KEY")
-    report["token_factory"] = spike_tf(tf_key) if tf_key and not a.skip_tf else {"skipped": "no TOKENFACTORY_API_KEY or --skip-tf"}
-    report["object_storage"] = spike_storage()
-    report["tavily"] = spike_tavily()
+    report["token_factory"] = spike_tf(tf_key, a.models, a.formats) if tf_key and not a.skip_tf else {"skipped": "no TOKENFACTORY_API_KEY or --skip-tf"}
+    if not a.tf_only:
+        report["object_storage"] = spike_storage()
+        report["tavily"] = spike_tavily()
     with open(a.out, "w") as f:
         json.dump(report, f, indent=1, ensure_ascii=False)
     print(f"wrote {a.out}", file=sys.stderr)
