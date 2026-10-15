@@ -61,6 +61,8 @@ export interface TavilyReceipt {
   credits: number | null;
   ms: number;
   urls: string[];
+  /** Search only: the result titles, aligned with `urls` (what Tavily returned, before any gate). */
+  titles?: string[];
   access: "key" | "keyless";
   requestId?: string;
   error?: string;

@@ -105,6 +105,7 @@ async function post<T extends { usage?: { credits?: number }; request_id?: strin
     receipt.credits = typeof body.usage?.credits === "number" ? body.usage.credits : null;
     receipt.requestId = body.request_id;
     receipt.urls = urlsOf(body);
+    if (method === "search") receipt.titles = ((body as unknown as SearchResponse).results ?? []).map((r) => r.title ?? "");
     receipt.ms = Date.now() - started;
     return { ok: true, body, receipt };
   }

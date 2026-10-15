@@ -131,6 +131,7 @@ export async function runCheck(input: CheckInput, deps: Deps, emit: Emit = () =>
   if (bad) {
     emit("bad_input", { reason: bad });
     pack.rule = `no check — ${bad.replace(/_/g, " ")}`;
+    emit("done", { caseId: null });
     return pack;
   }
   emit("started", { caseId: pack.id, mode: input.mode, stage: input.stage });
@@ -167,6 +168,7 @@ export async function runCheck(input: CheckInput, deps: Deps, emit: Emit = () =>
     emit("bad_input", { reason: "not_a_job_ad" });
     pack.rule = "no check — the text does not read as a job offer, and no rule fired";
     await save(true);
+    emit("done", { caseId: pack.id });
     return pack;
   }
 
