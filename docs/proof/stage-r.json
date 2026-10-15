@@ -1,0 +1,170 @@
+{
+ "stage": "r",
+ "recorded_at": "2026-10-14T23:49:05+00:00",
+ "rows": [
+  {
+   "id": "d-p06",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": []
+  },
+  {
+   "id": "d-p07",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": []
+  },
+  {
+   "id": "d-p08",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    {
+     "id": "advisory_destination",
+     "class": "CAUTION",
+     "span": "Myanmar"
+    }
+   ]
+  },
+  {
+   "id": "d-p09",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": []
+  },
+  {
+   "id": "d-p10",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": []
+  },
+  {
+   "id": "d-p11",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": []
+  },
+  {
+   "id": "d-p12",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    {
+     "id": "advisory_destination",
+     "class": "CAUTION",
+     "span": "Laos"
+    }
+   ]
+  },
+  {
+   "id": "d-p13",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": []
+  },
+  {
+   "id": "d-p14",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    {
+     "id": "advisory_destination",
+     "class": "CAUTION",
+     "span": "Myanmar"
+    }
+   ]
+  },
+  {
+   "id": "d-p15",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": []
+  },
+  {
+   "id": "d-p16",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    {
+     "id": "advisory_destination",
+     "class": "CAUTION",
+     "span": "Thailand"
+    }
+   ]
+  },
+  {
+   "id": "d-p17",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    {
+     "id": "advisory_destination",
+     "class": "CAUTION",
+     "span": "Laos"
+    }
+   ]
+  },
+  {
+   "id": "d-p18",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": []
+  },
+  {
+   "id": "d-p19",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    {
+     "id": "advisory_destination",
+     "class": "CAUTION",
+     "span": "Thailand"
+    }
+   ]
+  },
+  {
+   "id": "d-p20",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": []
+  },
+  {
+   "id": "d-p21",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    {
+     "id": "advisory_destination",
+     "class": "CAUTION",
+     "span": "Thailand"
+    }
+   ]
+  },
+  {
+   "id": "d-p22",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": []
+  },
+  {
+   "id": "d-p23",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": []
+  },
+  {
+   "id": "d-p24",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    {
+     "id": "personal_recruiter",
+     "class": "CAUTION",
+     "span": "telepon"
+    }
+   ]
+  },
+  {
+   "id": "d-p25",
+   "verdict": "STOP",
+   "flags": [
+    {
+     "id": "tourist_visa",
+     "class": "NEVER",
+     "span": "visa kunjungan"
+    }
+   ]
+  }
+ ],
+ "summary": {
+  "positives": 20,
+  "stop_on_rules_alone": 1,
+  "frame": "lead with evidence-flipped STOPs",
+  "verdicts": {
+   "STOP": 1,
+   "VERIFY_FIRST": 8,
+   "NO_RED_FLAGS_FOUND": 11
+  }
+ }
+}

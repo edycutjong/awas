@@ -1,0 +1,56 @@
+{
+ "stage": "vtime",
+ "recorded_at": "2026-10-14T23:56:52+00:00",
+ "rows": [
+  {
+   "id": "d-p22",
+   "end_date": "2024-06-13",
+   "company_matched_lines": 1,
+   "verdict": "STOP",
+   "case_id": "w6rwpvplszsauxkx2fy26jkle4",
+   "company_search": [
+    {
+     "method": "search",
+     "purpose": "company",
+     "params": {
+      "query": "\"PT CVGen dan PT SHB\"",
+      "exact_match": true,
+      "country": "indonesia",
+      "topic": "general",
+      "search_depth": "basic",
+      "max_results": 5,
+      "include_raw_content": "text",
+      "exclude_domains": [
+       "news.detik.com"
+      ],
+      "end_date": "2024-06-13"
+     },
+     "credits": 1,
+     "ms": 2208,
+     "urls": [
+      "https://www.kompas.id/artikel/dijanjikan-kerja-magang-di-jerman-mahasiswa-indonesia-jadi-korban-eksploitasi",
+      "https://www.instagram.com/p/C4u0aeNvQ6z",
+      "https://www.youtube.com/watch?v=n_mGncphuE8",
+      "https://tribratanews.polri.go.id/blog/hukum-4/kasus-tppo-modus-magang-ke-jerman-polri-terus-periksa-sejumlah-saksi-71855",
+      "https://www.cnnindonesia.com/nasional/20240323141552-12-1078108/bareskrim-beber-modus-magang-palsu-ke-jerman-tipu-33-universitas"
+     ],
+     "access": "key",
+     "requestId": "9db95c17-0d69-4a34-8222-bd6e93b7903f",
+     "titles": [
+      "Dijanjikan Kerja Magang di Jerman, Mahasiswa Indonesia Jadi Korban Eksploitasi",
+      "Instagram",
+      "Kisah mahasiswa Indonesia jadi korban eksploitasi berkedok magang di Jerman - BBC News Indonesia",
+      "Kasus TPPO Modus Magang ke Jerman, Polri Terus Periksa ...",
+      "Bareskrim Beber Modus Magang Palsu ke Jerman Tipu 33 ..."
+     ]
+    }
+   ]
+  }
+ ],
+ "summary": {
+  "dev_positives": 20,
+  "naming_a_company": 1,
+  "company_matched_before_publication": 1,
+  "result": "inconclusive (fewer than 8 dev positives name a company) — treated as a fail"
+ }
+}

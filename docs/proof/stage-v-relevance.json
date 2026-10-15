@@ -1,0 +1,171 @@
+{
+  "reader": "agent (unreviewed)",
+  "definition": "RELEVANT = an item (judge by its title, URL, and any verified quote from it) that EITHER (a) reports a case or pattern of Indonesians deceived by an overseas job offer into trafficking / online-scam work / illegal placement, matching THIS case's destination country (the offered or the actual one) OR its job type (e.g. \"admin/marketing/customer service in Thailand/Cambodia/Myanmar\", \"ABK/bartender in Spain\", \"ferienjob in Germany\"); OR (b) is an official warning (government ministry, KBRI/embassy, KP2MI/BP2MI, police, Kemnaker, Kemlu, Imigrasi) about deceptive overseas job offers in general. NOT relevant: generic job-scam tips about domestic fake vacancies (e.g. a bank's \"ciri-ciri lowongan kerja palsu\"), unrelated fraud (investment, VAT, visa scams in other countries' contexts), items about other countries' citizens, items whose title/quote gives no sign of the above. An Instagram/Facebook/YouTube item counts if its title or verified quote clearly meets (a) or (b); a bare \"Instagram\" title with no verified quote does not count.",
+  "cases": [
+    {
+      "id": "d-p06",
+      "relevant": true,
+      "best_item": {
+        "url": "https://kp2mi.go.id/berita-detail/di-balik-janji-kerja-restoran-di-kamboja-waspada-jerat-sindikat-scammer-dan-risiko-migrasi-nonprosedural",
+        "title": "Di Balik Janji Kerja Restoran di Kamboja"
+      },
+      "kind": "b",
+      "why": "Official KP2MI page: restaurant-job promise in Cambodia, scammer syndicates, non-procedural migration. Official warning on deceptive overseas offers; destination differs (Dubai) so (b). Title/URL only."
+    },
+    {
+      "id": "d-p07",
+      "relevant": false,
+      "best_item": null,
+      "kind": null,
+      "why": "Only domestic or generic job-scam warnings (Kubu Raya Kominfo, banks, truncated Instagram titles); nothing on overseas offers to Malaysia/Cambodia or finance-job trafficking."
+    },
+    {
+      "id": "d-p08",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.instagram.com/reel/Da9pcBRiGKd",
+        "title": "Dua pekerja migran Indonesia diduga menjadi korban ..."
+      },
+      "kind": "a",
+      "why": "Instagram item: Indonesian migrant workers lured by Thailand job offer, moved illegally to Myanmar (verified). Matches Myanmar destination; further Myanmar job-fraud items corroborate."
+    },
+    {
+      "id": "d-p09",
+      "relevant": false,
+      "best_item": null,
+      "kind": null,
+      "why": "Malaysian gold-mining laundering, a fake anti-scam law firm story and an Indian UK work-permit scam; nothing on Indonesians deceived by overseas job offers."
+    },
+    {
+      "id": "d-p10",
+      "relevant": false,
+      "best_item": null,
+      "kind": null,
+      "why": "Hits are US food-truck fraud, Aramco labour report, Riyadh attack and an Indian overseas-job scam; other nationalities or unrelated, no Indonesian Saudi job-offer item."
+    },
+    {
+      "id": "d-p11",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.facebook.com/indonesiaindubai/posts/%EF%B8%8F-imbauan-untuk-windu-waspada-tawaran-kerja-mencurigakanwindu-selalu-berhati-hat/1538605711637142",
+        "title": "KJRI Dubai"
+      },
+      "kind": "b",
+      "why": "KJRI Dubai (consulate) Facebook advisory warns suspicious job offers risk trafficking and confinement; verified quote, matches Dubai destination. Also a YouTube TPPO-to-Dubai case."
+    },
+    {
+      "id": "d-p12",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.facebook.com/batampos.co.id/videos/upaya-memberangkatkan-dua-calon-pekerja-migran-indonesia-cpmi-secara-non-prosedu/1809988476562349",
+        "title": "Upaya memberangkatkan dua calon pekerja migran ..."
+      },
+      "kind": "a",
+      "why": "Verified Batampos item: Indonesian CPMI non-procedural departure to Malaysia thwarted by police; illegal placement matching a listed destination. Kemenp2mi and Imigrasi items also surfaced."
+    },
+    {
+      "id": "d-p13",
+      "relevant": false,
+      "best_item": null,
+      "kind": null,
+      "why": "All five hits are Sabah gold-mining money-laundering stories; nothing on Indonesians deceived by plantation or cleaning job offers in Malaysia or Cambodia."
+    },
+    {
+      "id": "d-p14",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.youtube.com/watch?v=uEus45a1Afk",
+        "title": "90 WNI Korban Penipuan Online di Perbatasan Myanmar- ..."
+      },
+      "kind": "a",
+      "why": "YouTube title: 90 Indonesians (WNI) online-scam victims at Myanmar border; fits Thailand/Myanmar. No verified quote; Metro TV 49-WNI job-fraud item supports."
+    },
+    {
+      "id": "d-p15",
+      "relevant": false,
+      "best_item": null,
+      "kind": null,
+      "why": "Hits are job boards, a regional news index, OJK financial item, billiard-sports TikTok and a bank sustainability report; nothing on Indonesians lured to Malaysia."
+    },
+    {
+      "id": "d-p16",
+      "relevant": false,
+      "best_item": null,
+      "kind": null,
+      "why": "Only generic Asia-Pacific job-scam statistics (Indonesia 62%) and an unattributed Swiss job-fraud Instagram title; no verified quote, no Thailand e-commerce or official overseas-offer warning."
+    },
+    {
+      "id": "d-p17",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.tempo.co/hukum/polisi-bandara-ungkap-jaringan-rekrutmen-admin-scam-ke-laos-2128001",
+        "title": "Polisi Bandara Ungkap Jaringan Rekrutmen Admin Scam ..."
+      },
+      "kind": "a",
+      "why": "Tempo (verified): airport police uncover network recruiting illegal migrant workers as scam admins for Laos; Indonesian case matching the Laos destination."
+    },
+    {
+      "id": "d-p18",
+      "relevant": false,
+      "best_item": null,
+      "kind": null,
+      "why": "Malaysian anti-scam law firm story, Indian UK visa scams, gold-mining laundering and a Lexus article; nothing on Indonesians lured to Malaysian work."
+    },
+    {
+      "id": "d-p19",
+      "relevant": false,
+      "best_item": null,
+      "kind": null,
+      "why": "NYT scam-centre explainer (Americans), BBC Jungkook hacker, LA Times scam-centre photos, Malaysian law-firm story; none shows Indonesians deceived by job offers. NYT is borderline."
+    },
+    {
+      "id": "d-p20",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.kompas.id/artikel/saat-pintu-apartemen-terbuka-mimpi-kerja-itu-tertutup-seketika",
+        "title": "Info dari Facebook Dijanjikan Kerja di Malaysia, Malah ..."
+      },
+      "kind": "a",
+      "why": "Kompas.id feature: Facebook-sourced Malaysia job promise that went wrong; matches offered destination Malaysia. Title/URL only, no verified quote; Metro TV 49-WNI item supports."
+    },
+    {
+      "id": "d-p21",
+      "relevant": false,
+      "best_item": null,
+      "kind": null,
+      "why": "Hits are Thailand Labor Protection Act law-firm press releases and an insurance exhibition; nothing on Indonesians deceived by Thai marketing job offers."
+    },
+    {
+      "id": "d-p22",
+      "relevant": true,
+      "best_item": {
+        "url": "https://www.instagram.com/p/C4u0aeNvQ6z",
+        "title": "Sejumlah mahasiswa dari Indonesia menjadi korban ..."
+      },
+      "kind": "a",
+      "why": "Instagram (verified): Indonesian students lured by PT CVGEN and PT SHB into Germany ferienjob. YouTube, Facebook and legal-journal items cover the same TPPO case."
+    },
+    {
+      "id": "d-p23",
+      "relevant": false,
+      "best_item": null,
+      "kind": null,
+      "why": "US and Indian job/visa scams, fake home-repair firms, autism fraud and a car launch; nothing on Indonesians lured to Malaysian domestic or office work."
+    },
+    {
+      "id": "d-p24",
+      "relevant": false,
+      "best_item": null,
+      "kind": null,
+      "why": "Borderline, not counted: PDRM Instagram rescue of 49 women lured by factory-job offers fits Malaysia/kilang, but victims' nationality unstated; rest generic or unattributed."
+    },
+    {
+      "id": "d-p25",
+      "relevant": false,
+      "best_item": null,
+      "kind": null,
+      "why": "Hits are US humanitarian-visa and Indian UK work-permit scams plus a Bali tourist deportation; other countries' citizens or unrelated, nothing on Indonesians lured to Spain."
+    }
+  ],
+  "relevant_count": 8
+}

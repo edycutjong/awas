@@ -1,0 +1,1272 @@
+{
+ "stage": "v",
+ "recorded_at": "2026-10-14T23:51:01+00:00",
+ "rows": [
+  {
+   "id": "d-p06",
+   "seconds": 23.4,
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "rule": "NO RED FLAGS FOUND — every step completed and no rule fired. This is not a guarantee.",
+   "excluded_domain": "jpnn.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan pekerja kantor yang berhubungan dengan komputer di luar negeri korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://www.instagram.com/reel/DeGnUwbzr_U",
+       "title": "IMIGRASI KUALANAMU DEPORTASI ENAM WNA ASAL ..."
+      },
+      {
+       "url": "https://www.banksinarmas.com/id/artikel/ciri-ciri-lowongan-kerja-palsu",
+       "title": "Ini Ciri-Ciri Lowongan Kerja Palsu dan Cara Menghindarinya"
+      },
+      {
+       "url": "https://www.instagram.com/reel/DQbw2h_EpXN",
+       "title": "Waspada Lowongan Kerja ke Myanmar! Di balik tawaran ..."
+      },
+      {
+       "url": "https://www.instagram.com/p/DRmJzchgcMl",
+       "title": "Instagram"
+      },
+      {
+       "url": "https://kp2mi.go.id/berita-detail/di-balik-janji-kerja-restoran-di-kamboja-waspada-jerat-sindikat-scammer-dan-risiko-migrasi-nonprosedural",
+       "title": "Di Balik Janji Kerja Restoran di Kamboja"
+      }
+     ],
+     "error": null
+    },
+    {
+     "method": "extract",
+     "purpose": "advisory",
+     "query": "peringatan tawaran kerja luar negeri visa turis penipuan",
+     "credits": 0,
+     "results": [],
+     "error": null
+    }
+   ],
+   "lines": [
+    {
+     "url": "https://www.instagram.com/reel/DeGnUwbzr_U",
+     "status": "dropped",
+     "reason": "not_in_page",
+     "purpose": "pattern",
+     "quote": "IMIGRASI KUALANAMU DEPORTASI ENAM WNA ASAL",
+     "negative": false,
+     "entity": false,
+     "company_matched": false
+    },
+    {
+     "url": "https://www.banksinarmas.com/id/artikel/ciri-ciri-lowongan-kerja-palsu",
+     "status": "verified",
+     "reason": null,
+     "purpose": "pattern",
+     "quote": "Salah satu tanda paling jelas dari lowongan kerja palsu adalah janji gaji yang terlalu besar dan tidak sebanding dengan posisi yang ditawarkan.",
+     "negative": false,
+     "entity": false,
+     "company_matched": false
+    },
+    {
+     "url": "https://www.banksinarmas.com/id/artikel/ciri-ciri-lowongan-kerja-palsu",
+     "status": "verified",
+     "reason": null,
+     "purpose": "pattern",
+     "quote": "Modus lain yang sering digunakan penipu adalah mencantumkan nama perusahaan besar agar terlihat meyakinkan.",
+     "negative": true,
+     "entity": false,
+     "company_matched": false
+    },
+    {
+     "url": "https://www.instagram.com/p/DRmJzchgcMl",
+     "status": "verified",
+     "reason": null,
+     "purpose": "pattern",
+     "quote": "Indonesia menjadi sasaran utama penipuan lowongan kerja online di Asia Pasifik.",
+     "negative": true,
+     "entity": false,
+     "company_matched": false
+    }
+   ],
+   "verified_lines": 3,
+   "verified_negative_lines": 2,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 1,
+   "case_id": "vax64fobsub5zdjeht6ymltccu"
+  },
+  {
+   "id": "d-p07",
+   "seconds": 24.5,
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "rule": "NO RED FLAGS FOUND — every step completed and no rule fired. This is not a guarantee.",
+   "excluded_domain": "news.detik.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan \"keuangan\" Bali korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://kominfo.kuburaya.go.id/modus-penipuan-lewat-lowongan-kerja-tanpa-modal-waspada-agar-tidak-tertipu",
+       "title": "Modus Penipuan Lewat Lowongan Kerja “Tanpa Modal”: Waspada Agar Tidak Tertipu"
+      },
+      {
+       "url": "https://bprlestari.com/berita-lestari/waspada-job-scam-modus-penipuan-lowongan-kerja-yang-sedang-marak",
+       "title": "BPR Lestari: Berita Lestari"
+      },
+      {
+       "url": "https://www.instagram.com/reel/DdtOKN0J2bC",
+       "title": "⚠️ HATI-HATI PENIPUAN BERKEDOK LOWONGAN ..."
+      },
+      {
+       "url": "https://www.facebook.com/BankBPDBali/videos/%F0%9D%97%AA%F0%9D%97%AE%F0%9D%98%80%F0%9D%97%BD%F0%9D%97%AE%F0%9D%97%B1%F0%9D%97%AE-%F0%9D%97%A6%F0%9D%97%B0%F0%9D%97%AE%F0%9D%97%BA-%F0%9D%97%9D%F0%9D%97%AE%F0%9D%97%BB%F0%9D%97%B4%F0%9D%97%AE%F0%9D%97%BB-%F0%9D%97%A6%F0%9D%97%AE%F0%9D%97%BA%F0%9D%97%BD%F0%9D%97%AE%F0%9D%97%B6-%F0%9D%97%9D%F0%9D%97%AE%F0%9D%97%B1%F0%9D%97%B6-%F0%9D%97%9E%F0%9D%97%BC%F0%9D%97%BF%F0%9D%97%AF%F0%9D%97%AE%F0%9D%97%BB-%F0%9D%97%A6%F0%9D%97%B2%F0%9D%97%B9%F0%9D%97%AE%F0%9D%97%BB%F0%9D%97%B7%F0%9D%98%82%F0%9D%98%81%F0%9D%97%BB%F0%9D%98%86%F0%9D%97%AE%EF%B8%8Fmodus-penipuan-digital-semaki/1033408789305375",
+       "title": "𝗪𝗮𝘀𝗽𝗮𝗱𝗮 𝗦𝗰𝗮𝗺! 𝗝𝗮𝗻𝗴𝗮𝗻 𝗦𝗮𝗺𝗽𝗮𝗶 𝗝𝗮𝗱𝗶 𝗞𝗼𝗿𝗯𝗮𝗻 ..."
+      },
+      {
+       "url": "https://www.instagram.com/p/DZbp8s0j6sj",
+       "title": "🚨 WASPADA PENIPUAN BERKEDOK LOWONGAN ..."
+      }
+     ],
+     "error": null
+    },
+    {
+     "method": "extract",
+     "purpose": "advisory",
+     "query": "peringatan tawaran kerja luar negeri visa turis penipuan",
+     "credits": 0,
+     "results": [
+      {
+       "url": "https://kominfo.kuburaya.go.id/modus-penipuan-lewat-lowongan-kerja-tanpa-modal-waspada-agar-tidak-tertipu",
+       "title": null
+      }
+     ],
+     "error": null
+    }
+   ],
+   "lines": [],
+   "verified_lines": 0,
+   "verified_negative_lines": 0,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 1,
+   "case_id": "gwzr4tteol227qslcvhw3iwuum"
+  },
+  {
+   "id": "d-p08",
+   "seconds": 13.9,
+   "verdict": "VERIFY_FIRST",
+   "rule": "VERIFY FIRST — the destination is named in an official warning",
+   "excluded_domain": "detik.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan trading Myanmar korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://www.instagram.com/p/DdnUicCkkVU",
+       "title": "Seorang pemuda asal Kota Mataram bernama Muhammad ..."
+      },
+      {
+       "url": "https://www.facebook.com/100090686016905/posts/niat-mencari-pekerjaan-di-luar-negeri-justru-berubah-menjadi-mimpi-buruk-bagi-mu/1071220229244168",
+       "title": "Niat mencari pekerjaan di luar negeri justru berubah ..."
+      },
+      {
+       "url": "https://www.instagram.com/reel/Da9pcBRiGKd",
+       "title": "Dua pekerja migran Indonesia diduga menjadi korban ..."
+      },
+      {
+       "url": "https://www.youtube.com/watch?v=Xrd2Y_U8trE",
+       "title": "Janji Gaji Fantastis Berujung Petaka, 91 WNI Korban ..."
+      },
+      {
+       "url": "https://www.instagram.com/reel/DQbw2h_EpXN",
+       "title": "Instagram"
+      }
+     ],
+     "error": null
+    }
+   ],
+   "lines": [
+    {
+     "url": "https://www.instagram.com/p/DdnUicCkkVU",
+     "status": "verified",
+     "reason": null,
+     "purpose": "pattern",
+     "quote": "Anwar diduga menjadi korban penipuan modus lowongan kerja di Myanmar.",
+     "negative": true,
+     "entity": false,
+     "company_matched": false
+    },
+    {
+     "url": "https://www.facebook.com/100090686016905/posts/niat-mencari-pekerjaan-di-luar-negeri-justru-berubah-menjadi-mimpi-buruk-bagi-mu/1071220229244168",
+     "status": "verified",
+     "reason": null,
+     "purpose": "pattern",
+     "quote": "Anwar diduga menjadi korban penipuan modus lowongan kerja di Myanmar.",
+     "negative": true,
+     "entity": false,
+     "company_matched": false
+    },
+    {
+     "url": "https://www.instagram.com/reel/Da9pcBRiGKd",
+     "status": "verified",
+     "reason": null,
+     "purpose": "pattern",
+     "quote": "Para korban semula tergiur tawaran kerja di Thailand lewat media sosial, namun dipindahkan secara ilegal ke Myanmar",
+     "negative": true,
+     "entity": false,
+     "company_matched": false
+    },
+    {
+     "url": "https://www.youtube.com/watch?v=Xrd2Y_U8trE",
+     "status": "verified",
+     "reason": null,
+     "purpose": "pattern",
+     "quote": "Janji Gaji Fantastis Berujung Petaka, 91 WNI Korban Penipuan Kerja Dipulangkan",
+     "negative": true,
+     "entity": false,
+     "company_matched": false
+    }
+   ],
+   "verified_lines": 4,
+   "verified_negative_lines": 4,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 1,
+   "case_id": "epilrzzkqba4pn3p573gcwi2d4"
+  },
+  {
+   "id": "d-p09",
+   "seconds": 12.2,
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "rule": "NO RED FLAGS FOUND — every step completed and no rule fired. This is not a guarantee.",
+   "excluded_domain": "jpnn.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan Malaysia korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://says.com/my/news/malaysian-woman-loses-rm1-2-million-after-hiring-law-firm-to-recover-rm1500-from-scammers",
+       "title": "Malaysian Woman Loses RM1.2 Million After Hiring 'Law Firm' To Recover RM1,500 From Scammers - SAYS"
+      },
+      {
+       "url": "https://www.thestar.com.my/news/nation/2025/10/29/tawau-gold-mining-company-manager-faces-four-money-laundering-charges",
+       "title": "Tawau gold mining company manager faces four money laundering charges - The Star"
+      },
+      {
+       "url": "https://newswav.com/article/rm230k-sabah-gold-ore-sold-illegally-in-pahang-A2510_LqgnOF",
+       "title": "RM230k Sabah gold ore sold illegally in Pahang - Newswav"
+      },
+      {
+       "url": "https://newswav.com/article/gold-mining-executive-faces-rm230-000-money-laundering-charges-A2510_bywZ6W",
+       "title": "Gold mining executive faces RM230,000 money laundering charges - Newswav"
+      },
+      {
+       "url": "https://the420.in/vadodara-uk-work-permit-scam-youth-duped-rs-10-65-lakh/",
+       "title": "Dream Abroad Turns Nightmare as Youth Loses ₹10.65 Lakh in UK Permit Scam - The420.in"
+      }
+     ],
+     "error": null
+    }
+   ],
+   "lines": [
+    {
+     "url": "https://says.com/my/news/malaysian-woman-loses-rm1-2-million-after-hiring-law-firm-to-recover-rm1500-from-scammers",
+     "status": "verified",
+     "reason": null,
+     "purpose": "pattern",
+     "quote": "Scam victims in Malaysia are being targeted a second time by fake 'anti-scam' law firms claiming unusually high recovery rates.",
+     "negative": true,
+     "entity": false,
+     "company_matched": false
+    },
+    {
+     "url": "https://says.com/my/news/malaysian-woman-loses-rm1-2-million-after-hiring-law-firm-to-recover-rm1500-from-scammers",
+     "status": "verified",
+     "reason": null,
+     "purpose": "pattern",
+     "quote": "these self-styled 'anti-scam' law firms advertise heavily online, claiming they can recover 90% to 95% of money lost to scams, figures he described as implausible and misleading.",
+     "negative": true,
+     "entity": false,
+     "company_matched": false
+    }
+   ],
+   "verified_lines": 2,
+   "verified_negative_lines": 2,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 1,
+   "case_id": "kr6zynd4z63nksyi6bgqaqlqoe"
+  },
+  {
+   "id": "d-p10",
+   "seconds": 12.8,
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "rule": "NO RED FLAGS FOUND — every step completed and no rule fired. This is not a guarantee.",
+   "excluded_domain": "detik.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan bartender, supir, dan pekerja restoran Saudi Arabia korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://www.cbsnews.com/minnesota/video/food-truck-owner-falls-victim-to-scheme-minnesota-officials-investigating/",
+       "title": "Food truck owner falls victim to scheme; Minnesota officials investigating - CBS News"
+      },
+      {
+       "url": "https://www.theguardian.com/business/2026/may/21/aramco-migrant-workers-oil-firm-supply-chain-fairsquare",
+       "title": "‘Aramco is selling our sweat and blood’: workers in World Cup sponsor’s supply chain faced safety risks, report finds - The Guardian"
+      },
+      {
+       "url": "https://www.cnbc.com/video/2026/10/12/houthis-claim-deadly-riyadh-airport-attack-in-latest-escalation.html",
+       "title": "Houthis claim deadly Riyadh airport attack in latest escalation - CNBC"
+      },
+      {
+       "url": "https://nypost.com/2026/08/31/us-news/california-food-truck-builder-convicted-in-1m-fraud-targeting-immigrant-workers/",
+       "title": "Flashy food truck builder flaunted luxe life before being busted in dream-destroying $1M scam - New York Post"
+      },
+      {
+       "url": "https://timesofindia.indiatimes.com/city/ahmedabad/ahmedabad-firm-faces-fresh-case-over-overseas-job-scam/amp_articleshow/131539824.cms",
+       "title": "Ahmedabad: Firm faces fresh case over overseas job scam - The Times of India"
+      }
+     ],
+     "error": null
+    }
+   ],
+   "lines": [],
+   "verified_lines": 0,
+   "verified_negative_lines": 0,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 1,
+   "case_id": "blakv4uwoph6qou2libyrx3op4"
+  },
+  {
+   "id": "d-p11",
+   "seconds": 19.1,
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "rule": "NO RED FLAGS FOUND — every step completed and no rule fired. This is not a guarantee.",
+   "excluded_domain": "detik.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan Dubai korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://www.facebook.com/indonesiaindubai/posts/%EF%B8%8F-imbauan-untuk-windu-waspada-tawaran-kerja-mencurigakanwindu-selalu-berhati-hat/1538605711637142",
+       "title": "KJRI Dubai"
+      },
+      {
+       "url": "https://www.banksinarmas.com/id/artikel/ciri-ciri-lowongan-kerja-palsu",
+       "title": "Ini Ciri-Ciri Lowongan Kerja Palsu dan Cara Menghindarinya"
+      },
+      {
+       "url": "https://www.youtube.com/watch?v=m4XIoAcvSow",
+       "title": "Kasus Skandal TPPO ke Dubai! Korban Sakit Kronis Tetap ..."
+      },
+      {
+       "url": "https://www.facebook.com/indonesiaindubai/videos/%EF%B8%8F-imbauan-untuk-windu-waspada-tawaran-kerja-mencurigakanwindu-selalu-berhati-hat/1341264127772850",
+       "title": "⚠️ *IMBAUAN UNTUK #WinDu: WASPADA TAWARAN ..."
+      },
+      {
+       "url": "https://www.instagram.com/reel/DcQVXxLh59L",
+       "title": "Instagram"
+      }
+     ],
+     "error": null
+    }
+   ],
+   "lines": [
+    {
+     "url": "https://www.facebook.com/indonesiaindubai/posts/%EF%B8%8F-imbauan-untuk-windu-waspada-tawaran-kerja-mencurigakanwindu-selalu-berhati-hat/1538605711637142",
+     "status": "verified",
+     "reason": null,
+     "purpose": "pattern",
+     "quote": "Tawaran yang terlihat menarik dapat menjadi modus penipuan dan berisiko mengarah pada perdagangan manusia, penyekapan, maupun eksploitasi.",
+     "negative": true,
+     "entity": false,
+     "company_matched": false
+    },
+    {
+     "url": "https://www.facebook.com/indonesiaindubai/videos/%EF%B8%8F-imbauan-untuk-windu-waspada-tawaran-kerja-mencurigakanwindu-selalu-berhati-hat/1341264127772850",
+     "status": "verified",
+     "reason": null,
+     "purpose": "pattern",
+     "quote": "Tawaran yang terlihat menarik dapat menjadi modus penipuan dan berisiko mengarah pada perdagangan manusia, penyekapan, maupun eksploitasi.",
+     "negative": true,
+     "entity": false,
+     "company_matched": false
+    }
+   ],
+   "verified_lines": 2,
+   "verified_negative_lines": 2,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 1,
+   "case_id": "22b3ka4r5ferqsrwr6c6ojg6om"
+  },
+  {
+   "id": "d-p12",
+   "seconds": 30.1,
+   "verdict": "VERIFY_FIRST",
+   "rule": "VERIFY FIRST — the destination is named in an official warning; a page names this company without reporting harm",
+   "excluded_domain": "suara.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "company",
+     "query": "\"CPMI non-prosedural\"",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://www.instagram.com/p/DQJ5Scjk-SM",
+       "title": "🚨 Giat Pencegahan PMI Non-Prosedural 🇮🇩 Kamis, 23 ..."
+      },
+      {
+       "url": "https://www.facebook.com/batampos.co.id/videos/upaya-memberangkatkan-dua-calon-pekerja-migran-indonesia-cpmi-secara-non-prosedu/1809988476562349",
+       "title": "Upaya memberangkatkan dua calon pekerja migran ..."
+      },
+      {
+       "url": "https://www.facebook.com/kemenp2mi/posts/bp3tki-jakarta-mencegah-pemberangkatan-cpmi-non-prosedural-ke-malaysia-cpmi-ters/2971439192901005",
+       "title": "BP3TKI Jakarta mencegah pemberangkatan CPMI non ..."
+      },
+      {
+       "url": "https://disnakertrans.ntbprov.go.id/proses-sebelum-penempatan-menjadi-fokus-pencegahan-cpmi-non-prosedural",
+       "title": "Proses Sebelum Penempatan menjadi fokus Pencegahan ..."
+      },
+      {
+       "url": "https://batam.imigrasi.go.id/berita/2023/06/data-statistik-penundaan-keberangkatan-cpmi-non-prosedural-periode-januari-sd-mei-2023",
+       "title": "Data Statistik Penundaan Keberangkatan CPMI Non ..."
+      }
+     ],
+     "error": null
+    },
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan operator scamming, asisten rumah tangga (ART), pekerja perkebunan, admin judi online, hingga pegawai restoran Arab Saudi, Malaysia, Oman, Singapura, Laos, China, Korea Selatan dan Taiwan korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://africa.businessinsider.com/local/lifestyle/saudi-arabia-oman-and-bahrain-deport-over-336000-foreign-workers-in-2026-amid/4e85825",
+       "title": "Saudi Arabia, Oman and Bahrain deport over 336,000 foreign workers in 2026 amid crackdown on Ethiopians, Ugandans and Nigerians - Business Insider Africa"
+      },
+      {
+       "url": "https://apnews.com/article/indonesia-police-arrest-foreigners-online-gambling-071a9be68e9557ca90251efa4368708f",
+       "title": "Indonesian police arrest 321 foreigners in an operation to crack down on banned online gambling - AP News"
+      },
+      {
+       "url": "https://www.nytimes.com/2025/10/23/world/asia/scam-centers-myanmar-cambodia.html",
+       "title": "What to Know About the Billion-Dollar Scam Center Industry - The New York Times"
+      },
+      {
+       "url": "https://www.nytimes.com/article/scam-centers-myanmar-cambodia.html",
+       "title": "Americans Have Lost Billions to Online Scams. How Is That Possible? - The New York Times"
+      },
+      {
+       "url": "https://www.icis.com/asian-chemical-connections/2026/03/asias-petrochemical-heartland-is-built-on-middle-eastern-naphtha-and-the-iran-crisis-exposes-the-risk/",
+       "title": "Asia’s Petrochemical Heartland Is Built on Middle Eastern Naphtha — And the Iran Crisis Exposes the Risk - ICIS"
+      }
+     ],
+     "error": null
+    },
+    {
+     "method": "extract",
+     "purpose": "advisory",
+     "query": "peringatan tawaran kerja luar negeri visa turis penipuan",
+     "credits": 0,
+     "results": [
+      {
+       "url": "https://disnakertrans.ntbprov.go.id/proses-sebelum-penempatan-menjadi-fokus-pencegahan-cpmi-non-prosedural",
+       "title": null
+      },
+      {
+       "url": "https://batam.imigrasi.go.id/berita/2023/06/data-statistik-penundaan-keberangkatan-cpmi-non-prosedural-periode-januari-sd-mei-2023",
+       "title": null
+      }
+     ],
+     "error": null
+    }
+   ],
+   "lines": [
+    {
+     "url": "https://www.instagram.com/p/DQJ5Scjk-SM",
+     "status": "verified",
+     "reason": null,
+     "purpose": "company",
+     "quote": "(CPMI) non-prosedural di Pelabuhan Internasional Batam Center. Ketiga CPMI tersebut diduga akan berangkat ke Malaysia dengan modus paspor",
+     "negative": false,
+     "entity": true,
+     "company_matched": false
+    },
+    {
+     "url": "https://www.facebook.com/batampos.co.id/videos/upaya-memberangkatkan-dua-calon-pekerja-migran-indonesia-cpmi-secara-non-prosedu/1809988476562349",
+     "status": "verified",
+     "reason": null,
+     "purpose": "company",
+     "quote": "Upaya memberangkatkan dua calon pekerja migran Indonesia (CPMI) secara non-prosedural menuju Malaysia digagalkan personel Subdit Gakkum",
+     "negative": false,
+     "entity": false,
+     "company_matched": false
+    },
+    {
+     "url": "https://www.facebook.com/kemenp2mi/posts/bp3tki-jakarta-mencegah-pemberangkatan-cpmi-non-prosedural-ke-malaysia-cpmi-ters/2971439192901005",
+     "status": "dropped",
+     "reason": "not_in_page",
+     "purpose": "company",
+     "quote": "BP3TKI Jakarta mencegah pemberangkatan CPMI non … ini berawal dari pengaduan masyarakat yang menceritakan rekannya telah diberangkatkan ke luar negeri.",
+     "negative": false,
+     "entity": false,
+     "company_matched": false
+    }
+   ],
+   "verified_lines": 2,
+   "verified_negative_lines": 0,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 2,
+   "case_id": "4jjsssqjpvsovkalehj4kk6f6y"
+  },
+  {
+   "id": "d-p13",
+   "seconds": 14.2,
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "rule": "NO RED FLAGS FOUND — every step completed and no rule fired. This is not a guarantee.",
+   "excluded_domain": "detik.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan staf kebersihan perkebunan Malaysia korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://newswav.com/article/gold-mining-executive-faces-rm230-000-money-laundering-charges-A2510_bywZ6W",
+       "title": "Gold mining executive faces RM230,000 money laundering charges - Newswav"
+      },
+      {
+       "url": "https://www.thestar.com.my/news/nation/2025/10/29/tawau-gold-mining-company-manager-faces-four-money-laundering-charges",
+       "title": "Tawau gold mining company manager faces four money laundering charges - The Star"
+      },
+      {
+       "url": "https://www.bernama.com/en/news.php/?id=2484855",
+       "title": "Gold Mining Company Officer Charged With Receiving RM230,000 From Unlawful Activities - Bernama"
+      },
+      {
+       "url": "https://www.bernama.com/tv//news.php?id=2484855",
+       "title": "GOLD MINING COMPANY OFFICER CHARGED WITH RECEIVING RM230,000 FROM UNLAWFUL ACTIVITIES - Bernama"
+      },
+      {
+       "url": "https://newswav.com/article/rm230k-sabah-gold-ore-sold-illegally-in-pahang-A2510_LqgnOF",
+       "title": "RM230k Sabah gold ore sold illegally in Pahang - Newswav"
+      }
+     ],
+     "error": null
+    }
+   ],
+   "lines": [],
+   "verified_lines": 0,
+   "verified_negative_lines": 0,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 1,
+   "case_id": "5clefwfye76gr5v5ludi3yo73u"
+  },
+  {
+   "id": "d-p14",
+   "seconds": 13.6,
+   "verdict": "VERIFY_FIRST",
+   "rule": "VERIFY FIRST — the destination is named in an official warning",
+   "excluded_domain": "jpnn.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan Thailand korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://www.facebook.com/metrotv/posts/sebanyak-49-warga-negara-indonesia-wni-diduga-menjadi-korban-penipuan-lowongan-k/1671954560967119",
+       "title": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga ..."
+      },
+      {
+       "url": "https://www.facebook.com/61569140463577/posts/-waspada-penipuan-kerja-luar-negeri-ribuan-wni-telah-menjadi-korban-penipuan-low/122179234724638015",
+       "title": "[🚨 WASPADA PENIPUAN KERJA LUAR NEGERI! ..."
+      },
+      {
+       "url": "https://www.youtube.com/watch?v=uEus45a1Afk",
+       "title": "90 WNI Korban Penipuan Online di Perbatasan Myanmar- ..."
+      },
+      {
+       "url": "https://www.instagram.com/reel/DRMCcWdEuUB",
+       "title": "PEKERJA MIGRAN INDONESIA HARUS WASPADA ..."
+      },
+      {
+       "url": "https://www.instagram.com/reel/DQbw2h_EpXN",
+       "title": "Instagram"
+      }
+     ],
+     "error": null
+    }
+   ],
+   "lines": [],
+   "verified_lines": 0,
+   "verified_negative_lines": 0,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 1,
+   "case_id": "7uogrvjomptn6pb7f5xxaxbb74"
+  },
+  {
+   "id": "d-p15",
+   "seconds": 14.8,
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "rule": "NO RED FLAGS FOUND — every step completed and no rule fired. This is not a guarantee.",
+   "excluded_domain": "jpnn.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan kerja di tempat biliard Malaysia korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://www.indonesiatren.com/ragam/8729/lowongan-kerja",
+       "title": "Lowongan Kerja | indonesiatren.com"
+      },
+      {
+       "url": "https://www.kutairaya.com/daerah.php",
+       "title": "KutaiRaya.com | Daerah"
+      },
+      {
+       "url": "https://www.instagram.com/reel/DZ94hFLjK0E",
+       "title": "\"Otoritas Jasa Keuangan (OJK) menemukan sejumlah ..."
+      },
+      {
+       "url": "https://www.tiktok.com/@batamposofficial/video/7645852561613835528?lang=bg",
+       "title": "Masrur Amin Leads Billiard Sports Organization in Batam"
+      },
+      {
+       "url": "https://investor.cimbniaga.co.id/misc/AGMS/2026/SR2025-ID.pdf",
+       "title": "LAPORAN KEBERLANJUTAN 2025 - Investor Relations"
+      }
+     ],
+     "error": null
+    }
+   ],
+   "lines": [],
+   "verified_lines": 0,
+   "verified_negative_lines": 0,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 1,
+   "case_id": "d3yjkivvpumihi4oadd4xpafc4"
+  },
+  {
+   "id": "d-p16",
+   "seconds": 9.2,
+   "verdict": "VERIFY_FIRST",
+   "rule": "VERIFY FIRST — the destination is named in an official warning",
+   "excluded_domain": "detik.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan bidang e-commerce bagian penjualan barang Thailand korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://www.facebook.com/KOMPAScom/posts/indonesia-menjadi-pusat-penipuan-lowongan-kerja-paling-besar-di-kawasan-asia-pas/1375478567941587",
+       "title": "Indonesia menjadi pusat penipuan lowongan kerja paling ..."
+      },
+      {
+       "url": "https://www.instagram.com/reel/DUiH6rcCsKv",
+       "title": "Indonesia mendominasi 62% kasus penipuan lowongan ..."
+      },
+      {
+       "url": "https://www.instagram.com/reel/DRb-gscE-om",
+       "title": "Indonesia disebut jadi target utama penipuan lowongan ..."
+      },
+      {
+       "url": "https://www.instagram.com/p/DWgTjXuCpOi",
+       "title": "WASPADA PENIPUAN LOWONGAN KERJA DI SWIS ..."
+      },
+      {
+       "url": "https://www.tiktok.com/@kumparan/video/7576074944400854328",
+       "title": "RI jadi negara paling rentan penipuan loker se-Asia Pasifik ..."
+      }
+     ],
+     "error": null
+    }
+   ],
+   "lines": [],
+   "verified_lines": 0,
+   "verified_negative_lines": 0,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 1,
+   "case_id": "lgp3vjkazknkjmvypj6c7fp3km"
+  },
+  {
+   "id": "d-p17",
+   "seconds": 13.2,
+   "verdict": "VERIFY_FIRST",
+   "rule": "VERIFY FIRST — the destination is named in an official warning",
+   "excluded_domain": "detik.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan Laos korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://www.instagram.com/p/DYzAbPSIFPe",
+       "title": "Waspada tawaran kerja ke luar negeri dengan iming ..."
+      },
+      {
+       "url": "https://www.facebook.com/metrotv/posts/sebanyak-49-warga-negara-indonesia-wni-diduga-menjadi-korban-penipuan-lowongan-k/1671954560967119",
+       "title": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga ..."
+      },
+      {
+       "url": "https://www.facebook.com/KOMPAScom/videos/pbb-bongkar-pusat-scam-asia-ratusan-ribu-orang-jadi-korban/1448996410401535",
+       "title": "PBB Bongkar Pusat Scam Asia, Ratusan Ribu Orang Jadi ..."
+      },
+      {
+       "url": "https://www.tempo.co/hukum/polisi-bandara-ungkap-jaringan-rekrutmen-admin-scam-ke-laos-2128001",
+       "title": "Polisi Bandara Ungkap Jaringan Rekrutmen Admin Scam ..."
+      },
+      {
+       "url": "https://www.instagram.com/reel/DQbw2h_EpXN",
+       "title": "Instagram"
+      }
+     ],
+     "error": null
+    }
+   ],
+   "lines": [
+    {
+     "url": "https://www.tempo.co/hukum/polisi-bandara-ungkap-jaringan-rekrutmen-admin-scam-ke-laos-2128001",
+     "status": "verified",
+     "reason": null,
+     "purpose": "pattern",
+     "quote": "Polisi Bandara Soekarno-Hatta mengungkap sindikat perekrutan pekerja migran ilegal.",
+     "negative": true,
+     "entity": false,
+     "company_matched": false
+    }
+   ],
+   "verified_lines": 1,
+   "verified_negative_lines": 1,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 1,
+   "case_id": "glxm4q2psjn7lcapddh665lgiy"
+  },
+  {
+   "id": "d-p18",
+   "seconds": 11.3,
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "rule": "NO RED FLAGS FOUND — every step completed and no rule fired. This is not a guarantee.",
+   "excluded_domain": "merdeka.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan lady companion (LC) Malaysia korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://says.com/my/news/malaysian-woman-loses-rm1-2-million-after-hiring-law-firm-to-recover-rm1500-from-scammers",
+       "title": "Malaysian Woman Loses RM1.2 Million After Hiring 'Law Firm' To Recover RM1,500 From Scammers - SAYS"
+      },
+      {
+       "url": "https://the420.in/vadodara-uk-work-permit-scam-youth-duped-rs-10-65-lakh/",
+       "title": "Dream Abroad Turns Nightmare as Youth Loses ₹10.65 Lakh in UK Permit Scam - The420.in"
+      },
+      {
+       "url": "https://newswav.com/article/gold-mining-executive-faces-rm230-000-money-laundering-charges-A2510_bywZ6W",
+       "title": "Gold mining executive faces RM230,000 money laundering charges - Newswav"
+      },
+      {
+       "url": "https://autos.yahoo.com/new-vehicles-and-reviews/articles/lexus-lc-dies-because-world-002400166.html",
+       "title": "The Lexus LC Dies This Year Because the World is Unfair - Yahoo! Autos"
+      },
+      {
+       "url": "https://the420.in/hyderabad-uk-visa-scam-aren-overseas-consultancy-fraud-case/",
+       "title": "Hyderabad Woman Alleges UK Visa Scam by Overseas Consultancy - The420.in"
+      }
+     ],
+     "error": null
+    }
+   ],
+   "lines": [],
+   "verified_lines": 0,
+   "verified_negative_lines": 0,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 1,
+   "case_id": "osmehlfudnrgbdnm67jgzljwqu"
+  },
+  {
+   "id": "d-p19",
+   "seconds": 12.2,
+   "verdict": "VERIFY_FIRST",
+   "rule": "VERIFY FIRST — the destination is named in an official warning",
+   "excluded_domain": "detik.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan scammer Thailand korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://www.nytimes.com/article/scam-centers-myanmar-cambodia.html",
+       "title": "Americans Have Lost Billions to Online Scams. How Is That Possible? - The New York Times"
+      },
+      {
+       "url": "https://www.bbc.com/news/articles/cx21p4qy93po",
+       "title": "Alleged scammer extradited after hacking attempt on BTS star Jungkook - BBC"
+      },
+      {
+       "url": "https://www.latimes.com/world-nation/story/2026-02-03/images-show-abandoned-belongings-mock-police-stations-at-former-scam-center-in-asia",
+       "title": "Images show abandoned belongings and mock police stations at a former scam center in Asia - Los Angeles Times"
+      },
+      {
+       "url": "https://says.com/my/news/malaysian-woman-loses-rm1-2-million-after-hiring-law-firm-to-recover-rm1500-from-scammers",
+       "title": "Malaysian Woman Loses RM1.2 Million After Hiring 'Law Firm' To Recover RM1,500 From Scammers - SAYS"
+      },
+      {
+       "url": "https://www.cbsnews.com/colorado/video/ice-cream-shop-in-colorado-falls-victim-to-scammer-pretending-to-be-police/",
+       "title": "Ice cream shop in Colorado falls victim to scammer pretending to be police - CBS News"
+      }
+     ],
+     "error": null
+    }
+   ],
+   "lines": [
+    {
+     "url": "https://www.bbc.com/news/articles/cx21p4qy93po",
+     "status": "verified",
+     "reason": null,
+     "purpose": "pattern",
+     "quote": "The suspect, who is unnamed, was based in Bangkok until the extradition.",
+     "negative": false,
+     "entity": false,
+     "company_matched": false
+    },
+    {
+     "url": "https://www.nytimes.com/article/scam-centers-myanmar-cambodia.html",
+     "status": "verified",
+     "reason": null,
+     "purpose": "pattern",
+     "quote": "Francesca Regalado has reported on Southeast Asia’s scam industry from the Thailand-Myanmar border.",
+     "negative": true,
+     "entity": false,
+     "company_matched": false
+    }
+   ],
+   "verified_lines": 2,
+   "verified_negative_lines": 1,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 1,
+   "case_id": "g5mfypempbqs5dynsm2h2hyxhu"
+  },
+  {
+   "id": "d-p20",
+   "seconds": 12.8,
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "rule": "NO RED FLAGS FOUND — every step completed and no rule fired. This is not a guarantee.",
+   "excluded_domain": "merdeka.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan Malaysia korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://www.kompas.id/artikel/saat-pintu-apartemen-terbuka-mimpi-kerja-itu-tertutup-seketika",
+       "title": "Info dari Facebook Dijanjikan Kerja di Malaysia, Malah ..."
+      },
+      {
+       "url": "https://www.instagram.com/p/Dd1PyUynfXg",
+       "title": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga ..."
+      },
+      {
+       "url": "https://www.facebook.com/metrotv/posts/sebanyak-49-warga-negara-indonesia-wni-diduga-menjadi-korban-penipuan-lowongan-k/1671954560967119",
+       "title": "Sebanyak 49 Warga Negara Indonesia (WNI) diduga ..."
+      },
+      {
+       "url": "https://www.facebook.com/metrotv/videos/indonesia-mendominasi-62-kasus-penipuan-lowongan-kerja-di-asia-akibat-rendahnya-/1645130460237453",
+       "title": "Indonesia mendominasi 62% kasus penipuan lowongan ..."
+      },
+      {
+       "url": "https://www.instagram.com/reel/DcxRFoDT2xY",
+       "title": "LOWONGAN KERJA PALSU? JANGAN SAMPAI KENA! ..."
+      }
+     ],
+     "error": null
+    }
+   ],
+   "lines": [],
+   "verified_lines": 0,
+   "verified_negative_lines": 0,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 1,
+   "case_id": "iumi4kghxpxn3x3t7aeph3ikju"
+  },
+  {
+   "id": "d-p21",
+   "seconds": 14.1,
+   "verdict": "VERIFY_FIRST",
+   "rule": "VERIFY FIRST — the destination is named in an official warning",
+   "excluded_domain": "sumut.suara.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan marketing Thailand korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://www.lohud.com/press-release/story/121261/siam-legal-international-law-firm-highlights-key-changes-in-thailands-labor-protection-act-taking-effect-december-2025/",
+       "title": "Siam Legal International Law Firm Highlights Key Changes in Thailand's Labor Protection Act Taking Effect December 2025 - Lohud"
+      },
+      {
+       "url": "https://marketech-apac.com/ocean-life-insurance-launches-immersive-exhibition-reframing-insurance-around-self-love/",
+       "title": "Ocean Life Insurance launches immersive exhibition reframing insurance around self-love - marketech apac"
+      },
+      {
+       "url": "https://www.providencejournal.com/press-release/story/14743/siam-legal-international-law-firm-highlights-key-changes-in-thailands-labor-protection-act-taking-effect-december-2025/",
+       "title": "Siam Legal International Law Firm Highlights Key Changes in Thailand's Labor Protection Act Taking Effect December 2025 - The Providence Journal"
+      },
+      {
+       "url": "https://www.delawareonline.com/press-release/story/85382/siam-legal-international-law-firm-highlights-key-changes-in-thailands-labor-protection-act-taking-effect-december-2025/",
+       "title": "Siam Legal International Law Firm Highlights Key Changes in Thailand's Labor Protection Act Taking Effect December 2025 - The News Journal"
+      },
+      {
+       "url": "https://www.tallahassee.com/press-release/story/14786/siam-legal-international-law-firm-highlights-key-changes-in-thailands-labor-protection-act-taking-effect-december-2025/",
+       "title": "Siam Legal International Law Firm Highlights Key Changes in Thailand's Labor Protection Act Taking Effect December 2025 - Tallahassee Democrat"
+      }
+     ],
+     "error": null
+    }
+   ],
+   "lines": [],
+   "verified_lines": 0,
+   "verified_negative_lines": 0,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 1,
+   "case_id": "yeqitre6kvhsq5cta2yuc24ilq"
+  },
+  {
+   "id": "d-p22",
+   "seconds": 23.6,
+   "verdict": "VERIFY_FIRST",
+   "rule": "VERIFY FIRST — a page names this company without reporting harm",
+   "excluded_domain": "news.detik.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "company",
+     "query": "\"PT CVGen dan PT SHB\"",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://www.instagram.com/p/C4u0aeNvQ6z",
+       "title": "Sejumlah mahasiswa dari Indonesia menjadi korban ..."
+      },
+      {
+       "url": "https://ejurnal.ubharajaya.ac.id/index.php/JLSS/article/download/3738/2333/10715",
+       "title": "Pertanggungjawaban Pidana Perdagangan Orang Dalam ..."
+      },
+      {
+       "url": "https://journal.appihi.or.id/index.php/Amandemen/article/download/316/455/1725",
+       "title": "Analisis Pasal TPPO dalam Kasus Ferienjob"
+      },
+      {
+       "url": "https://www.youtube.com/watch?v=n_mGncphuE8",
+       "title": "Kisah mahasiswa Indonesia jadi korban eksploitasi ..."
+      },
+      {
+       "url": "https://www.facebook.com/gistravpolytechnic/posts/tppo-berkedok-magang-sebanyak-1047-mahasiswa-dari-33-universitas-di-indonesia-di/280328631821628",
+       "title": "TPPO Berkedok Magang Sebanyak 1.047 mahasiswa dari 33 ..."
+      }
+     ],
+     "error": null
+    },
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan Jerman korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://www.reuters.com/world/americas/germany-arrests-18-international-crackdown-suspected-online-fraud-german-2025-11-05/",
+       "title": "Germany says 18 arrested after probe of online fraud involving payment providers - Reuters"
+      },
+      {
+       "url": "https://www.law360.com/articles/2531902/german-authorities-arrest-2-in-family-vat-fraud-probe",
+       "title": "German Authorities Arrest 2 in Family VAT Fraud Probe - Law360"
+      },
+      {
+       "url": "https://www.washingtonpost.com/world/2026/03/15/iran-iraq-border-kurdish-haji-omeran-prices/7f86f680-20a1-11f1-954a-6300919c9854_story.html",
+       "title": "Iranians cross into northern Iraq for cheaper food, internet and work after border reopens - The Washington Post"
+      },
+      {
+       "url": "https://telanganatoday.com/hyderabad-woman-loses-rs-31-42-lakh-in-alleged-uk-skilled-worker-visa-scam",
+       "title": "Hyderabad: Woman loses Rs 31.42 lakh in alleged UK skilled worker visa scam - Telangana Today"
+      },
+      {
+       "url": "https://the420.in/hyderabad-uk-visa-scam-aren-overseas-consultancy-fraud-case/",
+       "title": "Hyderabad Woman Alleges UK Visa Scam by Overseas Consultancy - The420.in"
+      }
+     ],
+     "error": null
+    }
+   ],
+   "lines": [
+    {
+     "url": "https://www.instagram.com/p/C4u0aeNvQ6z",
+     "status": "verified",
+     "reason": null,
+     "purpose": "company",
+     "quote": "PT CVGEN dan PT SHB. Kedua perusahaan ini mendatangi kampus-kampus dan mengiming-imingi mahasiswa mengikuti program kerja magang di Jerman",
+     "negative": false,
+     "entity": true,
+     "company_matched": false
+    },
+    {
+     "url": "https://ejurnal.ubharajaya.ac.id/index.php/JLSS/article/download/3738/2333/10715",
+     "status": "verified",
+     "reason": null,
+     "purpose": "company",
+     "quote": "PT CVGEN dan PT SHB memperoleh keuntungan melalui skema dana talangan yang diberikan kepada mahasiswa dengan jumlah berkisar antara 30 hingga 50 juta rupiah.",
+     "negative": false,
+     "entity": true,
+     "company_matched": false
+    },
+    {
+     "url": "https://journal.appihi.or.id/index.php/Amandemen/article/download/316/455/1725",
+     "status": "verified",
+     "reason": null,
+     "purpose": "company",
+     "quote": "PT Cvgen dan PT SHB bertanggung jawab menyosialisasikan program Ferienjob ke universitas-universitas di.",
+     "negative": false,
+     "entity": true,
+     "company_matched": false
+    },
+    {
+     "url": "https://www.youtube.com/watch?v=n_mGncphuE8",
+     "status": "verified",
+     "reason": null,
+     "purpose": "company",
+     "quote": "PT CVGEN dan PT SHB. “Kami para mahasiswa juga ingin speak up biar pelaku jera,\" kata Nita. Polri sudah menetapkan lima orang tersangka",
+     "negative": false,
+     "entity": true,
+     "company_matched": false
+    }
+   ],
+   "verified_lines": 4,
+   "verified_negative_lines": 0,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 2,
+   "case_id": "3vgj4wpkefwb5mjxop7ydpdduy"
+  },
+  {
+   "id": "d-p23",
+   "seconds": 27.7,
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "rule": "NO RED FLAGS FOUND — every step completed and no rule fired. This is not a guarantee.",
+   "excluded_domain": "suara.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan asisten rumah tangga, cleaning service, dan admin kantor Malaysia korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://www.cbsnews.com/philadelphia/video/recent-grad-says-job-offer-was-a-scam-warns-others-to-watch-for-red-flags/",
+       "title": "Recent grad says job offer was a scam, warns others to watch for red flags - CBS News"
+      },
+      {
+       "url": "https://timesofindia.indiatimes.com/city/ahmedabad/paldi-woman-duped-of-rs-10l-in-uk-student-visa-fraud/articleshow/131125501.cms",
+       "title": "Paldi woman duped of Rs 10L in UK student visa fraud - The Times of India"
+      },
+      {
+       "url": "https://www.kare11.com/article/news/investigations/regulators-sue-company-behind-fake-home-repair-businesses-kare-11-investigation/89-21462790-4733-4e9e-a13d-eb93fd08cfd0",
+       "title": "‘Fake, Fake, Fake’: Regulators sue company behind fake home repair businesses exposed by KARE 11 investigation - kare11.com"
+      },
+      {
+       "url": "https://www.cbsnews.com/minnesota/video/minnesota-woman-pleads-not-guilty-in-autism-fraud-scheme/",
+       "title": "Minnesota woman pleads not guilty in autism fraud scheme - CBS News"
+      },
+      {
+       "url": "https://www.automotiveworld.com/news/mitsubishi-motors-launches-xforce-suv-in-malaysia/",
+       "title": "Mitsubishi Motors launches Xforce SUV in Malaysia - automotiveworld.com"
+      }
+     ],
+     "error": null
+    }
+   ],
+   "lines": [],
+   "verified_lines": 0,
+   "verified_negative_lines": 0,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 1,
+   "case_id": "udkh6vgyivatlmuroodwpfagg4"
+  },
+  {
+   "id": "d-p24",
+   "seconds": 14.9,
+   "verdict": "VERIFY_FIRST",
+   "rule": "VERIFY FIRST — the recruiter is a personal number with no company named",
+   "excluded_domain": "detik.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan kilang Malaysia korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://www.facebook.com/kerjakuliahluarnegri/videos/yang-pengen-kerja-di-malaysia-anti-ribet-%EF%B8%8Fshare-ke-temen-yang-lain-siapa-tau-but/1551095120101410",
+       "title": "Yang pengen kerja di Malaysia anti ribet! ⛔️ Share ke ..."
+      },
+      {
+       "url": "https://www.instagram.com/reel/DXTccmEEw-u",
+       "title": "Dapat tawaran kerja ke Malaysia, Singapura, atau negara ..."
+      },
+      {
+       "url": "https://www.instagram.com/p/DP76-6Wkihs",
+       "title": "Polis Diraja Malaysia (PDRM) menyelamatkan 49 wanita ..."
+      },
+      {
+       "url": "https://www.tiktok.com/@ceritariki/video/7576485545535081746",
+       "title": "Tips Kerja di Malaysia: Aturan dan Gaya Hidup"
+      },
+      {
+       "url": "https://siskop2mi.bp2mi.go.id/profil/negara/detail/MY",
+       "title": "SISKOP2MI: Profil - Negara - SISKOP2MI"
+      }
+     ],
+     "error": null
+    },
+    {
+     "method": "extract",
+     "purpose": "advisory",
+     "query": "peringatan tawaran kerja luar negeri visa turis penipuan",
+     "credits": 0,
+     "results": [
+      {
+       "url": "https://siskop2mi.bp2mi.go.id/profil/negara/detail/MY",
+       "title": null
+      }
+     ],
+     "error": null
+    }
+   ],
+   "lines": [
+    {
+     "url": "https://www.facebook.com/kerjakuliahluarnegri/videos/yang-pengen-kerja-di-malaysia-anti-ribet-%EF%B8%8Fshare-ke-temen-yang-lain-siapa-tau-but/1551095120101410",
+     "status": "verified",
+     "reason": null,
+     "purpose": "pattern",
+     "quote": "Korban penipuan, jangan sampai ngalamin sendiri!",
+     "negative": true,
+     "entity": false,
+     "company_matched": false
+    },
+    {
+     "url": "https://www.instagram.com/p/DP76-6Wkihs",
+     "status": "verified",
+     "reason": null,
+     "purpose": "pattern",
+     "quote": "M. Kumar menyampaikan modus operandi sindikat tersebut adalah memperdaya korban dengan tawaran pekerjaan di kilang dan perusahaan swasta dengan gaji antara",
+     "negative": true,
+     "entity": false,
+     "company_matched": false
+    }
+   ],
+   "verified_lines": 2,
+   "verified_negative_lines": 2,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 1,
+   "case_id": "gpclwttjwcv7oct5bokq2qo53q"
+  },
+  {
+   "id": "d-p25",
+   "seconds": 16.6,
+   "verdict": "STOP",
+   "rule": "STOP — rule: tourist or visit visa offered for work",
+   "excluded_domain": "detik.com",
+   "tavily": [
+    {
+     "method": "search",
+     "purpose": "pattern",
+     "query": "lowongan bartender Spanyol visa turis korban penipuan",
+     "credits": 1,
+     "results": [
+      {
+       "url": "https://www.greenwichtime.com/news/world/article/thousands-of-immigrants-got-scammed-by-an-22324707.php",
+       "title": "Thousands of immigrants got scammed by an attorney exploiting humanitarian visas, lawsuits say - Greenwich Time"
+      },
+      {
+       "url": "https://english.gujaratsamachar.com/news/gujarat/ahmedabad-visa-consultancy-firm-booked-for-alleged-4-5-lakh-fraud-51200396393.html",
+       "title": "Ahmedabad visa consultancy firm booked for alleged ₹4.5 lakh fraud - GujaratSamachar English"
+      },
+      {
+       "url": "https://nypost.com/2026/07/27/world-news/3-tourists-kicked-out-of-bali-for-breaching-visa-conditions/",
+       "title": "3 tourists kicked out of Bali for breaching visa conditions - New York Post"
+      },
+      {
+       "url": "https://the420.in/ahmedabad-businessman-duped-10-lakh-fake-london-visa-scam/",
+       "title": "Ahmedabad Entrepreneur Duped of ₹10.49 Lakh in UK Work Visa Racket - The420.in"
+      },
+      {
+       "url": "https://timesofindia.indiatimes.com/city/ahmedabad/gandhinagar-salon-owner-tries-to-kill-self-after-rs-24-lakh-london-work-permit-con/amp_articleshow/133058306.cms",
+       "title": "Gandhinagar: Salon owner tries to kill self after Rs 24 lakh London work-permit con - The Times of India"
+      }
+     ],
+     "error": null
+    }
+   ],
+   "lines": [],
+   "verified_lines": 0,
+   "verified_negative_lines": 0,
+   "company_matched_lines": 0,
+   "failed": [],
+   "credits": 1,
+   "case_id": "hp2bfmam4zkiz57geckkxpllcy"
+  }
+ ],
+ "summary": {
+  "positives": 20,
+  "cases_with_any_result": 20,
+  "cases_with_verified_negative_line": 7,
+  "cases_with_company_matched_line": 0,
+  "credits": 22,
+  "relevant_count": "recorded separately (a reading of the titles and verified lines, not code)"
+ }
+}
