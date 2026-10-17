@@ -1,0 +1,47 @@
+{
+ "file": "bench/results-t1.jsonl",
+ "rows": 35,
+ "positives": 25,
+ "negatives": 10,
+ "x_positives_naming_company": 0,
+ "headline_company_matched_stop": "0/0",
+ "stop_any_reason": {
+  "rubric": "8/25",
+  "extract": "9/25",
+  "picker": "9/25",
+  "full": "9/25"
+ },
+ "never_flag_only_stops": "9/25",
+ "evidence_flipped_stops": "0/0",
+ "negatives_wrongly_stopped": {
+  "rubric": "0/10",
+  "extract": "0/10",
+  "picker": "0/10",
+  "full": "0/10"
+ },
+ "negatives_distribution_full": {
+  "STOP": 0,
+  "VERIFY_FIRST": 1,
+  "NO_RED_FLAGS_FOUND": 9,
+  "null": 0
+ },
+ "positives_distribution_full": {
+  "STOP": 9,
+  "VERIFY_FIRST": 13,
+  "NO_RED_FLAGS_FOUND": 2,
+  "null": 1
+ },
+ "paraphrased_positives": 25,
+ "stop_any_reason_quoted_only": "0/0",
+ "lines_shown": 42,
+ "lines_proposed": 50,
+ "gate_drop_rate": "8/50 (16 %)",
+ "cited_line_invariant": "holds",
+ "seconds_full_p50": 10.0,
+ "seconds_full_p95": 15.8,
+ "bill": {
+  "tf_tokens": 235206,
+  "tavily_credits": 52
+ },
+ "retried_rows": 0
+}
