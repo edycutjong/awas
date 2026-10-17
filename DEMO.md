@@ -15,7 +15,7 @@ estimate.
 
 ## 1. Read this first: what changed on 2026-10-17
 
-- **The day-0 coverage gate failed, and Awas changed its claim.** Before the benchmark's first run we set ourselves a gate:
+- **The day-0 coverage gate failed, and Awas changed its claim.** Before the benchmark's first run we set ourselves a gate (in our own plan; the threshold first appears in this repository's history afterwards):
   Tavily must surface a relevant advisory or news item for at least 12 of 20 known cases. It surfaced one for **8/20**
   (`docs/proof/stage-v.json`, `stage-v-relevance.json`; read by an agent against the definition stored in that file,
   not yet by a human). So Awas no longer promises "published reports about this company". **The verdict comes from
@@ -33,7 +33,7 @@ estimate.
 - **85 publicly reported scam-recruitment cases + 40 licensed-agency vacancies**, collected under
   `bench/PROTOCOL.md` (written before collection, four amendments, each dated and committed before the runs it
   affects). Every row is SHA-256-hashed in `bench/MANIFEST.json`; rows were split by a committed seed (20261014):
-  dev 20 + 5, tranche 1 25 + 10, tranche 2 25 + 10; 15 + 15 unused and never run. Git tags `bench-t1`, `bench-t2`.
+  dev 20 + 5, tranche 1 25 + 10, tranche 2 25 + 10; 15 + 15 unused and not run in any result file shipped here. Git tags `bench-t1`, `bench-t2`.
 - **Positives** are reporters' or officials' descriptions of the offer (25 of 25 in tranche 1 are paraphrased), from
   outlets whose terms allow automated reading (two large outlets were withdrawn on their terms, Amendment 2).
   **Negatives** are vacancies by licensed placement companies on the ministry's own SISKOP2MI board. A STOP on a

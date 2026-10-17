@@ -60,7 +60,7 @@ One number per page, all opened on 2026-10-17. Letters mark the quotes used abov
     - 8b: "Green: Indicates a safe link"
     - 8c: "The above inspection results are presented to the user by Gogolook with the help of comprehensive evaluation from CIB and ScamAdviser databases."
 9. **SISKOP2MI (KP2MI), home page.** https://siskop2mi.bp2mi.go.id/ — read 2026-10-17
-    - 9a: "Daftar sekarang untuk mendapatkan akses lamaran ke lowongan resmi bekerja di luar negeri, disajikan oleh KP2MI."
+    - 9a: "Daftar sekarang untuk mendapatkan akses lamaran ke lowongan resmi bekerja di luar negeri, disajikan oleh KP2MI/BP2MI."
       English gloss: Register now to get access to apply for official vacancies for working abroad, presented by KP2MI.
 10. **SISKOP2MI, P3MI list.** https://siskop2mi.bp2mi.go.id/profil/lembaga/list_lembaga/p3mi — read 2026-10-17
     - 10a (page heading, then the search-box label): "List P3MI" · "Nama Lembaga"

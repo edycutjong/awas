@@ -53,7 +53,7 @@ The scale is official: Indonesia's foreign ministry reports **1,301 cases handle
 
 ### The Solution
 
-> The scam checkers we looked at give a risk score. Awas gives no score, only evidence: every quote has a URL and is checked in code against the page's text, and lines that fail are dropped on screen.
+> Most of the scam checkers we looked at give a score or a safe/unsafe label ([`docs/COMPARISON.md`](docs/COMPARISON.md)). Awas gives no score, only evidence: every quote has a URL and is checked in code against the page's text, and lines that fail are dropped on screen.
 
 1. **Extract** — Nemotron 3 Ultra on Nebius Token Factory copies typed fields (company, destination, job, visa, fees, promises, phones) out of the pasted ad; code checks every field is literally in the ad.
 2. **Rubric** — fixed rules, each quoting an official page ([`src/lib/rule-sources.ts`](src/lib/rule-sources.ts), [`docs/SOURCES.md`](docs/SOURCES.md)): a job in Cambodia or Myanmar (not placement countries, KP2MI), a tourist or visit visa for work, a fee before a contract and a held passport are `NEVER` rules (STOP); the police checklist's fast departure, high pay for light work, costs advanced then deducted, no company named, and any fee are `CAUTION` (VERIFY FIRST). A named Indonesian company is looked up in a dated snapshot of the official licensed-agency (P3MI) list.
@@ -121,7 +121,7 @@ Every row comes from [`bench/results-t2-summary.json`](bench/results-t2-summary.
 
 ### Honest limits (6)
 
-1. **Our day-0 search-coverage gate failed** (8 of 20 known cases had a relevant item; we had set 12). The web evidence is therefore context; the verdict rests on the cited rules.
+1. **Our day-0 search-coverage gate failed** (8 of 20 known cases had a relevant item; we had set 12 in our own plan before the run, a threshold that first appears in this repository's history afterwards). The web evidence is therefore context; the verdict rests on the cited rules.
 2. **The benchmark's reported cases are reporters' descriptions of offers, not the ads.** Real ads carry more red-flag wording; and "no company named" fires on most descriptions partly because reports rarely name the company.
 3. **Indonesian is not a listed language** for the Nemotron models used (per their model cards); the stage-T accuracy above is measured against labels drafted by an agent and not yet reviewed by a human.
 4. **The phone path is unbenchmarked.** A phone number with no company name returns VERIFY FIRST, not a verdict.
