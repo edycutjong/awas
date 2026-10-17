@@ -1,8 +1,8 @@
 <div align="center">
-  <img src="docs/assets/icon.svg" alt="Awas Icon" width="144">
+  <img src="docs/assets/icon-animated.svg" alt="Awas Icon" width="144">
   <h1>Awas 🚨</h1>
   <p><em>Paste an overseas job offer. Get an evidence file — every line a URL plus a quote that code checked against the page's text — and a STOP or VERIFY FIRST before anyone boards.</em></p>
-  <img src="docs/assets/readme-hero.png" alt="Illustration with sample text: the quote gate checks a quote against fetched page text, then a verdict stamp" width="100%">
+  <img src="docs/assets/readme-hero-animated.svg" alt="Illustration with sample text: the quote gate checks a quote against fetched page text, then a verdict stamp" width="100%">
 
   <br/>
 
@@ -12,6 +12,7 @@
   [![Measured Results](https://img.shields.io/badge/📊_Measured-Results-f59e0b?style=for-the-badge)](DEMO.md)
   [![Nebius Feedback](https://img.shields.io/badge/📝_Nebius-Feedback-76B900?style=for-the-badge)](FEEDBACK.md)
   [![Built for Nebius](https://img.shields.io/badge/Nebius-Global_AI_Hackathon-8b5cf6?style=for-the-badge)](https://nebiusglobalaihackathon.devpost.com/)
+  [![Devpost submission](https://img.shields.io/badge/Devpost-Submission-003E54?style=for-the-badge&logo=devpost&logoColor=white)](https://devpost.com/software/awas-xejalo)
 
   <br/>
 
