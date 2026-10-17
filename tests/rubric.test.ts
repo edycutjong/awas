@@ -22,10 +22,12 @@ describe("the mockup ad", () => {
     expect(got).not.toContain("fee_before_contract");
   });
 
-  it("fires the advisory destination and high-pay flags", () => {
+  it("fires the not-a-placement-country rule for Cambodia (not the advisory rule twice) and the high-pay flags", () => {
     const got = ids(MOCK_AD);
-    expect(got).toContain("advisory_destination");
+    expect(got).toContain("non_placement_country");
+    expect(got).not.toContain("advisory_destination");
     expect(got).toContain("high_pay_no_experience");
+    expect(got).toContain("high_pay_light_work");
   });
 
   it("every NEVER rule has a recorded official source, so it can STOP on its own", () => {
@@ -179,5 +181,87 @@ describe("negatedBefore", () => {
     expect(negatedBefore(t, t.indexOf("visa"))).toBe(true);
     const u = "tidak perlu pengalaman visa turis";
     expect(negatedBefore(u, u.indexOf("visa"))).toBe(false);
+  });
+});
+
+describe("Amendment 4 — the Polri checklist items, the Kemnaker fee rule and the non-placement countries", () => {
+  it("Cambodia and Myanmar are NEVER (each with its own KP2MI statement); Thailand stays an advisory CAUTION", () => {
+    const kh = evaluateRubric("Lowongan CS di Phnom Penh, gaji 1.000 USD", null).find((f) => f.id === "non_placement_country");
+    expect(kh).toMatchObject({ class: "NEVER", sourced: true });
+    expect(kh?.source?.quote).toContain("Kamboja itu bukan negara penempatan");
+    const mm = evaluateRubric("Kerja di Myanmar bagian marketing", null).find((f) => f.id === "non_placement_country");
+    expect(mm?.source?.quote).toContain("Myanmar bukan negara penempatan resmi");
+    const th = evaluateRubric("Kerja di Thailand bagian marketing", null);
+    expect(th.map((f) => f.id)).toContain("advisory_destination");
+    expect(th.map((f) => f.id)).not.toContain("non_placement_country");
+  });
+
+  it("a negated mention of Cambodia is not an offer to go there", () => {
+    for (const t of ["Penempatan Malaysia, bukan ke Kamboja", "Job in Japan, not in Cambodia", "tidak ke Myanmar"]) {
+      expect(ids(t)).not.toContain("non_placement_country");
+    }
+  });
+
+  it("fires from the model's destination field", () => {
+    const ad = "Negara: Kamboja (Sihanoukville). Posisi admin.";
+    const ex: Extraction = { isJobOffer: true, phones: [], fees: [], promises: [], droppedFields: [], destination: { text: "Kamboja (Sihanoukville)", start: 8, end: 31 } };
+    expect(evaluateRubric(ad, ex).find((f) => f.id === "non_placement_country")?.via).toBe("both");
+  });
+
+  it("a fee asked to get the job is CAUTION, in Indonesian and English; never the pay, never a covered cost", () => {
+    for (const t of ["Biaya pendaftaran Rp 500 ribu", "harus menyetorkan uang Rp 12 juta per orang", "Rp 3 juta untuk biaya proses visa", "meminta sejumlah uang untuk mengurus dokumen", "A registration fee of USD 300", "You must pay a processing fee"]) {
+      const f = evaluateRubric(t, null).find((x) => x.id === "fee_asked");
+      expect(f, t).toMatchObject({ class: "CAUTION", sourced: true });
+    }
+    for (const t of ["Gaji Rp 8 juta per bulan", "Bebas biaya, gaji Rp 9 juta", "Biaya pelatihan gratis, gaji Rp 9 juta", "Biaya Rp 0", "Basic pay USD 900 per month"]) {
+      expect(ids(t), t).not.toContain("fee_asked");
+    }
+  });
+
+  it("a fee already flagged before a contract or before departure is not repeated", () => {
+    const got = ids("Biaya admin Rp 3 jt sebelum berangkat");
+    expect(got).toContain("fee_before_departure");
+    expect(got).not.toContain("fee_asked");
+  });
+
+  it("costs advanced and deducted from pay (item 5); not when the ad says there is no deduction", () => {
+    for (const t of ["Biaya keberangkatan ditalangi dulu", "nanti dipotong dari gaji", "gaji akan dipotong selama tiga bulan", "ada dana talangan", "Costs are deducted from your salary"]) {
+      expect(ids(t), t).toContain("debt_bondage");
+    }
+    for (const t of ["Tanpa potongan gaji", "Gaji tidak dipotong", "No salary deductions"]) {
+      expect(ids(t), t).not.toContain("debt_bondage");
+    }
+  });
+
+  it("a very fast departure with no selection or training (item 1)", () => {
+    for (const t of ["Proses cepat, langsung berangkat", "berangkat dalam 7 hari", "tanpa tes dan tanpa pelatihan", "Fast departure guaranteed", "Fly within 2 weeks"]) {
+      expect(ids(t), t).toContain("quick_departure");
+    }
+    expect(ids("Tidak langsung berangkat: pelatihan 3 bulan di LPK resmi")).not.toContain("quick_departure");
+  });
+
+  it("very high pay for light office work (item 2) needs both the pay and the light work", () => {
+    expect(ids("Dicari admin online di Malaysia, gaji Rp 12 juta")).toContain("high_pay_light_work");
+    expect(ids("Customer service, high salary")).toContain("high_pay_light_work");
+    expect(ids("Dicari admin online di Malaysia, gaji Rp 4 juta")).not.toContain("high_pay_light_work");
+    expect(ids("Operator produksi pabrik di Jepang, gaji Rp 15 juta")).not.toContain("high_pay_light_work");
+  });
+
+  it("the ad names no company and no contact (item 3) — only for a job offer", () => {
+    expect(ids("Lowongan kerja di Malaysia, gaji besar")).toContain("no_company");
+    expect(ids("Lowongan kerja di Malaysia, hubungi WA admin")).toContain("personal_recruiter");
+    expect(ids("Lowongan kerja di Malaysia, hubungi WA admin")).not.toContain("no_company");
+    expect(ids("Lowongan PT Maju Terus di Malaysia")).not.toContain("no_company");
+    // Board listings print foreign legal forms in capitals.
+    for (const t of ["Worker\nHJ INTERNATIONAL CO. LTD. Taiwan\nGaji :", "Worker\nACROOS BORDERLAND CONSULTING S.R.O Slovakia\nGaji :", "Plantation Worker\nPAMOL PLANTATIONS SDN BHD Malaysia\nGaji :"]) {
+      expect(ids(t), t).not.toContain("no_company");
+    }
+    expect(ids("Resep sambal matah: bawang merah, cabai rawit, serai")).not.toContain("no_company");
+    const ex: Extraction = { isJobOffer: false, phones: [], fees: [], promises: [], droppedFields: [] };
+    expect(evaluateRubric("Info kerja bakti warga hari Minggu", ex).map((f) => f.id)).not.toContain("no_company");
+  });
+
+  it("narrative words of a news report alone fire nothing (the rules read offers, not reports)", () => {
+    expect(ids("Korban dijanjikan dan diiming-imingi, lalu tergiur. Modusnya menipu korban.")).toEqual([]);
   });
 });

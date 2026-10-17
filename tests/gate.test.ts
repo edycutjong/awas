@@ -114,9 +114,19 @@ describe("text-fragment link", () => {
 });
 
 describe("guard terms match anywhere in the quote (spec rule; tuned on the dev set only)", () => {
-  it("'palsu' anywhere marks a guard", () => {
+  it("a fake vacancy is the scam itself, not a misused name: 'lowongan palsu' does not guard (Amendment 4)", () => {
     const c: Corpus = new Map();
     addToCorpus(c, URL_A, "company", { pageText: "PT Sinar Harapan Abadi merekrut korban melalui lowongan palsu di Kamboja." });
-    expect(gateLine({ url: URL_A, quote: "PT Sinar Harapan Abadi merekrut korban melalui lowongan palsu", claim: "" }, c, ctx).guard).toBe(true);
+    const l = gateLine({ url: URL_A, quote: "PT Sinar Harapan Abadi merekrut korban melalui lowongan palsu", claim: "" }, c, ctx);
+    expect(l).toMatchObject({ entity: true, negative: true, guard: false });
+  });
+
+  it("impersonation artefacts and 'mengatasnamakan' still guard", () => {
+    const c: Corpus = new Map();
+    addToCorpus(c, URL_A, "company", {
+      pageText: "Waspada akun palsu PT Sinar Harapan Abadi yang menipu korban. Lowongan penipuan yang mengatasnamakan PT Sinar Harapan Abadi beredar.",
+    });
+    expect(gateLine({ url: URL_A, quote: "Waspada akun palsu PT Sinar Harapan Abadi yang menipu korban", claim: "" }, c, ctx).guard).toBe(true);
+    expect(gateLine({ url: URL_A, quote: "Lowongan penipuan yang mengatasnamakan PT Sinar Harapan Abadi beredar", claim: "" }, c, ctx).guard).toBe(true);
   });
 });

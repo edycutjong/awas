@@ -64,9 +64,25 @@ export function verifySteps(flags: Flag[]): Steps {
   const en: string[] = [];
   id.push("Cek nama perusahaan di daftar resmi P3MI (siskop2mi.bp2mi.go.id) — hubungi perusahaan lewat kontak di daftar itu, bukan nomor di iklan.");
   en.push("Check the company on the official licensed-agency (P3MI) list at siskop2mi.bp2mi.go.id — contact it through the details on that list, not the number in the ad.");
-  if (has("fee_before_contract") || has("fee_before_departure")) {
+  if (has("non_placement_country")) {
+    id.push("Negara ini bukan negara penempatan resmi pekerja migran Indonesia (KP2MI) — tidak ada jalur kerja resmi ke sana.");
+    en.push("This country is not an official placement country for Indonesian workers (KP2MI) — there is no legal route to work there.");
+  }
+  if (has("fee_before_contract") || has("fee_before_departure") || has("fee_asked")) {
     id.push("Jangan bayar biaya apa pun sebelum ada perjanjian kerja tertulis.");
     en.push("Do not pay any fee before there is a written work contract.");
+  }
+  if (has("debt_bondage")) {
+    id.push("Waspadai biaya yang \"ditalangi\" lalu dipotong dari gaji — itu bisa menjadi jeratan utang.");
+    en.push("Be wary of costs \"advanced\" and then deducted from pay — that can become debt bondage.");
+  }
+  if (has("quick_departure")) {
+    id.push("Penempatan resmi melalui seleksi dan pelatihan; janji langsung berangkat adalah tanda bahaya.");
+    en.push("Official placement goes through selection and training; a promise of immediate departure is a warning sign.");
+  }
+  if (has("high_pay_light_work")) {
+    id.push("Gaji sangat tinggi untuk kerja ringan seperti admin atau layanan pelanggan adalah pola yang diperingatkan polisi.");
+    en.push("Very high pay for light work such as admin or customer service is a pattern the police warn about.");
   }
   if (has("tourist_visa") || has("visit_visa_holder")) {
     id.push("Tanyakan jenis visanya: bekerja di luar negeri harus dengan visa kerja, bukan visa turis atau kunjungan.");
@@ -76,7 +92,7 @@ export function verifySteps(flags: Flag[]): Steps {
     id.push("Jangan serahkan paspor kepada perekrut.");
     en.push("Do not hand your passport to a recruiter.");
   }
-  if (has("personal_recruiter")) {
+  if (has("personal_recruiter") || has("no_company")) {
     id.push("Minta nama perusahaan dan nomor izinnya, jangan hanya lewat nomor pribadi.");
     en.push("Ask for the company's name and licence number, not just a personal number.");
   }

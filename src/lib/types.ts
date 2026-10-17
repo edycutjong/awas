@@ -25,10 +25,16 @@ export type FlagId =
   | "tourist_visa"
   | "fee_before_contract"
   | "passport_retention"
+  | "non_placement_country"
   | "fee_before_departure"
+  | "fee_asked"
+  | "debt_bondage"
   | "high_pay_no_experience"
+  | "high_pay_light_work"
+  | "quick_departure"
   | "advisory_destination"
   | "personal_recruiter"
+  | "no_company"
   | "visit_visa_holder";
 
 export type FlagClass = "NEVER" | "CAUTION";

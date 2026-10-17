@@ -1,6 +1,6 @@
 /* Awas lab: src/lib compiled for the browser by scripts/build-lab.mjs (MIT).
 * lab-sources: src/lib/text.ts src/lib/rubric.ts src/lib/rule-sources.ts src/lib/gate.ts src/lib/verdict.ts src/lib/types.ts scripts/lab/entry.ts scripts/lab/sha256.ts
-* source-sha256: 97728b6ed8cf3ef09b1d0d9fe1e6cd9a4b848810b6c0fd29ab0812aa8fc6aec6 */
+* source-sha256: 569fa66d4e828a20f3d9c904a40d5e8536e351cd800f416def3083588f3dc72f */
 var AwasLab = (function(exports) {
 	Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
 	//#region src/lib/text.ts
@@ -129,6 +129,10 @@ var AwasLab = (function(exports) {
 		title: "Waspada Penipuan Lowongan Kerja Luar Negeri (TPPO)",
 		date: "2026-02-04"
 	};
+	const POLRI_ITEM = (quote) => ({
+		...POLRI_CHECKLIST,
+		quote
+	});
 	const KEMNAKER_FEES = {
 		url: "https://www.kemnaker.go.id/news/detail/kemnaker-imbau-masyarakat-waspada-penipuan-lowongan-pekerjaan",
 		domain: "kemnaker.go.id",
@@ -160,6 +164,17 @@ var AwasLab = (function(exports) {
 			personal_recruiter: {
 				...POLRI_CHECKLIST,
 				quote: "Identitas perusahaan tidak jelas, alamat kantor tidak pasti dan komunikasi hanya dilakukan melalui media sosial atau WhatsApp tanpa pertemuan langsung di kantor resmi."
+			},
+			no_company: {
+				...POLRI_CHECKLIST,
+				quote: "Identitas perusahaan tidak jelas, alamat kantor tidak pasti dan komunikasi hanya dilakukan melalui media sosial atau WhatsApp tanpa pertemuan langsung di kantor resmi."
+			},
+			quick_departure: POLRI_ITEM("Proses sangat instan, menjanjikan keberangkatan cepat tanpa melalui seleksi resmi maupun pelatihan bahasa dan keterampilan."),
+			high_pay_light_work: POLRI_ITEM("Gaji tidak masuk akal, menawarkan upah sangat tinggi untuk pekerjaan yang terlihat ringan, seperti admin media sosial atau layanan pelanggan."),
+			debt_bondage: POLRI_ITEM("Biaya keberangkatan “ditalangi”, dengan iming-iming gratis di awal, namun pada akhirnya menjadi utang besar yang dipotong dari gaji (jeratan utang)."),
+			fee_asked: {
+				...KEMNAKER_FEES,
+				quote: "Jangan pernah memberikan apapun untuk mendapatkan pekerjaan."
 			},
 			high_pay_no_experience: {
 				url: "https://www.kemlu.go.id/berita/kasus-wni-di-kamboja-meningkat-tajam-di-awal-2025?type=publication",
@@ -194,6 +209,27 @@ var AwasLab = (function(exports) {
 				quote: "awalnya dijanjikan pekerjaan di Thailand sebagai pekerja kantoran dengan gaji USD 700, tetapi justru dikirim ke Kamboja."
 			}
 		},
+		nonPlacement: { places: [{
+			name: "Kamboja",
+			pattern: "kamboja|cambodia|phnom\\s+penh|sihanoukville",
+			source: {
+				url: "https://kp2mi.go.id/berita-detail/waspada-tawaran-kerja-ke-kamboja-menteri-mukhtarudin-itu-bukan-negara-penempatan-pekerja-migran-indonesia",
+				domain: "kp2mi.go.id",
+				title: "Waspada Tawaran Kerja ke Kamboja, Menteri Mukhtarudin: Itu Bukan Negara Penempatan Pekerja Migran Indonesia",
+				date: "2025-10-28",
+				quote: "Perlu saya tegaskan, Kamboja itu bukan negara penempatan."
+			}
+		}, {
+			name: "Myanmar",
+			pattern: "myanmar|burma|myawaddy",
+			source: {
+				url: "https://kp2mi.go.id/index.php/berita-detail/diduga-terjebak-sindikat-scammer-di-myanmar-bp3mi-sumatera-barat-tegaskan-pentingnya-migrasi-aman",
+				domain: "kp2mi.go.id",
+				title: "Diduga Terjebak Sindikat Scammer di Myanmar, BP3MI Sumatera Barat Tegaskan Pentingnya Migrasi Aman",
+				date: "2026-07-21",
+				quote: "Kami tegaskan bahwa Myanmar bukan negara penempatan resmi Pekerja Migran Indonesia."
+			}
+		}] },
 		advisory: {
 			places: [
 				{
@@ -247,6 +283,11 @@ var AwasLab = (function(exports) {
 	* covered in the same clause ("Semua biaya ditanggung perusahaan sebelum berangkat") do not fire — unless the clause
 	* says the worker bears them ("ditanggung oleh pekerja"). The visa flag has no post-head guard on purpose:
 	* "visa turis ditanggung perusahaan" is still a tourist visa for work.
+	*
+	* Rules match the content of an offer — pay figures, fees, visa type, destination, departure speed, debt, company
+	* identity — never the narrative words a news report uses about one (korban, iming-iming, dijanjikan, tergiur, modus):
+	* the benchmark's positives are reporters' descriptions, and a rule that keyed on their vocabulary would score well
+	* there and catch nothing in a real ad (bench/PROTOCOL.md Amendment 4).
 	*/
 	const NEGATORS_1 = /* @__PURE__ */ new Set([
 		"tanpa",
@@ -320,7 +361,9 @@ var AwasLab = (function(exports) {
 	}
 	const FEE_HEAD_ID = String.raw`(?:uang|biaya)\s+(?:penempatan|pendaftaran|administrasi|admin|proses|pengurusan|pemberangkatan|jasa|muka|jaminan)?\s*`;
 	const FEE_HEAD_EN = String.raw`\b(?:placement|recruitment|processing|agency|service|admin|administration|registration|visa)?\s*(?:fee|fees|deposit|charge|charges|payment)\b`;
-	/** The rule set. Order is the display order. */
+	/** A money amount in an Indonesian ad: "Rp 2 juta", "Rp. 500.000", "3 jt", "750 ribu". */
+	const AMOUNT_ID = String.raw`(?:\brp\.?\s?\d|\b\d+(?:[.,]\d+)?\s*(?:jt|juta|rb|ribu|k)\b)`;
+	/** The rule set. */
 	const PATTERNS = {
 		tourist_visa: [
 			/\bvisa\s+(?:turis|kunjungan|wisata|pelancong|liburan)\b/giu,
@@ -337,14 +380,53 @@ var AwasLab = (function(exports) {
 		high_pay_no_experience: [/\b(?:tanpa|tidak\s+(?:perlu|butuh|harus|wajib)|tak\s+perlu|bebas)\s+(?:ada\s+)?pengalaman\b|\bpengalaman\s+tidak\s+(?:diperlukan|dibutuhkan|wajib|harus)\b|\bfresh\s*graduate\b/giu, /\bno\s+(?:prior\s+|previous\s+|work\s+)?experience\b|\bwithout\s+(?:any\s+)?experience\b|\bexperience\s+(?:is\s+)?not\s+(?:required|needed|necessary)\b/giu],
 		advisory_destination: [],
 		personal_recruiter: [],
-		visit_visa_holder: [/\bvisit\s+visas?\s+holders?\b/giu]
+		visit_visa_holder: [/\bvisit\s+visas?\s+holders?\b/giu],
+		non_placement_country: [],
+		fee_asked: [
+			new RegExp(String.raw`\b(?:biaya|bayar|membayar|dibayar|bayaran|setor|setoran|menyetor|menyetorkan|transfer|mentransfer|dp|deposit|uang\s+(?:muka|pendaftaran|administrasi|admin|proses|jaminan|tiket|visa|pengurusan))\b(?:(?!gaji|upah|salary|penghasilan|bonus)[^.;:!?\n]){0,40}?${AMOUNT_ID}`, "giu"),
+			new RegExp(String.raw`${AMOUNT_ID}[^.;:!?\n]{0,25}?\b(?:untuk|buat|sebagai)\s+(?:biaya|ongkos|pendaftaran|administrasi|admin|proses|pengurusan|tiket|visa|paspor|medical|medis|pelatihan|jaminan)\b`, "giu"),
+			/\buang\s+(?:untuk|buat)\s+(?:mengurus|pengurusan|biaya|tiket|dokumen|paspor|visa|administrasi|pendaftaran|proses|keberangkatan)\b/giu,
+			new RegExp(String.raw`\b(?:fee|fees|deposit|charge|charges|payment)\b(?:(?!salary|wage|income|\bpay\b)[^.;:!?\n]){0,40}?(?:\$|\busd|\bus\$|\brp\.?|\bidr|\bphp|\bmyr|\brm|\baed|\bsgd)\s?\d`, "giu"),
+			/\bpay\s+(?:a|an|the)?\s*(?:\w+\s+)?(?:fee|deposit|charge)\b/giu
+		],
+		debt_bondage: [/\b(?:di)?talangi\b|\b(?:dana\s+)?talangan\b|\bdipotong\s+(?:dari\s+)?gaji\b|\bpotong(?:an)?\s+gaji\b|\bgaji\s+(?:\p{L}+\s+){0,2}dipotong\b|\bdicicil\s+(?:dari|lewat|melalui|dengan)\s+gaji\b|\bpinjaman\b|\bkasbon\b/giu, /\bdeducted\s+from\s+(?:your\s+|the\s+)?(?:salary|wages?|pay)\b|\b(?:salary|wage)\s+deductions?\b|\bloans?\b/giu],
+		quick_departure: [
+			/\b(?:langsung|cepat|segera|siap)\s+(?:di)?berangkat(?:kan)?\b/giu,
+			/\b(?:proses|keberangkatan|pemberangkatan|berangkat|penempatan)\s+(?:sangat\s+|super\s+)?(?:cepat|kilat|instan|singkat|ekspres|express)\b/giu,
+			/\bberangkat\s+(?:dalam|kurang\s+dari|maksimal|maks|max)\s+\d+\s*(?:hari|minggu|pekan)\b/giu,
+			/\b(?:tanpa|tidak\s+(?:perlu|pakai|ada|wajib))\s+(?:tes|test|seleksi|pelatihan|training|interview|wawancara|kursus)\b/giu,
+			/\b(?:minggu|pekan|bulan)\s+(?:ini|depan)\s+(?:langsung\s+)?berangkat\b/giu,
+			/\b(?:fast|quick|immediate|express|instant)\s+(?:departure|process(?:ing)?|deployment|placement|hiring)\b/giu,
+			/\b(?:fly|depart|leave)\s+(?:within|in)\s+\d+\s+(?:days?|weeks?)\b/giu,
+			/\bno\s+(?:interview|test|training|selection)\b/giu
+		],
+		high_pay_light_work: [],
+		no_company: []
 	};
 	const CONTRACT_WORDS = /\b(kontrak|tanda\s*tangan|ttd|dp|uang\s+jaminan|contract|deposit|signing|signed)\b/i;
 	const DEPARTURE_WORDS = /\b(berangkat|keberangkatan|pemberangkatan|departure|departing|flying)\b/i;
 	const NEVER_RULES = [
 		"tourist_visa",
 		"fee_before_contract",
-		"passport_retention"
+		"passport_retention",
+		"non_placement_country"
+	];
+	/** The order flags are evaluated and listed in: NEVER rules first. */
+	const FLAG_ORDER = [
+		"tourist_visa",
+		"fee_before_contract",
+		"passport_retention",
+		"non_placement_country",
+		"fee_before_departure",
+		"fee_asked",
+		"debt_bondage",
+		"high_pay_no_experience",
+		"high_pay_light_work",
+		"quick_departure",
+		"advisory_destination",
+		"personal_recruiter",
+		"no_company",
+		"visit_visa_holder"
 	];
 	const FLAG_LABELS = {
 		tourist_visa: {
@@ -378,6 +460,30 @@ var AwasLab = (function(exports) {
 		visit_visa_holder: {
 			id: "Iklan menerima pemegang visa kunjungan",
 			en: "The ad accepts visit-visa holders"
+		},
+		non_placement_country: {
+			id: "Negara tujuan bukan negara penempatan resmi pekerja migran",
+			en: "The destination is not an official placement country"
+		},
+		fee_asked: {
+			id: "Iklan meminta biaya untuk mendapatkan pekerjaan",
+			en: "The ad asks for a fee to get the job"
+		},
+		debt_bondage: {
+			id: "Biaya ditalangi, lalu dipotong dari gaji",
+			en: "Costs advanced, then deducted from pay"
+		},
+		high_pay_light_work: {
+			id: "Gaji sangat tinggi untuk pekerjaan ringan",
+			en: "Very high pay for light office work"
+		},
+		quick_departure: {
+			id: "Janji berangkat cepat tanpa seleksi atau pelatihan",
+			en: "A fast departure with no selection or training"
+		},
+		no_company: {
+			id: "Iklan tidak menyebut nama perusahaan",
+			en: "The ad names no company"
 		}
 	};
 	/** Pay figures in an ad, in their own currency (rupiah or US dollars). No conversion: each has its own cited threshold. */
@@ -424,6 +530,59 @@ var AwasLab = (function(exports) {
 		}
 		return out.sort((a, b) => a.start - b.start);
 	}
+	/** "Not a placement country" mentions, skipping a negated one ("bukan ke Kamboja", "not in Myanmar"). */
+	function nonPlacementMatches(text) {
+		const out = [];
+		for (const place of RULE_SOURCES.nonPlacement.places) {
+			const re = new RegExp(String.raw`\b(?:${place.pattern})\b`, "giu");
+			for (const m of text.matchAll(re)) {
+				const start = m.index ?? 0;
+				if (negatedPlace(text, start)) continue;
+				out.push({
+					span: {
+						text: m[0],
+						start,
+						end: start + m[0].length
+					},
+					source: place.source
+				});
+			}
+		}
+		return out.sort((a, b) => a.span.start - b.span.start);
+	}
+	const PLACE_PREPOSITIONS = /* @__PURE__ */ new Set([
+		"ke",
+		"di",
+		"menuju",
+		"untuk",
+		"dari",
+		"to",
+		"in",
+		"for",
+		"from"
+	]);
+	/** "bukan ke Kamboja", "tidak di Myanmar", "not to Cambodia": a negator, then at most a preposition. */
+	function negatedPlace(text, start) {
+		if (negatedBefore(text, start)) return true;
+		const clause = clauseAround(text, start);
+		const toks = tokensOf(text.slice(clause.start, start));
+		return toks.length >= 2 && PLACE_PREPOSITIONS.has(toks[toks.length - 1]) && endsWithNegator(toks.slice(0, -1));
+	}
+	/** Light office work, the examples the Polri checklist gives (admin, customer service) and their usual ad titles. */
+	const LIGHT_WORK = /\b(?:admin(?:istrasi)?|customer\s+service|layanan\s+pelanggan|cs\s+online|cs|telemarketing|marketing(?:\s+(?:online|digital))?|data\s+entry|entri\s+data|input\s+data|e-?commerce|online\s+shop|toko\s+online|operator\s+(?:komputer|online|chat|game)|pekerja\s+kantor(?:an)?|kerja\s+kantor(?:an)?|staf+\s+kantor|office\s+(?:staff|work|job|assistant)|typist|kerja\s+online|host\s+live|live\s+streaming|trading|trader)\b/giu;
+	const LIGHT_WORK_IT = /\bIT\b/u;
+	/** Pay claimed in words: "gaji besar", "gaji tinggi", "belasan juta", "high salary". */
+	const PAY_WORDS = /\bgaji\s+(?:sangat\s+|super\s+)?(?:besar|tinggi|gede|fantastis|menggiurkan)\b|\b(?:belasan|puluhan)\s+juta\b|\bhigh\s+(?:salary|pay|income)\b/giu;
+	/** High pay in an ad: a figure at or above the cited threshold, or a high-pay claim in words. */
+	function highPaySpans(text) {
+		const figures = payFigures(text).filter((p) => p.currency === "IDR" ? p.amount >= PAY.thresholdIdr : p.amount >= PAY.thresholdUsd).map((p) => p.span);
+		const words = [...text.matchAll(PAY_WORDS)].map((m) => ({
+			text: m[0],
+			start: m.index ?? 0,
+			end: (m.index ?? 0) + m[0].length
+		}));
+		return [...figures, ...words].sort((a, b) => a.start - b.start);
+	}
 	const LEGAL_COMPANY = /\b(?:PT|CV)\.?\s+[A-Z0-9][\p{L}\p{N}&.'-]*/u;
 	const FOREIGN_COMPANY = /\b[A-Z][\p{L}&'-]+(?:\s+[A-Z][\p{L}&'-]+)*\s+(?:Co\.?,?\s*Ltd\.?|Ltd\.?|Inc\.?|LLC|Sdn\.?\s*Bhd\.?|Group|Company|Corporation)\b/u;
 	const CONTACT = /(?:\+?62|\b0)8\d{1,3}[\s.-]?\d{3,4}[\s.-]?\d{3,5}|\b(?:wa|whatsapp|whats\s?app|hubungi|telp|telepon|hp|dm|inbox)\b/giu;
@@ -459,7 +618,11 @@ var AwasLab = (function(exports) {
 			}
 			case "fee_before_contract": return !negatedBefore(text, start) && !coveredAfter(text, start, end) && CONTRACT_WORDS.test(clause.text);
 			case "fee_before_departure": return !negatedBefore(text, start) && !coveredAfter(text, start, end);
-			case "high_pay_no_experience": return true;
+			case "fee_asked": return !negatedBefore(text, start) && !coveredAfter(text, start, end);
+			case "debt_bondage":
+				if (negatedBefore(text, start)) return false;
+				return !/\b(tidak|tak|tanpa|bukan|no|not|without)\b/i.test(text.slice(start, end));
+			case "quick_departure": return !negatedBefore(text, start);
 			default: return true;
 		}
 	}
@@ -486,18 +649,27 @@ var AwasLab = (function(exports) {
 					add(fee, before && kind && !negatedBefore(text, fee.start) && !coveredAfter(text, fee.start, fee.end));
 				}
 				break;
-			case "advisory_destination": add(ex.destination, !!ex.destination && advisoryMatches(ex.destination.text).length > 0);
+			case "advisory_destination":
+				add(ex.destination, !!ex.destination && advisoryMatches(ex.destination.text).length > 0);
+				break;
+			case "fee_asked":
+				for (const fee of ex.fees) add(fee, !negatedBefore(text, fee.start) && !coveredAfter(text, fee.start, fee.end) && !/\b(gratis|free|ditanggung|covered)\b/i.test(fee.text));
+				break;
+			case "debt_bondage":
+				for (const span of [...ex.fees, ...ex.promises]) add(span, PATTERNS.debt_bondage.some((re) => new RegExp(re.source, "iu").test(span.text)) && guardsPass("debt_bondage", text, span.start, span.end));
+				break;
+			case "quick_departure": for (const span of ex.promises) add(span, PATTERNS.quick_departure.some((re) => new RegExp(re.source, "iu").test(span.text)) && !negatedBefore(text, span.start));
 		}
 		return hits;
 	}
 	function sourceFor(id) {
 		return RULE_SOURCES.flags[id] ?? null;
 	}
-	function makeFlag(id, hits) {
+	function makeFlag(id, hits, sourceOverride) {
 		if (hits.length === 0) return null;
 		hits.sort((a, b) => a.span.start - b.span.start);
 		const vias = new Set(hits.map((h) => h.via));
-		const source = sourceFor(id);
+		const source = sourceOverride !== void 0 ? sourceOverride : sourceFor(id);
 		const declared = NEVER_RULES.includes(id) ? "NEVER" : "CAUTION";
 		const sourced = source !== null;
 		return {
@@ -516,28 +688,35 @@ var AwasLab = (function(exports) {
 	*/
 	function evaluateRubric(adText, extraction) {
 		const flags = [];
-		for (const id of [
-			"tourist_visa",
-			"fee_before_contract",
-			"passport_retention",
-			"fee_before_departure",
-			"high_pay_no_experience",
-			"advisory_destination",
-			"personal_recruiter",
-			"visit_visa_holder"
-		]) {
+		const has = (id) => flags.some((f) => f.id === id);
+		const nonPlacement = [...nonPlacementMatches(adText), ...extraction?.destination ? nonPlacementMatches(extraction.destination.text).map((m) => ({
+			...m,
+			span: extraction.destination,
+			model: true
+		})) : []];
+		for (const id of FLAG_ORDER) {
 			let hits;
-			if (id === "high_pay_no_experience") hits = highPayHits(adText, extraction);
+			let source;
+			if (id === "non_placement_country") {
+				hits = nonPlacement.map((m) => ({
+					span: m.span,
+					via: "model" in m ? "model" : "pattern"
+				}));
+				source = nonPlacement[0]?.source ?? null;
+			} else if (id === "high_pay_no_experience") hits = highPayHits(adText, extraction);
+			else if (id === "high_pay_light_work") hits = lightWorkHits(adText, extraction);
 			else if (id === "advisory_destination") hits = [...advisoryMatches(adText).map((span) => ({
 				span,
 				via: "pattern"
-			})), ...modelHits(id, adText, extraction)];
+			})), ...modelHits(id, adText, extraction)].filter((h) => !nonPlacement.some((m) => m.span.start < h.span.end && h.span.start < m.span.end));
 			else if (id === "personal_recruiter") hits = personalRecruiterHits(adText, extraction);
+			else if (id === "no_company") hits = has("personal_recruiter") ? [] : noCompanyHits(adText, extraction);
+			else if (id === "fee_asked") hits = has("fee_before_contract") || has("fee_before_departure") ? [] : [...patternHits(id, adText), ...modelHits(id, adText, extraction)];
 			else hits = [...patternHits(id, adText), ...modelHits(id, adText, extraction)];
-			const flag = makeFlag(id, dedupeHits(hits));
+			const flag = makeFlag(id, dedupeHits(hits), source);
 			if (flag) flags.push(flag);
 		}
-		if (flags.some((f) => f.id === "fee_before_contract")) return flags.filter((f) => !(f.id === "fee_before_departure" && overlapsFlag(f, flags.find((g) => g.id === "fee_before_contract"))));
+		if (has("fee_before_contract")) return flags.filter((f) => !(f.id === "fee_before_departure" && overlapsFlag(f, flags.find((g) => g.id === "fee_before_contract"))));
 		return flags;
 	}
 	function overlapsFlag(a, b) {
@@ -556,7 +735,7 @@ var AwasLab = (function(exports) {
 		const noExp = patternHits("high_pay_no_experience", text);
 		const modelNoExp = (ex?.promises ?? []).filter((p) => PATTERNS.high_pay_no_experience.some((re) => new RegExp(re.source, "iu").test(p.text)));
 		if (noExp.length === 0 && modelNoExp.length === 0) return [];
-		if (payFigures(text).filter((p) => p.currency === "IDR" ? p.amount >= PAY.thresholdIdr : p.amount >= PAY.thresholdUsd).length === 0) return [];
+		if (highPaySpans(text).length === 0) return [];
 		const hits = [];
 		if (noExp.length > 0) hits.push({
 			span: noExp[0].span,
@@ -567,6 +746,50 @@ var AwasLab = (function(exports) {
 			via: "model"
 		});
 		return hits;
+	}
+	/** Very high pay for light office work (Polri checklist item 2): the flag points at the pay. */
+	function lightWorkHits(text, ex) {
+		const pay = highPaySpans(text);
+		if (pay.length === 0) return [];
+		const hits = [];
+		if (new RegExp(LIGHT_WORK.source, "iu").test(text) || LIGHT_WORK_IT.test(text)) hits.push({
+			span: pay[0],
+			via: "pattern"
+		});
+		if (ex?.job && (new RegExp(LIGHT_WORK.source, "iu").test(ex.job.text) || LIGHT_WORK_IT.test(ex.job.text))) hits.push({
+			span: pay[0],
+			via: "model"
+		});
+		return hits;
+	}
+	/** Words that make a text read as a job offer — the no-company rule never fires on text that is not one. */
+	const JOB_CONTEXT = /\b(?:lowongan|loker|dibutuhkan|dicari|rekrut|direkrut|perekrutan|bekerja|pekerjaan|kerja|gaji|upah|hiring|vacanc(?:y|ies)|jobs?|work|salary)\b/iu;
+	/**
+	* The ad names no company and gives no contact (with a personal contact, the personal-recruiter rule fires instead).
+	* Only for text that reads as a job offer, and never when the model read it as something else — so a pasted recipe
+	* is still "not a job ad", not a check.
+	*/
+	function noCompanyHits(text, ex) {
+		if (!JOB_CONTEXT.test(text) || ex && !ex.isJobOffer) return [];
+		if (LEGAL_COMPANY.test(text) || FOREIGN_COMPANY.test(text) || ex?.company) return [];
+		const first = text.match(/^\s*([^\n]{1,80})/u);
+		if (!first) return [];
+		const start = (first.index ?? 0) + first[0].length - first[1].length;
+		const span = {
+			text: first[1],
+			start,
+			end: start + first[1].length
+		};
+		return ex ? [{
+			span,
+			via: "pattern"
+		}, {
+			span,
+			via: "model"
+		}] : [{
+			span,
+			via: "pattern"
+		}];
 	}
 	function personalRecruiterHits(text, ex) {
 		const hits = [];
@@ -780,8 +1003,8 @@ var AwasLab = (function(exports) {
 			re: /\bmencatut\b/
 		},
 		{
-			term: "palsu",
-			re: /\bpalsu\b/
+			term: "akun/situs palsu",
+			re: /\b(?:akun|website|situs|web|laman|halaman|logo)\s+(?:[\p{L}]+\s+)?palsu\b/u
 		},
 		{
 			term: "membantah",
@@ -813,8 +1036,21 @@ var AwasLab = (function(exports) {
 		high_pay_no_experience: "high pay with no experience needed",
 		advisory_destination: "the destination is named in an official warning",
 		personal_recruiter: "the recruiter is a personal number with no company named",
-		visit_visa_holder: "the ad accepts visit-visa holders"
+		visit_visa_holder: "the ad accepts visit-visa holders",
+		non_placement_country: "the destination is not an official placement country for Indonesian workers",
+		fee_asked: "a fee is asked to get the job",
+		debt_bondage: "costs are advanced, then deducted from pay",
+		high_pay_light_work: "very high pay for light office work",
+		quick_departure: "a fast departure with no selection or training",
+		no_company: "the ad names no company"
 	};
+	/** The NEVER-class rules; one with no recorded source is drawn and counted as CAUTION. */
+	const NEVER_IDS = [
+		"tourist_visa",
+		"fee_before_contract",
+		"passport_retention",
+		"non_placement_country"
+	];
 	function decide(flags, lines, failedSteps) {
 		const never = flags.filter((f) => f.class === "NEVER");
 		const matched = lines.filter(isCompanyMatched);
@@ -831,11 +1067,7 @@ var AwasLab = (function(exports) {
 		const entityOnly = lines.filter((l) => isVerdictInput(l) && l.entity && !isCompanyMatched(l));
 		if (caution.length > 0 || entityOnly.length > 0 || failedSteps.length > 0) {
 			const reasons = [
-				...caution.map((f) => f.sourced || ![
-					"tourist_visa",
-					"fee_before_contract",
-					"passport_retention"
-				].includes(f.id) ? FLAG_REASON[f.id] : `${FLAG_REASON[f.id]} (no official source recorded for this rule)`),
+				...caution.map((f) => f.sourced || !NEVER_IDS.includes(f.id) ? FLAG_REASON[f.id] : `${FLAG_REASON[f.id]} (no official source recorded for this rule)`),
 				...entityOnly.some((l) => l.guard) ? ["a page says this name was used by others or denied"] : [],
 				...entityOnly.some((l) => !l.guard && !l.entityCapped && !l.negative) ? ["a page names this company without reporting harm"] : [],
 				...entityOnly.some((l) => !l.guard && l.entityCapped) ? [entityOnly.some((l) => l.entityKind === "phone") ? "a page mentions this phone number" : "a page mentions a similar or generic name — check the licence number"] : [],

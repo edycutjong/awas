@@ -32,7 +32,8 @@ export const NEGATIVE_TERMS: { term: string; re: RegExp }[] = [
 export const GUARD_TERMS: { term: string; re: RegExp }[] = [
   { term: "mengatasnamakan", re: /\bmengatasnamakan\b/ },
   { term: "mencatut", re: /\bmencatut\b/ },
-  { term: "palsu", re: /\bpalsu\b/ },
+  // An impersonation artefact, not "lowongan kerja palsu" (a fake job is the scam itself; Amendment 4).
+  { term: "akun/situs palsu", re: /\b(?:akun|website|situs|web|laman|halaman|logo)\s+(?:[\p{L}]+\s+)?palsu\b/u },
   { term: "membantah", re: /\bmembantah\b/ },
   { term: "tidak terlibat", re: /\btidak terlibat\b/ },
 ];
@@ -70,7 +71,16 @@ const FLAG_REASON: Record<string, string> = {
   advisory_destination: "the destination is named in an official warning",
   personal_recruiter: "the recruiter is a personal number with no company named",
   visit_visa_holder: "the ad accepts visit-visa holders",
+  non_placement_country: "the destination is not an official placement country for Indonesian workers",
+  fee_asked: "a fee is asked to get the job",
+  debt_bondage: "costs are advanced, then deducted from pay",
+  high_pay_light_work: "very high pay for light office work",
+  quick_departure: "a fast departure with no selection or training",
+  no_company: "the ad names no company",
 };
+
+/** The NEVER-class rules; one with no recorded source is drawn and counted as CAUTION. */
+const NEVER_IDS = ["tourist_visa", "fee_before_contract", "passport_retention", "non_placement_country"];
 
 export function decide(flags: Flag[], lines: EvidenceLine[], failedSteps: string[]): Decision {
   const never = flags.filter((f) => f.class === "NEVER");
@@ -89,7 +99,7 @@ export function decide(flags: Flag[], lines: EvidenceLine[], failedSteps: string
   const entityOnly = lines.filter((l) => isVerdictInput(l) && l.entity && !isCompanyMatched(l));
   if (caution.length > 0 || entityOnly.length > 0 || failedSteps.length > 0) {
     const reasons = [
-      ...caution.map((f) => (f.sourced || !["tourist_visa", "fee_before_contract", "passport_retention"].includes(f.id) ? FLAG_REASON[f.id] : `${FLAG_REASON[f.id]} (no official source recorded for this rule)`)),
+      ...caution.map((f) => (f.sourced || !NEVER_IDS.includes(f.id) ? FLAG_REASON[f.id] : `${FLAG_REASON[f.id]} (no official source recorded for this rule)`)),
       ...(entityOnly.some((l) => l.guard) ? ["a page says this name was used by others or denied"] : []),
       ...(entityOnly.some((l) => !l.guard && !l.entityCapped && !l.negative) ? ["a page names this company without reporting harm"] : []),
       ...(entityOnly.some((l) => !l.guard && l.entityCapped) ? [entityOnly.some((l) => l.entityKind === "phone") ? "a page mentions this phone number" : "a page mentions a similar or generic name — check the licence number"] : []),
