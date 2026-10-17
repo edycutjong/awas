@@ -7,22 +7,22 @@
 <meta name="description" content="Paste an overseas job offer. Awas checks it against rules quoted from official Indonesian pages and shows a quote only when code finds it word for word.">
 <meta name="author" content="Edy Cu">
 <meta name="theme-color" content="#FBFAF5">
-<link rel="canonical" href="https://awas-cek.vercel.app/about">
+<link rel="canonical" href="https://awas.edycu.dev/about">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Awas">
 <meta property="og:title" content="Awas — pages, not scores">
 <meta property="og:description" content="Rules from official pages, quotes checked word for word in code: STOP, VERIFY FIRST or NO RED FLAGS FOUND. Never a score.">
-<meta property="og:url" content="https://awas-cek.vercel.app/about">
-<meta property="og:image" content="https://awas-cek.vercel.app/og-image.png?v=6790adc007">
+<meta property="og:url" content="https://awas.edycu.dev/about">
+<meta property="og:image" content="https://awas.edycu.dev/og-image.png?v=6790adc007">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Awas — a recorded evidence file: the rule and its official page, a quote found word for word, a STOP stamp">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Awas — pages, not scores">
 <meta name="twitter:description" content="Rules from official pages, quotes checked word for word in code: STOP, VERIFY FIRST or NO RED FLAGS FOUND. Never a score.">
-<meta name="twitter:image" content="https://awas-cek.vercel.app/og-image.png?v=6790adc007">
+<meta name="twitter:image" content="https://awas.edycu.dev/og-image.png?v=6790adc007">
 <link rel="preload" href="/fonts/abril-fatface-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/atkinson-hyperlegible-next-wght.woff2" as="font" type="font/woff2" crossorigin>
 <script>
@@ -658,7 +658,7 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
       </div>
       <p class="axis-note">Durations from the stored receipt, laid end to end.</p>
       <div class="receipt" id="receipt">
-        <div class="cmd"><code id="cmd">curl -sL https://awas-cek.vercel.app/api/case/qm5h5lnvunjgjlyqbw6kkabtya</code><button class="linkbtn" type="button" data-copy="#cmd"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>copy</span></button></div>
+        <div class="cmd"><code id="cmd">curl -sL https://awas.edycu.dev/api/case/qm5h5lnvunjgjlyqbw6kkabtya</code><button class="linkbtn" type="button" data-copy="#cmd"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>copy</span></button></div>
         <ol aria-label="The stored receipt, one line per step"><li style="--i:0"><span class="k">extract</span><span><span class="data">nvidia/Nemotron-3-Ultra-550b-a55b</span> · <span class="num">1,081</span> tok · 2.9 s</span></li><li style="--i:1"><span class="k">rules</span><span>non_placement_country · NEVER · “Kamboja” · kp2mi.go.id 2025-10-28</span></li><li style="--i:2"><span class="k">search</span><span>Tavily · “WNI korban penipuan lowongan kerja Kamboja” · 5 pages · 1 credit · 1.8 s</span></li><li style="--i:3"><span class="k">propose</span><span><span class="data">nvidia/nemotron-3-super-120b-a12b</span> · <span class="num">4,814</span> tok · 3.7 s</span></li><li style="--i:4"><span class="k">gate</span><span>6 proposed · 5 found word for word · 1 dropped</span></li><li style="--i:5"><span class="k">message</span><span><span class="data">nvidia/nemotron-3-super-120b-a12b</span> · <span class="num">1,567</span> tok · 4.7 s</span></li><li style="--i:6"><span class="k">verdict</span><span><span class="stopword">STOP</span> — rule: the destination is not an official placement country for Indonesian workers</span></li><li style="--i:7"><span class="k">total</span><span>13.6 s · 7,462 tokens · 1 Tavily credit · kept in Object Storage</span></li></ol>
       </div>
       <p class="rbar">condensed from that JSON · no key needed <button class="linkbtn" type="button" id="replay-receipt" hidden><svg class="ic" aria-hidden="true"><use href="#i-replay"/></svg>replay</button></p>
