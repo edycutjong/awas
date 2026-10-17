@@ -31,7 +31,7 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       # No credentials in CI: the suite uses recorded fixtures and fake upstreams, never the product's keys.
-      - run: npm test
+      - run: npx vitest run --coverage
 
   security:
     name: Dependency audit

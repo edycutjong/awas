@@ -113,7 +113,7 @@ The one extension no sponsor ships is the **quote gate**: two generic APIs becom
 
 | Metric | Value |
 |---|---|
-| Unit tests | **164 passing** (`npm test`, 13 files) |
+| Unit tests | **249 passing** (`npm test`, 21 files) |
 | Browser tests | **56 passing** (`npm run e2e`: 28 checks × phone and desktop projects; credential-free paths only: home, `/judge`, `/integrations`, `/about`, `/pitch`, guards, the in-page quote gate and rules, no horizontal scroll at 375/768/1440 px) |
 | Benchmark protocol | written before any row was collected: [`bench/PROTOCOL.md`](bench/PROTOCOL.md), with four dated amendments, each committed before the runs it affects |
 | Stage-T scoring rules | pre-registered before labels or model runs: [`bench/STAGE-T.md`](bench/STAGE-T.md) |
@@ -162,7 +162,7 @@ npm run dev               # http://localhost:3000
 ## 🧪 Testing & CI
 
 ```bash
-npm test          # 164 vitest tests: quote gate, verdict, rubric, registry, masking, SigV4 vectors, clients, store, pipeline, landing lab
+npm test          # 249 vitest tests: quote gate, verdict, rubric, registry, masking, SigV4 vectors, clients, store, pipeline, landing lab
 npm run typecheck && npm run lint
 npm run build && npm run e2e   # 56 Playwright tests, no credentials needed
 ```
