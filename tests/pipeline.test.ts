@@ -21,6 +21,8 @@ interface FakeOpts {
   extraction?: Record<string, unknown> | null;
   lines?: { source: string; quote: string; claim_id: string; claim_en: string }[];
   tavilyDown?: boolean;
+  /** Tavily answers 200 with a result the corpus code cannot read (a null entry). */
+  tavilyMalformed?: boolean;
   message?: Record<string, unknown>;
 }
 
@@ -45,6 +47,7 @@ function fake(o: FakeOpts = {}): { fetchImpl: typeof fetch; calls: string[] } {
     if (u.startsWith("https://tv.test")) {
       calls.push(`tavily:${u.endsWith("/extract") ? "extract" : body.exact_match ? "exact" : "pattern"}`);
       if (o.tavilyDown) return reply({ error: "down" }, 500);
+      if (o.tavilyMalformed && !u.endsWith("/extract")) return reply({ results: [null], usage: { credits: 1 } });
       if (u.endsWith("/extract")) return reply({ results: [], usage: { credits: 0 } });
       if (body.exact_match) return reply({ results: [{ url: "https://news.example.org/a", title: "Polisi ungkap perekrutan", content: "x", raw_content: PAGE }, { url: "https://source.example.com/b", title: "Sumber asli", raw_content: PAGE }], usage: { credits: 1 } });
       return reply({ results: [], usage: { credits: 1 } });
@@ -89,6 +92,14 @@ describe("runCheck", () => {
     const pack = await runCheck({ adText: "Lowongan admin gudang, gaji UMR, kirim lamaran ke kantor kami di Bekasi.", lang: "id", mode: "live", stage: "full" }, { tf, tavily, store: store(), fetchImpl });
     expect(pack.verdict).toBe("VERIFY_FIRST");
     expect(pack.receipt.failedSteps.join(" ")).toMatch(/Tavily/);
+  });
+
+  it("a search whose reply code cannot read marks that step failed — the run still ends with a verdict, never NO RED FLAGS FOUND", async () => {
+    const { fetchImpl } = fake({ tavilyMalformed: true, extraction: { is_job_offer: true, company: null, recruiter: null, phones: [], destination: null, job: "admin", visa: null, fees: [], promises: [] } });
+    const pack = await runCheck({ adText: "Lowongan admin gudang, gaji UMR, kirim lamaran ke kantor kami di Bekasi.", lang: "id", mode: "live", stage: "full" }, { tf, tavily, store: store(), fetchImpl });
+    expect(pack.done).toBe(true);
+    expect(pack.verdict).toBe("VERIFY_FIRST");
+    expect(pack.receipt.failedSteps).toContain("Tavily search (unexpected error)");
   });
 
   it("is_job_offer:false skips Tavily only when no rule fired", async () => {

@@ -210,7 +210,7 @@ export function templateProse(input: MessageInput): { introId: string; adviceId:
   };
 }
 
-export async function writeMessage(tf: TokenFactoryConfig | null, input: MessageInput, fetchImpl: typeof fetch = fetch): Promise<MessageResult> {
+export async function writeMessage(tf: TokenFactoryConfig | null, input: MessageInput, fetchImpl: typeof fetch = fetch, deadlineMs?: number): Promise<MessageResult> {
   const glossesFallback = new Map<number, { gloss: string; ok: boolean }>();
   const fromTemplate = (receipt: TfCallReceipt | null, error: string | null): MessageResult => {
     const t = templateProse(input);
@@ -235,7 +235,7 @@ export async function writeMessage(tf: TokenFactoryConfig | null, input: Message
   for (let attempt = 0; attempt < 2; attempt++) {
     const out = await chat<RawMessage>(tf, {
       call: "message", model: tf.models.message, system: MESSAGE_SYSTEM, user,
-      format: s.format, reasoning: s.reasoning, maxTokens: s.maxTokens, timeoutMs: s.timeoutMs, validate: validateMessage,
+      format: s.format, reasoning: s.reasoning, maxTokens: s.maxTokens, timeoutMs: s.timeoutMs, deadlineMs, validate: validateMessage,
     }, fetchImpl);
     lastReceipt = out.receipt;
     if (!out.ok || !out.value) {

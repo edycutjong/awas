@@ -159,6 +159,7 @@ export async function proposeLines(
   ex: Extraction | null,
   sources: FilteredSource[],
   fetchImpl: typeof fetch = fetch,
+  deadlineMs?: number,
 ): Promise<ProposeOutcome> {
   const s = callSetting("propose");
   const excerpts = sources.map((src) => `[${src.id}] ${src.title ?? ""} — ${src.url}\n${src.paragraphs.join("\n")}`).join("\n\n");
@@ -174,6 +175,7 @@ export async function proposeLines(
       reasoning: s.reasoning,
       maxTokens: s.maxTokens,
       timeoutMs: s.timeoutMs,
+      deadlineMs,
       validate: validateLines,
     },
     fetchImpl,

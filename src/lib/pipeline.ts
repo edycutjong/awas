@@ -117,6 +117,8 @@ export async function runCheck(input: CheckInput, deps: Deps, emit: Emit = () =>
   const fetchImpl = deps.fetchImpl ?? fetch;
   const budget = deps.budgetMs ?? 280_000;
   const left = () => budget - (Date.now() - started);
+  // Every model call gives up by this time, retries included, leaving room to save the pack and write the verdict.
+  const deadline = started + budget - 10_000;
   const pack = emptyPack(input, input.caseId ?? newCaseId());
   const failed = pack.receipt.failedSteps;
   const tfReceipts: TfCallReceipt[] = pack.receipt.tf;
@@ -151,7 +153,7 @@ export async function runCheck(input: CheckInput, deps: Deps, emit: Emit = () =>
       failed.push("extraction (Token Factory not configured)");
       emit("step_error", { step: "extraction", message: "Token Factory is not configured" });
     } else {
-      const out = await extractFields(deps.tf, input.adText, fetchImpl);
+      const out = await extractFields(deps.tf, input.adText, fetchImpl, deadline);
       tfReceipts.push(out.receipt);
       if (out.error || !out.extraction) {
         failed.push("extraction");
@@ -230,7 +232,11 @@ export async function runCheck(input: CheckInput, deps: Deps, emit: Emit = () =>
         };
         searches.push(search(tv, "pattern", params, fetchImpl).then((o) => { record(o); addSearch(o, "pattern"); }));
       }
-      await Promise.all(searches);
+      // A search that throws (not one that fails — those return ok:false) still only marks its own step as failed.
+      await Promise.all(searches.map((p) => p.catch((e: unknown) => {
+        failed.push("Tavily search (unexpected error)");
+        emit("step_error", { step: "tavily", message: e instanceof Error ? e.message : String(e) });
+      })));
       const official = [...corpus.values()].map((d) => d.url).filter((u) => OFFICIAL.test(domainOf(u))).slice(0, 5);
       if (official.length > 0) {
         const o = await extract(tv, { urls: official, query: "peringatan tawaran kerja luar negeri visa turis penipuan", chunks_per_source: 3 }, fetchImpl);
@@ -250,7 +256,7 @@ export async function runCheck(input: CheckInput, deps: Deps, emit: Emit = () =>
         failed.push("evidence proposal (time limit)");
         emit("step_error", { step: "propose", message: "not enough time left in this run" });
       } else {
-        const out = await proposeLines(deps.tf, input.adText, ex, sources, fetchImpl);
+        const out = await proposeLines(deps.tf, input.adText, ex, sources, fetchImpl, deadline);
         tfReceipts.push(out.receipt);
         if (out.error) {
           failed.push("evidence proposal");
@@ -296,7 +302,7 @@ export async function runCheck(input: CheckInput, deps: Deps, emit: Emit = () =>
     const msg = await writeMessage(left() > 30_000 ? deps.tf : null, {
       verdict: decision.verdict, rule: decision.rule, reasons: decision.reasons, flags: pack.flags, lines: quoted, glossOnly,
       company: ctx.company, phones: ctx.phones,
-    }, fetchImpl);
+    }, fetchImpl, deadline);
     if (msg.receipt) tfReceipts.push(msg.receipt);
     // Glosses go out keyed by the line's own index, so the live view and the stored pack can never disagree.
     const glossesByLine: Record<string, { gloss: string; ok: boolean }> = {};

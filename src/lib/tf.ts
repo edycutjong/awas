@@ -31,6 +31,8 @@ export interface ChatCall {
   reasoning: ReasoningKnob;
   maxTokens: number;
   timeoutMs: number;
+  /** Absolute time (epoch ms) by which the call must give up, retries included — the run's own budget. */
+  deadlineMs?: number;
   /** Validates the parsed JSON; returns an error string or null. */
   validate?: (value: unknown) => string | null;
 }
@@ -107,6 +109,9 @@ export async function chat<T = unknown>(tf: TokenFactoryConfig, c: ChatCall, fet
   let formatRetried = false;
   let lastError = "no attempt made";
   for (let attempt = 1; attempt <= 4; attempt++) {
+    // Retries never outlive the run: a slow upstream ends this call as a failed step, not as a killed function.
+    const remaining = c.deadlineMs === undefined ? Infinity : c.deadlineMs - Date.now();
+    if (remaining < 3_000) return done({ error: attempt === 1 ? "not enough time left in this run" : `${lastError} (no time left to retry)` });
     receipt.attempts = attempt;
     receipt.format = format;
     let res: Response;
@@ -115,7 +120,7 @@ export async function chat<T = unknown>(tf: TokenFactoryConfig, c: ChatCall, fet
         method: "POST",
         headers: { Authorization: `Bearer ${tf.apiKey}`, "Content-Type": "application/json" },
         body: JSON.stringify(buildBody(c, format)),
-        signal: AbortSignal.timeout(c.timeoutMs),
+        signal: AbortSignal.timeout(Math.min(c.timeoutMs, remaining)),
       });
     } catch (e) {
       lastError = `Token Factory request failed: ${e instanceof Error ? e.message : String(e)}`;

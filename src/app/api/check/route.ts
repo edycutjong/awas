@@ -54,6 +54,14 @@ export async function POST(req: Request) {
           // The reader went away; the pack is still written step by step.
         }
       };
+      // A reader that went away cancels the stream; closing it again then throws, so close once and quietly.
+      const close = () => {
+        try {
+          controller.close();
+        } catch {
+          // already closed by the client's cancel
+        }
+      };
       try {
         if (!bench && !judge) {
           const day = new Date().toISOString().slice(0, 10);
@@ -61,7 +69,7 @@ export async function POST(req: Request) {
           if (!ok) {
             send("rate_limited", { message: "too many checks from this connection — try a recorded sample or wait" });
             send("done", { caseId: null });
-            controller.close();
+            close();
             return;
           }
         }
@@ -70,7 +78,7 @@ export async function POST(req: Request) {
         send("step_error", { step: "server", message: e instanceof Error ? e.message : String(e) });
         send("done", { caseId: null });
       }
-      controller.close();
+      close();
     },
   });
 

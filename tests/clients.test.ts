@@ -50,6 +50,21 @@ describe("Token Factory call", () => {
     expect(out.value).toEqual({ a: 2 });
   });
 
+  it("never outlives the run's deadline: a hung upstream ends as a failed call, retries included", async () => {
+    const hang: typeof fetch = (_url, init) =>
+      new Promise((_resolve, reject) => init?.signal?.addEventListener("abort", () => reject(new Error("aborted"))));
+    const started = Date.now();
+    const out = await chat(tf, { ...base, format: "json_object", reasoning: "default", timeoutMs: 60_000, deadlineMs: Date.now() + 4_000 }, hang);
+    expect(out.ok).toBe(false);
+    expect(Date.now() - started).toBeLessThan(6_000);
+    expect(out.error).toMatch(/no time left|not enough time/);
+  });
+
+  it("does not start a call with less than 3 s left", async () => {
+    const out = await chat(tf, { ...base, format: "json_object", reasoning: "default", deadlineMs: Date.now() + 1_000 }, fakeFetch([{ body: completion('{"a":1}') }]));
+    expect(out).toMatchObject({ ok: false, error: "not enough time left in this run" });
+  });
+
   it("treats empty content as an error after one json_object retry — never a faked answer", async () => {
     const out = await chat(tf, { ...base, format: "json_schema_raw", reasoning: "default" }, fakeFetch([{ body: completion("") }, { body: completion(null) }]));
     expect(out.ok).toBe(false);

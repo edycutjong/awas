@@ -161,7 +161,7 @@ export interface ExtractOutcome {
   error: string | null;
 }
 
-export async function extractFields(tf: TokenFactoryConfig, adText: string, fetchImpl: typeof fetch = fetch): Promise<ExtractOutcome> {
+export async function extractFields(tf: TokenFactoryConfig, adText: string, fetchImpl: typeof fetch = fetch, deadlineMs?: number): Promise<ExtractOutcome> {
   const s = callSetting("extract");
   const out: ChatOutcome<RawExtraction> = await chat<RawExtraction>(
     tf,
@@ -175,6 +175,7 @@ export async function extractFields(tf: TokenFactoryConfig, adText: string, fetc
       reasoning: s.reasoning,
       maxTokens: s.maxTokens,
       timeoutMs: s.timeoutMs,
+      deadlineMs,
       validate: validateExtraction,
     },
     fetchImpl,
