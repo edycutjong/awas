@@ -1,7 +1,7 @@
 # Developer-experience report
 
 What building Awas on Nebius Token Factory, NVIDIA Nemotron and Tavily was actually like — the friction, measured.
-Every observation points at a recorded call in `docs/proof/`. This is the source of the Devpost Feedback field
+Every measured observation points at a recorded call in `docs/proof/` or `bench/`; statements about the docs cite the doc page. This is the source of the Devpost Feedback field
 (`FEEDBACK.md`).
 
 ## Token Factory
@@ -29,7 +29,7 @@ error, never a line to show (`src/lib/tf.ts`).
 `Llama-3_1-Nemotron-Ultra-253B-v1`. Prices are visible only through `GET /v1/models?verbose=true`.
 
 **4. Indonesian is not on any of the three model cards** (Super, Lightning, Ultra), so we measured it (stage T, 25
-dev ads, six fields, `docs/proof/stage-t.json`; labels drafted by the build agent and **not yet reviewed by a human**):
+dev texts — 20 reporters' descriptions of scam offers and 5 licensed vacancies — six fields, `docs/proof/stage-t.json`; labels drafted by the build agent and **not yet reviewed by a human**):
 
 | Model (reasoning setting) | Field accuracy vs the agent's labels |
 |---|---|
@@ -43,26 +43,26 @@ Ultra therefore does call 1 (extraction); Super does calls 2 and 3 (`docs/proof/
 
 ## Tavily
 
-**5. Keyless access works as documented.** Before a key existed, `X-Tavily-Access-Mode: keyless` returned real results
-(HTTP 200, `usage.credits` 1). Every Awas receipt records which mode served the call.
+**5. Keyless access works as documented.** `X-Tavily-Access-Mode: keyless` with no key returns real results (HTTP 200,
+`usage.credits` 1: `docs/proof/tavily-keyless-2026-10-17.json`). Every Awas receipt records which mode served the call.
 
 **6. Coverage of Indonesian sources depends on the query far more than on the index.** On 20 dev cases, the
-pre-registered query (job + destination, `topic: "news"`, `time_range: "year"`, `language: "id"`) surfaced a relevant
-item for **8/20** (`docs/proof/stage-v.json`, `stage-v-relevance.json`) — the day-0 gate Awas had set itself (≥ 12/20)
+pre-registered query (job + destination, `topic: "news"`, `time_range: "year"`, `language: "id"` — `patternQuery` in
+`src/lib/pipeline.ts` before commit 3d19b31) surfaced a relevant item for **8/20** (`docs/proof/stage-v.json`, `stage-v-relevance.json`) — the day-0 gate Awas had set itself (≥ 12/20)
 failed. A destination-centred query (`topic: "general"`, `country: "indonesia"`, no time range) surfaced one for
 **18/20** on the same cases (`docs/proof/dev-tune-2026-10-17.json` — in-sample, the dev set the query was tuned on).
-`country` boosts only with `topic: "general"`, which is easy to miss.
+`country` boosts only with `topic: "general"` (Tavily's search reference, `country`), which is easy to miss.
 
 **7. `extract` failed quietly on a social-media URL** (`Failed to fetch url`, 0 credits, `spike-2026-10-15.json`); Awas
 leaves social-media domains out of its context search.
 
-**8. `end_date` filters on "publish date or last updated date"** and search results carry no date, so a "published
-before" test can leak; Awas's V-time column says so (`docs/proof/stage-v-time.json`).
+**8. `end_date` filters on "publish date or last updated date"**, so a "published before" test can leak; Awas's
+V-time column says so (`docs/proof/stage-v-time.json`).
 
 ## Nebius Object Storage
 
 **9. Conditional create works:** a second `PUT` with `If-None-Match: "*"` returned **412** (`spike-2026-10-15.json`,
-`object_storage`). Awas builds its per-IP rate slots and write-once packs on it, with no database.
+`object_storage`). Awas builds its per-IP rate slots on it, with no database.
 
 ## Vercel (hosting, not a sponsor)
 

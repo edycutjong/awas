@@ -1,0 +1,28 @@
+{
+ "what": "One Tavily /search call with no API key, using the documented keyless mode (header X-Tavily-Access-Mode: keyless).",
+ "recorded_at": "2026-10-17T08:25:01+00:00",
+ "request": {
+  "url": "https://api.tavily.com/search",
+  "headers": {
+   "X-Tavily-Access-Mode": "keyless"
+  },
+  "body": {
+   "query": "\"Kementerian Luar Negeri\" imbauan tawaran kerja Kamboja",
+   "max_results": 3,
+   "search_depth": "basic",
+   "include_usage": true
+  }
+ },
+ "status": 200,
+ "seconds": 1.76,
+ "usage": {
+  "credits": 1
+ },
+ "request_id": "c82d162c-2a6d-410b-85d8-bb44825d960a",
+ "result_urls": [
+  "https://www.instagram.com/reel/DU5SaVZE-tX",
+  "https://www.facebook.com/kemenp2mi/posts/sobatmigran-waspada-tawaran-kerja-ke-kambojapergi-ke-kamboja-memang-mudah-namun-/1263458522475108",
+  "https://www.instagram.com/reel/DQddAqik3_r"
+ ],
+ "error": null
+}

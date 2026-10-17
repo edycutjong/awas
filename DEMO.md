@@ -15,9 +15,9 @@ estimate.
 
 ## 1. Read this first: what changed on 2026-10-17
 
-- **The day-0 coverage gate failed, and Awas changed its claim.** Before writing any product code we set a gate:
+- **The day-0 coverage gate failed, and Awas changed its claim.** Before the benchmark's first run we set ourselves a gate:
   Tavily must surface a relevant advisory or news item for at least 12 of 20 known cases. It surfaced one for **8/20**
-  (`docs/proof/stage-v.json`, `stage-v-relevance.json`; read by an agent with a definition written before reading,
+  (`docs/proof/stage-v.json`, `stage-v-relevance.json`; read by an agent against the definition stored in that file,
   not yet by a human). So Awas no longer promises "published reports about this company". **The verdict comes from
   rules quoted from official pages; the web evidence is context, and every quote shown is checked in code.**
 - **Reports almost never name the recruiting company.** Of the benchmark's reported cases whose offer text names a
@@ -66,15 +66,17 @@ estimate.
   `docs/proof/verify-quotes-t1-2026-10-17.txt`): 27 present; 14 not checkable by a script (the site refused it — 403
   or 404 to a repeated fetch — or the page is JavaScript or a PDF; a browser still shows them); 1 "changed since
   fetch", a company-directory table row that Tavily's text writes with ";" separators while the page's HTML has none.
-- **Seconds to verdict** (full column, on the deployed Vercel function): p50 **10.0 s**, p95 **15.8 s**.
+- **Seconds to verdict** (full column, the app's own receipts; run with `--base https://awas-cek.vercel.app`, so
+  every case id in the file opens at `https://awas-cek.vercel.app/case/<id>`): p50 **10.0 s**, p95 **15.8 s**.
 - **Bill:** 235,206 Token Factory tokens and 52 Tavily credits for the full column (0–3 credits a check, mostly 1–2).
 
 **What tranche 1 made visible** (fixed before code-freeze; only tranche 2 measures the fixes): one case ended with no
 verdict because the model read the text as "not a job offer" and that switched off a raw-text rule — rules now read
 only the raw text; one case ended NO RED FLAGS FOUND because the model returned "Lembaga Pelatihan Kerja (LPK)" as
 the company — a kind of recruiter is no longer counted as a name. One more NO RED FLAGS FOUND (domestic work in Qatar)
-has no rule: the ministerial decree behind the Middle-East domestic-work moratorium appears to have been revoked in
-2026, so Awas does not encode it.
+has no rule: Indonesia's 2015 moratorium on placing domestic workers with private households in Middle-East countries
+(Kepmenaker 260/2015) is not encoded — its current scope was not verified (a lifting for Saudi Arabia was announced as
+planned in 2025), so it stays a gap rather than a guess.
 
 ## 4. Tranche 2 — the headline (out-of-sample: run once, 2026-10-17, on code tagged `code-freeze`)
 
@@ -83,7 +85,8 @@ has no rule: the ministerial decree behind the Middle-East domestic-work morator
 **It ran as a Nebius Serverless Job.** `POST /api/bench/dispatch` checked `bench/tranche2.jsonl` against
 `bench/MANIFEST.json` (sha256 `1e333cdf…`) before creating job `aijob-e03nhcfcwc4vnee33m` in uk-south1 (`cpu-d3`,
 `python:3.11`). The job ran the committed `scripts/bench.py` (sha256 `35614ce4…`, the file at `code-freeze`) against
-the production app in bench mode and wrote its rows through presigned Object Storage URLs — it held no credential.
+the production app in bench mode and wrote its rows through presigned Object Storage URLs. It held no Nebius or
+model-provider credential — only the app's bench secret and the two presigned upload URLs.
 
 **Licensed ads (10): 0/10 stopped** in every column. Full verdicts: NO RED FLAGS FOUND 9 · VERIFY FIRST 1 (a page
 mentioned a similar name) · STOP 0.
@@ -113,7 +116,12 @@ mentioned a similar name) · STOP 0.
   6 of 54 proposed lines dropped (11 %); 44 of the 48 carry an English gloss, 1 is marked "translation unavailable"
   because the translation lost a hedge word. Re-checked by plain GET (`docs/proof/verify-quotes-t2-2026-10-17.txt`):
   33 present, 14 not checkable by a script, 1 "changed since fetch" — again a directory table row written with ";".
-- **Run to run:** 10 cases run twice more: **19/20** reruns give the same verdict as the first run.
+- **Run to run:** the pre-registered rerun took the first 10 rows of the file, which are the licensed vacancies:
+  **19/20** reruns gave the first run's verdict (t2-n05 moved from VERIFY FIRST to NO RED FLAGS FOUND once;
+  `bench/results-t2-variance.jsonl`). Because that measured no reported case, 10 reported cases were then rerun twice
+  more on the same frozen logic (`bench/results-t2-variance-positives.jsonl`, added afterwards; the headline above is
+  the first run): **20/20** reruns gave the first run's verdict (3 STOP cases and 7 VERIFY FIRST cases, each run
+  twice more).
 - **Seconds to verdict** (the app's own receipts, full column): p50 **13.7 s**, p95 **31.7 s**.
 - **Bill:** 269,623 Token Factory tokens and 51 Tavily credits for the full column (1–3 credits a check). At the
   prices `GET /v1/models` returns (`docs/proof/models-2026-10-17.json`), the median full check costs **$0.0078** in
@@ -126,14 +134,15 @@ Pooled with tranche 1 (mixed code versions — an appendix, not a headline): lic
 
 | Stage | Result | File |
 |---|---|---|
-| T — can Nemotron read the ads? (25 dev ads, 6 fields, **vs labels drafted by the build agent, not yet reviewed by a human**) | Ultra 84.8 % · Super 70.7 % · Lightning 59.6 % (reasoning off; no answer with low_effort) · regex baseline 0/6 on the company field → gate (≥ 80 %) passed; Ultra does call 1 | `docs/proof/stage-t.json` |
+| T — can Nemotron read the ads? (25 dev texts — 20 reporters' descriptions, 5 licensed vacancies — 6 fields, **vs labels drafted by the build agent, not yet reviewed by a human**) | Ultra 84.8 % · Super 70.7 % · Lightning 59.6 % (reasoning off; no answer with low_effort) · regex baseline 0/6 on the company field → gate (≥ 80 %) passed; Ultra does call 1 | `docs/proof/stage-t.json` |
 | R — rules alone on the 20 dev positives (before Amendment 4) | 1 STOP · 8 VERIFY FIRST · 11 NO RED FLAGS FOUND | `docs/proof/stage-r.json` |
 | V — does Tavily surface a relevant item? | 8/20 → **gate failed** (≥ 12/20) | `docs/proof/stage-v.json`, `stage-v-relevance.json` |
 | V-time — published before the case? | inconclusive: 1 dev positive names a company (< 8) | `docs/proof/stage-v-time.json` |
-| EMBED | not run (no free Serverless Endpoint slot) | — |
+| EMBED | not run — optional; no embedding endpoint was deployed | — |
 
 **Dev set after Amendment 4 (in-sample — the rules were tuned on these rows; never a benchmark number):** reported
-cases 3 STOP · 17 VERIFY FIRST · 0 NO RED FLAGS FOUND (before: 1 · 9 · 10); licensed ads 0 stopped in any column; the
+cases, full pipeline, 3 STOP · 17 VERIFY FIRST · 0 NO RED FLAGS FOUND (before, full pipeline in stage V: 1 · 9 · 10 —
+stage R above is the rules-only column); licensed ads 0 stopped in any column; the
 destination-centred context search found a relevant item for 18/20 (before: 8/20). `docs/proof/dev-tune-2026-10-17.json`.
 
 ## 6. Bench mode differs from live use in exactly four ways

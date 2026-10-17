@@ -37,7 +37,7 @@
 
 **Live:** [awas-cek.vercel.app](https://awas-cek.vercel.app) (the app) · [/about](https://awas-cek.vercel.app/about) (the story page, with the rules and the quote gate running in your browser) · [/pitch](https://awas-cek.vercel.app/pitch) (the deck).
 
-> **Measured, out of sample** (tranche 2 of a benchmark frozen before it ran, run once on code tagged `code-freeze`, as a Nebius Serverless Job — [`DEMO.md`](DEMO.md)): **0 of 10 licensed agencies' vacancies stopped**; of 25 publicly reported scam-recruitment cases, **9 STOP, 15 VERIFY FIRST, 1 NO RED FLAGS FOUND**. Every one of the 48 evidence lines shown carries a URL and a quote code found verbatim on the page. One honest note first: our own day-0 gate on search coverage failed (a relevant item for 8 of 20 known cases), so Awas does not promise "published reports about this company" — the verdict comes from rules quoted from official pages, and the web evidence is context.
+> **Measured, out of sample** (tranche 2 of a benchmark frozen before it ran, run once on code tagged `code-freeze`, as a Nebius Serverless Job — [`DEMO.md`](DEMO.md)): **0 of 10 licensed agencies' vacancies stopped**; of 25 publicly reported scam-recruitment cases, **9 STOP, 15 VERIFY FIRST, 1 NO RED FLAGS FOUND**. Every one of the 48 evidence lines shown carries a URL and a quote the code found verbatim in the page text Tavily returned. One honest note first: our own day-0 gate on search coverage failed (a relevant item for 8 of 20 known cases), so Awas does not promise "published reports about this company" — the verdict comes from rules quoted from official pages, and the web evidence is context.
 
 ## 💡 The Problem & Solution
 
@@ -78,7 +78,7 @@ flowchart LR
 | Layer | Choice |
 |---|---|
 | App | Next.js 15, TypeScript, Tailwind 4 |
-| Models | NVIDIA Nemotron on Nebius Token Factory, routed per call: **Nemotron 3 Ultra** (`nvidia/Nemotron-3-Ultra-550b-a55b`) extracts the fields (84.8 % field accuracy on 25 Indonesian ads vs Super 70.7 % and Lightning 59.6 % — against labels drafted by our build agent, not yet reviewed by a human: [`docs/proof/stage-t.json`](docs/proof/stage-t.json)); **Nemotron 3 Super** (`nvidia/nemotron-3-super-120b-a12b`) proposes evidence lines and writes the family message |
+| Models | NVIDIA Nemotron on Nebius Token Factory, routed per call: **Nemotron 3 Ultra** (`nvidia/Nemotron-3-Ultra-550b-a55b`) extracts the fields (84.8 % field accuracy on 25 Indonesian texts — 20 reporters' descriptions of scam offers and 5 licensed vacancies — vs Super 70.7 % and Lightning 59.6 %, against labels drafted by our build agent, not yet reviewed by a human: [`docs/proof/stage-t.json`](docs/proof/stage-t.json)); **Nemotron 3 Super** (`nvidia/nemotron-3-super-120b-a12b`) proposes evidence lines and writes the family message |
 | Retrieval | Tavily `/search` and `/extract` |
 | State | Nebius Object Storage (S3 API, SigV4): evidence packs (rewritten as each step completes), per-IP rate slots (conditional create); a 75-day expiry rule on `cases/` is intended, its receipt is pending |
 | Nebius libraries | `src/lib/nebius/` (SigV4, Object Storage, service-account auth, Serverless Jobs), copied from the same author's earlier project, [faultline](https://github.com/edycutjong/faultline) |
@@ -91,7 +91,7 @@ flowchart LR
 | 2 | Tavily `POST /search` | exact-phrase search for the company and phone, a destination search for context, page text for the gate | [`tavily.ts`](src/lib/tavily.ts) |
 | 3 | Tavily `POST /extract` | relevant passages from official advisory pages | [`tavily.ts`](src/lib/tavily.ts) |
 | 4 | Nebius Object Storage `PutObject` / `GetObject`; conditional `PutObject` for rate slots; presigned URLs | evidence packs, per-IP rate slots, recorded samples, the bench job's results | [`storage.ts`](src/lib/nebius/storage.ts), [`store.ts`](src/lib/store.ts) |
-| 5 | Nebius Serverless Jobs `POST /ai/v1/jobs` | runs the frozen benchmark on Nebius compute (uk-south1, `cpu-d3`): tranche 2 ran as job `aijob-e03nhcfcwc4vnee33m` ([`bench/results-t2-job.json`](bench/results-t2-job.json)); the job holds no credential and writes its rows through presigned URLs | [`jobs.ts`](src/lib/nebius/jobs.ts), [`dispatch/route.ts`](src/app/api/bench/dispatch/route.ts) |
+| 5 | Nebius Serverless Jobs `POST /ai/v1/jobs` | runs the frozen benchmark on Nebius compute (uk-south1, `cpu-d3`): tranche 2 ran as job `aijob-e03nhcfcwc4vnee33m` ([`bench/results-t2-job.json`](bench/results-t2-job.json)); the job holds no Nebius or model-provider credential — only the app's bench secret and two presigned upload URLs | [`jobs.ts`](src/lib/nebius/jobs.ts), [`dispatch/route.ts`](src/app/api/bench/dispatch/route.ts) |
 
 **Honest count: 5 distinct methods from 2 vendors**, with NVIDIA as the model family (Nemotron 3 Ultra and Super).
 
@@ -109,7 +109,7 @@ The one extension no sponsor ships is the **quote gate**: two generic APIs becom
 | Licensed agencies' vacancies wrongly stopped | **0 / 10** (NO RED FLAGS FOUND 9, VERIFY FIRST 1) |
 | Ablation, STOPs on the 25 cases | rules only 8 · rules + Nemotron extraction 8 · code sentence-picker 8 · full Awas 9 |
 | Evidence lines shown | 48, each a URL plus a quote found verbatim in code; 6 of 54 proposed dropped (11 %) |
-| Same verdict on a rerun | 19 / 20 |
+| Same verdict on a rerun | **20 / 20** on 10 reported cases (3 STOP, 7 VERIFY FIRST, each run twice more); 19 / 20 on 10 licensed vacancies |
 | Seconds to verdict, p50 / p95 | **13.7 s / 31.7 s** |
 | Cost of a full check | median **$0.0078** in Token Factory tokens, 1–3 Tavily credits |
 

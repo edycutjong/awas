@@ -1,7 +1,8 @@
 # Feedback — Nebius Token Factory, Nebius AI Cloud and NVIDIA Nemotron
 
 From building Awas: three Nemotron models on Token Factory, Object Storage and a Serverless Job, in Indonesian.
-Each item points at a recorded call in `docs/proof/`; the longer friction log is `docs/DX-REPORT.md`.
+Each measured item points at a recorded call in `docs/proof/` or `bench/`; the longer friction log is
+`docs/DX-REPORT.md`.
 
 ## Token Factory
 
@@ -17,23 +18,26 @@ Each item points at a recorded call in `docs/proof/`; the longer friction log is
    rows, about 100 s each (`docs/proof/stage-t.json`). A per-model note on the knobs — and a `finish_reason` that says
    the budget ran out while reasoning — would let builders pick settings without measuring them.
 3. **Nemotron 3 Ultra is live but undocumented.** `GET /v1/models` lists `nvidia/Nemotron-3-Ultra-550b-a55b`; the
-   docs we could read name only the retired `Llama-3_1-Nemotron-Ultra-253B-v1`. Prices appear only with
-   `?verbose=true`. A model page with prices and supported languages would help.
+   docs we could read name only the retired `Llama-3_1-Nemotron-Ultra-253B-v1`. We got prices only by
+   adding `?verbose=true`. A model page with prices and supported languages would help.
 4. **Indonesian is on none of the model cards — please publish multilingual results.** We measured it ourselves on 25
-   Indonesian job ads, 6 fields (labels drafted by our build agent, not yet reviewed by a human): Ultra 84.8 %, Super
+   Indonesian texts (20 reporters' descriptions of scam job offers, 5 licensed vacancies), 6 fields (labels drafted by
+   our build agent, not yet reviewed by a human): Ultra 84.8 %, Super
    70.7 %, Lightning 59.6 % with reasoning off (`docs/proof/stage-t.json`). Ultra now does Awas's extraction. Published
    Bahasa Indonesia numbers would tell builders in Southeast Asia which model to start with.
-5. **Image input would change this product.** Most job ads forwarded on WhatsApp are images. `nvidia/Nemotron-3.5-Super-VL`
-   appeared on `/v1/models` during the hackathon (2026-10-17); a short guide to image input on Token Factory would let
-   Awas read a screenshot instead of asking the family to copy the text out.
+5. **Image input would change this product.** Awas asks a family to copy the text out of an image ad with the phone's
+   copy-text feature. `nvidia/Nemotron-3.5-Super-VL` appeared on `/v1/models` during the hackathon
+   (`docs/proof/models-2026-10-17.json`); a short guide to image input on Token Factory would let Awas read the
+   screenshot itself.
 
 ## Nebius AI Cloud
 
-6. **Serverless Jobs worked first time over REST** — `POST /ai/v1/jobs` (an Operation with `resourceId`), injected
-   files (≤ 64 KiB fits a small script and a benchmark file), environment variables for presigned result URLs. Two
-   notes from running the benchmark as a job: about 4 minutes of provisioning before a 20-second container, and the
-   container's stdout is readable with `nebius ai job logs` but we found no REST endpoint for it, so the job writes its
-   own results to Object Storage.
+6. **Creating a Serverless Job over REST worked on the first try** — `POST /ai/v1/jobs` (an Operation with
+   `resourceId`), injected files (≤ 64 KiB fits a small script and a benchmark file), environment variables for
+   presigned result URLs. Two notes: about 4 minutes of provisioning before the container starts (the one-row smoke job
+   then ran 20 seconds, the 35-row benchmark 20 minutes — `docs/proof/serverless-job-smoke-2026-10-17.json`,
+   `bench/results-t2-job.json`), and the container's stdout is readable with `nebius ai job logs` but we found no REST
+   endpoint for it, so the job writes its own results to Object Storage.
 7. **Object Storage conditional writes are a quiet superpower.** A second `PUT` with `If-None-Match: "*"` returns
-   **412** (`docs/proof/spike-2026-10-15.json`); Awas builds its per-connection rate limit and write-once evidence
-   files on it, with no database. It deserves a prominent example in the S3-compatibility docs.
+   **412** (`docs/proof/spike-2026-10-15.json`); Awas builds its per-connection rate limit on it, with no database. It
+   deserves a prominent example in the S3-compatibility docs.

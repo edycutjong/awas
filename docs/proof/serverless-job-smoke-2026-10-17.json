@@ -1,0 +1,25 @@
+{
+ "what": "The first bench job (smoke test, 1 dev row), as the Nebius Jobs API reports it.",
+ "meta": {
+  "runId": "dev-20261017T060432z",
+  "jobId": "aijob-e03pnwmsyy7rscrfft",
+  "set": "dev",
+  "setSha256": "2519697bcd8afba3e73c805098edef1b832296272656f3e7c35401130c8b10d2",
+  "benchPySha256": "35614ce46990035d2478fdd637d6cd6147cd8a6deeee1b14adaf7ff5001c2c7c",
+  "base": "https://awas-cek.vercel.app",
+  "region": "uk-south1",
+  "createdAt": "2026-10-17T06:04:37.937Z",
+  "variance": 0,
+  "n": 1,
+  "deployment": "dpl_3pUBywCYEYe4c8FyZfQxc2odvR7Q"
+ },
+ "job": {
+  "id": "aijob-e03pnwmsyy7rscrfft",
+  "name": "awas-bench-dev-20261017t060432z",
+  "parentId": "project-e03apddzlc00mx8xpjtfkx",
+  "createdAt": "2026-10-17T06:04:32.755425Z",
+  "state": "COMPLETED",
+  "startedAt": "2026-10-17T06:08:49.163390126Z",
+  "finishedAt": "2026-10-17T06:09:09.057436794Z"
+ }
+}

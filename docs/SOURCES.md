@@ -36,6 +36,13 @@ browser — a plain `curl` returns an empty shell; kemlu.go.id articles need the
 Rules from the Cambodia row down were added on 2026-10-17 by `bench/PROTOCOL.md` Amendment 4 (option B: the cited rules carry
 the verdict), tuned on the dev set only, before tranche 1 first ran. Each quote was read on the rendered page that day.
 
+**A rule we did not encode.** [Kepmenaker 260/2015](https://jdih.kemnaker.go.id/peraturan/detail/618/keputusan-menaker-nomor-260-tahun-2015)
+— "Penghentian Dan Pelarangan Penempatan Tenaga Kerja Indonesia Pada Pengguna Perseorangan Di Negara-negara Kawasan
+Timur Tengah" (the moratorium on placing workers with private households in Middle-East countries). It is not among
+the seven decrees [Kepmenaker 8/2026](https://jdih.kemnaker.go.id/peraturan/detail/2828/keputusan-menteri-ketenagakerjaan-nomor-8-tahun-2026)
+revokes, but [KP2MI announced a planned lifting for Saudi Arabia](https://kp2mi.go.id/berita-detail/ini-8-poin-kesepakatan-rencana-pencabutan-moratorium-penempatan-pekerja-migran-ke-arab-saudi)
+in 2025, and we did not verify its current scope — so Awas does not apply it (tranche 1 has a miss it would have caught).
+
 **Where to check (every VERIFY FIRST):** the licensed placement-company list,
 [siskop2mi.bp2mi.go.id/profil/lembaga/list_lembaga/p3mi](https://siskop2mi.bp2mi.go.id/profil/lembaga/list_lembaga/p3mi)
 (linked from the [SISKOP2MI FAQ](https://siskop2mi.bp2mi.go.id/publik/faq)), and the KP2MI call centre 08001000
