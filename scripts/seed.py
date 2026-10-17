@@ -17,6 +17,7 @@ import hashlib
 import json
 import os
 import re
+import subprocess
 import sys
 import time
 import urllib.error
@@ -138,11 +139,21 @@ def record_samples(base: str) -> int:
         if not case_id:
             print(f"  {smp['slug']}: no case id", file=sys.stderr)
             continue
+        # A real browser opens each verified line's text-fragment link first (scripts/fragment_check.mjs).
+        fragments: dict = {}
+        try:
+            out = subprocess.run(["node", "scripts/fragment_check.mjs", "--case", case_id, "--base", base],
+                                 capture_output=True, text=True, timeout=600)
+            fragments = json.loads(out.stdout.strip() or "{}")
+            sys.stderr.write(out.stderr)
+        except Exception as e:  # the sample is still stored; its cards then say "open the page and search for"
+            print(f"  {smp['slug']}: fragment check failed: {e}", file=sys.stderr)
         req = urllib.request.Request(f"{base}/api/samples", method="POST",
-                                     data=json.dumps({"caseId": case_id, "slug": smp["slug"], "label": smp["label"]}).encode(),
+                                     data=json.dumps({"caseId": case_id, "slug": smp["slug"], "label": smp["label"], "fragments": fragments}).encode(),
                                      headers={"Content-Type": "application/json", "x-awas-bench": secret})
         with urllib.request.urlopen(req, timeout=60) as r:
-            print(f"  {smp['slug']}: case {case_id} → {json.loads(r.read()).get('stored')}", file=sys.stderr)
+            res = json.loads(r.read())
+            print(f"  {smp['slug']}: case {case_id} → {res.get('stored')} ({res.get('fragmentsFound')} fragment link(s) seen on the live page)", file=sys.stderr)
     return 0
 
 
