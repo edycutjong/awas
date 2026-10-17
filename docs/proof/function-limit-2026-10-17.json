@@ -1,0 +1,97 @@
+{
+ "what": "Function time limit (spec \u00a70.5 e / architecture.md 'Vercel function time limit'): read from the Vercel project, then one full real check on the deployed function.",
+ "recorded_at": "2026-10-17T05:31:00+00:00",
+ "vercel": {
+  "plan": "hobby",
+  "fluid": true,
+  "functionDefaultTimeout_s": 300,
+  "region": "iad1",
+  "source": "GET /v9/projects/<awas> defaultResourceConfig + GET /v2/teams/<team> billing.plan",
+  "route_maxDuration_s": 300
+ },
+ "run": {
+  "url": "https://awas-cek.vercel.app/api/check",
+  "mode": "live (judge code, so no rate slot)",
+  "ad": "the composite mockup ad of assets/ui/mock.html (not a real ad, not a benchmark row)",
+  "total_seconds": 9.7,
+  "events_seconds_since_request": [
+   {
+    "t": 0.8,
+    "event": "started"
+   },
+   {
+    "t": 3.3,
+    "event": "extracted"
+   },
+   {
+    "t": 3.3,
+    "event": "flags"
+   },
+   {
+    "t": 3.3,
+    "event": "rule_stop"
+   },
+   {
+    "t": 4.7,
+    "event": "tavily_call"
+   },
+   {
+    "t": 7.4,
+    "event": "line_pending"
+   },
+   {
+    "t": 7.4,
+    "event": "line_verified"
+   },
+   {
+    "t": 7.4,
+    "event": "line_pending"
+   },
+   {
+    "t": 7.4,
+    "event": "line_verified"
+   },
+   {
+    "t": 7.4,
+    "event": "line_pending"
+   },
+   {
+    "t": 7.4,
+    "event": "line_verified"
+   },
+   {
+    "t": 7.4,
+    "event": "line_pending"
+   },
+   {
+    "t": 7.4,
+    "event": "line_verified"
+   },
+   {
+    "t": 7.4,
+    "event": "line_pending"
+   },
+   {
+    "t": 7.4,
+    "event": "line_verified"
+   },
+   {
+    "t": 7.6,
+    "event": "verdict"
+   },
+   {
+    "t": 9.5,
+    "event": "message"
+   },
+   {
+    "t": 9.7,
+    "event": "receipt"
+   },
+   {
+    "t": 9.7,
+    "event": "done"
+   }
+  ]
+ },
+ "result": "one full run uses 9.7 s of the 300 s limit"
+}
