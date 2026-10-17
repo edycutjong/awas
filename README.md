@@ -42,6 +42,14 @@
 
 **Live:** [awas.edycu.dev](https://awas.edycu.dev) (the app) · [/about](https://awas.edycu.dev/about) (the story page, with the rules and the quote gate running in your browser) · [/pitch](https://awas.edycu.dev/pitch) (the deck).
 
+<p align="center"><img src="docs/broll-judge.gif" width="100%" alt="Screen recording of awas.edycu.dev/judge: choosing the recorded case 'Tawaran ke Kamboja (KP2MI, 2022)' shows a red line 'STOP — the destination is not an official placement country (rule; final)', the ad text with the name masked as [nama], a red flag 'Negara tujuan bukan negara penempatan resmi pekerja migran' citing kp2mi.go.id, then yellow-highlighted quotes from news.detik.com marked as context, not used for the verdict."></p>
+
+<sub>A recorded replay on <a href="https://awas.edycu.dev/judge">/judge</a>, real time: the file builds, the rule fires with its official source, and every highlighted quote is one the code found word for word on the page.</sub>
+
+<p align="center"><img src="docs/broll-lab.gif" width="100%" alt="Screen recording of the 'Try to fool the gate' lab on awas.edycu.dev/about: a quote copied from humas.polri.go.id is 'found verbatim in one chunk' and highlighted; 'One clause flipped' is struck through with 'dropped: not in the page'; the composite offer lists six rules, 'Fee before a contract' fires one NEVER rule giving STOP, and 'Negated' shows 'NO RULE FIRED'."></p>
+
+<sub>The rules and the quote gate running in the browser on <a href="https://awas.edycu.dev/about">/about</a>: the app's own <code>src/lib</code>, no server call.</sub>
+
 > **Measured, out of sample** (tranche 2 of a benchmark frozen before it ran, run once on code tagged `code-freeze`, as a Nebius Serverless Job — [`DEMO.md`](DEMO.md)): **0 of 10 licensed agencies' vacancies stopped**; of 25 publicly reported scam-recruitment cases, **9 STOP, 15 VERIFY FIRST, 1 NO RED FLAGS FOUND**. Every one of the 48 evidence lines shown carries a URL and a quote the code found verbatim in the page text Tavily returned. One honest note first: our own day-0 gate on search coverage failed (a relevant item for 8 of 20 known cases), so Awas does not promise "published reports about this company". The verdict rests on rules quoted from official pages; web evidence is context, and only a verified line about the offer's own company can raise a verdict: to STOP when it names the company beside a harm word and no denial (once in the 25 cases); a phone-number match, a generic or all-caps name, or a mention without a harm word can only raise it to VERIFY FIRST.
 
 ## 💡 The Problem & Solution
