@@ -65,7 +65,7 @@ export async function POST(req: Request) {
   }
 
   const base = (process.env.BENCH_BASE_URL || new URL(req.url).origin).replace(/\/+$/, "");
-  const runId = `${set}-${new Date().toISOString().replace(/[-:]/g, "").slice(0, 15)}z`;
+  const runId = `${set}-${new Date().toISOString().replace(/[-:]/g, "").slice(0, 15)}z`.toLowerCase();
   const day = 24 * 3600;
   const args = ["/opt/awas/bench.py", "--set", "/opt/awas/set.jsonl", "--base", base, "--out", "/tmp/results.jsonl"];
   if (n) args.push("--n", String(n));
@@ -103,7 +103,7 @@ export async function GET(req: Request) {
   const cfg = loadConfig();
   if (!cfg.configured) return Response.json({ error: "not configured" }, { status: 503 });
   const runId = new URL(req.url).searchParams.get("runId") ?? "";
-  if (!/^[a-z0-9-]{1,40}z$/.test(runId)) return Response.json({ error: "need ?runId=" }, { status: 400 });
+  if (!/^[a-z0-9-]{1,40}z$/i.test(runId)) return Response.json({ error: "need ?runId=" }, { status: 400 });
   const meta = await getJson<Meta>(cfg.config, metaKey(runId));
   if (!meta) return Response.json({ error: "no such run" }, { status: 404 });
   const job = await getJob(cfg.config, meta.jobId).catch((e: unknown) => ({ error: e instanceof Error ? e.message : String(e) }));
