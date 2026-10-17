@@ -277,6 +277,22 @@ export function presignPut(config: NebiusConfig, key: string, expiresSeconds: nu
   }).url;
 }
 
+/** The read-side twin of `presignPut`: one key, GET only, until it expires (the builder fetches a job's rows). */
+export function presignGet(config: NebiusConfig, key: string, expiresSeconds: number, date?: Date): string {
+  const url = new URL(objectUrl(config, key));
+  return presignUrl({
+    method: "GET",
+    origin: url.origin,
+    path: decodeURIComponent(url.pathname),
+    region: config.region,
+    service: "s3",
+    accessKeyId: config.s3AccessKeyId,
+    secretAccessKey: config.s3SecretAccessKey,
+    expiresSeconds,
+    date,
+  }).url;
+}
+
 /** Object key layout. Centralised so no two writers can drift apart. */
 export const keys = {
   /** Evidence pack. Expires after 75 days (bucket lifecycle rule on `cases/`). */

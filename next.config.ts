@@ -2,6 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // The bench dispatcher hands the committed bench.py and a frozen tranche to a Nebius Serverless Job.
+  outputFileTracingIncludes: {
+    "/api/bench/dispatch": ["./scripts/bench.py", "./bench/dev.jsonl", "./bench/tranche1.jsonl", "./bench/tranche2.jsonl", "./bench/MANIFEST.json"],
+  },
   // Self-hosted fonts never change in place; page media is regenerated rarely, so it revalidates daily.
   async headers() {
     return [

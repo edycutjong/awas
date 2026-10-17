@@ -1,6 +1,12 @@
-# Only the app deploys; benchmark rows, scripts and tests stay in the repo.
-scripts/
+# Only the app deploys; tests and docs stay in the repo. The bench dispatcher (SHOULD #1) needs bench.py and the
+# frozen sets, so those few files go up with it.
+scripts/*
+!scripts/bench.py
 tests/
 e2e/
-bench/
+bench/*
+!bench/dev.jsonl
+!bench/tranche1.jsonl
+!bench/tranche2.jsonl
+!bench/MANIFEST.json
 docs/

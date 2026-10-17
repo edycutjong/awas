@@ -13,6 +13,10 @@ Columns, all produced by the app's own TypeScript code path (POST /api/check, be
 Bench mode differs from live use in exactly four ways (DEMO.md): `exclude` (the row's own source domain and near-
 duplicate titles), the secret header that skips the per-IP limit, the `stage` parameter, and an optional `endDate`.
 A run whose only failure is an upstream rate limit or outage is retried (at most twice) and the retry is recorded.
+
+As a Nebius Serverless Job (POST /api/bench/dispatch): the job has no logs over REST, so when AWAS_PUT_URL (and
+AWAS_PUT_VARIANCE_URL) hold presigned Object Storage URLs, the results file is PUT there after every row — a job that
+dies part-way still leaves every finished row, and a rerun with the same --out skips them.
 """
 
 from __future__ import annotations
@@ -66,6 +70,18 @@ def transient_failure(pack: dict | None) -> bool:
         return True
     errs = [t.get("error") or "" for t in pack.get("tavily", [])] + [t.get("error") or "" for t in pack["receipt"].get("tf", [])]
     return any(any(k in e for k in TRANSIENT) for e in errs if e)
+
+
+def put_file(path: Path, url: str | None) -> None:
+    """PUT the whole file to a presigned URL (best effort: a failed upload never stops the run)."""
+    if not url:
+        return
+    try:
+        req = urllib.request.Request(url, method="PUT", data=path.read_bytes(), headers={"Content-Type": "application/x-ndjson"})
+        with urllib.request.urlopen(req, timeout=60):
+            pass
+    except Exception as e:
+        print(f"  upload failed: {type(e).__name__}: {e}", file=sys.stderr)
 
 
 def run_column(base: str, secret: str, row: dict, stage: str, end_date: str | None = None) -> dict:
@@ -128,6 +144,7 @@ def bench(args) -> int:
                   f"full={rec['full']['verdict']} cm={rec['full'].get('company_matched')} picker={rec['picker']['verdict']}", file=sys.stderr)
             f.write(json.dumps(rec, ensure_ascii=False) + "\n")
             f.flush()
+            put_file(out, os.environ.get("AWAS_PUT_URL"))
     if args.variance:
         var_out = out.with_name(out.stem + "-variance.jsonl")
         firsts = {json.loads(l)["id"]: json.loads(l) for l in out.read_text().splitlines() if l.strip()}
@@ -136,8 +153,10 @@ def bench(args) -> int:
                 for rep in (2, 3):
                     res = run_column(args.base, secret, row, "full")
                     f.write(json.dumps({"id": row["id"], "rep": rep, "verdict": (res["pack"] or {}).get("verdict"),
-                                        "first": firsts.get(row["id"], {}).get("full", {}).get("verdict")}) + "\n")
+                                        "first": firsts.get(row["id"], {}).get("full", {}).get("verdict"),
+                                        "case_id": (res["pack"] or {}).get("id")}) + "\n")
                     f.flush()
+                    put_file(var_out, os.environ.get("AWAS_PUT_VARIANCE_URL"))
     return summarise(out)
 
 
