@@ -426,6 +426,15 @@ textarea.clip::placeholder {
 details[open] > summary::before {
   transform: rotate(45deg);
 }
+details > summary:hover {
+  color: var(--ink);
+}
+a.mast:hover {
+  text-decoration-line: underline;
+  text-decoration-color: var(--before);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+}
 .more {
   margin: 4px 0 8px;
 }

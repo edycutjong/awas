@@ -50,16 +50,20 @@ for (const t of targets) {
   await sleep(700);
   await page.mouse.move(0, 0);
   await sleep(400);
-  const before = await el.screenshot();
+  // The focus ring is drawn outside the element's box (outline-offset), so every shot keeps an 8 px margin around it.
+  const box = await el.boundingBox();
+  const clip = { x: Math.max(0, box.x - 8), y: Math.max(0, box.y - 8), width: box.width + 16, height: box.height + 16 };
+  const shot = () => page.screenshot({ clip });
+  const before = await shot();
   await el.hover();
   await sleep(450);
-  const hovered = await el.screenshot();
+  const hovered = await shot();
   await page.mouse.move(0, 0);
   await sleep(450);
   await page.keyboard.press("Tab"); // keyboard modality, so :focus-visible applies to the focus below
   await el.focus();
   await sleep(450);
-  const focused = await el.screenshot();
+  const focused = await shot();
   await el.evaluate((n) => n.blur());
   const hoverOk = Buffer.compare(before, hovered) !== 0;
   const focusOk = Buffer.compare(before, focused) !== 0;
