@@ -197,7 +197,7 @@ docs/           SOURCES.md · assets/
 - [x] Frozen benchmark run and the numbers in [`DEMO.md`](DEMO.md) (tranche 2 as a Nebius Serverless Job)
 - [x] Recorded sample cases on `/judge`
 - [x] Deployed URL, story page (`/about`) and pitch deck (`/pitch`)
-- [ ] Demo video
+- [x] Demo video ([YouTube, 2:37](https://youtu.be/to4VOBm_eNM))
 
 ## 📄 License
 
