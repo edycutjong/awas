@@ -31,12 +31,12 @@ const atkinsonMono = localFont({
 });
 
 const DESCRIPTION =
-  "Paste a job ad. Awas builds an evidence file: every line is a URL plus a quote code found verbatim on that page. Then it says STOP or VERIFY FIRST.";
+  "Paste a job ad: an evidence file where every line is a URL and a quote found verbatim on that page, then STOP, VERIFY FIRST or NO RED FLAGS FOUND.";
 
 const TITLE = "Awas — check a job ad before anyone boards";
 
 // Cards clip descriptions on mobile beyond ~125 characters.
-const OG_DESCRIPTION = "Paste a job ad: official rules, quotes checked word for word in code, then STOP or VERIFY FIRST.";
+const OG_DESCRIPTION = "Paste a job ad: official rules, quotes checked word for word in code, then STOP, VERIFY FIRST or NO RED FLAGS FOUND.";
 
 export const metadata: Metadata = {
   // The project's production domain (awas.vercel.app belongs to someone else).

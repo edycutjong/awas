@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Awas">
 <meta property="og:title" content="Awas — pages, not scores">
-<meta property="og:description" content="Official rules, quotes checked word for word in code, STOP or VERIFY FIRST. 0 of 10 licensed vacancies got STOP.">
+<meta property="og:description" content="Rules from official pages, quotes checked word for word in code: STOP, VERIFY FIRST or NO RED FLAGS FOUND. Never a score.">
 <meta property="og:url" content="https://awas-cek.vercel.app/about">
 <meta property="og:image" content="https://awas-cek.vercel.app/og-image.png?v=6790adc007">
 <meta property="og:image:width" content="1200">
@@ -21,7 +21,7 @@
 <meta property="og:image:alt" content="Awas — a recorded evidence file: the rule and its official page, a quote found word for word, a STOP stamp">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Awas — pages, not scores">
-<meta name="twitter:description" content="Official rules, quotes checked word for word in code, STOP or VERIFY FIRST. 0 of 10 licensed vacancies got STOP.">
+<meta name="twitter:description" content="Rules from official pages, quotes checked word for word in code: STOP, VERIFY FIRST or NO RED FLAGS FOUND. Never a score.">
 <meta name="twitter:image" content="https://awas-cek.vercel.app/og-image.png?v=6790adc007">
 <link rel="preload" href="/fonts/abril-fatface-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/atkinson-hyperlegible-next-wght.woff2" as="font" type="font/woff2" crossorigin>
@@ -85,6 +85,7 @@ a { color: inherit; text-decoration-thickness: 1.5px; text-underline-offset: 3px
 a:hover { text-decoration-thickness: 3px; text-underline-offset: 4px; }
 :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
 code, .data { font-family: var(--font-data); font-size: 0.86em; }
+.nw { white-space: nowrap; }
 p, li, blockquote { text-wrap: pretty; }
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .skip { position: absolute; left: 12px; top: -60px; z-index: 60; background: var(--ink); color: var(--bg); padding: 12px 16px; font-weight: 700; text-decoration: none; }
@@ -100,7 +101,7 @@ p, li, blockquote { text-wrap: pretty; }
 .mnote span { display: block; }
 
 /* Masthead */
-.mast { padding: 18px 0 0; }
+.mast { position: sticky; top: 0; z-index: 40; padding: 10px 0 8px; background: var(--bg); border-bottom: 1px solid var(--rule); }
 .mast .page { display: flex; align-items: center; gap: 28px; min-height: 64px; }
 .word { display: inline-flex; align-items: baseline; gap: 10px; text-decoration: none; }
 .word b { font: 400 34px/1 var(--font-display); letter-spacing: 0.005em; }
@@ -150,17 +151,17 @@ h3 { font: 700 20px/1.3 var(--font-body); margin: 0; }
 .f-head .mk { display: block; font: 400 28px/1 var(--font-display); }
 .f-head .sub { display: block; margin-top: 6px; font: 500 13px/1.45 var(--font-data); color: var(--muted); }
 .f-head .linkbtn { margin-top: 10px; }
-.lab { display: block; margin: 12px 0 0; }
+.lab { display: block; margin: 12px 0 0; text-transform: none; letter-spacing: 0.01em; font-size: 13.5px; }
 .ad { font-size: 18.5px; line-height: 1.8; margin: 4px 0 0; padding: 2px 0 10px; border-bottom: 1.5px dashed var(--rule); }
 .u { background: linear-gradient(var(--muted), var(--muted)) no-repeat 0 100% / 100% 1.5px; padding-bottom: 1px; }
-.u::after { content: attr(data-f); font: 600 11px/1 var(--font-body); letter-spacing: 0.03em; color: var(--muted); margin-left: 4px; vertical-align: 0.7em; white-space: nowrap; }
+.u::after { content: attr(data-f); font: 600 12px/1 var(--font-body); letter-spacing: 0.03em; color: var(--muted); margin-left: 4px; vertical-align: 0.7em; white-space: nowrap; }
 .rule { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 12px; margin: 12px 0 0; }
 .tick { width: 16px; height: 16px; margin-top: 5px; border: 3px solid var(--stop); }
 .tick.check { border-color: var(--check); }
 .rule b { font-weight: 700; }
 .rule .en { color: var(--muted); }
-.src { display: block; margin-top: 3px; font: 500 13px/1.5 var(--font-data); color: var(--muted); }
-.src a { color: var(--ink); }
+.src { display: block; margin-top: 3px; font: 500 14px/1.5 var(--font-data); color: var(--muted); }
+.src a, .card .open { color: var(--ink); padding-block: 8px; }
 .rule .src a, .nevers .src a, .flags .src a { white-space: nowrap; }
 .rule blockquote { margin: 6px 0 0; padding: 0 0 0 12px; border-left: 1.5px solid var(--rule); font-size: 16.5px; }
 .legend { font: 600 13px/1.45 var(--font-body); color: var(--ink); white-space: nowrap; }
@@ -169,14 +170,14 @@ h3 { font: 700 20px/1.3 var(--font-body); margin: 0; }
 .card .row1 { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 12px; }
 .card .q { display: block; margin-top: 2px; font-size: 17.5px; line-height: 1.5; text-decoration: none; }
 .card a.q:hover .hl { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
-.card .open { font: 600 13px/1.45 var(--font-body); white-space: nowrap; }
+.card .open { font: 600 14px/1.45 var(--font-body); white-space: nowrap; }
 .card .gl { display: block; margin-top: 4px; font-size: 14.5px; line-height: 1.45; color: var(--muted); }
 .card.dropped { background: transparent; border: 1px dashed var(--before); }
 .card.dropped .q { font-size: 15.5px; color: var(--muted); }
 .card.dropped .q s { text-decoration: none; background: linear-gradient(var(--before), var(--before)) no-repeat 0 55% / 100% 1.5px; }
 .why { display: block; margin-top: 3px; font: 500 13.5px/1.45 var(--font-body); color: var(--muted); }
-.mask { display: inline-block; width: 4.2em; height: 1em; vertical-align: -0.12em; background: var(--ink); border-radius: 2px; }
-.mask-lab { font: 700 11.5px/1 var(--font-body); color: var(--ink); border: 1px solid var(--muted); padding: 1px 4px; margin-left: 4px; white-space: nowrap; }
+.mask { display: inline-block; width: 4.2em; height: 1em; vertical-align: -0.12em; background: var(--ink); border: 1px solid var(--ink); border-radius: 2px; }
+.mask-lab { font: 700 12.5px/1 var(--font-body); color: var(--ink); border: 1px solid var(--muted); padding: 1px 4px; margin-left: 4px; white-space: nowrap; }
 .f-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin-top: 12px; font: 500 13.5px/1.5 var(--font-body); color: var(--muted); }
 .f-foot a { color: var(--ink); font-weight: 600; }
 .linkbtn { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 12px; background: transparent; border: 1.5px solid var(--muted); color: var(--ink); font: 600 13.5px/1 var(--font-body); cursor: pointer; transition: border-color 120ms ease-out, background-color 120ms ease-out; }
@@ -193,15 +194,14 @@ h3 { font: 700 20px/1.3 var(--font-body); margin: 0; }
    is a set of keyframes that waits, paused on its first frame, until its section is seen; then it plays once and settles. */
 @keyframes k-under { from { background-size: 0 1.5px; } }
 @keyframes k-fade { from { opacity: 0; } }
-@keyframes k-rise { from { opacity: 0.22; transform: translateY(8px); } }
+@keyframes k-rise { from { transform: translateY(10px); } }
 @keyframes k-sweep { from { background-size: 0 100%; color: var(--muted); } }
 @keyframes k-strike { from { background-size: 0 1.5px; } }
 @keyframes k-stamp { 0% { opacity: 0; transform: rotate(-2deg) scale(1.24); } 55% { opacity: 1; } 100% { opacity: 1; transform: rotate(-6deg) scale(1); } }
 @keyframes k-thud { 0%, 100% { transform: rotate(var(--rot)); } 35% { transform: rotate(var(--rot)) translateY(3px) scale(0.997); } }
 @keyframes k-hstrike { from { background-size: 0 0.075em; } }
-@keyframes k-slip { 0% { opacity: 0; transform: rotate(-2deg) scale(1.35); } 100% { opacity: 1; transform: rotate(-6deg) scale(1); } }
-@keyframes k-wipe { from { clip-path: inset(0 100% 0 0); } }
-@keyframes k-line { from { opacity: 0; transform: translateX(-6px); } }
+@keyframes k-slip { 0% { transform: rotate(-1deg) scale(1.32); } 100% { transform: rotate(-6deg) scale(1); } }
+@keyframes k-type { from { clip-path: inset(0 100% 0 0); } }
 .motion #file:not(.settled) .u { animation: k-under 450ms var(--d) var(--ease) both; }
 .motion #file:not(.settled) .u::after { animation: k-fade 300ms var(--d) ease-out both; }
 .motion #file:not(.settled) .rule { animation: k-rise 400ms 1000ms var(--ease) both; }
@@ -214,10 +214,9 @@ h3 { font: 700 20px/1.3 var(--font-body); margin: 0; }
 .motion #file:not(.settled) { animation: k-thud 260ms 3480ms ease-out both; }
 .motion #top:not(.settled) .strike > span { animation: k-hstrike 520ms var(--hd, 3850ms) var(--ease) both; }
 .motion #slips:not(.settled) .st { animation: k-slip 200ms calc(var(--i) * 70ms + 150ms) cubic-bezier(.2,.9,.3,1.25) both; }
-.motion #axis:not(.settled) .seg { animation: k-wipe 520ms calc(var(--i) * 420ms + 100ms) var(--ease) both; }
-.motion #receipt:not(.settled) li { animation: k-line 260ms calc(var(--i) * 300ms + 300ms) ease-out both; }
+.motion #receipt:not(.settled) li { animation: k-type 420ms calc(var(--i) * 280ms + 200ms) steps(18, end) both; }
 .motion #file:not(.play), .motion #file:not(.play) *, .motion #file:not(.play) .u::after,
-.motion #top:not(.play) .strike > span, .motion #slips:not(.play) .st, .motion #axis:not(.play) .seg, .motion #receipt:not(.play) li { animation-play-state: paused !important; } /* the shorthand above resets play-state */
+.motion #top:not(.play) .strike > span, .motion #slips:not(.play) .st, .motion #receipt:not(.play) li { animation-play-state: paused !important; } /* the shorthand above resets play-state */
 
 /* ============================== THE REGISTER ============================== */
 .reg-top { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 48px; align-items: end; }
@@ -225,6 +224,9 @@ h3 { font: 700 20px/1.3 var(--font-body); margin: 0; }
 .verdicts div { padding: 14px 18px 4px 0; }
 .verdicts .big { display: block; font: 400 clamp(64px, 7vw, 104px)/0.95 var(--font-display); }
 .verdicts .big small { font-size: 0.42em; color: var(--muted); }
+.verdicts .stopbig { display: inline-block; color: var(--stop); border: 6px solid currentColor; border-radius: 14px; padding: 2px 18px 0; transform: rotate(-4deg); mix-blend-mode: multiply;
+  -webkit-mask-image: radial-gradient(circle at 30% 40%, #000 60%, rgba(0,0,0,.84) 61%), repeating-linear-gradient(17deg, #000 0 8px, rgba(0,0,0,.88) 8px 11px); -webkit-mask-composite: source-in; mask-composite: intersect; }
+.verdicts .stopbig small { color: var(--stop); }
 .verdicts p { margin: 6px 0 0; font-size: 16px; }
 .slips-wrap { margin-top: 40px; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 2fr); gap: 28px; }
 .slips-wrap h3 { margin: 0 0 10px; }
@@ -240,7 +242,7 @@ h3 { font: 700 20px/1.3 var(--font-body); margin: 0; }
 .receipts div + div { padding-left: 20px; border-left: 1px solid var(--rule); }
 .receipts dt { font: 400 clamp(40px, 4.2vw, 58px)/1 var(--font-display); white-space: nowrap; }
 .receipts dd { margin: 8px 0 0; font-size: 15.5px; line-height: 1.45; }
-.receipts dd .sm { display: block; margin-top: 6px; font-size: 13.5px; color: var(--muted); }
+.receipts dd .sm { display: block; margin-top: 6px; font-size: 14px; color: var(--muted); }
 .fine { margin: 18px 0 0; max-width: 68ch; font-size: 16px; color: var(--ink); }
 
 /* ============================== THE LAB ============================== */
@@ -277,7 +279,7 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 .run-grid { margin-top: 44px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 44px; align-items: start; }
 .shots { display: grid; gap: 22px; }
 .shot { position: relative; margin: 0; background: var(--card); padding: 10px 10px 10px; box-shadow: var(--shadow); }
-.shot:nth-child(1) { transform: rotate(-0.8deg); } .shot:nth-child(2) { transform: rotate(0.6deg); margin-left: 34px; }
+.shot:nth-child(1) { transform: rotate(-0.8deg); } .shot:nth-child(2) { transform: rotate(0.6deg); margin-left: 34px; } .shot:nth-child(3) { transform: rotate(-0.4deg); margin-left: 12px; }
 .shot .tape { top: -12px; left: 40%; transform: rotate(-3deg); }
 .shot figcaption { margin-top: 8px; font: 500 13.5px/1.45 var(--font-body); color: var(--muted); }
 .axis { position: relative; margin: 6px 0 0; }
@@ -305,7 +307,7 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 .cuts { margin-top: 36px; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 6fr); gap: 22px; align-items: start; }
 .cut { position: relative; margin: 0; background: var(--card); padding: 18px 20px 16px; box-shadow: var(--shadow); }
 .cut:nth-child(2) { transform: rotate(0.7deg); margin-top: 38px; } .cut:nth-child(3) { transform: rotate(-0.6deg); margin-top: 14px; }
-.cut .num { display: block; font: 400 clamp(52px, 5.4vw, 84px)/0.95 var(--font-display); }
+.cut .num { display: block; font: 400 clamp(52px, 5vw, 74px)/0.95 var(--font-display); }
 .cut .num small { font-size: 0.45em; white-space: nowrap; }
 .cut .what { display: block; margin-top: 8px; font: 700 16.5px/1.4 var(--font-body); }
 .cut .src { margin-top: 10px; }
@@ -317,14 +319,17 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 .bc { position: relative; background: var(--card); padding: 24px 24px 20px; box-shadow: var(--shadow); }
 .bc .tape { top: -12px; left: 28px; width: 92px; height: 24px; transform: rotate(-3deg); }
 .bc:nth-child(2) .tape { left: auto; right: 40px; transform: rotate(4deg); }
+.bc:nth-child(1) .tape, .bc:nth-child(3) .tape, .bc:nth-child(5) .tape { display: none; }
 .bc:nth-child(1) { transform: rotate(-0.5deg); } .bc:nth-child(3) { transform: rotate(0.6deg); } .bc:nth-child(4) { transform: rotate(-0.3deg); } .bc:nth-child(5) { transform: rotate(0.5deg); }
 .bc .ico { width: 34px; height: 34px; color: var(--ink); fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .bc h3 { margin-top: 10px; font-size: 21px; }
 .bc p { margin: 8px 0 0; font-size: 16.5px; line-height: 1.55; }
 .bc .chips { padding-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; }
-.chip { display: inline-block; font: 500 12.5px/1.3 var(--font-data); color: var(--muted); border: 1px solid var(--rule); background: var(--bg); padding: 4px 7px; overflow-wrap: anywhere; }
-.b1 { grid-column: span 4; } .b2 { grid-column: span 8; grid-row: span 2; } .b3 { grid-column: span 4; }
-.b4 { grid-column: span 7; } .b5 { grid-column: span 5; }
+.chip { display: inline-block; font: 500 12.5px/1.3 var(--font-data); color: var(--muted); border: 1px solid var(--rule); background: var(--bg); padding: 4px 7px; overflow-wrap: normal; word-break: keep-all; max-width: 100%; }
+.b1 { grid-column: span 4; } .b2 { grid-column: span 8; } .b3 { grid-column: span 5; }
+.b4 { grid-column: span 7; } .b5 { grid-column: span 12; }
+.b5 { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 24px; align-items: center; }
+.b5 .ico, .b5 h3, .b5 p, .b5 .chips { grid-column: 1; } .b5 .trio { grid-column: 2; grid-row: 1 / span 4; margin: 0; }
 .nevers { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 18px; }
 .nevers li { padding: 10px 0 0; border-top: 1.5px solid var(--rule); font-size: 15.5px; line-height: 1.45; }
 .nevers b { display: block; font-size: 16px; }
@@ -378,6 +383,13 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 .foot .meta { font: 500 13.5px/1.6 var(--font-body); color: var(--muted); }
 
 /* ============================== RESPONSIVE ============================== */
+/* Short laptop screens: the file tightens so the rule, the yellow line, the dropped line and the stamp share the first view. */
+@media (min-width: 1024px) and (max-height: 900px) {
+  .ad { line-height: 1.6; }
+  .card .gl { font-size: 14px; }
+  .file { padding-top: 18px; }
+  .card { padding: 8px 12px; }
+}
 /* Short laptop screens (1280×720, 1366×768): the headline and lede step down so the actions stay in the first view. */
 @media (min-width: 1024px) and (max-height: 800px) {
   .hero { padding-top: 14px; }
@@ -396,6 +408,8 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 }
 @media (max-width: 1023px) {
   .hero { grid-template-columns: minmax(0, 1fr); }
+  .hero-copy { display: contents; }
+  .hero h1 { order: 1; } .hero .file { order: 2; margin-top: 26px; } .hero .lede { order: 3; } .hero .ctas { order: 4; } .hero .proof { order: 5; }
   .file { max-width: 680px; }
   .reg-top, .run-grid, .labs { grid-template-columns: minmax(0, 1fr); }
   .slips-wrap { grid-template-columns: minmax(0, 1fr); }
@@ -413,9 +427,7 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   :root { --mx: 14px; --pad: 18px; }
   body { font-size: 17px; }
   .page { padding-left: 32px; }
-  .mnote { display: block; position: static; width: auto; text-align: left; margin: 0 0 6px; }
-  .mnote span { display: inline; }
-  .mnote span + span::before { content: "· "; }
+  .mnote { display: none; }
   .mast .page { gap: 14px; min-height: 56px; }
   .word b { font-size: 30px; }
   .word i { display: none; }
@@ -436,11 +448,12 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   h2 { font-size: clamp(34px, 10vw, 46px); }
   .sec-lede { font-size: 17.5px; }
   .verdicts .big { font-size: 64px; }
-  .slips, .slips.lic { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
-  .slip { min-height: 0; padding: 8px 6px; }
-  .slip .st { font-size: 10.5px; letter-spacing: 0.02em; padding: 3px 4px 2px; white-space: normal; text-align: center; }
-  .slip .why { display: none; }
+  .slips, .slips.lic { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  .slip { min-height: 0; padding: 8px 7px; }
+  .slip .st { font-size: 11.5px; letter-spacing: 0.02em; padding: 3px 5px 2px; white-space: normal; max-width: 100%; transform: rotate(-3deg); }
+  .slip .why { font-size: 13px; margin-top: 6px; }
   .axis .seg.narrow { font-size: 0; }
+  .verdicts .stopbig { border-width: 4px; padding: 0 10px; }
   .shots { grid-template-columns: 1fr; }
   .shot:nth-child(2) { margin-left: 0; }
   .receipt li { grid-template-columns: minmax(0, 1fr); gap: 0; }
@@ -469,7 +482,8 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   .hl, .pagebox mark { background: Mark; color: MarkText; forced-color-adjust: none; }
   .strike > span, .card.dropped .q s { background: none; text-decoration: line-through; }
   .u { background: none; text-decoration: underline; }
-  .stamp, .slip .st, .trio .st { forced-color-adjust: none; }
+  .stamp, .slip .st, .trio .st, .verdicts .stopbig { forced-color-adjust: none; }
+  .mask { forced-color-adjust: none; background: CanvasText; }
 }
 @media print {
   body::after, .skip, .mast nav, .linkbtn, .presets, textarea, .ctas { display: none !important; }
@@ -493,7 +507,7 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   <div class="page">
     <a class="word" href="/about"><b>Awas</b><i>— watch out</i></a>
     <nav aria-label="Sections">
-      <a href="#register">The register</a><a href="#lab">Try the gate</a><a href="#run">One run</a><a href="#how">How it decides</a><a href="#ralat">Ralat</a><a href="#faq">FAQ</a>
+      <a href="#register">The register</a><a href="#ralat">Ralat</a><a href="#lab">Try the gate</a><a href="#run">One run</a><a href="#how">How it decides</a><a href="#faq">FAQ</a>
     </nav>
     <a class="btn btn-ink btn-sm" href="/">Open the app <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
   </div>
@@ -505,7 +519,7 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   <p class="mnote"><span>17 Okt 2026</span> <span lang="id">rekaman</span></p>
   <div class="hero-copy">
     <h1 id="h1">Awas answers the family chat with pages, not <span class="strike"><span>scores</span></span>.</h1>
-    <p class="lede">An overseas job offer arrives — customer service in Cambodia, 2,000 USD — and someone in the family has to answer tonight. Awas answers with <b>the rule, quoted from an official page</b>, quotes code found <b>word for word</b>, and a stamp. Out of sample, <b>9 of 25</b> reported scam offers got STOP and 15 more VERIFY FIRST; <b>0 of 10</b> licensed vacancies got STOP.</p>
+    <p class="lede">A job offer arrives — customer service in Cambodia, 2,000 USD — and someone must answer tonight. Awas answers with <b>the official rule</b>, quotes code found <b>word for word</b>, and a stamp. Out of sample: <b>9 of 25</b> scam offers got STOP; <b>0 of 10</b> licensed vacancies did.</p>
     <div class="ctas">
       <a class="btn btn-ink" href="/">Paste an offer <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       <a class="btn" href="/pitch">Pitch deck</a>
@@ -552,11 +566,11 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   <p class="mnote"><span>17 Okt 2026</span> <span>tranche 2</span></p>
   <div class="reg-top">
     <div class="sec-head">
-      <h2 id="reg-h">Thirty-five cases. One scored run.</h2>
+      <h2 id="reg-h">Thirty-five cases. One graded run.</h2>
       <p class="sec-lede">25 reported scam offers and 10 licensed vacancies, never tuned on, scored in one run by a Nebius Serverless Job on <code>code-freeze</code>.</p>
     </div>
     <div class="verdicts">
-      <div><span class="big"><span data-count="9">9</span><small> / 25</small></span><p>reported scam offers got STOP — 15 more VERIFY FIRST, 1 missed</p></div>
+      <div><span class="big"><span class="stopbig"><span data-count="9">9</span><small> / 25</small></span></span><p>reported scam offers got STOP — 15 more VERIFY FIRST, 1 missed</p></div>
       <div><span class="big"><span data-count="0">0</span><small> / 10</small></span><p>licensed agencies’ vacancies got STOP</p></div>
     </div>
   </div>
@@ -574,9 +588,20 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
     <div><dt><span data-count="48">48</span>/48</dt><dd>quotes shown, all found word for word<span class="sm">6 of 54 dropped · plain-GET re-check: 33 found, 14 unreadable, 1 changed</span></dd></div>
     <div><dt>13.7 s</dt><dd>median to a verdict<span class="sm">p95 31.7 s</span></dd></div>
     <div><dt>$0.0078</dt><dd>median Token Factory cost per check<span class="sm">+ 1–3 Tavily credits</span></dd></div>
-    <div><dt><span data-count="20">20</span>/20</dt><dd>same verdict on reruns of 10 reported cases<span class="sm">19/20 on 10 licensed (pre-registered)</span></dd></div>
+    <div><dt><span data-count="19">19</span>/20</dt><dd>same verdict on the pre-registered rerun (10 licensed)<span class="sm">20/20 on a later rerun of the first 10 reported cases</span></dd></div>
   </dl>
-  <p class="fine">The ninth STOP is the one report naming its company, matched in another outlet’s report: one case, not a rate. <a href="https://github.com/edycutjong/awas/blob/main/bench/results-t2.jsonl" rel="noopener">every row</a> · <span class="data">aijob-e03nhcfcwc4vnee33m</span></p>
+  <p class="fine">The ninth STOP is the one report naming its company, matched in another outlet’s report: one case, not a rate. An earlier tranche, run before the freeze, showed two misses that were fixed first. <a href="https://github.com/edycutjong/awas/blob/main/bench/results-t2.jsonl" rel="noopener">every row</a> · <span class="data">aijob-e03nhcfcwc4vnee33m</span></p>
+</section>
+
+<!-- ============================== RALAT ============================== -->
+<section class="sec page" id="ralat" aria-labelledby="ralat-h">
+  <p class="mnote"><span>README limits</span></p>
+  <div class="sec-head">
+    <h2 id="ralat-h">What failed, said plainly.</h2>
+    <p class="sec-lede">A newspaper’s corrections box is the <i lang="id">ralat</i>. Four of the README’s six honest limits, verbatim:</p>
+  </div>
+  <div class="ralat"><span class="kop" lang="id">RALAT</span><ol><li><div><blockquote>“Our day-0 search-coverage gate failed (8 of 20 known cases had a relevant item; we had set 12). The web evidence is therefore context; the verdict rests on the cited rules.”</blockquote><cite>— README · Honest limits, 1</cite><p class="did"><b>Done:</b> the verdict moved onto cited rules, before tranche 1 ran.</p></div></li><li><div><blockquote>“The benchmark&#x27;s reported cases are reporters&#x27; descriptions of offers, not the ads.”</blockquote><cite>— README · Honest limits, 2</cite><p class="did"><b>Done:</b> each case says what it is: the file at the top is “as KP2MI described it”.</p></div></li><li><div><blockquote>“Indonesian is not a listed language for the Nemotron models used (per their model cards)”</blockquote><cite>— README · Honest limits, 3</cite><p class="did"><b>Measured instead:</b> field accuracy on 25 dev texts, against labels our agent drafted, not yet reviewed.</p></div></li><li><div><blockquote>“The phone path is unbenchmarked. A phone number with no company name returns VERIFY FIRST, not a verdict.”</blockquote><cite>— README · Honest limits, 4</cite><p class="did"><b>Why:</b> benchmark rows carry no phone numbers.</p></div></li></ol></div>
+  <p class="withdrawn">Also: 53 collected rows were discarded before any model saw them — their publishers forbid AI use (protocol amendment 2).</p>
 </section>
 
 <!-- ============================== THE LAB ============================== -->
@@ -622,12 +647,13 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
   </div>
   <div class="run-grid">
     <div class="shots">
-      <figure class="shot"><i class="tape" aria-hidden="true"></i><img src="/landing/media/deck-dtop.webp" width="1488" height="1078" loading="lazy" alt="Awas — the recorded evidence file in the live app: the offer underlined, the STOP stamp, the rules with their official sources"><figcaption>the live app’s file: the stamp and its rules</figcaption></figure>
-      <figure class="shot"><img src="/landing/media/deck-dsuara.webp" width="1488" height="716" loading="lazy" alt="Awas — a context card: the quote highlighted yellow because the gate found it word for word on liks.suara.com, with its translation and link"><figcaption>a line the gate found word for word</figcaption></figure>
+      <figure class="shot"><i class="tape" aria-hidden="true"></i><picture><source media="(max-width: 759px)" srcset="/landing/media/run-top.webp" width="692" height="1882"><img src="/landing/media/deck-dtop.webp" width="1488" height="1078" loading="lazy" alt="Awas — the recorded evidence file in the live app: the offer underlined, the STOP stamp, the rules with their official sources"></picture><figcaption>the live app’s file: the stamp and its rules</figcaption></figure>
+      <figure class="shot"><picture><source media="(max-width: 759px)" srcset="/landing/media/run-suara.webp" width="692" height="1340"><img src="/landing/media/deck-dsuara.webp" width="1488" height="716" loading="lazy" alt="Awas — a context card: the quote highlighted yellow because the gate found it word for word on liks.suara.com, with its translation and link"></picture><figcaption>a line the gate found word for word</figcaption></figure>
+      <figure class="shot"><picture><source media="(max-width: 759px)" srcset="/landing/media/run-message.webp" width="692" height="910"><img src="/landing/media/deck-dmessage.webp" width="1488" height="526" loading="lazy" alt="Awas — the message to forward to the family, in Bahasa, with copy and share buttons"></picture><figcaption>the answer for the family chat, ready to forward</figcaption></figure>
     </div>
     <div>
       <div class="axis" id="axis" role="img" aria-label="One recorded check, 13.6 seconds: Nemotron 3 Ultra 2.9 s, Tavily 1.8 s, Nemotron 3 Super 3.7 s and 4.7 s, the rest 0.5 s">
-        <div class="bar"><span class="seg tf" style="width:21.06%;--i:0">Ultra 2.9</span><span class="seg tv" style="width:13.20%;--i:1">Tavily 1.8</span><span class="seg tf" style="width:27.20%;--i:2">Super 3.7</span><span class="seg tf" style="width:34.75%;--i:3">Super 4.7</span><span class="seg rest" style="width:3.80%;--i:4"></span></div>
+        <div class="bar"><span class="seg tf" style="width:21.06%;--i:0">Ultra</span><span class="seg tv narrow" style="width:13.20%;--i:1">Tavily</span><span class="seg tf" style="width:27.20%;--i:2">Super</span><span class="seg tf" style="width:34.75%;--i:3">Super</span><span class="seg rest narrow" style="width:3.80%;--i:4"></span></div>
         <div class="ticks"><span style="left:0">0 s</span><span style="left:21.06%">2.9</span><span style="left:61.45%">8.3</span><span style="left:100%">13.6 s · STOP</span></div>
       </div>
       <p class="axis-note">Durations from the stored receipt, laid end to end.</p>
@@ -658,26 +684,15 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
     <h2 id="how-h">The model reads. Code decides.</h2>
     <p class="sec-lede">Nemotron reads and proposes; code decides — unchanged since <code>code-freeze</code>, under 144 unit and 56 browser tests.</p>
   </div>
-  <div class="bento"><article class="bc b1"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><circle cx="8" cy="8" r="4"/><circle cx="8" cy="24" r="4"/><path d="M11 10.5 27 25M11 21.5 27 7"/></svg><h3>Reads the offer</h3><p>Nemotron 3 Ultra copies typed fields; code checks each is in the text.</p><div class="chips"><span class="chip">nvidia/Nemotron-3-Ultra-550b-a55b</span><span class="chip">call 1</span></div></article><article class="bc b2"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="11" width="26" height="10" rx="1"/><path d="M8 11v4M13 11v6M18 11v4M23 11v6"/></svg><h3>Applies the rules</h3><p>16 rules in code: 14 quote an official page, 2 check the licence list. Any NEVER rule is a STOP; each link opens its sentence:</p><ol class="nevers"><li><b>Not a placement country</b><span class="src"><a href="https://kp2mi.go.id/berita-detail/waspada-tawaran-kerja-ke-kamboja-menteri-mukhtarudin-itu-bukan-negara-penempatan-pekerja-migran-indonesia#:~:text=Perlu%20saya%20tegaskan%2C%20Kamboja%20itu%20bukan%20negara%20penempatan." rel="noopener" title="Perlu saya tegaskan, Kamboja itu bukan negara penempatan.">kp2mi.go.id · 2025-10-28</a> <span class="data">+1</span></span></li><li><b>Tourist visa for work</b><span class="src"><a href="https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo#:~:text=Dokumen%20bermasalah%2C%20menggunakan%20visa,(work%20permit)%20yang%20sah." rel="noopener" title="Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah.">humas.polri.go.id · 2026-02-04</a></span></li><li><b>Fee before a contract</b><span class="src"><a href="https://www.kemnaker.go.id/news/detail/kemnaker-imbau-masyarakat-waspada-penipuan-lowongan-pekerjaan#:~:text=Jangan%20pernah%20memberikan%20apapun%20untuk%20mendapatkan%20pekerjaan." rel="noopener" title="Jangan pernah memberikan apapun untuk mendapatkan pekerjaan.">kemnaker.go.id · 2024-10-10</a></span></li><li><b>Passport held</b><span class="src"><a href="https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo#:~:text=M%2Denolak%2C%20apabila%20diminta%20menyerahkan,perorangan%20yang%20tidak%20jelas." rel="noopener" title="M-enolak, apabila diminta menyerahkan dokumen asli seperti paspor atau KTP kepada pihak perorangan yang tidak jelas.">humas.polri.go.id · 2026-02-04</a></span></li></ol><p>The other 12 lead to VERIFY FIRST; the licence list is a dated snapshot of 534 agencies.</p><div class="chips"><span class="chip">rubric.ts</span><span class="chip">registry.ts</span></div></article><article class="bc b3"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 6h18v20H8a3 3 0 0 1-3-3z"/><path d="M23 10h4v13a3 3 0 0 1-3 3"/><path d="M9 11h10M9 15h10M9 19h6"/></svg><h3>Looks it up</h3><p>Tavily searches the exact company and number, and scam reports for the destination: context, never a rule input. Only a verified line naming the offer’s own company can raise the verdict.</p><div class="chips"><span class="chip">tavily search · exact_match</span><span class="chip">tavily extract</span></div></article><article class="bc b4"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="m19 5 8 8-11 11H8v-8z"/><path d="m8 24-3 3h7"/><path d="M4 29h24"/></svg><h3>Checks every quote</h3><p>Nemotron 3 Super proposes lines; code shows a quote only if 6+ words sit verbatim in a page Tavily returned. Else it is dropped, on screen.</p><figure class="frag"><img src="/landing/media/polri-fragment.webp" width="1168" height="392" loading="lazy" alt="Awas — an official Polri page opened from a gate link: the browser scrolls to the quoted sentence and marks it"><figcaption>A gate link, opened: the page scrolls to the sentence and marks it.</figcaption></figure><div class="chips"><span class="chip">nvidia/nemotron-3-super-120b-a12b</span><span class="chip">call 2</span><span class="chip">gate.ts</span></div></article><article class="bc b5"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 4h8v6l-2 4h-4l-2-4z"/><path d="M6 18h20v5H6z"/><path d="M5 27h22"/></svg><h3>Decides, then writes</h3><p>A truth table sets the verdict; Super writes the family message from verified lines.</p><p class="trio" aria-label="The three verdicts"><span class="st s">STOP</span><span class="st v">VERIFY FIRST</span><span class="st n">NO RED FLAGS FOUND</span></p><div class="chips"><span class="chip">verdict.ts</span><span class="chip">nvidia/nemotron-3-super-120b-a12b</span><span class="chip">call 3</span></div></article></div>
+  <div class="bento"><article class="bc b1"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><circle cx="8" cy="8" r="4"/><circle cx="8" cy="24" r="4"/><path d="M11 10.5 27 25M11 21.5 27 7"/></svg><h3>Reads the offer</h3><p>Nemotron 3 Ultra copies typed fields; code checks each is in the text.</p><div class="chips"><span class="chip">nvidia/Nemotron-3-Ultra-550b-a55b</span><span class="chip">call 1</span></div></article><article class="bc b2"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="11" width="26" height="10" rx="1"/><path d="M8 11v4M13 11v6M18 11v4M23 11v6"/></svg><h3>Applies the rules</h3><p>16 rules in code: 14 quote an official page, 2 check the licence list. Any NEVER rule is a STOP; each link points to its sentence:</p><ol class="nevers"><li><b>Not a placement country</b><span class="src"><a href="https://kp2mi.go.id/berita-detail/waspada-tawaran-kerja-ke-kamboja-menteri-mukhtarudin-itu-bukan-negara-penempatan-pekerja-migran-indonesia#:~:text=Perlu%20saya%20tegaskan%2C%20Kamboja%20itu%20bukan%20negara%20penempatan." rel="noopener" title="Perlu saya tegaskan, Kamboja itu bukan negara penempatan.">kp2mi.go.id · 2025-10-28</a> <span class="data">+1</span></span></li><li><b>Tourist visa for work</b><span class="src"><a href="https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo#:~:text=Dokumen%20bermasalah%2C%20menggunakan%20visa,(work%20permit)%20yang%20sah." rel="noopener" title="Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah.">humas.polri.go.id · 2026-02-04</a></span></li><li><b>Fee before a contract</b><span class="src"><a href="https://www.kemnaker.go.id/news/detail/kemnaker-imbau-masyarakat-waspada-penipuan-lowongan-pekerjaan#:~:text=Jangan%20pernah%20memberikan%20apapun%20untuk%20mendapatkan%20pekerjaan." rel="noopener" title="Jangan pernah memberikan apapun untuk mendapatkan pekerjaan.">kemnaker.go.id · 2024-10-10</a></span></li><li><b>Passport held</b><span class="src"><a href="https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo#:~:text=M%2Denolak%2C%20apabila%20diminta%20menyerahkan,perorangan%20yang%20tidak%20jelas." rel="noopener" title="M-enolak, apabila diminta menyerahkan dokumen asli seperti paspor atau KTP kepada pihak perorangan yang tidak jelas.">humas.polri.go.id · 2026-02-04</a></span></li></ol><p>The other 12 lead to VERIFY FIRST; the licence list is a dated snapshot of 534 agencies.</p><div class="chips"><span class="chip">rubric.ts</span><span class="chip">registry.ts</span></div></article><article class="bc b3"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 6h18v20H8a3 3 0 0 1-3-3z"/><path d="M23 10h4v13a3 3 0 0 1-3 3"/><path d="M9 11h10M9 15h10M9 19h6"/></svg><h3>Looks it up</h3><p>Tavily searches the exact company and number, and scam reports for the destination: context, never a rule input. Only a verified line naming the offer’s own company beside a harm word can raise it to STOP.</p><div class="chips"><span class="chip">tavily search · exact_match</span><span class="chip">tavily extract</span></div></article><article class="bc b4"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="m19 5 8 8-11 11H8v-8z"/><path d="m8 24-3 3h7"/><path d="M4 29h24"/></svg><h3>Checks every quote</h3><p>Nemotron 3 Super proposes lines; code shows a quote only if 6+ words sit verbatim in a page Tavily returned. Else it is dropped, on screen.</p><figure class="frag"><img src="/landing/media/polri-fragment.webp" width="1168" height="392" loading="lazy" alt="Awas — an official Polri page opened from a gate link: the browser scrolls to the quoted sentence and marks it"><figcaption>A gate link, opened: the page scrolls to the sentence and marks it.</figcaption></figure><div class="chips"><span class="chip">nvidia/nemotron-3-super-120b-a12b</span><span class="chip">call 2</span><span class="chip">gate.ts</span></div></article><article class="bc b5"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 4h8v6l-2 4h-4l-2-4z"/><path d="M6 18h20v5H6z"/><path d="M5 27h22"/></svg><h3>Decides, then writes</h3><p>A truth table sets the verdict; Super writes the family message from verified lines.</p><p class="trio" aria-label="The three verdicts"><span class="st s">STOP</span><span class="st v">VERIFY FIRST</span><span class="st n">NO RED FLAGS FOUND</span></p><div class="chips"><span class="chip">verdict.ts</span><span class="chip">nvidia/nemotron-3-super-120b-a12b</span><span class="chip">call 3</span></div></article></div>
   <div class="sponsors" role="group" aria-label="Sponsor methods used"><div><b>Nebius Token Factory</b><code>src/lib/tf.ts</code></div><div><b>Tavily search</b><code>src/lib/tavily.ts</code></div><div><b>Tavily extract</b><code>src/lib/tavily.ts</code></div><div><b>Nebius Object Storage</b><code>src/lib/nebius/storage.ts</code></div><div><b>Nebius Serverless Jobs</b><code>src/lib/nebius/jobs.ts</code></div></div>
-</section>
-
-<!-- ============================== RALAT ============================== -->
-<section class="sec page" id="ralat" aria-labelledby="ralat-h">
-  <p class="mnote"><span>README limits</span></p>
-  <div class="sec-head">
-    <h2 id="ralat-h">What failed, printed first.</h2>
-    <p class="sec-lede">A newspaper’s corrections box is the <i lang="id">ralat</i>. Four of the README’s six honest limits, verbatim:</p>
-  </div>
-  <div class="ralat"><span class="kop" lang="id">RALAT</span><ol><li><div><blockquote>“Our day-0 search-coverage gate failed (8 of 20 known cases had a relevant item; we had set 12). The web evidence is therefore context; the verdict rests on the cited rules.”</blockquote><cite>— README · Honest limits, 1</cite><p class="did"><b>Done:</b> the verdict moved onto cited rules, before tranche 1 ran.</p></div></li><li><div><blockquote>“The benchmark&#x27;s reported cases are reporters&#x27; descriptions of offers, not the ads.”</blockquote><cite>— README · Honest limits, 2</cite><p class="did"><b>Done:</b> each case says what it is: the file at the top is “as KP2MI described it”.</p></div></li><li><div><blockquote>“Indonesian is not a listed language for the Nemotron models used (per their model cards)”</blockquote><cite>— README · Honest limits, 3</cite><p class="did"><b>Measured instead:</b> field accuracy on 25 dev texts, against labels our agent drafted, not yet reviewed.</p></div></li><li><div><blockquote>“The phone path is unbenchmarked. A phone number with no company name returns VERIFY FIRST, not a verdict.”</blockquote><cite>— README · Honest limits, 4</cite><p class="did"><b>Why:</b> benchmark rows carry no phone numbers.</p></div></li></ol></div>
-  <p class="withdrawn">Also: 53 collected rows discarded unread — their publishers forbid AI use (protocol amendment 2).</p>
 </section>
 
 <!-- ============================== FAQ ============================== -->
 <section class="sec page" id="faq" aria-labelledby="faq-h">
   <p class="mnote"><span lang="id">tanya jawab</span></p>
   <h2 id="faq-h">Questions a judge would ask.</h2>
-  <div class="faq"><details><summary>Who decides STOP — the model?</summary><div class="a"><p>Code: <code>verdict.ts</code> — a sourced NEVER rule, or a verified line naming the offer’s own company beside a harm word. 8 of 9 tranche-2 STOPs came from rules. There is no score and no green; the mildest verdict says it is not a guarantee.</p></div></details><details><summary>What if the model invents a quote?</summary><div class="a"><p>The gate drops it, on screen — 6 of 54 in tranche 2. Flip one word in the lab and watch.</p></div></details><details><summary>How accurate is it?</summary><div class="a"><p>Out of sample: 0 of 10 licensed vacancies got STOP; of 25 reported scam offers, 9 STOP, 15 VERIFY FIRST, 1 missed — reporters’ descriptions, not the ads. Every row: <a href="https://github.com/edycutjong/awas/blob/main/bench/results-t2.jsonl">bench/results-t2.jsonl</a>.</p></div></details><details><summary>Does it accuse companies?</summary><div class="a"><p>Its own sentences never name one. A name appears only in the pasted offer, a verified quote, or beside “Dilaporkan oleh &lt;sumber&gt;, bukan tuduhan kami” — reported by the source, not our accusation.</p></div></details></div>
+  <div class="faq"><details><summary>Who decides STOP — the model?</summary><div class="a"><p>Code: <code>verdict.ts</code> — a sourced NEVER rule, or a verified line naming the offer’s own company beside a harm word. 8 of 9 tranche-2 STOPs came from rules. There is no score and no green; the mildest verdict says it is not a guarantee.</p></div></details><details><summary>What if the model invents a quote?</summary><div class="a"><p>The gate drops it, on screen — 6 of 54 in tranche 2. Flip one word in the lab and watch.</p></div></details><details><summary>How accurate is it?</summary><div class="a"><p>Out of sample: 0 of 10 licensed vacancies got STOP; of 25 reported scam offers, 9 STOP, 15 VERIFY FIRST, 1 missed — reporters’ descriptions, not the ads. Every row: <a href="https://github.com/edycutjong/awas/blob/main/bench/results-t2.jsonl">bench/results-t2.jsonl</a>.</p></div></details><details><summary>Does it accuse companies?</summary><div class="a"><p>Its own sentences never name one. A name appears only in the pasted offer, a verified quote, or beside “Dilaporkan oleh &lt;sumber&gt;, bukan tuduhan kami” — reported by the source, not our accusation.</p></div></details><details><summary>What happens to what I paste?</summary><div class="a"><p>Each check is stored as an evidence file in Nebius Object Storage, so its link keeps working. The app tells the user: <i lang="id">disimpan 75 hari, tidak diindeks mesin pencari, nomor telepon disamarkan</i> — kept 75 days, not indexed, phone numbers masked. Don’t paste your own personal data.</p></div></details></div>
 </section>
 
 <section class="close page" aria-labelledby="close-h">
@@ -693,7 +708,7 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
       <p><b>Awas</b> — Indonesian for “watch out”. Built for the Nebius Global AI Hackathon.</p>
       <p class="links" style="margin-top:10px"><a href="/">The app</a><a href="/judge">/judge</a><a href="/integrations">/integrations</a><a href="/pitch">Pitch deck</a><a href="https://github.com/edycutjong/awas" rel="noopener">Source</a><a href="https://github.com/edycutjong/awas/blob/main/DEMO.md" rel="noopener">DEMO.md</a><a href="https://github.com/edycutjong/awas/blob/main/docs/SOURCES.md" rel="noopener">SOURCES.md</a><a href="https://github.com/edycutjong/awas/blob/main/FEEDBACK.md" rel="noopener">FEEDBACK.md</a></p>
     </div>
-    <p class="meta">v0.1.0 · MIT<br>names masked in this page’s captures</p>
+    <p class="meta">v0.1.0 · MIT<br>names masked in this page’s captures; stored case records are unedited</p>
   </div>
 </footer>
 
@@ -723,7 +738,7 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
     el.classList.add("play");
     timers.set(el, setTimeout(() => el.classList.add("settled"), ms));
   };
-  const settleAll = () => $$("#top, #file, #slips, #axis, #receipt").forEach((e) => e.classList.add("play", "settled"));
+  const settleAll = () => $$("#top, #file, #slips, #receipt").forEach((e) => e.classList.add("play", "settled"));
 
   // Copy buttons.
   $$("[data-copy]").forEach((b) => b.addEventListener("click", async () => {
@@ -747,10 +762,12 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
       runFile();
     });
     seen($("#slips"), () => play($("#slips"), 3200));
-    const axis = $("#axis"), receipt = $("#receipt"), rr = $("#replay-receipt");
-    const runReceipt = () => { play(axis, 2400); play(receipt, 3000); };
+    const receipt = $("#receipt"), rr = $("#replay-receipt");
+    const runReceipt = () => play(receipt, 2900);
     seen(receipt, runReceipt);
     rr.hidden = false; rr.addEventListener("click", runReceipt);
+    // A capture that never scrolls still gets a full receipt.
+    setTimeout(() => { if (!receipt.classList.contains("play")) receipt.classList.add("play", "settled"); }, 9000);
     // Count-ups: the final number is in the HTML; motion only replays the count.
     $$("[data-count]").forEach((el) => seen(el, () => {
       const end = Number(el.dataset.count), t0 = performance.now(), dur = 900;
@@ -772,12 +789,13 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
     const pageBox = $("#page-text"), quoteBox = $("#quote"), gateOut = $("#gate-result");
     pageBox.textContent = PAGE.text;
     const REASON = { not_in_page: "not in the page", too_short: "fewer than " + lab.MIN_QUOTE_WORDS + " words", spans_chunks: "runs across two separate chunks", url_not_returned: "a page this run did not fetch" };
+    let user = false;  // the first render scrolls instantly (a smooth scroll at load suppresses the page's LCP entry)
     const showPage = (line) => {
       if (line.status === "verified") {
         const a = line.matchOffset, b = a + line.quote.length;
         pageBox.innerHTML = esc(PAGE.text.slice(0, a)) + "<mark>" + esc(PAGE.text.slice(a, b)) + "</mark>" + esc(PAGE.text.slice(b));
         const m = pageBox.querySelector("mark");
-        if (m) pageBox.scrollTo({ top: Math.max(0, m.offsetTop - pageBox.offsetTop - 40), behavior: motion ? "smooth" : "auto" });
+        if (m) pageBox.scrollTo({ top: Math.max(0, m.offsetTop - pageBox.offsetTop - 40), behavior: user && motion ? "smooth" : "auto" });
       } else pageBox.textContent = PAGE.text;
     };
     const sentenceAround = (a, b) => {
@@ -801,8 +819,9 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
         : `<div class="gate-card dropped"><span class="q" lang="id">“${esc(q)}”</span><span class="fold" lang="id">kutipan tidak ditemukan di halaman — tidak ditampilkan · <span lang="en">quote not found in the page — not shown</span></span><span class="why">dropped: ${esc(REASON[line.reason] ?? line.reason)}</span></div>`;
     };
     let gt = null;
-    quoteBox.addEventListener("input", () => { clearTimeout(gt); gt = setTimeout(runGate, 220); $$("[data-quote]").forEach((c) => c.setAttribute("aria-pressed", "false")); });
+    quoteBox.addEventListener("input", () => { user = true; clearTimeout(gt); gt = setTimeout(runGate, 220); $$("[data-quote]").forEach((c) => c.setAttribute("aria-pressed", "false")); });
     $$("[data-quote]").forEach((c) => c.addEventListener("click", () => {
+      user = true;
       $$("[data-quote]").forEach((x) => x.setAttribute("aria-pressed", String(x === c)));
       quoteBox.value = c.dataset.quote; runGate();
     }));
@@ -814,7 +833,7 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
       if (!adBox.value.trim()) { rulesOut.innerHTML = `<p class="hint">Paste or type an offer.</p>`; return; }
       const flags = lab.evaluateRubric(adBox.value, null);
       const d = lab.decide(flags, [], []);
-      const rows = flags.map((f) => `<li><i class="tick ${f.class === "NEVER" ? "" : "check"}" aria-hidden="true"></i><div><b>${esc(f.label)}</b> · <span class="sp" lang="id">“${esc(f.span.text)}”</span><span class="src">${f.class === "NEVER" ? "NEVER" : "CAUTION"} rule · ${f.source ? `<a href="${esc(f.source.url)}" rel="noopener">${esc(f.source.domain)} · ${esc(f.source.date)}</a>` : "no source recorded"}</span></div></li>`).join("");
+      const rows = flags.map((f) => `<li><i class="tick ${f.class === "NEVER" ? "" : "check"}" aria-hidden="true"></i><div><b>${esc(f.label)}</b> · <span class="sp" lang="id">“${esc(f.span.text)}”</span><span class="src">${f.class === "NEVER" ? "NEVER" : "CAUTION"} rule · ${f.source ? `<a href="${esc(f.source.url)}" rel="noopener">${esc(f.source.domain)} · <span class="nw">${esc(f.source.date)}</span></a>` : "no source recorded"}</span></div></li>`).join("");
       let v;
       if (d.verdict === "STOP") v = `<p class="vline v-stop"><b>STOP</b> <span>— ${esc(d.reasons.join(" + "))}. A sourced NEVER rule decides it; the rest of a check is context for the family.</span></p>`;
       else if (flags.length) v = `<p class="vline v-check"><b>VERIFY FIRST</b> <span>— ${esc(d.reasons.join("; "))}.</span></p>`;
