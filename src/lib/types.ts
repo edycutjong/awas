@@ -35,6 +35,8 @@ export type FlagId =
   | "advisory_destination"
   | "personal_recruiter"
   | "no_company"
+  | "not_on_p3mi_list"
+  | "p3mi_suspended"
   | "visit_visa_holder";
 
 export type FlagClass = "NEVER" | "CAUTION";
@@ -157,6 +159,8 @@ export interface EvidencePack {
   explanationEn: string;
   messageSource: "model" | "template" | null;
   picker?: PickerResult;
+  /** The licensed-placement registry check (a dated snapshot of the official P3MI list). */
+  registry?: { asOf: string; source: string; found: { name: string; status: string } | null; notListed: string[] };
   receipt: Receipt;
   /** Recorded samples only: when the real run was recorded. */
   recordedAt?: string;

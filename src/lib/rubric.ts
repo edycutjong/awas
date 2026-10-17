@@ -20,7 +20,8 @@
  * there and catch nothing in a real ad (bench/PROTOCOL.md Amendment 4).
  */
 
-import { clauseAround, normalise } from "./text";
+import { checkRegistry, REGISTRY_SOURCE } from "./registry";
+import { clauseAround, isCurriculumVitae, normalise } from "./text";
 import type { Extraction, Flag, FlagClass, FlagId, RuleSource, Span } from "./types";
 import { RULE_SOURCES } from "./rule-sources";
 
@@ -132,6 +133,8 @@ const PATTERNS: Record<FlagId, RegExp[]> = {
   ],
   high_pay_light_work: [],
   no_company: [],
+  not_on_p3mi_list: [],
+  p3mi_suspended: [],
 };
 
 const CONTRACT_WORDS = /\b(kontrak|tanda\s*tangan|ttd|dp|uang\s+jaminan|contract|deposit|signing|signed)\b/i;
@@ -143,7 +146,7 @@ const NEVER_RULES: FlagId[] = ["tourist_visa", "fee_before_contract", "passport_
 export const FLAG_ORDER: FlagId[] = [
   "tourist_visa", "fee_before_contract", "passport_retention", "non_placement_country",
   "fee_before_departure", "fee_asked", "debt_bondage", "high_pay_no_experience", "high_pay_light_work", "quick_departure",
-  "advisory_destination", "personal_recruiter", "no_company", "visit_visa_holder",
+  "advisory_destination", "personal_recruiter", "no_company", "not_on_p3mi_list", "p3mi_suspended", "visit_visa_holder",
 ];
 
 export const FLAG_LABELS: Record<FlagId, { id: string; en: string }> = {
@@ -161,6 +164,8 @@ export const FLAG_LABELS: Record<FlagId, { id: string; en: string }> = {
   high_pay_light_work: { id: "Gaji sangat tinggi untuk pekerjaan ringan", en: "Very high pay for light office work" },
   quick_departure: { id: "Janji berangkat cepat tanpa seleksi atau pelatihan", en: "A fast departure with no selection or training" },
   no_company: { id: "Iklan tidak menyebut nama perusahaan", en: "The ad names no company" },
+  not_on_p3mi_list: { id: "Nama perusahaan tidak ditemukan di daftar P3MI resmi", en: "The company is not on the official licensed-agency (P3MI) list" },
+  p3mi_suspended: { id: "Perusahaan ini sedang dihentikan sementara (sanksi) di daftar P3MI", en: "The agency is under a temporary suspension on the P3MI list" },
 };
 
 /* ------------------------------------------------------------------------------------------ */
@@ -392,6 +397,12 @@ export function evaluateRubric(adText: string, extraction: Extraction | null): F
         .filter((h) => !nonPlacement.some((m) => m.span.start < h.span.end && h.span.start < m.span.end));
     } else if (id === "personal_recruiter") hits = personalRecruiterHits(adText, extraction);
     else if (id === "no_company") hits = has("personal_recruiter") ? [] : noCompanyHits(adText, extraction);
+    else if (id === "not_on_p3mi_list" || id === "p3mi_suspended") {
+      const reg = checkRegistry(adText, extraction?.company);
+      const spans = id === "not_on_p3mi_list" ? reg.notListed : reg.found && !/^aktif$/i.test(reg.found.status) ? [reg.found.span] : [];
+      hits = spans.map((span) => ({ span, via: "pattern" as const }));
+      source = REGISTRY_SOURCE;
+    }
     // A fee already flagged as "before a contract" or "before departure" is not repeated as "a fee is asked".
     else if (id === "fee_asked") hits = has("fee_before_contract") || has("fee_before_departure") ? [] : [...patternHits(id, adText), ...modelHits(id, adText, extraction)];
     else hits = [...patternHits(id, adText), ...modelHits(id, adText, extraction)];
@@ -449,7 +460,7 @@ const JOB_OFFER = /\b(?:lowongan|loker|dibutuhkan|dicari|rekrut\p{L}*|direkrut|p
 /** The ad names no company and gives no contact (with a personal contact, the personal-recruiter rule fires instead). */
 function noCompanyHits(text: string, ex: Extraction | null): Hit[] {
   if (!JOB_OFFER.test(text)) return [];
-  if (LEGAL_COMPANY.test(text) || FOREIGN_COMPANY.test(text) || ex?.company) return [];
+  if (namesLegalCompany(text) || FOREIGN_COMPANY.test(text) || ex?.company) return [];
   // The flag is about the ad as a whole: it points at the ad's first line.
   const first = text.match(/^\s*([^\n]{1,80})/u);
   if (!first) return [];
@@ -458,10 +469,16 @@ function noCompanyHits(text: string, ex: Extraction | null): Hit[] {
   return ex ? [{ span, via: "pattern" }, { span, via: "model" }] : [{ span, via: "pattern" }];
 }
 
+/** An Indonesian legal-form name in the ad ("PT Maju", "CV Sinar") — but never "Kirim CV ke WA". */
+function namesLegalCompany(text: string): boolean {
+  for (const m of text.matchAll(new RegExp(LEGAL_COMPANY.source, "gu"))) if (!isCurriculumVitae(text, m.index ?? 0, m[0])) return true;
+  return false;
+}
+
 function personalRecruiterHits(text: string, ex: Extraction | null): Hit[] {
   const hits: Hit[] = [];
   const contacts = [...text.matchAll(CONTACT)];
-  const namedCompany = LEGAL_COMPANY.test(text) || FOREIGN_COMPANY.test(text);
+  const namedCompany = namesLegalCompany(text) || FOREIGN_COMPANY.test(text);
   if (!namedCompany && contacts.length > 0) {
     const m = contacts[0];
     hits.push({ span: { text: m[0], start: m.index ?? 0, end: (m.index ?? 0) + m[0].length }, via: "pattern" });

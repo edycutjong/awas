@@ -273,6 +273,19 @@ textarea.clip::placeholder {
   margin-left: 3px;
 }
 
+.registry {
+  margin: 0.75rem 0 0;
+  padding: 0.6rem 0.8rem;
+  border-left: 3px solid var(--check);
+  background: var(--card);
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+.registry a {
+  color: var(--check);
+}
+
 .flag {
   display: flex;
   gap: 10px;

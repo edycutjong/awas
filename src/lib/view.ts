@@ -38,13 +38,14 @@ export interface View {
   recordedAt: string | null;
   sampleLabel: string | null;
   mode: EvidencePack["mode"] | null;
+  registry: EvidencePack["registry"] | null;
 }
 
 export function emptyView(adText = ""): View {
   return {
     status: "idle", adText, extraction: null, flags: [], ruleStop: [], tavily: [], lines: [], verdict: null, rule: "",
     reasons: [], steps: [], messageId: "", messageEn: "", explanationEn: "", messageSource: null, receipt: null,
-    errors: [], caseId: null, badInput: null, recordedAt: null, sampleLabel: null, mode: null,
+    errors: [], caseId: null, badInput: null, recordedAt: null, sampleLabel: null, mode: null, registry: null,
   };
 }
 
@@ -56,7 +57,7 @@ export function reduce(v: View, event: string, data: any): View {
     case "extracted":
       return { ...v, extraction: data.extraction ?? null };
     case "flags":
-      return { ...v, flags: data.flags ?? [] };
+      return { ...v, flags: data.flags ?? [], registry: data.registry ?? null };
     case "rule_stop":
       return { ...v, ruleStop: data.flags ?? [] };
     case "tavily_call":
@@ -125,6 +126,7 @@ export function viewFromPack(pack: EvidencePack): View {
     caseId: pack.id,
     recordedAt: pack.recordedAt ?? null,
     sampleLabel: pack.sampleLabel ?? null,
+    registry: pack.registry ?? null,
     mode: pack.mode,
   };
 }

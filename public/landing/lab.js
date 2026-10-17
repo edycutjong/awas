@@ -1,8 +1,549 @@
 /* Awas lab: src/lib compiled for the browser by scripts/build-lab.mjs (MIT).
 * lab-sources: src/lib/text.ts src/lib/rubric.ts src/lib/rule-sources.ts src/lib/gate.ts src/lib/verdict.ts src/lib/types.ts scripts/lab/entry.ts scripts/lab/sha256.ts
-* source-sha256: d0ffea23380d09496517f0927dab9ca1d564b882b18b288200291323af056423 */
+* source-sha256: be4507dee9295ddc776ea77e6bc1a839d82f79c6c8c2a011ffde990aba818718 */
 var AwasLab = (function(exports) {
 	Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
+	//#region src/lib/data/p3mi-2026-10-17.json
+	var source = "https://siskop2mi.bp2mi.go.id/profil/lembaga/list_lembaga/p3mi";
+	var fetched = "2026-10-17";
+	var count = 534;
+	var agencies = [
+		["AGESA ASA JAYA", "Aktif"],
+		["AJI AYAHBUNDA SEJATI", "Aktif"],
+		["ANTAR BANGSA CITRA DHARMAINDO", "Aktif"],
+		["PUTRA INDO SEJAHTERA", "Aktif"],
+		["AMALINDO LANGGENG", "Aktif"],
+		["AMANAH PUTRA PRATAMA", "Aktif"],
+		["INTAN AYU LESTARI", "Aktif"],
+		["INTERSOLUSI INDONESIA", "Aktif"],
+		["ARMINA MITRA KARYA", "Aktif"],
+		["ARNI FAMILY", "Aktif"],
+		["ASAMULIA INDOMANPOWER", "Aktif"],
+		["ASSALAM KARYA MANUNGGAL", "Aktif"],
+		["BABA METRO UTAMA", "Aktif"],
+		["BAHAM PUTRA ABADI", "Aktif"],
+		["BAHRINDO MAHDI", "Aktif"],
+		["GASINDO BUALA SARI", "Aktif"],
+		["GUNAWAN SUKSES ABADI", "Aktif"],
+		["HENDRARTA ARGA RAYA", "Aktif"],
+		["INDONAKER MANDIRI", "Aktif"],
+		["INDO DUTA SEMBADA", "Aktif"],
+		["INDOTAK JAYA ABADI", "Aktif"],
+		["BUMI MAS CITRA MANDIRI", "Aktif"],
+		["BUMI MAS ANTARNUSA", "Aktif"],
+		["CITRANUSA KARYA SEMESTA", "Aktif"],
+		["CITRA CATUR UTAMA KARYA", "Aktif"],
+		["ISTI JAYA MANDIRI", "Aktif"],
+		["JASATAMA DANA MANDIRI", "Aktif"],
+		["JASEBU PRIMA INTERNUSA", "Aktif"],
+		["KARYATAMA MITRA SEJATI", "Aktif"],
+		["HAMPARAN KARYA INSANI", "Aktif"],
+		["KURNIA BINA RIZKI", "Aktif"],
+		["LIA CENTRAL UTAMA", "Aktif"],
+		["BANDAR LAGUNA", "Aktif"],
+		["BANYUSEWU SEGARA BERKAH", "Aktif"],
+		["BAYUSATRIA DEWI", "Aktif"],
+		["BHAKTI PERSADA JAYA", "Aktif"],
+		["BINA DINAMITA RAMA", "Aktif"],
+		["BINTAN NIRWANA", "Aktif"],
+		["DIVA DUTA INDOSA", "Aktif"],
+		["DUTA FADALIMA", "Aktif"],
+		["DUTA FAJAR BARUTAMA", "Aktif"],
+		["DWICITRA TRI PATRIA", "Aktif"],
+		["ELSHAFAH ADI WIGUNA MANDIRI", "Aktif"],
+		["ESDEMA MANDIRI", "Aktif"],
+		["NURWIRA CAHAYA", "Aktif"],
+		["QAFCO", "Aktif"],
+		["LINTAS CAKRAWALA BUANA", "Aktif"],
+		["MARDEL ANUGERAH INTERNASIONAL", "Sanksi - Penghentian Sementara"],
+		["MEKARJAYA WANAYASA PUTRA", "Aktif"],
+		["MITRA HARTA INSANI", "Aktif"],
+		["MITRA SINERGI SUKSES", "Aktif"],
+		["MITRA SARANA INTERNASIONAL", "Aktif"],
+		["MOMANDSONS SEJAHTERA", "Aktif"],
+		["MUHDI SETIA ABADI", "Aktif"],
+		["MULTI LINTAS BUANA RAYA", "Aktif"],
+		["NUSA SINAR MAKMUR", "Aktif"],
+		["PANCAMANAH UTAMA", "Aktif"],
+		["PERSADA DUTA UTAMA", "Aktif"],
+		["PERWITA NUSARAYA", "Aktif"],
+		["PHINISI SUMBER DAYA", "Aktif"],
+		["PORICONINDO INTINUSA", "Aktif"],
+		["SANJAYA THANRY BAHTERA", "Aktif"],
+		["PAMOR SAPTA DHARMA", "Aktif"],
+		["TRIAS INSAN MADANI", "Aktif"],
+		["BALI PESONA ABADI", "Aktif"],
+		["TRITUNGGAL NUANSA PRIMATAMA", "Aktif"],
+		["ABDILLAH PUTRA TAMALA", "Aktif"],
+		["RAHANA KARINDO UTAMA", "Aktif"],
+		["RESTU BUNDA SEJATI", "Aktif"],
+		["RUYUNG KARYAMANDIRI", "Aktif"],
+		["SAPTA REZEKI", "Aktif"],
+		["SATRIA PARANGTRITIS", "Aktif"],
+		["SRITI RUKMA LESTARI", "Aktif"],
+		["SUKMA INSAN KAMIL", "Aktif"],
+		["SUKMA KARYA SEJATI", "Aktif"],
+		["SUMBER TENAGA KERJA REMAJA ABADI", "Aktif"],
+		["SUMBERKENCANA SEJAHTERA", "Aktif"],
+		["SUMBER BAKAT INSANI", "Aktif"],
+		["SURYAPACIFIC JAYA", "Aktif"],
+		["TAFCINDO JASATAMA SEGARA", "Aktif"],
+		["TIARAMAS RONA GEMILANG", "Aktif"],
+		["BUKIT MAYAK ASRI", "Aktif"],
+		["TIMURAYA JAYA LESTARI", "Aktif"],
+		["TISTAMA ARGARAYA", "Aktif"],
+		["TRI AKMI SENTOSA", "Aktif"],
+		["WAHANA KARYA SUPLAINDO", "Aktif"],
+		["CIKAL DIAN ASTUTI", "Aktif"],
+		["NUR FAUZAN SEJAHTERA", "Aktif"],
+		["ANDHIKA PUTRA MANDIRI", "Aktif"],
+		["ANNUR JAYA", "Aktif"],
+		["TEGAR SUKSES ABADI", "Aktif"],
+		["PERMATA GOBEL KARYA SEJAHTERA", "Aktif"],
+		["PUTRA PERTIWI JAYALESTARI", "Aktif"],
+		["GRAHA MITRA BALINDO", "Aktif"],
+		["BUMI MAS INDONESIA MANDIRI", "Aktif"],
+		["NAYAKA KALYANA", "Aktif"],
+		["MILENIUM NAGA MAS", "Aktif"],
+		["TIARA CILACAP ABADI", "Aktif"],
+		["TIFAR ADMANCO", "Aktif"],
+		["RIHLAH IBADI", "Aktif"],
+		["NEW COMER", "Aktif"],
+		["MUARA MAS GLOBAL", "Aktif"],
+		["RAMAH INDAH INDOHASTA", "Aktif"],
+		["ASIA PRIMADONA PRATAMA", "Aktif"],
+		["DUTA PUTRA KAHURIPAN", "Aktif"],
+		["PANDU ABDI PERTIWI", "Sanksi - Penghentian Sementara"],
+		["LAATANSA LINTAS INTERNASIONAL", "Aktif"],
+		["BRATA KARYA INDONESIA", "Aktif"],
+		["DEFITA BERSAUDARA", "Aktif"],
+		["BELLA SUKSES MANDIRI", "Aktif"],
+		["PANCA BANYU AJI SAKTI", "Aktif"],
+		["ALFIRA PERDANA JAYA", "Aktif"],
+		["PUTRA ALWINI", "Aktif"],
+		["ARWANA CITRA LESTARI", "Aktif"],
+		["AVIDA AVIADUTA", "Aktif"],
+		["DHARMAKERTA RAHARJA", "Aktif"],
+		["BIDAR SATRIA ABADI", "Aktif"],
+		["DWICITRA PUTRA MANDIRI", "Aktif"],
+		["OKDO HARAPAN MULIA", "Aktif"],
+		["FORWARD GLOBAL", "Aktif"],
+		["SABRINA PRAMITHA", "Aktif"],
+		["SARCO", "Aktif"],
+		["SUKSES MANDIRI UTAMA", "Aktif"],
+		["TRITAMA BINA KARYA", "Aktif"],
+		["KHALIFFAH FIERDAUS AULIA", "Aktif"],
+		["ZISRA DWI JAYA", "Aktif"],
+		["SUKSES DUA BERSAUDARA", "Aktif"],
+		["PUTRA DUTAPEMBANGUNAN", "Aktif"],
+		["NUSA SINAR PERKASA", "Aktif"],
+		["PELITA KARYA JUHARI", "Aktif"],
+		["VITA MELATI INDONESIA", "Aktif"],
+		["ASA JAYA", "Aktif"],
+		["MULTI SUKSES PUTRANTO", "Aktif"],
+		["PERMATA SUKSES ABADI", "Aktif"],
+		["BIDAR PUTRA SUKSES", "Aktif"],
+		["LITAKARYA BERSAMA", "Aktif"],
+		["YANBU AL BAHAR", "Aktif"],
+		["JABAPUTRA BINAWAN UNGGUL", "Aktif"],
+		["SUDINAR ARTHA", "Aktif"],
+		["HARCO SELARAS SENTOSA JAYA", "Aktif"],
+		["CRYSTAL BIRU MEULIGO", "Aktif"],
+		["MITRA KENCANA PRASETYA", "Aktif"],
+		["HOSANA JASA PERSADA", "Aktif"],
+		["FICOTAMA BINA TRAMPIL", "Aktif"],
+		["BALANTA BUDI PRIMA", "Aktif"],
+		["DUTA WIBAWA MANDA PUTRA", "Aktif"],
+		["MULIA LAKSANA SEJAHTERA", "Aktif"],
+		["SAKINAH PYRAMIDA", "Aktif"],
+		["SAHARA FAJARINDO CORPORA", "Aktif"],
+		["BAHANA MEGA PRESTASI", "Aktif"],
+		["AGAFIA ADDA MANDIRI", "Aktif"],
+		["SERUMPUN MAJU BERSAMA", "Aktif"],
+		["LEYVI PERKASA BERSAUDARA", "Aktif"],
+		["PRATAMA LAHJI MANDIRI", "Aktif"],
+		["GRAHA CIPTA UTAMA", "Aktif"],
+		["REANG NOTO BERSAMA", "Aktif"],
+		["JATIM DUTAPEMBANGUNAN", "Aktif"],
+		["MEGAH UTAMA KRIYA NUGRAHA", "Aktif"],
+		["CIPTA REZEKI UTAMA", "Aktif"],
+		["ABUL PRATAMAJAYA", "Aktif"],
+		["AL WIHDAH JAYA SENTOSA", "Aktif"],
+		["AGRELIA PUTRA SEJAHTERA", "Aktif"],
+		["SATRIA ABDI PERSADA", "Aktif"],
+		["WIRA KREASI USAHA", "Aktif"],
+		["FALIA SINATRYA SEJATI", "Aktif"],
+		["INDOKARSA GUNABUANA", "Aktif"],
+		["DWI TUNGGAL JAYA ABADI", "Aktif"],
+		["BUMIMAS KATONG BESARI", "Aktif"],
+		["PADEMANGAN SEMESTA LESTARI", "Aktif"],
+		["KENTJANA MERCU BUANA", "Aktif"],
+		["ANTAR INDOSADYA", "Aktif"],
+		["ALKURNIA SENTOSA INTERNASIONAL", "Aktif"],
+		["PARCO LAUT", "Aktif"],
+		["BUANA LINTAS KARYA", "Aktif"],
+		["BINA ADIDAYA MANDIRI INTERNATIONAL", "Aktif"],
+		["AMALIA ROZIKIN JAYA", "Aktif"],
+		["GUNA KARYA INSAN MANDIRI", "Aktif"],
+		["CEGER SARI BUANA", "Aktif"],
+		["BANGUN GUNUNGSARI", "Aktif"],
+		["AMAL ICHWAN ARINDO", "Aktif"],
+		["SINAR BERLIAN MANDIRI", "Aktif"],
+		["KARYANANDA ADI PERTIWI", "Aktif"],
+		["BARKAHAYU SAFARINDO", "Aktif"],
+		["DEKA PERKASA ADIJAYA", "Aktif"],
+		["PRIMA DUTA SEJATI", "Aktif"],
+		["JAYA FRANS ABADI", "Aktif"],
+		["PRIMA SYIFA NUSANTARA", "Aktif"],
+		["GRAHA AYUKARSA", "Aktif"],
+		["CITRA KARYA SEJATI", "Aktif"],
+		["KIJANG LOMBOK RAYA", "Aktif"],
+		["SOFIA INTERNASIONAL PERKASA", "Aktif"],
+		["TRI GANDA SWAJAYA", "Aktif"],
+		["DUTA AMPEL MULIA", "Aktif"],
+		["KARYA ANTAR BANGSA SEJATI", "Aktif"],
+		["SARANA INSAN MANDIRI", "Aktif"],
+		["PANCA ASHMA TUNGGAL", "Aktif"],
+		["AKKA AL-MATAR", "Aktif"],
+		["BAROKAH SAUDARA ABADI", "Aktif"],
+		["KARYA SEMESTA SEJAHTERA", "Aktif"],
+		["IIN ERA SEJAHTERA", "Aktif"],
+		["EKASANTI JAYAMULIA", "Aktif"],
+		["ANTO BINTAN PERMAI", "Aktif"],
+		["NANGUMA SEJATI", "Aktif"],
+		["SEJAHTERA EKA PRATAMA", "Aktif"],
+		["TENAGA SEJAHTERA WIRASTA", "Aktif"],
+		["GENTA KARYA SEJAHTERA", "Aktif"],
+		["ANTAR TENAGA MANDIRI", "Aktif"],
+		["ALZUBARA MANPOWER INDONESIA", "Aktif"],
+		["WAHANA BAROKAH", "Aktif"],
+		["MARCO PUTRA MANDIRI", "Aktif"],
+		["PRIMA DUTA PERSADA", "Aktif"],
+		["MILLENIUM MUDA MAKMUR", "Aktif"],
+		["PT. ABUNI`MAH SEJAHTERA UTAMA", "Aktif"],
+		["LUCKY MITRA ABADI", "Aktif"],
+		["AL ROYYAN CAHAYA MANDIRI", "Aktif"],
+		["BUMENJAYA EKA PUTRA", "Aktif"],
+		["INDO WYNN", "Aktif"],
+		["ASRI CIPTA TENAGA KARYA", "Aktif"],
+		["TATA ATLAS MASTERINDO", "Aktif"],
+		["BERKAT SUKSES MAKMUR SEJAHTERA", "Aktif"],
+		["ANUGERAH DIANTAS", "Aktif"],
+		["ADILA PREZKIFARINDO DUTA", "Aktif"],
+		["BINAWAN INTI UTAMA", "Aktif"],
+		["MAHARANI TRI UTAMA MANDIRI", "Aktif"],
+		["MAHARANI ANUGRAH PEKERTI", "Aktif"],
+		["SANSAN YOSINDO", "Aktif"],
+		["WIRA KARITAS", "Aktif"],
+		["DANAMON WAHANA TENAGA KERJA", "Aktif"],
+		["KHIDMAT EL KASAB", "Aktif"],
+		["AMRITA MAHESA PRIMA", "Aktif"],
+		["PRIMADAYA PRATAMA PANDUKARYA", "Aktif"],
+		["TEKAD JAYA ABADI", "Aktif"],
+		["SANG SURYA SENTOSA ABADI", "Aktif"],
+		["DIAN YOGYA PERDANA", "Aktif"],
+		["MUSTARI MITRA MAHKOTA", "Aktif"],
+		["DEWI PENGAYOM BANGSA", "Aktif"],
+		["SETIA MULIA KRIDATAMA", "Aktif"],
+		["DJAMIN HARAPAN ABADI", "Aktif"],
+		["EKORISTI BERKARYA", "Aktif"],
+		["BINA KRIDATAMA LESTARI", "Aktif"],
+		["SUKAMULIA MANDIRI AGUNG", "Aktif"],
+		["INSAN KARYA MANDIRI UTAMA", "Aktif"],
+		["HAENA DUTA CEMERLANG", "Aktif"],
+		["ALLQURRNY BAGAS PRATAMA", "Aktif"],
+		["JASATAMA WIDYA PERKASA", "Aktif"],
+		["RASTANURA RAYANI SAPUTRA", "Aktif"],
+		["JAFA INDO CORPORA", "Sanksi - Penghentian Sementara"],
+		["IFAN MARGATAMA", "Aktif"],
+		["MUTIARA PUTRA UTAMA", "Aktif"],
+		["ANDROMEDA GRAHA", "Aktif"],
+		["BERKAH GUNA SELARAS", "Sanksi - Penghentian Sementara"],
+		["MUTIARA BAHARI ALAMRIA", "Aktif"],
+		["DUTA TANGGUH SELARAS", "Aktif"],
+		["SUPERINDO SEMESTA", "Aktif"],
+		["RIZALDY BINA BERSAMA", "Aktif"],
+		["BALI DUTA MANDIRI", "Aktif"],
+		["PUTRI MANDIRI ABADI", "Aktif"],
+		["PANCARAN BATUSARI", "Aktif"],
+		["USAHATAMA BUNDA SEJATI", "Aktif"],
+		["AMRI MARGATAMA", "Aktif"],
+		["SAMPEANG ALIFID MANDIRI", "Aktif"],
+		["BINAGALA MITRA", "Aktif"],
+		["HASRATANDA SEJAHTERA", "Aktif"],
+		["FLAMBOYAN GEMA JASA", "Aktif"],
+		["FIM ANUGERAH PERKASA", "Aktif"],
+		["FAHAD FAJAR MUSTIKA", "Aktif"],
+		["SARIMADU JAYANUSA", "Aktif"],
+		["PUTRA BRAGAS MANDIRI", "Aktif"],
+		["MITRA MUDA REKSA MANDIRI", "Aktif"],
+		["JATIM SUKSES KARYA BERSAMA", "Aktif"],
+		["DIYAVI MANPOWER", "Aktif"],
+		["NUR BAKTI LANGGENG MANDIRI", "Aktif"],
+		["DUTA BANTEN MANDIRI", "Aktif"],
+		["ALAM PERMAI INDONESIA", "Aktif"],
+		["BUMENJAYA PRADUTA ABADI", "Aktif"],
+		["ADHI MAKMUR OENGGOEL INSANI", "Aktif"],
+		["DELLA FADHIL ANUGRAH", "Aktif"],
+		["BUANA SAFIRA ABADI", "Aktif"],
+		["CITRA PUTRA INDARAB", "Aktif"],
+		["CAHAYA LOMBOK", "Aktif"],
+		["ASSAMI ANANDA MANDIRI", "Aktif"],
+		["GENTA GUMI SELAPAWIS", "Aktif"],
+		["ARUNDA BAYU", "Aktif"],
+		["PT. BALI PARADISE CITRA DEWATA", "Aktif"],
+		["PUTRI NIL SEJATI", "Aktif"],
+		["RAJASA INTAMA", "Aktif"],
+		["SENTOSAKARYA ADITAMA", "Aktif"],
+		["TRITAMA MEGAH ABADI", "Aktif"],
+		["NAHELINDO PRATAMA", "Aktif"],
+		["KALIP SUKSES BERJAYA", "Aktif"],
+		["PUTRA JABUNG PERSADA", "Aktif"],
+		["MILLENIUM MUDA MANDIRI", "Aktif"],
+		["PT.AL-HIKMAH JAYA BHAKTI", "Aktif"],
+		["ANDALAN MITRA PRESTASI", "Aktif"],
+		["DINASTY INSAN MANDIRI", "Aktif"],
+		["SARI WARTI AGUNG", "Sanksi - Penghentian Sementara"],
+		["GUNAMANDIRI PARIPURNA", "Aktif"],
+		["HIKMAH SURYA JAYA", "Aktif"],
+		["BUGHSAN LABRINDO", "Aktif"],
+		["MUSAFIR KELANA", "Aktif"],
+		["SABIKA ARABINDO", "Aktif"],
+		["SALMAN PUTRA RAYANA", "Aktif"],
+		["SRIJATI GANDASARI", "Aktif"],
+		["BINTANG LIMA BRATA", "Aktif"],
+		["DELTA RONA ADIGUNA", "Aktif"],
+		["KARYA PESONA SUMBER REJEKI", "Aktif"],
+		["SURYA ABADI DUTAINDO", "Aktif"],
+		["AZKA DUTA SEMESTA", "Aktif"],
+		["PT AHWA INTERNATIONAL RESOURCE", "Aktif"],
+		["CITRA DATO PERKASA", "Aktif"],
+		["EMPAT PILAR SINAR GEMILANG", "Aktif"],
+		["KARYA SEMARATAMA MANDIRI", "Aktif"],
+		["PT ANUGERAH TUJUH SAMUDRA", "Aktif"],
+		["PT BAKTI UNGGUL SEJAHTERA", "Aktif"],
+		["PT BINAMANDIRI MULIA JAYA", "Aktif"],
+		["PT DAYA HELDIA ABADI", "Aktif"],
+		["PT GRAND GRAHA PRATAMA", "Aktif"],
+		["PT KERJAYA LESTARI KEPONG", "Aktif"],
+		["PT OMNA TRISATYA CHANDRA", "Aktif"],
+		["TENRIAWARU ELIT INTERNASIONAL", "Aktif"],
+		["TUNASKARYA SUKSES BERKARYA", "Aktif"],
+		["PT. BLUE DIAMOND INDONESIA", "Aktif"],
+		["LAS OLAS INDONESIA", "Aktif"],
+		["PT. PRIGEL ANTAR SUKSES", "Aktif"],
+		["PT. SERANGKAI CAHAYA TIMUR", "Aktif"],
+		["SRI DEWI BARUNA", "Aktif"],
+		["PT. SUGIH JAYA SENTOSA", "Aktif"],
+		["PT. SUMA BERJAYA ASRI", "Aktif"],
+		["PUNCAK JAYA SAMUDRA", "Aktif"],
+		["SALAM KARYA WINTANA", "Aktif"],
+		["BREXA TALENT INDONESIA", "Aktif"],
+		["ARGAM PUTRA TAMA", "Aktif"],
+		["PT JAYA INDONESIA PANDU ABHIPRAYA", "Aktif"],
+		["PT MARINA PRIMA SUKSES", "Aktif"],
+		["PT PUTRA ALIRSHAD SEJAHTERA", "Aktif"],
+		["YUSRI MUHAIR MANDIRI", "Aktif"],
+		["AIDA DUTA INDONESIA SEJAHTERA", "Aktif"],
+		["SAMUEL JAYA MARITIM", "Aktif"],
+		["PT PANGERAN PUTRA SEJAHTERA", "Aktif"],
+		["PT GRANDA SAMUDRA UTAMA", "Aktif"],
+		["PT BINAJASA ABADIKARYA", "Aktif"],
+		["MEGA AGUNG SEJAHTRA", "Aktif"],
+		["ANNUR PRIMA JAYA", "Aktif"],
+		["CEMERLANG TUNGGAL INTINUSA", "Aktif"],
+		["PT. KORINDO TECH INDONESIA", "Aktif"],
+		["FORTUNE JAYA CORPORA", "Aktif"],
+		["INDO SUMBER MANDIRI", "Aktif"],
+		["PT. MARDEL MITRA SEJAHTERA", "Aktif"],
+		["PT. KAMPUH WELDING INDONESIA", "Aktif"],
+		["PT. ANUGERAH BAHARI PASIFIK", "Aktif"],
+		["SIP SIAP SUKSES", "Aktif"],
+		["PT INDONESIA MAPAN PERKASA", "Aktif"],
+		["INDO BAROKAH INSANI", "Aktif"],
+		["ARSYILA CONDET MANDIRI", "Sanksi - Penghentian Sementara"],
+		["JAVA TUNA MUKTI", "Aktif"],
+		["PROFESIONAL WORKER INDONESIA", "Aktif"],
+		["GANESHA BINA BANGSA", "Aktif"],
+		["HUMAN SELECT INDONESIA", "Aktif"],
+		["YUKO TESA MIRAI", "Aktif"],
+		["SOLUSI BALI BERKARYA", "Aktif"],
+		["KARYA TENAGA MANDIRI", "Aktif"],
+		["YUTAKA SAIYOU GALUH PERSADA", "Aktif"],
+		["DUTA ARNETHO MANDIRI", "Aktif"],
+		["DASTAN FAJAR GEMILANG", "Aktif"],
+		["TOP KARIR MULTINUSA", "Aktif"],
+		["NUINDO DUTA KHATULISTIWA", "Aktif"],
+		["ALPHA MAGSAYSAY INTERNATIONAL", "Aktif"],
+		["LANGGENG NAWASENA PROSPERITY", "Aktif"],
+		["MITRA KARIR INTERNASIONAL", "Aktif"],
+		["NAGA PERSADA GLOBAL", "Aktif"],
+		["FUJI BIJAK PRESTASI", "Aktif"],
+		["ASKA BALI GROUP", "Aktif"],
+		["PRESTASI ABADI SUKSES", "Aktif"],
+		["IIM ABADI JAYA", "Aktif"],
+		["FOSCON GLOBAL INDONESIA", "Aktif"],
+		["SULTAN MONARKI NUSANTARA", "Aktif"],
+		["LOMBOK PUTRA PRATAMA", "Aktif"],
+		["EDEN GRACE SUMBER DAYA", "Aktif"],
+		["NUGRAHA KINERJA SENTOSA", "Aktif"],
+		["JEPANG WIND INDONESIA", "Aktif"],
+		["LORING MARGI INTERNASIONAL", "Aktif"],
+		["INDOKARYA SUKSES SEJAHTERA", "Aktif"],
+		["JOE MANPOWER INTERNATIONAL", "Aktif"],
+		["UNIVERSAL RECRUITMENT AGENCY", "Aktif"],
+		["PUTRA SAHABAT INTERNATIONAL", "Aktif"],
+		["CAHAYA LIMA SAMUDRA", "Aktif"],
+		["JASUMA ANUGERAH PRIMA SEJAHTERA", "Aktif"],
+		["JAKARTA MAJU BERSAMA", "Aktif"],
+		["BERKAH YUNIVA KENCANA", "Aktif"],
+		["WORLD HORENSO INDONESIA", "Aktif"],
+		["BALI SANITYA GLOBAL", "Aktif"],
+		["CITRA INSAN MANDIRI", "Aktif"],
+		["ADHI KERANI INDONESIA", "Aktif"],
+		["SINERGI MALEO AZHAR", "Aktif"],
+		["SUKSES BINA BANGSA", "Aktif"],
+		["RYOSHIN HARAPAN EDUKASI", "Aktif"],
+		["KEPODANG MAKMUR SEJAHTERA", "Aktif"],
+		["MINORI", "Aktif"],
+		["NAWA MANUNGGAL JAYA", "Aktif"],
+		["KEBUN TEKNOLOGI INDONESIA", "Aktif"],
+		["MIRAI BERKAH ABADI", "Aktif"],
+		["MCS INTERNASIONAL", "Aktif"],
+		["GOSIVA SUKSES MANDIRI", "Aktif"],
+		["DEVISA GROUP ALRIYADH", "Aktif"],
+		["KANDARRA INDONESIA", "Aktif"],
+		["BINTANG BENUAJAYA MANDIRI", "Aktif"],
+		["ANDINI PERMATA SEJAHTERA", "Aktif"],
+		["ASA BESTARI KASIH AMERTA", "Aktif"],
+		["AHWA GLOBAL SUKSES", "Aktif"],
+		["TAHTA MAHA DEWA", "Aktif"],
+		["ANUGRAH MIGRAN NUSANTARA", "Aktif"],
+		["AKBEI BORNEO RAYA", "Aktif"],
+		["KTJ Indonesia", "Aktif"],
+		["JAVA OLAH SUMBER SUKSES", "Aktif"],
+		["PRIMA DHANI BAHARI", "Aktif"],
+		["BIMA SAMUDRA BAHARI", "Aktif"],
+		["ORION HARMONI MANDALA", "Aktif"],
+		["AMANAH MIGRAN INDONESIA", "Aktif"],
+		["OCEAN JAYA SAMUDRA", "Aktif"],
+		["ISMAA GLOBAL MANAJEMEN", "Aktif"],
+		["MARIKU AIC INDONESIA", "Aktif"],
+		["KOKORONO BIJAK LOKA", "Aktif"],
+		["EDIGY DJAYA GLOBAL", "Aktif"],
+		["FLORA TALENT INDONESIA", "Aktif"],
+		["HAMA WORK SOLUTION", "Aktif"],
+		["AMRI SETIA MULYA", "Aktif"],
+		["AMIRAH BERKAH MELIMPAH", "Aktif"],
+		["ABDI SELARAS SETIA", "Aktif"],
+		["SOLUSINDO INSAN MANDIRI", "Aktif"],
+		["TENTREM DAMAI SENTOSA", "Aktif"],
+		["SURYA EKA PERKASA", "Aktif"],
+		["HYMBI NIHON NUSANTARA", "Aktif"],
+		["SURYA TIRTA MITRA JASA", "Aktif"],
+		["PT. SETYA JAYA SAMUDERA", "Aktif"],
+		["AFDAL DUTA SEJAHTERA", "Aktif"],
+		["TAMIO SUKSES BERSAMA", "Aktif"],
+		["DUTAGRIYA SARANA", "Aktif"],
+		["ELITE TUTORS INDONESIA", "Aktif"],
+		["LPK BSI INDONESIA", "Aktif"],
+		["NAWASENA CITA NUSANTARA", "Aktif"],
+		["SINAR IMPIAN BERKARYA", "Aktif"],
+		["PT. SHABI LOMBOK BERSAUDARA", "Aktif"],
+		["DIAN MANPOWER SUPPLY", "Aktif"],
+		["HIBIKI CENDEKIA MANDALA", "Aktif"],
+		["BRYNA SUKSES ABADI", "Aktif"],
+		["CIPTA JAYA BAHTERA", "Aktif"],
+		["ZAMRUD SINAR NUSANTARA", "Aktif"],
+		["YOBOSYO CORINDO PUTRA", "Aktif"],
+		["HINATA HUMAN LINK", "Aktif"],
+		["AMIL FAJAR BERKAH", "Aktif"],
+		["SAPTA SINERGI SELARAS", "Aktif"],
+		["INSAN SELARAS INDONESIA", "Aktif"],
+		["MARUFUKU UNIVERSAL INDONESIA", "Aktif"],
+		["DAYA TALENTA GLOBAL", "Aktif"],
+		["BRILLIANT LANGGENG MAKMUR", "Aktif"],
+		["SAHABAT JEPANG INDONESIA GROUP", "Aktif"],
+		["NAKAYOSHI JAYA ABADI", "Aktif"],
+		["LAYLA PARAHYANGAN SEJATI", "Aktif"],
+		["MASA JAYA PASIFIK", "Aktif"],
+		["PENEMPATAN PEMENANG ASIA", "Aktif"],
+		["MENERBANGKAN ANAK BANGSA", "Aktif"],
+		["ABDI SOBAT AMERTA", "Aktif"],
+		["MARIKANGEN MANDIRI CIREBON", "Aktif"],
+		["PRAMA ULTRA GLOBAL INTERPRISE", "Aktif"],
+		["HANSEATIC CONNECT INDONESIA", "Aktif"],
+		["SYAM INDO CORPORA", "Aktif"],
+		["GLORIOUS AGUNG MANDIRI", "Aktif"],
+		["NOVO CITRA MARINE", "Aktif"],
+		["MULTI GENERASI INDONESIA", "Aktif"],
+		["JIESCO PRO SPERITY", "Aktif"],
+		["CITRA ESDEEM KARAWANG", "Aktif"],
+		["HADIN PRO MANPOWER", "Aktif"],
+		["GOLDEN ARUNIKA PERSADA", "Aktif"],
+		["UPTY GLOBAL NETWORK", "Aktif"],
+		["PADPARADSCHA HUMANIKA GLOBAL GROUP", "Aktif"],
+		["WASAIDA HOMARE INDONESIA", "Aktif"],
+		["SAKURA GLOBAL INDONESIA", "Aktif"],
+		["International Pioneer Manpower", "Aktif"],
+		["EDU OMNI TAKARA", "Aktif"],
+		["JOBSTACULAR INSAN SEJAHTERA", "Aktif"],
+		["MALONA SAHAPORY INTEGRITAS", "Aktif"],
+		["AQNESIA MULTI USAHA", "Aktif"],
+		["JAYATRA SERVIS INDONESIA", "Aktif"],
+		["ALIYAH EST INDONESIA", "Aktif"],
+		["PT ANUGERAH BAHARI PASIFIK", "Aktif"],
+		["NORYOKU KALYANA INDONESIA", "Aktif"],
+		["Marine Cruise Indonesia", "Aktif"],
+		["DUTA SAMUDERA BAHARI", "Aktif"],
+		["DAYA HELDIA ABADI", "Aktif"],
+		["BIMASENA CIPTA MANGGALA", "Aktif"],
+		["ARTHA GLOBAL MANPOWER", "Aktif"],
+		["RAJAWALI TUNGGAL SETIA", "Aktif"],
+		["Garuda Emas Express", "Aktif"],
+		["HAJAVADA NUSANTARA ABADI", "Aktif"],
+		["Moza Group Indonesia", "Aktif"],
+		["PAMOR SUKSES ABADI", "Aktif"],
+		["PT Rafa Global Marine", "Aktif"],
+		["ACE INDONESIA SUKSESS", "Aktif"],
+		["AXEL GARUDA INDONESIA", "Aktif"],
+		["LUSIA BERKAH SEJAHTERA", "Aktif"],
+		["RNT UTAMA INDONESIA", "Aktif"],
+		["PT Mulia Mandiri Abadi Tasikmalaya", "Aktif"],
+		["ANUGERAH FAMILI ASIA", "Aktif"],
+		["SANTI SAKURA PLANNING", "Aktif"],
+		["JOYFUL CARE INDONESIA", "Aktif"],
+		["MENUJU MASA DEPAN CERAH", "Aktif"],
+		["ANUGERAH TENAGA NUSANTARA", "Aktif"],
+		["SENTRAL INOVASI RAYA", "Aktif"],
+		["CAHAYA PENDIDIKAN INTERNASIONAL", "Aktif"],
+		["ANABUKI CONSULTANT INDONESIA", "Aktif"],
+		["YUKARI SINERGI INSANI", "Aktif"],
+		["AMEASTARA RAYA MULIA", "Aktif"],
+		["MOJO Global Talent", "Aktif"],
+		["GENERASI EMAS BERDAYA", "Aktif"],
+		["BREXA TALENT INDONESIA", "Aktif"],
+		["HARENOHI CAHAYA INDONESIA", "Aktif"],
+		["ARTOMORO ABADI REJEKI", "Aktif"],
+		["Mega Pratama Samudra", "Aktif"],
+		["AIKO NEGARA DAHA", "Aktif"],
+		["SINGA MANPOWER", "Aktif"],
+		["PT. Tafcindo Jasatama Segara", "Aktif"],
+		["HIRO SEJAHTERA BERSAMA", "Aktif"],
+		["NAGA CAHAYA ABADI", "Aktif"],
+		["ASIA INDO MANPOWER", "Aktif"],
+		["PT Global Alpha Group", "Aktif"],
+		["EDREA GLOBAL GROUP", "Aktif"],
+		["KURATEN MANABU INDONESIA", "Aktif"],
+		["GERBANG TALENTA GLOBALINDO", "Aktif"],
+		["INDO SAMUDERA SERVICE MANAGEMENT", "Aktif"],
+		["ABC BUDAYA CENTER", "Aktif"],
+		["PANDAWA MITRA INDONESIA", "Aktif"],
+		["CITRA BINA TENAGA MANDIRI", "Aktif"],
+		["SUNDO KUKUH BERSINAR", "Aktif"],
+		["DAYA BARU INDONESIA", "Aktif"]
+	];
+	//#endregion
 	//#region src/lib/text.ts
 	const ZERO_WIDTH = /[​-‍⁠﻿­]/;
 	const SINGLE_QUOTES = /[‘’‚‛′ʼ`´]/;
@@ -120,6 +661,122 @@ var AwasLab = (function(exports) {
 	/** Digits only. */
 	function digits(s) {
 		return s.replace(/\D/g, "");
+	}
+	/**
+	* "CV" is also a curriculum vitae: "Kirim CV ke WA", "SEND CV WHATSAPP". A "CV <Name>" match is a company only when it
+	* is not preceded by a sending verb and not followed by a channel or filler word.
+	*/
+	const CV_BEFORE = /\b(?:kirim|kirimkan|send|submit|upload|lampirkan|sertakan|bawa|email|e-mail|drop)\s*$/i;
+	const CV_AFTER = /^\s*(?:whatsapp|whats\s?app|wa|email|e-mail|anda|lengkap|terbaru|ke|to|via|melalui|segera|dan|and|atau|or|lamaran)\b/i;
+	function isCurriculumVitae(text, matchStart, matchText) {
+		const at = matchStart + (matchText.length - matchText.trimStart().length);
+		if (!/^cv\b/i.test(text.slice(at, at + 3))) return false;
+		return CV_BEFORE.test(text.slice(Math.max(0, at - 20), at)) || CV_AFTER.test(text.slice(at + 2).replace(/^\./, ""));
+	}
+	//#endregion
+	//#region src/lib/registry.ts
+	/**
+	* The licensed-placement registry check (spec §4 SHOULD #2): a dated snapshot of the official P3MI list, looked up in
+	* code. A query-ranked web search cannot prove a name is absent from a list of hundreds; a stored snapshot can say
+	* exactly "not found on the list as of <date>".
+	*
+	* - The ad names an Indonesian company (PT / CV) that is not on the list → CAUTION, never STOP: the list changes, and
+	*   ship-crew agencies are licensed elsewhere.
+	* - The ad names an agency the list shows under suspension → CAUTION.
+	* - Found and active → no flag, only a note: scammers reuse licensed names, so the family should contact the agency
+	*   through the details on the list, not the number in the ad.
+	*/
+	const LEGAL_FORMS$1 = /* @__PURE__ */ new Set([
+		"pt",
+		"cv",
+		"tbk",
+		"persero"
+	]);
+	function nameTokens(name) {
+		return (normalise(name).match(/[\p{L}\p{N}]+/gu) ?? []).filter((t) => !LEGAL_FORMS$1.has(t));
+	}
+	const REGISTRY = {
+		source,
+		asOf: fetched,
+		count,
+		agencies: agencies.map(([name, status]) => ({
+			name,
+			status,
+			tokens: nameTokens(name)
+		}))
+	};
+	const REGISTRY_SOURCE = {
+		url: source,
+		domain: "siskop2mi.bp2mi.go.id",
+		title: `SISKOP2MI — List P3MI (${count} licensed placement companies)`,
+		date: fetched,
+		quote: "List P3MI"
+	};
+	function tokensWithOffsets(text) {
+		return [...text.matchAll(/[\p{L}\p{N}]+/gu)].map((m) => ({
+			t: m[0].normalize("NFKC").toLowerCase(),
+			start: m.index ?? 0,
+			end: (m.index ?? 0) + m[0].length
+		}));
+	}
+	/** "PT Maju Jaya" / "CV. Sinar" in the ad: the Indonesian company names worth looking up. */
+	const INDONESIAN_COMPANY = /\b(?:PT|CV)\.?\s+(?:[A-Z0-9][\p{L}\p{N}&'’-]*\.?\s*){1,6}/gu;
+	function checkRegistry(adText, extractedCompany) {
+		const result = {
+			asOf: REGISTRY.asOf,
+			source: REGISTRY.source,
+			found: null,
+			notListed: []
+		};
+		const toks = tokensWithOffsets(adText);
+		let best = null;
+		for (const agency of REGISTRY.agencies) {
+			const n = agency.tokens;
+			if (n.length === 0) continue;
+			for (let i = 0; i + n.length <= toks.length; i++) {
+				if (!n.every((t, k) => toks[i + k].t === t)) continue;
+				if (n.length === 1 && !(i > 0 && LEGAL_FORMS$1.has(toks[i - 1].t))) continue;
+				const span = {
+					text: adText.slice(toks[i].start, toks[i + n.length - 1].end),
+					start: toks[i].start,
+					end: toks[i + n.length - 1].end
+				};
+				if (!best || n.length > best.len) best = {
+					agency: {
+						name: agency.name,
+						status: agency.status
+					},
+					span,
+					len: n.length
+				};
+			}
+		}
+		if (best) {
+			result.found = {
+				...best.agency,
+				span: best.span
+			};
+			return result;
+		}
+		const seen = /* @__PURE__ */ new Set();
+		const add = (span) => {
+			const key = nameTokens(span.text).join(" ");
+			if (key && !seen.has(key)) {
+				seen.add(key);
+				result.notListed.push(span);
+			}
+		};
+		for (const m of adText.matchAll(INDONESIAN_COMPANY)) {
+			if (isCurriculumVitae(adText, m.index ?? 0, m[0])) continue;
+			const text = m[0].trim().replace(/[.,]$/, "");
+			add({
+				text,
+				start: m.index ?? 0,
+				end: (m.index ?? 0) + text.length
+			});
+		}
+		if (extractedCompany && /^(?:PT|CV)\b/i.test(extractedCompany.text.trim())) add(extractedCompany);
+		return result;
 	}
 	//#endregion
 	//#region src/lib/rule-sources.ts
@@ -401,7 +1058,9 @@ var AwasLab = (function(exports) {
 			/\bno\s+(?:interview|test|training|selection)\b/giu
 		],
 		high_pay_light_work: [],
-		no_company: []
+		no_company: [],
+		not_on_p3mi_list: [],
+		p3mi_suspended: []
 	};
 	const CONTRACT_WORDS = /\b(kontrak|tanda\s*tangan|ttd|dp|uang\s+jaminan|contract|deposit|signing|signed)\b/i;
 	const DEPARTURE_WORDS = /\b(berangkat|keberangkatan|pemberangkatan|departure|departing|flying)\b/i;
@@ -426,6 +1085,8 @@ var AwasLab = (function(exports) {
 		"advisory_destination",
 		"personal_recruiter",
 		"no_company",
+		"not_on_p3mi_list",
+		"p3mi_suspended",
 		"visit_visa_holder"
 	];
 	const FLAG_LABELS = {
@@ -484,6 +1145,14 @@ var AwasLab = (function(exports) {
 		no_company: {
 			id: "Iklan tidak menyebut nama perusahaan",
 			en: "The ad names no company"
+		},
+		not_on_p3mi_list: {
+			id: "Nama perusahaan tidak ditemukan di daftar P3MI resmi",
+			en: "The company is not on the official licensed-agency (P3MI) list"
+		},
+		p3mi_suspended: {
+			id: "Perusahaan ini sedang dihentikan sementara (sanksi) di daftar P3MI",
+			en: "The agency is under a temporary suspension on the P3MI list"
 		}
 	};
 	/** Pay figures in an ad, in their own currency (rupiah or US dollars). No conversion: each has its own cited threshold. */
@@ -713,7 +1382,14 @@ var AwasLab = (function(exports) {
 			})), ...modelHits(id, adText, extraction)].filter((h) => !nonPlacement.some((m) => m.span.start < h.span.end && h.span.start < m.span.end));
 			else if (id === "personal_recruiter") hits = personalRecruiterHits(adText, extraction);
 			else if (id === "no_company") hits = has("personal_recruiter") ? [] : noCompanyHits(adText, extraction);
-			else if (id === "fee_asked") hits = has("fee_before_contract") || has("fee_before_departure") ? [] : [...patternHits(id, adText), ...modelHits(id, adText, extraction)];
+			else if (id === "not_on_p3mi_list" || id === "p3mi_suspended") {
+				const reg = checkRegistry(adText, extraction?.company);
+				hits = (id === "not_on_p3mi_list" ? reg.notListed : reg.found && !/^aktif$/i.test(reg.found.status) ? [reg.found.span] : []).map((span) => ({
+					span,
+					via: "pattern"
+				}));
+				source = REGISTRY_SOURCE;
+			} else if (id === "fee_asked") hits = has("fee_before_contract") || has("fee_before_departure") ? [] : [...patternHits(id, adText), ...modelHits(id, adText, extraction)];
 			else hits = [...patternHits(id, adText), ...modelHits(id, adText, extraction)];
 			const flag = makeFlag(id, dedupeHits(hits), source);
 			if (flag) flags.push(flag);
@@ -772,7 +1448,7 @@ var AwasLab = (function(exports) {
 	/** The ad names no company and gives no contact (with a personal contact, the personal-recruiter rule fires instead). */
 	function noCompanyHits(text, ex) {
 		if (!JOB_OFFER.test(text)) return [];
-		if (LEGAL_COMPANY.test(text) || FOREIGN_COMPANY.test(text) || ex?.company) return [];
+		if (namesLegalCompany(text) || FOREIGN_COMPANY.test(text) || ex?.company) return [];
 		const first = text.match(/^\s*([^\n]{1,80})/u);
 		if (!first) return [];
 		const start = (first.index ?? 0) + first[0].length - first[1].length;
@@ -792,10 +1468,15 @@ var AwasLab = (function(exports) {
 			via: "pattern"
 		}];
 	}
+	/** An Indonesian legal-form name in the ad ("PT Maju", "CV Sinar") — but never "Kirim CV ke WA". */
+	function namesLegalCompany(text) {
+		for (const m of text.matchAll(new RegExp(LEGAL_COMPANY.source, "gu"))) if (!isCurriculumVitae(text, m.index ?? 0, m[0])) return true;
+		return false;
+	}
 	function personalRecruiterHits(text, ex) {
 		const hits = [];
 		const contacts = [...text.matchAll(CONTACT)];
-		if (!(LEGAL_COMPANY.test(text) || FOREIGN_COMPANY.test(text)) && contacts.length > 0) {
+		if (!(namesLegalCompany(text) || FOREIGN_COMPANY.test(text)) && contacts.length > 0) {
 			const m = contacts[0];
 			hits.push({
 				span: {
@@ -1043,7 +1724,9 @@ var AwasLab = (function(exports) {
 		debt_bondage: "costs are advanced, then deducted from pay",
 		high_pay_light_work: "very high pay for light office work",
 		quick_departure: "a fast departure with no selection or training",
-		no_company: "the ad names no company"
+		no_company: "the ad names no company",
+		not_on_p3mi_list: "the company is not on the official licensed-agency list",
+		p3mi_suspended: "the agency is under a temporary suspension on the official list"
 	};
 	/** The NEVER-class rules; one with no recorded source is drawn and counted as CAUTION. */
 	const NEVER_IDS = [

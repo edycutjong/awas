@@ -301,6 +301,17 @@ export function EvidenceFile({ view, judge = false }: { view: View; judge?: bool
         </section>
       ) : null}
 
+      {view.registry?.found && /^aktif$/i.test(view.registry.found.status) ? (
+        <p className="registry">
+          <b>{view.registry.found.name}</b> terdaftar sebagai P3MI resmi per {view.registry.asOf} · listed as a licensed agency on the{" "}
+          <a href={view.registry.source} target="_blank" rel="noopener noreferrer">
+            official P3MI list
+          </a>{" "}
+          as of {view.registry.asOf}. Penipu sering memakai nama resmi — hubungi perusahaan lewat kontak di daftar itu, bukan nomor di iklan ·
+          scammers reuse licensed names: contact the agency through the list, not the number in the ad.
+        </p>
+      ) : null}
+
       {view.lines.length > 0 || view.tavily.length > 0 ? (
         <section aria-labelledby="ev-h">
           <h2 id="ev-h">Yang sudah dipublikasikan · what has been published</h2>

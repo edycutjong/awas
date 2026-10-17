@@ -77,6 +77,8 @@ const FLAG_REASON: Record<string, string> = {
   high_pay_light_work: "very high pay for light office work",
   quick_departure: "a fast departure with no selection or training",
   no_company: "the ad names no company",
+  not_on_p3mi_list: "the company is not on the official licensed-agency list",
+  p3mi_suspended: "the agency is under a temporary suspension on the official list",
 };
 
 /** The NEVER-class rules; one with no recorded source is drawn and counted as CAUTION. */

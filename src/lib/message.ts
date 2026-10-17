@@ -9,6 +9,7 @@
  */
 
 import { mentionsCompany, maskAll } from "./mask";
+import { REGISTRY } from "./registry";
 import { OFFICIAL_CHECKS } from "./rule-sources";
 import { callSetting } from "./settings";
 import { normalise } from "./text";
@@ -64,6 +65,14 @@ export function verifySteps(flags: Flag[]): Steps {
   const en: string[] = [];
   id.push("Cek nama perusahaan di daftar resmi P3MI (siskop2mi.bp2mi.go.id) — hubungi perusahaan lewat kontak di daftar itu, bukan nomor di iklan.");
   en.push("Check the company on the official licensed-agency (P3MI) list at siskop2mi.bp2mi.go.id — contact it through the details on that list, not the number in the ad.");
+  if (has("not_on_p3mi_list")) {
+    id.push(`Nama perusahaan di iklan tidak ada di daftar P3MI resmi (per ${REGISTRY.asOf}) — perusahaan penempatan resmi selalu terdaftar di sana.`);
+    en.push(`The company in the ad is not on the official P3MI list (as of ${REGISTRY.asOf}) — licensed placement companies are always listed there.`);
+  }
+  if (has("p3mi_suspended")) {
+    id.push("Perusahaan ini sedang dikenai sanksi penghentian sementara di daftar P3MI — jangan mendaftar sampai statusnya aktif kembali.");
+    en.push("This agency is under a temporary suspension on the P3MI list — do not apply until its status is active again.");
+  }
   if (has("non_placement_country")) {
     id.push("Negara ini bukan negara penempatan resmi pekerja migran Indonesia (KP2MI) — tidak ada jalur kerja resmi ke sana.");
     en.push("This country is not an official placement country for Indonesian workers (KP2MI) — there is no legal route to work there.");

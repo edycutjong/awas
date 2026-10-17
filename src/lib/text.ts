@@ -119,3 +119,16 @@ export function isClauseBoundary(text: string, i: number): boolean {
 export function digits(s: string): string {
   return s.replace(/\D/g, "");
 }
+
+/**
+ * "CV" is also a curriculum vitae: "Kirim CV ke WA", "SEND CV WHATSAPP". A "CV <Name>" match is a company only when it
+ * is not preceded by a sending verb and not followed by a channel or filler word.
+ */
+const CV_BEFORE = /\b(?:kirim|kirimkan|send|submit|upload|lampirkan|sertakan|bawa|email|e-mail|drop)\s*$/i;
+const CV_AFTER = /^\s*(?:whatsapp|whats\s?app|wa|email|e-mail|anda|lengkap|terbaru|ke|to|via|melalui|segera|dan|and|atau|or|lamaran)\b/i;
+
+export function isCurriculumVitae(text: string, matchStart: number, matchText: string): boolean {
+  const at = matchStart + (matchText.length - matchText.trimStart().length);
+  if (!/^cv\b/i.test(text.slice(at, at + 3))) return false;
+  return CV_BEFORE.test(text.slice(Math.max(0, at - 20), at)) || CV_AFTER.test(text.slice(at + 2).replace(/^\./, ""));
+}
