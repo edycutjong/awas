@@ -65,6 +65,12 @@ The scale is official: Indonesia's foreign ministry reports **1,301 cases handle
 
 ## 🏗️ Architecture & Tech Stack
 
+<p align="center"><img src="docs/architecture.png" width="880" alt="Awas architecture: the browser posts a pasted job ad to /api/check on Vercel, which streams eight steps back: rate slot, Nemotron 3 Ultra extracts the fields on Nebius Token Factory, sourced rules fire in code, Tavily searches the web, Nemotron 3 Super proposes quotes, the quote gate keeps only quotes found word for word on a fetched page, code decides STOP, VERIFY FIRST or NO RED FLAGS FOUND, and Nemotron 3 Super writes the family message. Evidence packs go to Nebius Object Storage; a Nebius Serverless AI Job runs the frozen benchmark."></p>
+
+<p align="center"><sub>One check, in the order it runs. The header shows a real recorded STOP case. Step code: <a href="src/lib/pipeline.ts"><code>src/lib/pipeline.ts</code></a>.</sub></p>
+
+<details><summary>The same flow as a Mermaid diagram</summary>
+
 ```mermaid
 flowchart LR
   A[Pasted ad] --> B[Extract fields<br/>Nemotron / Token Factory]
@@ -79,12 +85,14 @@ flowchart LR
   G --> S[(Nebius Object Storage<br/>evidence pack)]
 ```
 
+</details>
+
 | Layer | Choice |
 |---|---|
 | App | Next.js 15, TypeScript, Tailwind 4 |
 | Models | NVIDIA Nemotron on Nebius Token Factory, routed per call: **Nemotron 3 Ultra** (`nvidia/Nemotron-3-Ultra-550b-a55b`) extracts the fields (84.8 % field accuracy on 25 Indonesian texts — 20 reporters' descriptions of scam offers and 5 licensed vacancies — vs Super 70.7 % and Lightning 59.6 %, against labels drafted by our build agent, not yet reviewed by a human: [`docs/proof/stage-t.json`](docs/proof/stage-t.json)); **Nemotron 3 Super** (`nvidia/nemotron-3-super-120b-a12b`) proposes evidence lines and writes the family message |
 | Retrieval | Tavily `/search` and `/extract` |
-| State | Nebius Object Storage (S3 API, SigV4): evidence packs (rewritten as each step completes), per-IP rate slots (conditional create); a 75-day expiry rule on `cases/` (and 1 day on `rate/`), read back from the bucket on 2026-10-18: [`docs/proof/bucket-lifecycle-2026-10-18.json`](docs/proof/bucket-lifecycle-2026-10-18.json) |
+| State | Nebius Object Storage (S3 API, SigV4): evidence packs (saved four times: after the rules, after the web search, after the quote gate, and when the check ends), per-IP rate slots (conditional create); a 75-day expiry rule on `cases/` (and 1 day on `rate/`), read back from the bucket on 2026-10-18: [`docs/proof/bucket-lifecycle-2026-10-18.json`](docs/proof/bucket-lifecycle-2026-10-18.json) |
 | Nebius libraries | `src/lib/nebius/` (SigV4, Object Storage, service-account auth, Serverless Jobs), copied from the same author's earlier project, [faultline](https://github.com/edycutjong/faultline) |
 
 ## 🏆 Nebius Token Factory + NVIDIA Nemotron + Tavily Integration
