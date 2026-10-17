@@ -108,6 +108,8 @@ export interface MessageInput {
   flags: Flag[];
   /** Verified lines to quote (at most 2), in display order. */
   lines: EvidenceLine[];
+  /** Further verified lines that get an English gloss but are not quoted in the family message. */
+  glossOnly?: EvidenceLine[];
   company?: string;
   phones: string[];
 }
@@ -209,7 +211,9 @@ export async function writeMessage(tf: TokenFactoryConfig | null, input: Message
   if (!tf) return fromTemplate(null, "Token Factory is not configured");
 
   const s = callSetting("message");
-  const numbered = input.lines.map((l, i) => `[${i + 1}] “${l.quote}” — ${domainOf(l.url)}`).join("\n");
+  // Numbered: the quoted lines first (the message cites them), then the lines that only need a gloss.
+  const all = [...input.lines, ...(input.glossOnly ?? [])];
+  const numbered = all.map((l, i) => `[${i + 1}] “${l.quote}” — ${domainOf(l.url)}${i >= input.lines.length ? " (gloss only)" : ""}`).join("\n");
   const user = [
     `Verdict (decided by code): ${input.verdict.replace(/_/g, " ")}`,
     `Why: ${input.reasons.join("; ") || "no rule fired"}`,
@@ -236,7 +240,7 @@ export async function writeMessage(tf: TokenFactoryConfig | null, input: Message
     }
     const glosses = new Map<number, { gloss: string; ok: boolean }>();
     for (const g of out.value.glosses ?? []) {
-      const line = input.lines[g.line - 1];
+      const line = all[g.line - 1];
       if (!line || typeof g.gloss_en !== "string") continue;
       const quoteNames = mentionsCompany(line.quote, input.company);
       const gloss = quoteNames ? g.gloss_en : maskAll(g.gloss_en, input.company, input.phones, "en");

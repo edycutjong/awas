@@ -13,7 +13,7 @@ import { addToCorpus, gateLine, type Corpus, type GateContext } from "./gate";
 import { extractFields } from "./extract";
 import { maskAll, newCaseId, sanitise } from "./mask";
 import { domainOf, verifySteps, writeMessage } from "./message";
-import { filterCorpus, pickSentences, proposeLines } from "./propose";
+import { BUDGET, filterCorpus, pickSentences, proposeLines } from "./propose";
 import { evaluateRubric } from "./rubric";
 import { MAX_AD_CHARS, MIN_AD_CHARS } from "./settings";
 import { exactQuery, extract, search, type SearchResponse, type TavilyOutcome } from "./tavily";
@@ -287,23 +287,29 @@ export async function runCheck(input: CheckInput, deps: Deps, emit: Emit = () =>
   // 6 · Message (TF call 3) — full runs only; the ablation columns stop at the verdict.
   if (input.stage === "full") {
     const quoted = [...pack.lines.filter(isCompanyMatched), ...pack.lines.filter((l) => isVerdictInput(l) && !isCompanyMatched(l))].slice(0, 2);
+    // Every other verified line gets an English gloss too (judges read English), but is not quoted in the message.
+    const glossOnly = pack.lines.filter((l) => l.status === "verified" && !quoted.includes(l)).slice(0, BUDGET.maxLines);
+    const numbered = [...quoted, ...glossOnly];
     const msg = await writeMessage(left() > 30_000 ? deps.tf : null, {
-      verdict: decision.verdict, rule: decision.rule, reasons: decision.reasons, flags: pack.flags, lines: quoted,
+      verdict: decision.verdict, rule: decision.rule, reasons: decision.reasons, flags: pack.flags, lines: quoted, glossOnly,
       company: ctx.company, phones: ctx.phones,
     }, fetchImpl);
     if (msg.receipt) tfReceipts.push(msg.receipt);
+    // Glosses go out keyed by the line's own index, so the live view and the stored pack can never disagree.
+    const glossesByLine: Record<string, { gloss: string; ok: boolean }> = {};
     for (const [n, g] of msg.glosses) {
-      const line = quoted[n - 1];
+      const line = numbered[n - 1];
       if (line) {
         line.gloss = g.ok ? g.gloss : undefined;
         line.glossStatus = g.ok ? "ok" : "unavailable";
+        glossesByLine[String(pack.lines.indexOf(line))] = g;
       }
     }
     pack.messageId = msg.messageId;
     pack.messageEn = msg.messageEn;
     pack.explanationEn = msg.explanationEn;
     pack.messageSource = msg.source;
-    emit("message", { messageId: msg.messageId, messageEn: msg.messageEn, explanationEn: msg.explanationEn, source: msg.source, glosses: Object.fromEntries(msg.glosses) });
+    emit("message", { messageId: msg.messageId, messageEn: msg.messageEn, explanationEn: msg.explanationEn, source: msg.source, glosses: glossesByLine });
   }
 
   await save(true);

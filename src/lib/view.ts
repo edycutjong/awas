@@ -96,11 +96,10 @@ export function reduce(v: View, event: string, data: any): View {
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
 /** The message step's glosses belong to the verified lines it quoted, in order. */
+/** Glosses arrive keyed by the line's own index (pipeline.ts). */
 function applyGlosses(lines: ViewLine[], glosses: Record<string, { gloss: string; ok: boolean }>): ViewLine[] {
-  const verified = lines.filter((l) => l.state === "verified" && l.purpose !== "pattern");
   return lines.map((l) => {
-    const n = verified.indexOf(l) + 1;
-    const g = n > 0 ? glosses[String(n)] : undefined;
+    const g = l.state === "verified" ? glosses[String(l.index)] : undefined;
     return g ? { ...l, gloss: g.ok ? g.gloss : undefined, glossStatus: g.ok ? "ok" : "unavailable" } : l;
   });
 }

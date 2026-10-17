@@ -73,6 +73,11 @@ describe("runCheck", () => {
     expect(pack.lines[0].quote).toContain("PT Sinar Harapan Abadi");
     expect(pack.messageId).toContain("Dilaporkan oleh news.example.org, bukan tuduhan kami.");
     expect(pack.lines[0].gloss).toContain("allegedly");
+    // Glosses are keyed by the line's own index, for the live view and the stored pack alike.
+    const views: { event: string; data: unknown }[] = [];
+    await runCheck({ adText: AD, lang: "id", mode: "live", stage: "full" }, { tf, tavily, store: store(), fetchImpl }, (event, data) => views.push({ event, data }));
+    const msg = views.find((v) => v.event === "message")?.data as { glosses: Record<string, unknown> };
+    expect(Object.keys(msg.glosses)).toEqual(["0"]);
     expect(pack.picker?.companyMatched).toBe(true);
     expect(events).toEqual(expect.arrayContaining(["extracted", "flags", "tavily_call", "line_pending", "line_verified", "line_dropped", "verdict", "message", "receipt", "done"]));
     expect(events.indexOf("verdict")).toBeGreaterThan(events.lastIndexOf("line_dropped"));
