@@ -4,27 +4,34 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Awas — pages, not scores</title>
-<meta name="description" content="Paste an overseas job offer. Awas checks it against rules quoted from official Indonesian pages and shows a quote only when code finds it word for word. No score.">
+<meta name="description" content="Paste an overseas job offer. Awas checks it against rules quoted from official Indonesian pages and shows a quote only when code finds it word for word.">
 <meta name="author" content="Edy Cu">
 <meta name="theme-color" content="#FBFAF5">
 <link rel="canonical" href="https://awas-cek.vercel.app/about">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Awas">
 <meta property="og:title" content="Awas — pages, not scores">
-<meta property="og:description" content="Official rules, quotes checked word for word in code, STOP or VERIFY FIRST. 0 of 10 licensed vacancies stopped.">
+<meta property="og:description" content="Official rules, quotes checked word for word in code, STOP or VERIFY FIRST. 0 of 10 licensed vacancies got STOP.">
 <meta property="og:url" content="https://awas-cek.vercel.app/about">
 <meta property="og:image" content="https://awas-cek.vercel.app/og-image.png?v=6790adc007">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Awas — an evidence file with a highlighted quote and a red STOP stamp">
+<meta property="og:image:alt" content="Awas — a recorded evidence file: the rule and its official page, a quote found word for word, a STOP stamp">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Awas — pages, not scores">
-<meta name="twitter:description" content="Official rules, quotes checked word for word in code, STOP or VERIFY FIRST. 0 of 10 licensed vacancies stopped.">
+<meta name="twitter:description" content="Official rules, quotes checked word for word in code, STOP or VERIFY FIRST. 0 of 10 licensed vacancies got STOP.">
 <meta name="twitter:image" content="https://awas-cek.vercel.app/og-image.png?v=6790adc007">
 <link rel="preload" href="/fonts/abril-fatface-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/atkinson-hyperlegible-next-wght.woff2" as="font" type="font/woff2" crossorigin>
-<script>if (matchMedia("(prefers-reduced-motion: no-preference)").matches) document.documentElement.classList.add("motion");</script>
+<script>
+  // Motion is an enhancement: without this script, or if the page script never starts, every element shows its final state.
+  if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+    document.documentElement.classList.add("motion");
+    setTimeout(function () { if (!window.__awas) document.documentElement.classList.remove("motion"); }, 4000);
+  }
+</script>
 <style>
 @font-face { font-family: "Abril Fatface"; src: url(/fonts/abril-fatface-400.woff2) format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "Atkinson Hyperlegible Next"; src: url(/fonts/atkinson-hyperlegible-next-wght.woff2) format("woff2"); font-weight: 200 800; font-display: swap; }
@@ -49,14 +56,19 @@
   --font-display: "Abril Fatface", "Abril Fallback", "Bodoni 72", Didot, Georgia, serif;
   --font-body:    "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", "Atkinson Fallback", system-ui, sans-serif;
   --font-data:    "Atkinson Hyperlegible Mono", "Atkinson Mono Fallback", ui-monospace, Menlo, monospace;
-  /* Page geometry: the red margin line sits at --mx; pencil notes live left of it, the clippings right of it. */
+  /* Page geometry and paper: the red margin line sits at --mx; pencil notes live left of it, the clippings right of it. */
   --mx: 112px;
   --pad: 48px;
+  --paper: #FFFEF8;   /* an older clipping, a shade warmer than --card */
+  --edge: #ECE7D6;    /* a clipping's cut edge */
+  --line: #EFECE3;    /* a ruled row inside a clipping */
+  --ink-2: #2A3550;   /* ink, pressed a little lighter (hover) */
   --tape: rgba(222, 211, 168, 0.62);
   --shadow: 0 1px 0 rgba(28, 35, 51, 0.06), 0 18px 34px -20px rgba(28, 35, 51, 0.42);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 * { box-sizing: border-box; }
-html { overflow-x: clip; scroll-padding-top: 24px; color-scheme: light; scrollbar-color: var(--muted) var(--bg); -webkit-text-size-adjust: 100%; }
+html { overflow-x: clip; scroll-padding-top: 24px; scroll-padding-bottom: 24px; color-scheme: light; scrollbar-color: var(--muted) var(--bg); -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: rgba(199, 213, 232, 0.5); }
 html.motion { scroll-behavior: smooth; }
 body {
   margin: 0; color: var(--ink); background-color: var(--bg);
@@ -73,10 +85,13 @@ a { color: inherit; text-decoration-thickness: 1.5px; text-underline-offset: 3px
 a:hover { text-decoration-thickness: 3px; text-underline-offset: 4px; }
 :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
 code, .data { font-family: var(--font-data); font-size: 0.86em; }
+p, li, blockquote { text-wrap: pretty; }
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .skip { position: absolute; left: 12px; top: -60px; z-index: 60; background: var(--ink); color: var(--bg); padding: 12px 16px; font-weight: 700; text-decoration: none; }
 .skip:focus { top: 12px; }
 .ic { width: 1em; height: 1em; display: inline-block; vertical-align: -0.12em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+/* Labels are the reading face in caps; the mono face only sets data (domains, dates, ids, seconds, tokens). */
+.cap { font: 700 12.5px/1.45 var(--font-body); letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
 
 /* The page column: a margin line, pencil notes in the margin, clippings to its right. */
 .page { position: relative; max-width: 1400px; margin: 0 auto; padding: 0 var(--pad) 0 calc(var(--mx) + 40px); }
@@ -87,17 +102,20 @@ code, .data { font-family: var(--font-data); font-size: 0.86em; }
 /* Masthead */
 .mast { padding: 18px 0 0; }
 .mast .page { display: flex; align-items: center; gap: 28px; min-height: 64px; }
-.word { font: 400 34px/1 var(--font-display); text-decoration: none; letter-spacing: 0.005em; }
+.word { display: inline-flex; align-items: baseline; gap: 10px; text-decoration: none; }
+.word b { font: 400 34px/1 var(--font-display); letter-spacing: 0.005em; }
+.word i { font: italic 500 14px/1 var(--font-body); color: var(--muted); }
+.word:hover b { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
 .mast nav { margin-left: auto; display: flex; gap: 22px; font-weight: 600; font-size: 16px; }
 .mast nav a { text-decoration-color: transparent; padding: 10px 0; }
 .mast nav a:hover { text-decoration-color: currentColor; }
 
 /* Buttons: a ruled index-card edge, ink or paper. */
-.btn { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 20px; border: 2px solid var(--ink); background: var(--bg); color: var(--ink); font: 700 16px/1 var(--font-body); text-decoration: none; transition: transform 140ms cubic-bezier(.2,.7,.3,1), box-shadow 140ms ease-out, background-color 140ms ease-out; }
+.btn { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 20px; border: 2px solid var(--ink); background: var(--bg); color: var(--ink); font: 700 16px/1 var(--font-body); text-decoration: none; transition: transform 140ms var(--ease), box-shadow 140ms ease-out, background-color 140ms ease-out; }
 .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 -2px rgba(28, 35, 51, 0.28); }
 .btn:active { transform: translateY(0); box-shadow: none; }
 .btn-ink { background: var(--ink); color: var(--bg); }
-.btn-ink:hover { background: #2a3550; }
+.btn-ink:hover { background: var(--ink-2); }
 .btn .ic { width: 18px; height: 18px; }
 .btn-sm { min-height: 44px; padding: 0 14px; font-size: 15px; }
 
@@ -113,87 +131,93 @@ h3 { font: 700 20px/1.3 var(--font-body); margin: 0; }
 .sec-lede { font-size: 19px; max-width: 40em; margin: 18px 0 0; }
 
 /* ============================== HERO ============================== */
-.hero { display: grid; grid-template-columns: minmax(0, 11fr) minmax(0, 12fr); gap: clamp(32px, 4vw, 64px); align-items: start; padding-top: 34px; }
-.hero .mnote { top: 50px; }
+.hero { display: grid; grid-template-columns: minmax(0, 11fr) minmax(0, 12fr); gap: clamp(32px, 4vw, 64px); align-items: start; padding-top: 30px; }
+.hero .mnote { top: 46px; }
 .hero h1 { margin-top: 18px; }
-.lede { font-size: 20px; line-height: 1.55; margin: 26px 0 0; max-width: 33em; }
+.lede { font-size: 20px; line-height: 1.55; margin: 24px 0 0; max-width: 33em; }
 .lede b { font-weight: 700; }
-.ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
-.proof { margin: 22px 0 0; font: 500 14px/1.6 var(--font-data); color: var(--muted); }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.proof { margin: 20px 0 0; font: 500 15px/1.6 var(--font-body); color: var(--muted); }
 .proof a { color: var(--ink); }
 
 /* The clipping: one recorded evidence file, taped onto the folio. */
-.file { position: relative; margin: 26px 0 0; background: var(--card); padding: 26px clamp(20px, 2.4vw, 34px) 20px; box-shadow: var(--shadow); transform: rotate(0.6deg); transform-origin: 50% 0; }
+.file { --rot: 0.6deg; position: relative; margin: 22px 0 0; background: var(--card); padding: 22px clamp(18px, 2.2vw, 30px) 18px; box-shadow: var(--shadow); transform: rotate(var(--rot)); transform-origin: 50% 0; }
 .file::after { content: ""; position: absolute; inset: auto 0 -6px 0; height: 8px; background: radial-gradient(circle at 6px -2px, transparent 5px, var(--card) 5.5px) 0 0 / 12px 8px repeat-x; } /* scissor-cut lower edge */
 .tape { position: absolute; top: -13px; width: 112px; height: 28px; background: var(--tape); box-shadow: 0 1px 1px rgba(28,35,51,.08); }
 .tape.t1 { left: 34px; transform: rotate(-4deg); }
 .tape.t2 { right: 70px; transform: rotate(3.5deg); }
 .f-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
-.f-head .mk { display: block; font: 400 26px/1 var(--font-display); }
-.f-head .sub { display: block; margin-top: 6px; font: 500 13px/1.4 var(--font-data); color: var(--muted); }
-.lab { display: block; margin: 16px 0 0; font: 600 12.5px/1.45 var(--font-data); letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
-.ad { font-size: 19px; line-height: 1.95; margin: 6px 0 0; padding: 4px 0 14px; border-bottom: 1.5px dashed var(--rule); }
+.f-head .mk { display: block; font: 400 28px/1 var(--font-display); }
+.f-head .sub { display: block; margin-top: 6px; font: 500 13px/1.45 var(--font-data); color: var(--muted); }
+.f-head .linkbtn { margin-top: 10px; }
+.lab { display: block; margin: 12px 0 0; }
+.ad { font-size: 18.5px; line-height: 1.8; margin: 4px 0 0; padding: 2px 0 10px; border-bottom: 1.5px dashed var(--rule); }
 .u { background: linear-gradient(var(--muted), var(--muted)) no-repeat 0 100% / 100% 1.5px; padding-bottom: 1px; }
-.u::after { content: attr(data-f); font: 500 11.5px/1 var(--font-data); color: var(--muted); margin-left: 4px; vertical-align: 0.65em; white-space: nowrap; }
-.rule { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 12px; margin: 16px 0 0; }
+.u::after { content: attr(data-f); font: 600 11px/1 var(--font-body); letter-spacing: 0.03em; color: var(--muted); margin-left: 4px; vertical-align: 0.7em; white-space: nowrap; }
+.rule { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 12px; margin: 12px 0 0; }
 .tick { width: 16px; height: 16px; margin-top: 5px; border: 3px solid var(--stop); }
 .tick.check { border-color: var(--check); }
 .rule b { font-weight: 700; }
 .rule .en { color: var(--muted); }
 .src { display: block; margin-top: 3px; font: 500 13px/1.5 var(--font-data); color: var(--muted); }
 .src a { color: var(--ink); }
-.rule .src a, .nevers .src a { white-space: nowrap; }
-.rule blockquote { margin: 8px 0 0; padding: 0 0 0 12px; border-left: 1.5px solid var(--rule); font-size: 17px; }
-.legend { margin: 16px 0 6px; font-size: 15px; color: var(--ink); }
+.rule .src a, .nevers .src a, .flags .src a { white-space: nowrap; }
+.rule blockquote { margin: 6px 0 0; padding: 0 0 0 12px; border-left: 1.5px solid var(--rule); font-size: 16.5px; }
+.legend { font: 600 13px/1.45 var(--font-body); color: var(--ink); white-space: nowrap; }
 .hl { background-image: linear-gradient(100deg, transparent 0 0.3%, var(--after) 0.6% 99.2%, transparent 99.6%); background-repeat: no-repeat; background-size: 100% 100%; padding: 1px 3px; border-radius: 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
-.card { position: relative; margin: 8px 0 0; padding: 12px 14px; background: #fffef8; border: 1px solid #ece7d6; }
-.card .q { display: block; font-size: 18px; line-height: 1.55; }
-.card .gl { display: block; margin-top: 6px; font-size: 15px; color: var(--muted); }
-.card .gl i { font-style: normal; font: 600 11.5px var(--font-data); letter-spacing: .04em; text-transform: uppercase; }
+.card { position: relative; margin: 10px 0 0; padding: 10px 14px; background: var(--paper); border: 1px solid var(--edge); }
+.card .row1 { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 12px; }
+.card .q { display: block; margin-top: 2px; font-size: 17.5px; line-height: 1.5; text-decoration: none; }
+.card a.q:hover .hl { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.card .open { font: 600 13px/1.45 var(--font-body); white-space: nowrap; }
+.card .gl { display: block; margin-top: 4px; font-size: 14.5px; line-height: 1.45; color: var(--muted); }
 .card.dropped { background: transparent; border: 1px dashed var(--before); }
-.card.dropped .q { font-size: 16px; color: var(--muted); }
+.card.dropped .q { font-size: 15.5px; color: var(--muted); }
 .card.dropped .q s { text-decoration: none; background: linear-gradient(var(--before), var(--before)) no-repeat 0 55% / 100% 1.5px; }
-.why { display: block; margin-top: 4px; font: 500 13px/1.45 var(--font-data); color: var(--muted); }
+.why { display: block; margin-top: 3px; font: 500 13.5px/1.45 var(--font-body); color: var(--muted); }
 .mask { display: inline-block; width: 4.2em; height: 1em; vertical-align: -0.12em; background: var(--ink); border-radius: 2px; }
-.mask-lab { font: 600 11.5px/1 var(--font-data); color: var(--ink); border: 1px solid var(--muted); padding: 1px 4px; margin-left: 4px; white-space: nowrap; }
-.f-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin-top: 16px; font: 500 13px/1.5 var(--font-data); color: var(--muted); }
-.f-foot a { color: var(--ink); }
-.f-foot .replay { margin-left: auto; }
-.linkbtn { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 12px; background: transparent; border: 1.5px solid var(--muted); color: var(--ink); font: 600 13px/1 var(--font-data); cursor: pointer; transition: border-color 120ms ease-out, background-color 120ms ease-out; }
+.mask-lab { font: 700 11.5px/1 var(--font-body); color: var(--ink); border: 1px solid var(--muted); padding: 1px 4px; margin-left: 4px; white-space: nowrap; }
+.f-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin-top: 12px; font: 500 13.5px/1.5 var(--font-body); color: var(--muted); }
+.f-foot a { color: var(--ink); font-weight: 600; }
+.linkbtn { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 12px; background: transparent; border: 1.5px solid var(--muted); color: var(--ink); font: 600 13.5px/1 var(--font-body); cursor: pointer; transition: border-color 120ms ease-out, background-color 120ms ease-out; }
 .linkbtn:hover { border-color: var(--ink); background: rgba(199, 213, 232, 0.35); }
 .linkbtn .ic { width: 15px; height: 15px; }
 
-/* The rubber stamp (the app's own stamp): lands last, on the clipping's corner, never on the ad's words. */
-.stamp { position: relative; flex: none; margin: -2px 2px 0 0; z-index: 2; display: inline-block; transform: rotate(-6deg); color: var(--stop); border: 5px solid currentColor; border-radius: 10px; padding: 6px 16px 5px; text-align: center; mix-blend-mode: multiply; pointer-events: none;
+/* The rubber stamp (the app's own stamp): lands last, in the clipping's corner, never on the offer's words. */
+.stamp { position: relative; flex: none; z-index: 2; display: inline-block; transform: rotate(-6deg); color: var(--stop); border: 5px solid currentColor; border-radius: 10px; padding: 6px 16px 5px; text-align: center; mix-blend-mode: multiply; pointer-events: none;
   -webkit-mask-image: radial-gradient(circle at 30% 40%, #000 60%, rgba(0,0,0,.82) 61%), repeating-linear-gradient(17deg, #000 0 7px, rgba(0,0,0,.86) 7px 9px); -webkit-mask-composite: source-in; mask-composite: intersect; }
 .stamp .w { display: block; font: 800 40px/1 var(--font-body); letter-spacing: 0.08em; }
-.stamp .s { display: block; margin: 5px auto 0; font: 700 11.5px/1.25 var(--font-data); letter-spacing: 0.05em; border-top: 2px solid currentColor; padding-top: 4px; }
+.stamp .s { display: block; margin: 5px auto 0; font: 700 12px/1.25 var(--font-body); letter-spacing: 0.05em; border-top: 2px solid currentColor; padding-top: 4px; }
 
-/* Motion: everything above is the settled state (print, no-JS, reduced motion, screenshots).
-   With motion, the file is armed (pencil state) and plays in the run's real order. */
-.motion .file.armed .u { background-size: 0 1.5px; }
-.motion .file.armed .u::after { opacity: 0; }
-.motion .file.armed .rule, .motion .file.armed .legend, .motion .file.armed .card, .motion .file.armed .f-foot { opacity: 0; transform: translateY(8px); }
-.motion .file.armed .card.verified .hl { background-size: 0 100%; color: var(--muted); }
-.motion .file.armed .card.dropped .q s { background-size: 0 1.5px; }
-.motion .file.armed .stamp { opacity: 0; transform: rotate(-2deg) scale(1.22); }
-.motion .hero.armed .strike > span { background-size: 0 0.075em; }
-.motion .file.play .u { transition: background-size 450ms cubic-bezier(.3,.7,.2,1); }
-.motion .file.play .u::after { transition: opacity 300ms ease-out; }
-.motion .file.play .u:nth-of-type(1), .motion .file.play .u:nth-of-type(1)::after { transition-delay: 250ms; }
-.motion .file.play .u:nth-of-type(2), .motion .file.play .u:nth-of-type(2)::after { transition-delay: 600ms; }
-.motion .file.play .u:nth-of-type(3), .motion .file.play .u:nth-of-type(3)::after { transition-delay: 950ms; }
-.motion .file.play .rule { transition: opacity 400ms ease-out 1550ms, transform 400ms cubic-bezier(.2,.7,.2,1) 1550ms; }
-.motion .file.play .legend, .motion .file.play .card.verified { transition: opacity 380ms ease-out 2350ms, transform 380ms cubic-bezier(.2,.7,.2,1) 2350ms; }
-.motion .file.play .card.verified .hl { transition: background-size 480ms cubic-bezier(.3,.6,.2,1) 3050ms, color 200ms linear 3050ms; }
-.motion .file.play .card.dropped { transition: opacity 380ms ease-out 3800ms, transform 380ms cubic-bezier(.2,.7,.2,1) 3800ms; }
-.motion .file.play .card.dropped .q s { transition: background-size 320ms ease-out 4300ms; }
-.motion .file.play .f-foot { transition: opacity 400ms ease-out 4700ms, transform 400ms ease-out 4700ms; }
-.motion .file.play .stamp { transition: opacity 120ms linear 5150ms, transform 230ms cubic-bezier(.2,.9,.3,1.25) 5150ms; }
-.motion .file.thud { animation: thud 260ms ease-out; }
-.motion .hero.play .strike > span { transition: background-size 520ms cubic-bezier(.3,.7,.2,1) 5750ms; }
-.motion .hero.play[data-solo] .strike > span { transition-delay: 900ms; }
-@keyframes thud { 0% { transform: rotate(0.6deg); } 35% { transform: rotate(0.6deg) translateY(3px) scale(0.997); } 100% { transform: rotate(0.6deg); } }
+/* Motion. Everything above is the settled state (print, no-JS, reduced motion, screenshots). With motion, each sequence
+   is a set of keyframes that waits, paused on its first frame, until its section is seen; then it plays once and settles. */
+@keyframes k-under { from { background-size: 0 1.5px; } }
+@keyframes k-fade { from { opacity: 0; } }
+@keyframes k-rise { from { opacity: 0.22; transform: translateY(8px); } }
+@keyframes k-sweep { from { background-size: 0 100%; color: var(--muted); } }
+@keyframes k-strike { from { background-size: 0 1.5px; } }
+@keyframes k-stamp { 0% { opacity: 0; transform: rotate(-2deg) scale(1.24); } 55% { opacity: 1; } 100% { opacity: 1; transform: rotate(-6deg) scale(1); } }
+@keyframes k-thud { 0%, 100% { transform: rotate(var(--rot)); } 35% { transform: rotate(var(--rot)) translateY(3px) scale(0.997); } }
+@keyframes k-hstrike { from { background-size: 0 0.075em; } }
+@keyframes k-slip { 0% { opacity: 0; transform: rotate(-2deg) scale(1.35); } 100% { opacity: 1; transform: rotate(-6deg) scale(1); } }
+@keyframes k-wipe { from { clip-path: inset(0 100% 0 0); } }
+@keyframes k-line { from { opacity: 0; transform: translateX(-6px); } }
+.motion #file:not(.settled) .u { animation: k-under 450ms var(--d) var(--ease) both; }
+.motion #file:not(.settled) .u::after { animation: k-fade 300ms var(--d) ease-out both; }
+.motion #file:not(.settled) .rule { animation: k-rise 400ms 1000ms var(--ease) both; }
+.motion #file:not(.settled) .card.verified { animation: k-rise 380ms 1500ms var(--ease) both; }
+.motion #file:not(.settled) .card.verified .hl { animation: k-sweep 480ms 2000ms cubic-bezier(.3,.6,.2,1) both; }
+.motion #file:not(.settled) .card.dropped { animation: k-rise 380ms 2450ms var(--ease) both; }
+.motion #file:not(.settled) .card.dropped .q s { animation: k-strike 320ms 2850ms ease-out both; }
+.motion #file:not(.settled) .f-foot { animation: k-rise 400ms 3050ms var(--ease) both; }
+.motion #file:not(.settled) .stamp { animation: k-stamp 260ms 3300ms cubic-bezier(.2,.9,.3,1.25) both; }
+.motion #file:not(.settled) { animation: k-thud 260ms 3480ms ease-out both; }
+.motion #top:not(.settled) .strike > span { animation: k-hstrike 520ms var(--hd, 3850ms) var(--ease) both; }
+.motion #slips:not(.settled) .st { animation: k-slip 200ms calc(var(--i) * 70ms + 150ms) cubic-bezier(.2,.9,.3,1.25) both; }
+.motion #axis:not(.settled) .seg { animation: k-wipe 520ms calc(var(--i) * 420ms + 100ms) var(--ease) both; }
+.motion #receipt:not(.settled) li { animation: k-line 260ms calc(var(--i) * 300ms + 300ms) ease-out both; }
+.motion #file:not(.play), .motion #file:not(.play) *, .motion #file:not(.play) .u::after,
+.motion #top:not(.play) .strike > span, .motion #slips:not(.play) .st, .motion #axis:not(.play) .seg, .motion #receipt:not(.play) li { animation-play-state: paused !important; } /* the shorthand above resets play-state */
 
 /* ============================== THE REGISTER ============================== */
 .reg-top { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 48px; align-items: end; }
@@ -203,32 +227,59 @@ h3 { font: 700 20px/1.3 var(--font-body); margin: 0; }
 .verdicts .big small { font-size: 0.42em; color: var(--muted); }
 .verdicts p { margin: 6px 0 0; font-size: 16px; }
 .slips-wrap { margin-top: 40px; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 2fr); gap: 28px; }
-.slips-wrap h3 { font: 600 13px/1.4 var(--font-data); letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+.slips-wrap h3 { margin: 0 0 10px; }
 .slips { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
 .slips.lic { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.slip { position: relative; background: var(--card); min-height: 74px; padding: 9px 10px 10px; box-shadow: 0 1px 0 rgba(28,35,51,.06), 0 8px 16px -12px rgba(28,35,51,.4); }
+.slip { position: relative; background: var(--card); min-height: 78px; padding: 10px 10px 10px; box-shadow: 0 1px 0 rgba(28,35,51,.06), 0 8px 16px -12px rgba(28,35,51,.4); }
 .slip:nth-child(3n+1) { transform: rotate(-0.5deg); } .slip:nth-child(4n+2) { transform: rotate(0.6deg); }
-.slip .id { display: block; font: 500 12.5px/1.2 var(--font-data); color: var(--muted); }
-.slip .why { display: block; margin-top: 34px; font: 400 13px/1.3 var(--font-body); color: var(--ink); }
-.slip .st { position: absolute; top: 12px; left: 10px; display: inline-block; font: 800 13px/1 var(--font-body); letter-spacing: 0.07em; padding: 4px 6px 3px; border: 2.5px solid currentColor; border-radius: 4px; transform: rotate(-6deg); mix-blend-mode: multiply; }
-.slip.s .st { color: var(--stop); } .slip.v .st { color: var(--check); } .slip.n .st { color: var(--muted); border-style: dashed; }
-.motion .slips-wrap.armed .st { opacity: 0; transform: rotate(-2deg) scale(1.35); }
-.motion .slips-wrap.play .st { transition: opacity 90ms linear calc(var(--i) * 70ms + 200ms), transform 200ms cubic-bezier(.2,.9,.3,1.25) calc(var(--i) * 70ms + 200ms); }
+.slip .st { display: inline-block; font: 800 12.5px/1.05 var(--font-body); letter-spacing: 0.06em; padding: 4px 6px 3px; border: 2.5px solid currentColor; border-radius: 4px; transform: rotate(-6deg); mix-blend-mode: multiply; }
+.slip .why { margin-top: 8px; font: 400 13px/1.3 var(--font-body); color: var(--ink); }
+.slip.s .st { color: var(--stop); } .slip.v .st { color: var(--check); border-style: double; border-width: 4px; } .slip.n .st { color: var(--muted); border-style: dashed; }
 .receipts { margin: 44px 0 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); }
 .receipts div { padding: 18px 20px 18px 0; }
 .receipts div + div { padding-left: 20px; border-left: 1px solid var(--rule); }
 .receipts dt { font: 400 clamp(40px, 4.2vw, 58px)/1 var(--font-display); white-space: nowrap; }
 .receipts dd { margin: 8px 0 0; font-size: 15.5px; line-height: 1.45; }
-.receipts dd .data { display: block; margin-top: 6px; font-size: 12.5px; color: var(--muted); }
-.fine { margin: 18px 0 0; max-width: 62em; font-size: 16px; color: var(--ink); }
-.fine .data { color: var(--muted); }
+.receipts dd .sm { display: block; margin-top: 6px; font-size: 13.5px; color: var(--muted); }
+.fine { margin: 18px 0 0; max-width: 68ch; font-size: 16px; color: var(--ink); }
+
+/* ============================== THE LAB ============================== */
+.labs { margin-top: 40px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+.panel { position: relative; background: var(--card); padding: 22px 24px 24px; box-shadow: var(--shadow); }
+.panel:first-child { transform: rotate(-0.3deg); } .panel:last-child { transform: rotate(0.35deg); }
+.panel p.hint { margin: 6px 0 0; font-size: 16px; color: var(--ink); }
+.field-lab { display: block; margin: 16px 0 6px; }
+.pagebox { height: 230px; overflow: auto; padding: 12px 14px; background: var(--bg); border: 1.5px solid var(--rule); font-size: 15.5px; line-height: 1.6; white-space: pre-wrap; }
+.pagebox mark { background: var(--after); color: var(--ink); padding: 1px 2px; }
+textarea { width: 100%; min-height: 6.5em; field-sizing: content; max-height: 18em; padding: 12px 14px; border: 1.5px solid var(--muted); background: var(--bg); color: var(--ink); font: 400 17px/1.5 var(--font-body); resize: vertical; caret-color: var(--stop); }
+textarea:hover { border-color: var(--ink); }
+textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.presets { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.preset { min-height: 44px; padding: 0 14px; border: 1.5px solid var(--muted); border-radius: 22px; background: var(--card); color: var(--ink); font: 600 14.5px/1 var(--font-body); cursor: pointer; transition: border-color 120ms ease-out, background-color 120ms ease-out, transform 120ms ease-out; }
+.preset:hover { border-color: var(--ink); transform: translateY(-1px); }
+.preset[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.out { margin-top: 16px; min-height: 120px; }
+.gate-card { padding: 12px 14px; border: 1px solid var(--edge); background: var(--paper); }
+.gate-card.dropped { background: transparent; border-style: dashed; border-color: var(--before); }
+.gate-card .q { display: block; font-size: 17px; }
+.gate-card.dropped .q { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--before); text-decoration-thickness: 1.5px; }
+.gate-card .fold { display: block; margin-top: 6px; font-size: 15px; color: var(--muted); }
+.gate-card .cut { display: block; margin-top: 8px; font-size: 15px; }
+.flags { list-style: none; margin: 0; padding: 0; }
+.flags li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 16px; }
+.flags .sp { color: var(--muted); }
+.vline { margin: 12px 0 0; padding: 10px 12px; border: 2px solid currentColor; font-size: 16px; }
+.vline b { letter-spacing: 0.06em; }
+.vline span { color: var(--ink); }
+.vline.v-stop { color: var(--stop); } .vline.v-check { color: var(--check); } .vline.v-none { color: var(--muted); border-style: dashed; }
 
 /* ============================== ONE RUN ============================== */
 .run-grid { margin-top: 44px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 44px; align-items: start; }
-.shots { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
-.shot { margin: 0; background: var(--card); padding: 8px 8px 10px; box-shadow: var(--shadow); }
-.shot:nth-child(1) { transform: rotate(-1deg); } .shot:nth-child(2) { transform: rotate(0.8deg); margin-top: 72px; }
-.shot figcaption { margin-top: 8px; font: 500 12.5px/1.45 var(--font-data); color: var(--muted); }
+.shots { display: grid; gap: 22px; }
+.shot { position: relative; margin: 0; background: var(--card); padding: 10px 10px 10px; box-shadow: var(--shadow); }
+.shot:nth-child(1) { transform: rotate(-0.8deg); } .shot:nth-child(2) { transform: rotate(0.6deg); margin-left: 34px; }
+.shot .tape { top: -12px; left: 40%; transform: rotate(-3deg); }
+.shot figcaption { margin-top: 8px; font: 500 13.5px/1.45 var(--font-body); color: var(--muted); }
 .axis { position: relative; margin: 6px 0 0; }
 .axis .bar { display: flex; height: 34px; border: 2px solid var(--ink); background: var(--card); }
 .axis .seg { position: relative; height: 100%; border-right: 1.5px solid var(--ink); display: flex; align-items: center; justify-content: center; font: 600 12.5px/1 var(--font-data); white-space: nowrap; overflow: hidden; }
@@ -239,96 +290,56 @@ h3 { font: 700 20px/1.3 var(--font-body); margin: 0; }
 .axis .ticks span { position: absolute; top: 6px; transform: translateX(-50%); }
 .axis .ticks span:first-child { transform: none; } .axis .ticks span:last-child { transform: translateX(-100%); color: var(--stop); font-weight: 700; }
 .axis-note { font-size: 14px; color: var(--muted); margin: 6px 0 0; }
-.motion .axis.armed .seg { clip-path: inset(0 100% 0 0); }
-.motion .axis.play .seg { transition: clip-path 600ms cubic-bezier(.3,.7,.2,1); transition-delay: calc(var(--i) * 520ms); clip-path: inset(0 0 0 0); }
 .receipt { margin-top: 18px; background: var(--card); box-shadow: var(--shadow); padding: 18px 20px 16px; }
-.receipt .cmd { display: flex; gap: 10px; align-items: flex-start; justify-content: space-between; padding-bottom: 12px; border-bottom: 1.5px dashed var(--rule); }
-.receipt .cmd code { font-size: 13px; line-height: 1.5; white-space: nowrap; overflow-x: auto; min-width: 0; padding-bottom: 4px; scrollbar-width: thin; }
-.receipt .cmd { align-items: center; }
+.receipt .cmd { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: start; padding-bottom: 12px; border-bottom: 1.5px dashed var(--rule); }
+.receipt .cmd code { font-size: 13px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
 .receipt ol { list-style: none; margin: 12px 0 0; padding: 0; font: 500 13.5px/1.55 var(--font-data); }
-.receipt li { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 12px; padding: 5px 0; border-bottom: 1px solid #efece3; }
+.receipt li { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 12px; padding: 5px 0; border-bottom: 1px solid var(--line); }
 .receipt li:last-child { border-bottom: 0; }
 .receipt li .k { color: var(--muted); }
 .receipt li .stopword { color: var(--stop); font-weight: 700; }
 .receipt li .num { font-variant-numeric: tabular-nums; }
-.motion .receipt.armed li { opacity: 0; transform: translateX(-6px); }
-.motion .receipt.play li { transition: opacity 260ms ease-out, transform 260ms ease-out; transition-delay: calc(var(--i) * 330ms + 300ms); }
-.rbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 14px; font: 500 13px/1.45 var(--font-data); color: var(--muted); }
-.rbar a { color: var(--ink); }
+.rbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 14px; font: 500 14px/1.45 var(--font-body); color: var(--muted); }
 
 /* ============================== THE RECORD ============================== */
 .cuts { margin-top: 36px; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 6fr); gap: 22px; align-items: start; }
 .cut { position: relative; margin: 0; background: var(--card); padding: 18px 20px 16px; box-shadow: var(--shadow); }
 .cut:nth-child(2) { transform: rotate(0.7deg); margin-top: 38px; } .cut:nth-child(3) { transform: rotate(-0.6deg); margin-top: 14px; }
 .cut .num { display: block; font: 400 clamp(52px, 5.4vw, 84px)/0.95 var(--font-display); }
-.cut .num small { font-size: 0.45em; }
+.cut .num small { font-size: 0.45em; white-space: nowrap; }
 .cut .what { display: block; margin-top: 8px; font: 700 16.5px/1.4 var(--font-body); }
-.cut blockquote { margin: 12px 0 0; font-size: 15.5px; line-height: 1.5; }
-.cut .tr { margin: 6px 0 0; font-size: 14.5px; color: var(--muted); }
 .cut .src { margin-top: 10px; }
-.framing { margin-top: 26px; max-width: 58em; font-size: 16.5px; }
-.framing .k { font: 600 12.5px var(--font-data); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin-right: 6px; }
+.framing { margin: 26px 0 0; max-width: 68ch; font-size: 16.5px; }
+.framing .k { margin-right: 8px; }
 
 /* ============================== HOW IT DECIDES ============================== */
-.bento { margin-top: 44px; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 18px; }
-.bc { background: var(--card); padding: 22px 24px 20px; box-shadow: var(--shadow); display: flex; flex-direction: column; }
+.bento { margin-top: 44px; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 22px; align-items: start; }
+.bc { position: relative; background: var(--card); padding: 24px 24px 20px; box-shadow: var(--shadow); }
+.bc .tape { top: -12px; left: 28px; width: 92px; height: 24px; transform: rotate(-3deg); }
+.bc:nth-child(2) .tape { left: auto; right: 40px; transform: rotate(4deg); }
+.bc:nth-child(1) { transform: rotate(-0.5deg); } .bc:nth-child(3) { transform: rotate(0.6deg); } .bc:nth-child(4) { transform: rotate(-0.3deg); } .bc:nth-child(5) { transform: rotate(0.5deg); }
 .bc .ico { width: 34px; height: 34px; color: var(--ink); fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.bc h3 { margin-top: 12px; font-size: 21px; }
+.bc h3 { margin-top: 10px; font-size: 21px; }
 .bc p { margin: 8px 0 0; font-size: 16.5px; line-height: 1.55; }
-.bc .chips { margin-top: auto; padding-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; }
+.bc .chips { padding-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; }
 .chip { display: inline-block; font: 500 12.5px/1.3 var(--font-data); color: var(--muted); border: 1px solid var(--rule); background: var(--bg); padding: 4px 7px; overflow-wrap: anywhere; }
 .b1 { grid-column: span 4; } .b2 { grid-column: span 8; grid-row: span 2; } .b3 { grid-column: span 4; }
 .b4 { grid-column: span 7; } .b5 { grid-column: span 5; }
 .nevers { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 18px; }
 .nevers li { padding: 10px 0 0; border-top: 1.5px solid var(--rule); font-size: 15.5px; line-height: 1.45; }
 .nevers b { display: block; font-size: 16px; }
-.nevers q { display: block; margin-top: 4px; quotes: "“" "”"; }
 .nevers .src { margin-top: 4px; }
 .frag { margin: 14px 0 0; }
 .frag img { border: 1px solid var(--rule); }
-.frag figcaption { margin-top: 6px; font: 500 12.5px/1.45 var(--font-data); color: var(--muted); }
+.frag figcaption { margin-top: 6px; font: 500 13.5px/1.45 var(--font-body); color: var(--muted); }
 .trio { display: flex; flex-wrap: wrap; gap: 14px 18px; margin: 18px 0 4px; }
 .trio .st { display: inline-block; font: 800 15px/1 var(--font-body); letter-spacing: 0.07em; padding: 6px 9px 5px; border: 3px solid currentColor; border-radius: 6px; transform: rotate(-5deg); mix-blend-mode: multiply; }
-.trio .st.s { color: var(--stop); } .trio .st.v { color: var(--check); transform: rotate(3deg); } .trio .st.n { color: var(--muted); border-style: dashed; transform: rotate(-2deg); }
-.gate-rules { margin: 12px 0 0; padding: 0; list-style: none; font-size: 16px; }
-.gate-rules li { padding: 6px 0; border-bottom: 1px solid #efece3; }
-.gate-rules .ok { font-weight: 700; }
-.gate-rules .no { color: var(--muted); }
-.sponsors { margin-top: 26px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 2px solid var(--ink); }
+.trio .st.s { color: var(--stop); } .trio .st.v { color: var(--check); transform: rotate(3deg); border-style: double; border-width: 5px; } .trio .st.n { color: var(--muted); border-style: dashed; transform: rotate(-2deg); }
+.sponsors { margin-top: 30px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 2px solid var(--ink); }
 .sponsors div { padding: 12px 14px 4px 0; font-size: 15px; line-height: 1.45; }
 .sponsors div + div { padding-left: 14px; border-left: 1px solid var(--rule); }
 .sponsors b { display: block; font-size: 15.5px; }
-.nevers .src a { text-decoration-style: dotted; }
 .sponsors code { display: block; margin-top: 4px; color: var(--muted); font-size: 12.5px; overflow-wrap: anywhere; }
-
-/* ============================== THE LAB ============================== */
-.labs { margin-top: 40px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
-.panel { background: var(--card); padding: 22px 24px 24px; box-shadow: var(--shadow); }
-.panel p.hint { margin: 6px 0 0; font-size: 16px; color: var(--ink); }
-.field-lab { display: block; margin: 16px 0 6px; font: 600 12.5px/1.4 var(--font-data); letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
-.pagebox { height: 230px; overflow: auto; padding: 12px 14px; background: var(--bg); border: 1.5px solid var(--rule); font-size: 15.5px; line-height: 1.6; white-space: pre-wrap; }
-.pagebox mark { background: var(--after); color: var(--ink); padding: 1px 2px; }
-textarea { width: 100%; min-height: 104px; padding: 12px 14px; border: 1.5px solid var(--muted); background: var(--bg); color: var(--ink); font: 400 17px/1.5 var(--font-body); resize: vertical; caret-color: var(--stop); }
-textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
-.presets { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-.preset { min-height: 44px; padding: 0 14px; border: 1.5px solid var(--muted); border-radius: 22px; background: var(--card); color: var(--ink); font: 600 14.5px/1 var(--font-body); cursor: pointer; transition: border-color 120ms ease-out, background-color 120ms ease-out, transform 120ms ease-out; }
-.preset:hover { border-color: var(--ink); transform: translateY(-1px); }
-.preset[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
-.out { margin-top: 16px; min-height: 120px; }
-.gate-card { padding: 12px 14px; border: 1px solid #ece7d6; background: #fffef8; }
-.gate-card.dropped { background: transparent; border-style: dashed; border-color: var(--before); }
-.gate-card .q { display: block; font-size: 17px; }
-.gate-card.dropped .q { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--before); text-decoration-thickness: 1.5px; }
-.gate-card .fold { display: block; margin-top: 6px; font-size: 15px; color: var(--muted); }
-.gate-card .cut { display: block; margin-top: 8px; font-size: 15px; }
-.flags { list-style: none; margin: 0; padding: 0; }
-.flags li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 10px; padding: 8px 0; border-bottom: 1px solid #efece3; font-size: 16px; }
-.flags .sp { color: var(--muted); }
-.vline { margin: 12px 0 0; padding: 10px 12px; border: 2px solid currentColor; font-size: 16px; }
-.vline b { letter-spacing: 0.06em; }
-.vline span { color: var(--ink); }
-.vline.v-stop { color: var(--stop); } .vline.v-check { color: var(--check); } .vline.v-none { color: var(--muted); border-style: dashed; }
-.lab-note { margin-top: 18px; max-width: 62em; font-size: 16px; }
 
 /* ============================== RALAT ============================== */
 .ralat { margin-top: 40px; position: relative; background: var(--card); border: 2px solid var(--ink); padding: 26px 30px 24px; box-shadow: var(--shadow); max-width: 1040px; }
@@ -337,11 +348,11 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 .ralat li { counter-increment: r; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; padding: 16px 0; border-bottom: 1px solid var(--rule); }
 .ralat li:last-child { border-bottom: 0; }
 .ralat li::before { content: counter(r); font: 400 34px/1 var(--font-display); }
-.ralat blockquote { margin: 0; font-size: 18px; line-height: 1.55; }
-.ralat cite { display: block; margin-top: 6px; font: 500 13px/1.4 var(--font-data); font-style: normal; color: var(--muted); }
+.ralat blockquote { margin: 0; max-width: 68ch; font-size: 18px; line-height: 1.55; }
+.ralat cite { display: block; margin-top: 6px; font: 600 13.5px/1.4 var(--font-body); font-style: normal; color: var(--muted); }
 .ralat .did { margin: 8px 0 0; font-size: 16px; }
 .ralat .did b { font-weight: 700; }
-.withdrawn { margin: 20px 0 0; max-width: 62em; font-size: 16px; }
+.withdrawn { margin: 20px 0 0; max-width: 68ch; font-size: 16px; }
 
 /* ============================== FAQ ============================== */
 .faq { margin-top: 32px; max-width: 980px; border-top: 2px solid var(--ink); }
@@ -350,7 +361,7 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 .faq summary::-webkit-details-marker { display: none; }
 .faq summary::after { content: ""; justify-self: end; width: 14px; height: 14px; border-right: 2.5px solid var(--ink); border-bottom: 2.5px solid var(--ink); transform: rotate(45deg) translate(-3px, -3px); transition: transform 180ms ease-out; }
 .faq details[open] summary::after { transform: rotate(225deg) translate(-3px, -3px); }
-.faq summary:hover { color: #2a3550; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
+.faq summary:hover { color: var(--ink-2); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
 .faq .a { padding: 0 48px 20px 0; font-size: 17px; max-width: 46em; }
 .faq .a p { margin: 0 0 10px; }
 
@@ -363,16 +374,25 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 .foot .page { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px 40px; }
 .foot p { margin: 0; font-size: 15px; }
 .foot .links { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 15px; }
-.foot .links a { display: inline-flex; align-items: center; min-height: 32px; }
-.foot .meta { font: 500 13px/1.6 var(--font-data); color: var(--muted); }
+.foot .links a { display: inline-flex; align-items: center; min-height: 36px; }
+.foot .meta { font: 500 13.5px/1.6 var(--font-body); color: var(--muted); }
 
 /* ============================== RESPONSIVE ============================== */
+/* Short laptop screens (1280×720, 1366×768): the headline and lede step down so the actions stay in the first view. */
+@media (min-width: 1024px) and (max-height: 800px) {
+  .hero { padding-top: 14px; }
+  .hero h1 { margin-top: 8px; font-size: clamp(44px, 4.4vw, 66px); }
+  .lede { font-size: 18px; margin-top: 18px; }
+  .ctas { margin-top: 20px; }
+}
 @media (max-width: 1180px) {
   :root { --mx: 76px; --pad: 32px; }
   .mast nav { display: none; }
-  .mnote { font-size: 12.5px; }
+  .mast .btn { margin-left: auto; }
+  .mnote { display: none; }
   .b1, .b3 { grid-column: span 6; } .b2 { grid-column: span 12; grid-row: auto; } .b4, .b5 { grid-column: span 6; }
   .sponsors { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .sponsors div:nth-child(4) { padding-left: 0; border-left: 0; }
 }
 @media (max-width: 1023px) {
   .hero { grid-template-columns: minmax(0, 1fr); }
@@ -384,40 +404,45 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   .cut:nth-child(n) { margin-top: 0; }
   .shots { max-width: 680px; }
 }
+@media (max-width: 899px) {
+  .receipts { grid-template-columns: 1fr 1fr; }
+  .receipts div:nth-child(3) { padding-left: 0; border-left: 0; }
+  .receipts div:nth-child(n+3) { border-top: 1px solid var(--rule); }
+}
 @media (max-width: 759px) {
   :root { --mx: 14px; --pad: 18px; }
   body { font-size: 17px; }
   .page { padding-left: 32px; }
-  .mnote { position: static; width: auto; text-align: left; margin: 0 0 6px; }
+  .mnote { display: block; position: static; width: auto; text-align: left; margin: 0 0 6px; }
   .mnote span { display: inline; }
   .mnote span + span::before { content: "· "; }
   .mast .page { gap: 14px; min-height: 56px; }
-  .word { font-size: 30px; }
-  .mast .btn { margin-left: auto; min-height: 44px; padding: 0 14px; font-size: 15px; }
+  .word b { font-size: 30px; }
+  .word i { display: none; }
+  .mast .btn { min-height: 44px; padding: 0 14px; font-size: 15px; }
   .hero { padding-top: 22px; }
   .hero h1 { font-size: clamp(42px, 12vw, 54px); }
   .lede { font-size: 18px; }
   .ctas .btn { flex: 1 1 auto; justify-content: center; }
   .ctas .btn-ink { flex-basis: 100%; }
-  .file { transform: none; margin-left: -10px; margin-right: -8px; padding: 22px 16px 16px; }
-  .f-head { padding-right: 0; }
+  .file { --rot: 0deg; margin-left: -10px; margin-right: -8px; padding: 20px 16px 16px; }
   .f-head { flex-direction: column-reverse; align-items: stretch; gap: 10px; }
-  .stamp { align-self: flex-end; margin: 0 4px 0 0; }
+  .stamp { align-self: flex-end; margin-right: 4px; }
   .stamp .w { font-size: 30px; }
-  .stamp .s { font-size: 10.5px; }
-  .ad { font-size: 18px; } .ad::before { display: none; }
+  .stamp .s { font-size: 12px; }
+  .ad { font-size: 17.5px; }
   .tape.t2 { right: 34px; }
-  .f-foot .replay { margin-left: 0; }
   .sec { padding-top: 88px; }
   h2 { font-size: clamp(34px, 10vw, 46px); }
   .sec-lede { font-size: 17.5px; }
   .verdicts .big { font-size: 64px; }
-  .slips, .slips.lic { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .receipts { grid-template-columns: 1fr 1fr; }
-  .receipts div:nth-child(3) { padding-left: 0; border-left: 0; }
-  .receipts div:nth-child(n+3) { border-top: 1px solid var(--rule); }
+  .slips, .slips.lic { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+  .slip { min-height: 0; padding: 8px 6px; }
+  .slip .st { font-size: 10.5px; letter-spacing: 0.02em; padding: 3px 4px 2px; white-space: normal; text-align: center; }
+  .slip .why { display: none; }
+  .axis .seg.narrow { font-size: 0; }
   .shots { grid-template-columns: 1fr; }
-  .shot:nth-child(2) { margin-top: 0; }
+  .shot:nth-child(2) { margin-left: 0; }
   .receipt li { grid-template-columns: minmax(0, 1fr); gap: 0; }
   .bento { grid-template-columns: minmax(0, 1fr); }
   .bento > * { grid-column: auto !important; }
@@ -431,7 +456,7 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   .close { padding-top: 96px; }
 }
 @media (max-width: 420px) {
-  .slip .st { font-size: 11.5px; letter-spacing: 0.04em; white-space: nowrap; }
+  .flags .src a, .nevers .src a { white-space: normal; }
   .receipts { grid-template-columns: minmax(0, 1fr); }
   .receipts div + div, .receipts div:nth-child(3) { padding-left: 0; border-left: 0; border-top: 1px solid var(--rule); }
 }
@@ -439,11 +464,18 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   a, .btn, .preset, .linkbtn, .faq summary::after { transition: none; }
   .btn:hover, .preset:hover { transform: none; }
 }
+/* Forced colours: the highlight and the strikes are backgrounds, so restate them in system colours. */
+@media (forced-colors: active) {
+  .hl, .pagebox mark { background: Mark; color: MarkText; forced-color-adjust: none; }
+  .strike > span, .card.dropped .q s { background: none; text-decoration: line-through; }
+  .u { background: none; text-decoration: underline; }
+  .stamp, .slip .st, .trio .st { forced-color-adjust: none; }
+}
 @media print {
   body::after, .skip, .mast nav, .linkbtn, .presets, textarea, .ctas { display: none !important; }
   .page::before { display: none; }
   .file, .cut, .shot, .slip, .panel, .bc, .receipt { box-shadow: none; border: 1px solid var(--rule); }
-  .faq details .a { display: block; }
+  .receipts { grid-template-columns: 1fr 1fr; }
   * { transition: none !important; animation: none !important; }
 }
 </style>
@@ -459,9 +491,9 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 
 <header class="mast">
   <div class="page">
-    <a class="word" href="/about">Awas</a>
+    <a class="word" href="/about"><b>Awas</b><i>— watch out</i></a>
     <nav aria-label="Sections">
-      <a href="#register">The register</a><a href="#run">One run</a><a href="#how">How it decides</a><a href="#lab">Try the gate</a><a href="#ralat">Ralat</a><a href="#faq">FAQ</a>
+      <a href="#register">The register</a><a href="#lab">Try the gate</a><a href="#run">One run</a><a href="#how">How it decides</a><a href="#ralat">Ralat</a><a href="#faq">FAQ</a>
     </nav>
     <a class="btn btn-ink btn-sm" href="/">Open the app <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
   </div>
@@ -473,42 +505,43 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   <p class="mnote"><span>17 Okt 2026</span> <span lang="id">rekaman</span></p>
   <div class="hero-copy">
     <h1 id="h1">Awas answers the family chat with pages, not <span class="strike"><span>scores</span></span>.</h1>
-    <p class="lede">Offers like this circulate in family chats — customer service in Cambodia, 2,000 USD — and someone has to answer tonight. Awas checks the offer against <b>rules quoted from official pages</b> and shows a quote only when code finds it <b>word for word</b> on its page. Out of sample: <b>9 of 25</b> reported scam offers stopped, <b>0 of 10</b> licensed vacancies.</p>
+    <p class="lede">An overseas job offer arrives — customer service in Cambodia, 2,000 USD — and someone in the family has to answer tonight. Awas answers with <b>the rule, quoted from an official page</b>, quotes code found <b>word for word</b>, and a stamp. Out of sample, <b>9 of 25</b> reported scam offers got STOP and 15 more VERIFY FIRST; <b>0 of 10</b> licensed vacancies got STOP.</p>
     <div class="ctas">
-      <a class="btn btn-ink" href="/">Open the app <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a class="btn btn-ink" href="/">Paste an offer <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       <a class="btn" href="/pitch">Pitch deck</a>
       <a class="btn" href="https://github.com/edycutjong/awas" rel="noopener">Source on GitHub</a>
     </div>
-    <p class="proof">no login · <a href="/judge">5 recorded runs on /judge</a> · quotes link to their pages</p>
+    <p class="proof">No login · <a href="/judge">5 recorded runs on /judge</a> · every quote opens on its page</p>
   </div>
 
   <figure class="file" id="file" aria-labelledby="file-cap">
     <i class="tape t1" aria-hidden="true"></i><i class="tape t2" aria-hidden="true"></i>
-    <div class="f-head"><div><span class="mk">Awas</span><span class="sub">berkas bukti · evidence file<br>rekaman · recorded 2026-10-17</span></div>
-      <div class="stamp" id="stamp" role="img" aria-label="Verdict: STOP — jangan berangkat dulu, don't travel yet"><span class="w">STOP</span><span class="s">jangan berangkat dulu<br>don’t travel yet</span></div></div>
-    <span class="lab">the offer, as KP2MI described it (2022) — not the ad</span>
-    <p class="ad" lang="id">PMI ([nama]) asal Medan mengaku mendapat tawaran bekerja di <span class="u" data-f="negara · country" style="--d:250ms">Kamboja</span> dari Facebook. [nama] dijanjikan bekerja sebagai <span class="u" data-f="pekerjaan · job" style="--d:600ms">Costumer Service</span> sebuah perusahaan dengan <span class="u" data-f="janji · promise" style="--d:950ms">gaji sebesar 2000 USD</span>.</p>
+    <div class="f-head">
+      <div><span class="mk">Awas</span><span class="sub">berkas bukti · evidence file<br>rekaman · recorded 2026-10-17</span>
+        <button class="linkbtn" type="button" id="replay-file" hidden><svg class="ic" aria-hidden="true"><use href="#i-replay"/></svg>replay the check</button></div>
+      <div class="stamp" id="stamp" role="img" aria-label="Verdict: STOP — jangan berangkat dulu, don't travel yet"><span class="w">STOP</span><span class="s">jangan berangkat dulu<br>don’t travel yet</span></div>
+    </div>
+    <span class="lab cap">the offer, as KP2MI described it (2022) — not the ad</span>
+    <p class="ad" lang="id">PMI ([nama]) asal Medan mengaku mendapat tawaran bekerja di <span class="u" data-f="negara · country" style="--d:250ms">Kamboja</span> dari Facebook. [nama] dijanjikan bekerja sebagai <span class="u" data-f="pekerjaan · job [sic]" style="--d:600ms">Costumer Service</span> sebuah perusahaan dengan <span class="u" data-f="janji · promise" style="--d:950ms">gaji sebesar 2000 USD</span>.</p>
     <div class="rule">
       <i class="tick" aria-hidden="true"></i>
       <div><b lang="id">Negara tujuan bukan negara penempatan resmi pekerja migran</b> <span class="en">· The destination is not an official placement country</span>
-        <span class="src">NEVER rule · <a href="https://kp2mi.go.id/berita-detail/waspada-tawaran-kerja-ke-kamboja-menteri-mukhtarudin-itu-bukan-negara-penempatan-pekerja-migran-indonesia" rel="noopener">kp2mi.go.id · 2025-10-28</a></span>
+        <span class="src">NEVER rule · <a href="https://kp2mi.go.id/berita-detail/waspada-tawaran-kerja-ke-kamboja-menteri-mukhtarudin-itu-bukan-negara-penempatan-pekerja-migran-indonesia#:~:text=Perlu%20saya%20tegaskan%2C%20Kamboja%20itu%20bukan%20negara%20penempatan." rel="noopener" title="Opens the official page at this sentence">kp2mi.go.id · 2025-10-28</a></span>
         <blockquote lang="id">“Perlu saya tegaskan, Kamboja itu bukan negara penempatan.”</blockquote>
       </div>
     </div>
-    <p class="legend"><span class="hl" lang="id">kuning</span> = found word for word, by code</p>
     <div class="card verified">
-      <span class="why">liks.suara.com · context, not a verdict input</span>
+      <span class="row1"><span class="why"><span class="data">liks.suara.com</span> · context, not a verdict input</span><span class="legend"><span class="hl" lang="id">kuning</span> = found word for word</span></span>
       <a class="q" href="https://liks.suara.com/read/2026/02/10/183352/dilema-wni-bermasalah-di-kamboja-korban-perdagangan-orang-atau-operator-penipuan#:~:text=Para%20WNI%20direkrut%20melalui,Kamboja%2C%20mereka%20justru%20terperangkap." rel="noopener" lang="id"><span class="hl">“Para WNI direkrut melalui media sosial dengan janji pekerjaan legal. Kenyataannya, setibanya di Kamboja, mereka justru terperangkap.”</span></a>
-      <span class="gl"><i>translation — not evidence</i> These Indonesian citizens were recruited via social media with promises of legal work. In reality, upon arriving in Cambodia, they instead became trapped.</span>
+      <span class="gl">These Indonesian citizens were recruited via social media with promises of legal work. In reality, upon arriving in Cambodia, they instead became trapped. <a class="open" href="https://liks.suara.com/read/2026/02/10/183352/dilema-wni-bermasalah-di-kamboja-korban-perdagangan-orang-atau-operator-penipuan#:~:text=Para%20WNI%20direkrut%20melalui,Kamboja%2C%20mereka%20justru%20terperangkap." rel="noopener">open the sentence <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></span>
     </div>
     <div class="card dropped">
-      <span class="q" lang="id"><s>“Korban scam Usaha untuk kabur tidak tiba-tiba terjadi, cerita </s><span class="mask" role="img" aria-label="a person's name, masked"></span><s>, salah satu korban.”</s> <span class="mask-lab">nama disamarkan · name masked</span></span>
-      <span class="why">bbc.com · not found in the page — never shown as evidence</span>
+      <span class="q" lang="id"><s>“Korban scam Usaha untuk kabur tidak tiba-tiba terjadi, cerita </s><span class="mask" role="img" aria-label="a person's name, masked"></span><s>, salah satu korban.”</s> <span class="mask-lab" lang="en">name masked</span></span>
+      <span class="why"><span class="data">bbc.com</span> · not found in the page — never shown as evidence</span>
     </div>
     <div class="f-foot">
-      <span>13.6 s · 3 Nemotron calls · 1 Tavily credit</span>
+      <span>13.6 s · 3 Nemotron calls · 1 Tavily credit · 4 more lines found</span>
       <a href="/case/qm5h5lnvunjgjlyqbw6kkabtya">open this case <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      <button class="linkbtn replay" type="button" id="replay-file" hidden><svg class="ic" aria-hidden="true"><use href="#i-replay"/></svg>replay</button>
     </div>
     <figcaption class="vh" id="file-cap">A recorded evidence file: STOP.</figcaption>
   </figure>
@@ -519,31 +552,65 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   <p class="mnote"><span>17 Okt 2026</span> <span>tranche 2</span></p>
   <div class="reg-top">
     <div class="sec-head">
-      <h2 id="reg-h">Thirty-five cases, run once.</h2>
-      <p class="sec-lede">25 reported scam offers and 10 licensed vacancies the rules were never tuned on, run once by a Nebius Serverless Job on <code>code-freeze</code>.</p>
+      <h2 id="reg-h">Thirty-five cases. One scored run.</h2>
+      <p class="sec-lede">25 reported scam offers and 10 licensed vacancies, never tuned on, scored in one run by a Nebius Serverless Job on <code>code-freeze</code>.</p>
     </div>
     <div class="verdicts">
-      <div><span class="big"><span data-count="9">9</span><small> / 25</small></span><p>reported scam offers stopped — 15 more VERIFY FIRST, 1 missed</p></div>
-      <div><span class="big"><span data-count="0">0</span><small> / 10</small></span><p>licensed agencies’ vacancies stopped</p></div>
+      <div><span class="big"><span data-count="9">9</span><small> / 25</small></span><p>reported scam offers got STOP — 15 more VERIFY FIRST, 1 missed</p></div>
+      <div><span class="big"><span data-count="0">0</span><small> / 10</small></span><p>licensed agencies’ vacancies got STOP</p></div>
     </div>
   </div>
   <div class="slips-wrap" id="slips">
     <div>
-      <h3>25 publicly reported scam offers</h3>
-      <ol class="slips" aria-label="Tranche 2, reported scam offers: each case's verdict and deciding rule"><li class="slip v" style="--i:0" title="t2-p11: VERIFY FIRST — very high pay, light work · a personal number only"><span class="st">VERIFY FIRST</span></li><li class="slip s" style="--i:1" title="t2-p12: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip v" style="--i:2" title="t2-p13: VERIFY FIRST — no company named"><span class="st">VERIFY FIRST</span></li><li class="slip v" style="--i:3" title="t2-p14: VERIFY FIRST — a fee to get the job"><span class="st">VERIFY FIRST</span></li><li class="slip v" style="--i:4" title="t2-p15: VERIFY FIRST — a very fast departure · no company named"><span class="st">VERIFY FIRST</span></li><li class="slip s" style="--i:5" title="t2-p16: STOP — tourist visa for work"><span class="st">STOP</span><span class="why">tourist visa for work</span></li><li class="slip v" style="--i:6" title="t2-p17: VERIFY FIRST — a fee to get the job · costs advanced, then deducted"><span class="st">VERIFY FIRST</span></li><li class="slip v" style="--i:7" title="t2-p18: VERIFY FIRST — a fee to get the job · no company named"><span class="st">VERIFY FIRST</span></li><li class="slip v" style="--i:8" title="t2-p19: VERIFY FIRST — a fee to get the job · in an official warning"><span class="st">VERIFY FIRST</span></li><li class="slip s" style="--i:9" title="t2-p20: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip v" style="--i:10" title="t2-p21: VERIFY FIRST — a fee to get the job · no company named"><span class="st">VERIFY FIRST</span></li><li class="slip v" style="--i:11" title="t2-p22: VERIFY FIRST — very high pay, light work · no company named"><span class="st">VERIFY FIRST</span></li><li class="slip s" style="--i:12" title="t2-p23: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip n" style="--i:13" title="t2-p24: NO RED FLAGS — no rule fired"><span class="st">NO RED FLAGS</span></li><li class="slip s" style="--i:14" title="t2-p25: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip s" style="--i:15" title="t2-p26: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip v" style="--i:16" title="t2-p27: VERIFY FIRST — no company named"><span class="st">VERIFY FIRST</span></li><li class="slip v" style="--i:17" title="t2-p28: VERIFY FIRST — a fee to get the job · no company named"><span class="st">VERIFY FIRST</span></li><li class="slip s" style="--i:18" title="t2-p29: STOP — another outlet’s report names the company"><span class="st">STOP</span><span class="why">another outlet’s report names the company</span></li><li class="slip v" style="--i:19" title="t2-p30: VERIFY FIRST — very high pay, light work · in an official warning"><span class="st">VERIFY FIRST</span></li><li class="slip v" style="--i:20" title="t2-p31: VERIFY FIRST — in an official warning · no company named"><span class="st">VERIFY FIRST</span></li><li class="slip v" style="--i:21" title="t2-p32: VERIFY FIRST — no company named"><span class="st">VERIFY FIRST</span></li><li class="slip s" style="--i:22" title="t2-p33: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip v" style="--i:23" title="t2-p34: VERIFY FIRST — no company named"><span class="st">VERIFY FIRST</span></li><li class="slip s" style="--i:24" title="t2-p35: STOP — tourist visa for work"><span class="st">STOP</span><span class="why">tourist visa for work</span></li></ol>
+      <h3 class="cap">25 publicly reported scam offers</h3>
+      <ol class="slips" aria-label="Tranche 2, reported scam offers: each case's verdict and deciding rule"><li class="slip v" style="--i:0" title="t2-p11: VERIFY FIRST — very high pay, light work"><span class="st">VERIFY FIRST</span><span class="why">very high pay, light work</span></li><li class="slip s" style="--i:1" title="t2-p12: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip v" style="--i:2" title="t2-p13: VERIFY FIRST — no company named"><span class="st">VERIFY FIRST</span><span class="why">no company named</span></li><li class="slip v" style="--i:3" title="t2-p14: VERIFY FIRST — a fee to get the job"><span class="st">VERIFY FIRST</span><span class="why">a fee to get the job</span></li><li class="slip v" style="--i:4" title="t2-p15: VERIFY FIRST — a very fast departure"><span class="st">VERIFY FIRST</span><span class="why">a very fast departure</span></li><li class="slip s" style="--i:5" title="t2-p16: STOP — tourist visa for work"><span class="st">STOP</span><span class="why">tourist visa for work</span></li><li class="slip v" style="--i:6" title="t2-p17: VERIFY FIRST — a fee to get the job"><span class="st">VERIFY FIRST</span><span class="why">a fee to get the job</span></li><li class="slip v" style="--i:7" title="t2-p18: VERIFY FIRST — a fee to get the job"><span class="st">VERIFY FIRST</span><span class="why">a fee to get the job</span></li><li class="slip v" style="--i:8" title="t2-p19: VERIFY FIRST — a fee to get the job"><span class="st">VERIFY FIRST</span><span class="why">a fee to get the job</span></li><li class="slip s" style="--i:9" title="t2-p20: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip v" style="--i:10" title="t2-p21: VERIFY FIRST — a fee to get the job"><span class="st">VERIFY FIRST</span><span class="why">a fee to get the job</span></li><li class="slip v" style="--i:11" title="t2-p22: VERIFY FIRST — very high pay, light work"><span class="st">VERIFY FIRST</span><span class="why">very high pay, light work</span></li><li class="slip s" style="--i:12" title="t2-p23: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip n" style="--i:13" title="t2-p24: NO RED FLAGS FOUND — no rule fired"><span class="st">NO RED FLAGS FOUND</span></li><li class="slip s" style="--i:14" title="t2-p25: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip s" style="--i:15" title="t2-p26: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip v" style="--i:16" title="t2-p27: VERIFY FIRST — no company named"><span class="st">VERIFY FIRST</span><span class="why">no company named</span></li><li class="slip v" style="--i:17" title="t2-p28: VERIFY FIRST — a fee to get the job"><span class="st">VERIFY FIRST</span><span class="why">a fee to get the job</span></li><li class="slip s" style="--i:18" title="t2-p29: STOP — another outlet’s report names the company"><span class="st">STOP</span><span class="why">another outlet’s report names the company</span></li><li class="slip v" style="--i:19" title="t2-p30: VERIFY FIRST — very high pay, light work"><span class="st">VERIFY FIRST</span><span class="why">very high pay, light work</span></li><li class="slip v" style="--i:20" title="t2-p31: VERIFY FIRST — in an official warning"><span class="st">VERIFY FIRST</span><span class="why">in an official warning</span></li><li class="slip v" style="--i:21" title="t2-p32: VERIFY FIRST — no company named"><span class="st">VERIFY FIRST</span><span class="why">no company named</span></li><li class="slip s" style="--i:22" title="t2-p33: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip v" style="--i:23" title="t2-p34: VERIFY FIRST — no company named"><span class="st">VERIFY FIRST</span><span class="why">no company named</span></li><li class="slip s" style="--i:24" title="t2-p35: STOP — tourist visa for work"><span class="st">STOP</span><span class="why">tourist visa for work</span></li></ol>
     </div>
     <div>
-      <h3>10 licensed agencies’ vacancies</h3>
-      <ol class="slips lic" aria-label="Tranche 2, licensed agencies' vacancies: each verdict"><li class="slip n" style="--i:25" title="t2-n01: NO RED FLAGS — no rule fired"><span class="st">NO RED FLAGS</span></li><li class="slip n" style="--i:26" title="t2-n02: NO RED FLAGS — no rule fired"><span class="st">NO RED FLAGS</span></li><li class="slip n" style="--i:27" title="t2-n03: NO RED FLAGS — no rule fired"><span class="st">NO RED FLAGS</span></li><li class="slip n" style="--i:28" title="t2-n04: NO RED FLAGS — no rule fired"><span class="st">NO RED FLAGS</span></li><li class="slip v" style="--i:29" title="t2-n05: VERIFY FIRST — a page names a similar company"><span class="st">VERIFY FIRST</span></li><li class="slip n" style="--i:30" title="t2-n06: NO RED FLAGS — no rule fired"><span class="st">NO RED FLAGS</span></li><li class="slip n" style="--i:31" title="t2-n07: NO RED FLAGS — no rule fired"><span class="st">NO RED FLAGS</span></li><li class="slip n" style="--i:32" title="t2-n08: NO RED FLAGS — no rule fired"><span class="st">NO RED FLAGS</span></li><li class="slip n" style="--i:33" title="t2-n09: NO RED FLAGS — no rule fired"><span class="st">NO RED FLAGS</span></li><li class="slip n" style="--i:34" title="t2-n10: NO RED FLAGS — no rule fired"><span class="st">NO RED FLAGS</span></li></ol>
+      <h3 class="cap">10 licensed agencies’ vacancies</h3>
+      <ol class="slips lic" aria-label="Tranche 2, licensed agencies' vacancies: each verdict"><li class="slip n" style="--i:25" title="t2-n01: NO RED FLAGS FOUND — no rule fired"><span class="st">NO RED FLAGS FOUND</span></li><li class="slip n" style="--i:26" title="t2-n02: NO RED FLAGS FOUND — no rule fired"><span class="st">NO RED FLAGS FOUND</span></li><li class="slip n" style="--i:27" title="t2-n03: NO RED FLAGS FOUND — no rule fired"><span class="st">NO RED FLAGS FOUND</span></li><li class="slip n" style="--i:28" title="t2-n04: NO RED FLAGS FOUND — no rule fired"><span class="st">NO RED FLAGS FOUND</span></li><li class="slip v" style="--i:29" title="t2-n05: VERIFY FIRST — a page names a similar company"><span class="st">VERIFY FIRST</span><span class="why">a page names a similar company</span></li><li class="slip n" style="--i:30" title="t2-n06: NO RED FLAGS FOUND — no rule fired"><span class="st">NO RED FLAGS FOUND</span></li><li class="slip n" style="--i:31" title="t2-n07: NO RED FLAGS FOUND — no rule fired"><span class="st">NO RED FLAGS FOUND</span></li><li class="slip n" style="--i:32" title="t2-n08: NO RED FLAGS FOUND — no rule fired"><span class="st">NO RED FLAGS FOUND</span></li><li class="slip n" style="--i:33" title="t2-n09: NO RED FLAGS FOUND — no rule fired"><span class="st">NO RED FLAGS FOUND</span></li><li class="slip n" style="--i:34" title="t2-n10: NO RED FLAGS FOUND — no rule fired"><span class="st">NO RED FLAGS FOUND</span></li></ol>
     </div>
   </div>
   <dl class="receipts">
-    <div><dt><span data-count="48">48</span>/48</dt><dd>quotes shown, all found word for word<span class="data">6 of 54 dropped</span></dd></div>
-    <div><dt>13.7 s</dt><dd>median to a verdict<span class="data">p95 31.7 s</span></dd></div>
-    <div><dt>$0.0078</dt><dd>median Token Factory cost per check<span class="data">GET /v1/models prices</span></dd></div>
-    <div><dt><span data-count="20">20</span>/20</dt><dd>reruns, same verdict<span class="data">19/20 on licensed</span></dd></div>
+    <div><dt><span data-count="48">48</span>/48</dt><dd>quotes shown, all found word for word<span class="sm">6 of 54 dropped · plain-GET re-check: 33 found, 14 unreadable, 1 changed</span></dd></div>
+    <div><dt>13.7 s</dt><dd>median to a verdict<span class="sm">p95 31.7 s</span></dd></div>
+    <div><dt>$0.0078</dt><dd>median Token Factory cost per check<span class="sm">+ 1–3 Tavily credits</span></dd></div>
+    <div><dt><span data-count="20">20</span>/20</dt><dd>same verdict on reruns of 10 reported cases<span class="sm">19/20 on 10 licensed (pre-registered)</span></dd></div>
   </dl>
-  <p class="fine">The ninth STOP: the one report naming its company, matched in another outlet’s report — one case, not a rate. The miss: “rumah sakit Suriah” read as a company. <span class="data">aijob-e03nhcfcwc4vnee33m · <a href="https://github.com/edycutjong/awas/blob/main/DEMO.md">DEMO.md</a></span></p>
+  <p class="fine">The ninth STOP is the one report naming its company, matched in another outlet’s report: one case, not a rate. <a href="https://github.com/edycutjong/awas/blob/main/bench/results-t2.jsonl" rel="noopener">every row</a> · <span class="data">aijob-e03nhcfcwc4vnee33m</span></p>
+</section>
+
+<!-- ============================== THE LAB ============================== -->
+<section class="sec page" id="lab" aria-labelledby="lab-h">
+  <p class="mnote"><span>in your browser</span></p>
+  <div class="sec-head">
+    <h2 id="lab-h">Try to fool the gate.</h2>
+    <p class="sec-lede">The rules and the quote gate run here, in your browser — the app’s own <code>src/lib</code>.</p>
+  </div>
+  <div class="labs">
+    <div class="panel">
+      <h3>The quote gate</h3>
+      <p class="hint">6+ words, verbatim (case, quotes, dashes, spacing aside).</p>
+      <span class="field-lab cap" id="page-lab">the page · <a href="https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo" rel="noopener">humas.polri.go.id · 2026-02-04</a></span>
+      <div class="pagebox" id="page-text" tabindex="0" role="region" aria-labelledby="page-lab" lang="id">Identitas perusahaan tidak jelas, alamat kantor tidak pasti dan komunikasi hanya dilakukan melalui media sosial atau WhatsApp tanpa pertemuan langsung di kantor resmi.
+Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah.</div>
+      <label class="field-lab cap" for="quote">a proposed quote</label>
+      <textarea id="quote" lang="id" maxlength="600" spellcheck="false">Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah.</textarea>
+      <div class="presets" role="group" aria-label="Try a quote"><button class="preset" type="button" data-quote="Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah." aria-pressed="true">The page’s own sentence</button><button class="preset" type="button" data-quote="Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja adalah visa kerja yang sah." aria-pressed="false">One clause flipped</button><button class="preset" type="button" data-quote="Polisi menyebut gaji yang ditawarkan sangat tinggi untuk pekerjaan ringan seperti layanan pelanggan." aria-pressed="false">A paraphrase</button><button class="preset" type="button" data-quote="visa turis" aria-pressed="false">Two words</button><button class="preset" type="button" data-quote="DOKUMEN BERMASALAH, menggunakan VISA TURIS atau visa kunjungan untuk bekerja" aria-pressed="false">SHOUTED</button><button class="preset" type="button" data-quote="visa kerja (work permit) yang sah." aria-pressed="false">Cut short</button></div>
+      <div class="out" id="gate-result" aria-live="polite"><div class="gate-card verified"><span class="q" lang="id"><span class="hl">“Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah.”</span></span><span class="why">found verbatim in one chunk of humas.polri.go.id · 17 words · <a href="https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo#:~:text=Dokumen%20bermasalah%2C%20menggunakan%20visa,(work%20permit)%20yang%20sah." rel="noopener">open it on the page</a></span></div></div>
+    </div>
+    <div class="panel">
+      <h3>The rules</h3>
+      <p class="hint">Edit the offer; the rules re-run as you type.</p>
+      <label class="field-lab cap" for="adtext">the offer</label>
+      <textarea id="adtext" lang="id" maxlength="6000" spellcheck="false">Dibutuhkan CS online untuk Kamboja. Gaji Rp 15 jt/bulan, tanpa pengalaman.
+Visa turis diurus, tiket ditanggung. Biaya admin Rp 3 jt sebelum berangkat.</textarea>
+      <div class="presets" role="group" aria-label="Try an offer"><button class="preset" type="button" data-ad="Dibutuhkan CS online untuk Kamboja. Gaji Rp 15 jt/bulan, tanpa pengalaman.
+Visa turis diurus, tiket ditanggung. Biaya admin Rp 3 jt sebelum berangkat." aria-pressed="true">A composite offer</button><button class="preset" type="button" data-ad="Kerja pabrik di Korea. Biaya administrasi Rp 3,5 jt sebelum kontrak ditandatangani." aria-pressed="false">Fee before a contract</button><button class="preset" type="button" data-ad="Hiring online customer service for Cambodia. Visit visa holders may apply.
+Your passport will be held by the company on arrival." aria-pressed="false">Said in English</button><button class="preset" type="button" data-ad="Contoh Manufacturing Co. Ltd. (Malaysia) membutuhkan operator produksi. Tanpa visa turis: visa kerja diurus resmi.
+Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negated</button></div>
+      <div class="out" id="rules-result" aria-live="polite"><p class="vline v-stop"><b>STOP</b> <span>— rule: tourist or visit visa offered for work + rule: the destination is not an official placement country for Indonesian workers. 6 rules fired; a sourced NEVER rule decides it.</span></p></div>
+    </div>
+  </div>
 </section>
 
 <!-- ============================== ONE RUN ============================== -->
@@ -551,12 +618,12 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   <p class="mnote"><span>17 Okt 2026</span> <span>06:58 UTC</span></p>
   <div class="sec-head">
     <h2 id="run-h">13.6 seconds, start to stamp.</h2>
-    <p class="sec-lede">The file at the top is this run, recorded 17 October 2026 on frozen code — open on <a href="/judge">/judge</a>, its receipt one command away.</p>
+    <p class="sec-lede">The file at the top is this run, recorded 17 October 2026 on the frozen pipeline — open on <a href="/judge">/judge</a>, its receipt one command away.</p>
   </div>
   <div class="run-grid">
     <div class="shots">
-      <figure class="shot"><img src="/landing/media/run-top.webp" width="692" height="1882" loading="lazy" alt="Awas — the recorded evidence file on a phone: the offer underlined, the STOP stamp, the two rules with their official sources"><figcaption>the stamp and its rules</figcaption></figure>
-      <figure class="shot"><img src="/landing/media/run-suara.webp" width="692" height="1340" loading="lazy" alt="Awas — a context card: the quote highlighted yellow because the gate found it word for word on liks.suara.com, with its translation and link"><figcaption>found word for word</figcaption></figure>
+      <figure class="shot"><i class="tape" aria-hidden="true"></i><img src="/landing/media/deck-dtop.webp" width="1488" height="1078" loading="lazy" alt="Awas — the recorded evidence file in the live app: the offer underlined, the STOP stamp, the rules with their official sources"><figcaption>the live app’s file: the stamp and its rules</figcaption></figure>
+      <figure class="shot"><img src="/landing/media/deck-dsuara.webp" width="1488" height="716" loading="lazy" alt="Awas — a context card: the quote highlighted yellow because the gate found it word for word on liks.suara.com, with its translation and link"><figcaption>a line the gate found word for word</figcaption></figure>
     </div>
     <div>
       <div class="axis" id="axis" role="img" aria-label="One recorded check, 13.6 seconds: Nemotron 3 Ultra 2.9 s, Tavily 1.8 s, Nemotron 3 Super 3.7 s and 4.7 s, the rest 0.5 s">
@@ -565,10 +632,10 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
       </div>
       <p class="axis-note">Durations from the stored receipt, laid end to end.</p>
       <div class="receipt" id="receipt">
-        <div class="cmd"><code id="cmd">curl -s awas-cek.vercel.app/api/case/qm5h5lnvunjgjlyqbw6kkabtya</code><button class="linkbtn" type="button" data-copy="#cmd"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg>copy</button></div>
+        <div class="cmd"><code id="cmd">curl -sL https://awas-cek.vercel.app/api/case/qm5h5lnvunjgjlyqbw6kkabtya</code><button class="linkbtn" type="button" data-copy="#cmd"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>copy</span></button></div>
         <ol aria-label="The stored receipt, one line per step"><li style="--i:0"><span class="k">extract</span><span><span class="data">nvidia/Nemotron-3-Ultra-550b-a55b</span> · <span class="num">1,081</span> tok · 2.9 s</span></li><li style="--i:1"><span class="k">rules</span><span>non_placement_country · NEVER · “Kamboja” · kp2mi.go.id 2025-10-28</span></li><li style="--i:2"><span class="k">search</span><span>Tavily · “WNI korban penipuan lowongan kerja Kamboja” · 5 pages · 1 credit · 1.8 s</span></li><li style="--i:3"><span class="k">propose</span><span><span class="data">nvidia/nemotron-3-super-120b-a12b</span> · <span class="num">4,814</span> tok · 3.7 s</span></li><li style="--i:4"><span class="k">gate</span><span>6 proposed · 5 found word for word · 1 dropped</span></li><li style="--i:5"><span class="k">message</span><span><span class="data">nvidia/nemotron-3-super-120b-a12b</span> · <span class="num">1,567</span> tok · 4.7 s</span></li><li style="--i:6"><span class="k">verdict</span><span><span class="stopword">STOP</span> — rule: the destination is not an official placement country for Indonesian workers</span></li><li style="--i:7"><span class="k">total</span><span>13.6 s · 7,462 tokens · 1 Tavily credit · kept in Object Storage</span></li></ol>
       </div>
-      <p class="rbar">condensed from that JSON · <button class="linkbtn" type="button" id="replay-receipt" hidden><svg class="ic" aria-hidden="true"><use href="#i-replay"/></svg>replay</button></p>
+      <p class="rbar">condensed from that JSON · no key needed <button class="linkbtn" type="button" id="replay-receipt" hidden><svg class="ic" aria-hidden="true"><use href="#i-replay"/></svg>replay</button></p>
     </div>
   </div>
 </section>
@@ -581,7 +648,7 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
     <p class="sec-lede">Cut from the ministries’ own pages; each sentence is in docs/SOURCES.md.</p>
   </div>
   <div class="cuts"><figure class="cut"><span class="num">12,019</span><span class="what">Indonesians from scam networks in Cambodia asked the embassy to bring them home, Jan–Jun 2026</span><span class="src"><a href="https://www.kemlu.go.id/berita/lebih-dari-12000-wni-eks-jaringan-penipuan-daring-di-kamboja-minta-bantuan-kepulangan?type=publication" rel="noopener">kemlu.go.id · KBRI Phnom Penh · 2 July 2026</a></span></figure><figure class="cut"><span class="num">1,301<small> · 85%</small></span><span class="what">cases at the embassy in Cambodia, Q1 2025 — 85% online scams</span><span class="src"><a href="https://www.kemlu.go.id/berita/kbri-phnom-penh-tangani-1301-kasus-wni-selama-jan-mar-2025-mayoritas-terkait-penipuan-daring-online-scam?type=publication" rel="noopener">kemlu.go.id · KBRI Phnom Penh · 24 April 2025</a></span></figure><figure class="cut"><span class="num" style="font-size:clamp(30px,2.8vw,40px);line-height:1.08" lang="id">“kerja di IT atau marketing digital”</span><span class="what">how the offer arrives, in the ministry’s words</span><span class="src"><a href="https://kp2mi.go.id/berita-detail/waspada-tawaran-kerja-ke-kamboja-menteri-mukhtarudin-itu-bukan-negara-penempatan-pekerja-migran-indonesia" rel="noopener">kp2mi.go.id · KP2MI · 28 October 2025</a></span></figure></div>
-  <p class="framing"><span class="k">catatan</span>The same pages count people who ran scams, not only victims. Awas claims less: the offers follow a pattern a family can check before anyone leaves.</p>
+  <p class="framing"><span class="k cap">catatan</span>The same pages count people who ran scams, not only victims. Awas claims less: the offers follow a pattern a family can check before anyone leaves.</p>
 </section>
 
 <!-- ============================== HOW IT DECIDES ============================== -->
@@ -589,44 +656,10 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   <p class="mnote"><span>src/lib</span> <span>frozen</span></p>
   <div class="sec-head">
     <h2 id="how-h">The model reads. Code decides.</h2>
-    <p class="sec-lede">Nemotron reads and proposes; rules, quote check and verdict are code — frozen at <code>code-freeze</code>, 144 unit and 56 browser tests.</p>
+    <p class="sec-lede">Nemotron reads and proposes; code decides — unchanged since <code>code-freeze</code>, under 144 unit and 56 browser tests.</p>
   </div>
-  <div class="bento"><article class="bc b1"><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><circle cx="8" cy="8" r="4"/><circle cx="8" cy="24" r="4"/><path d="M11 10.5 27 25M11 21.5 27 7"/></svg><h3>Reads the offer</h3><p>Nemotron 3 Ultra copies typed fields with their spans; code checks each span is in the text.</p><div class="chips"><span class="chip">nvidia/Nemotron-3-Ultra-550b-a55b</span><span class="chip">call 1</span></div></article><article class="bc b2"><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="11" width="26" height="10" rx="1"/><path d="M8 11v4M13 11v6M18 11v4M23 11v6"/></svg><h3>Applies the rules</h3><p>16 rules in code, each quoting an official page. Any one of the four NEVER rules is a STOP:</p><ol class="nevers"><li><b>Not a placement country</b><span class="src"><a href="https://kp2mi.go.id/berita-detail/waspada-tawaran-kerja-ke-kamboja-menteri-mukhtarudin-itu-bukan-negara-penempatan-pekerja-migran-indonesia" rel="noopener" title="Perlu saya tegaskan, Kamboja itu bukan negara penempatan.">kp2mi.go.id · 2025-10-28</a> <span class="data">+1</span></span></li><li><b>Tourist visa for work</b><span class="src"><a href="https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo" rel="noopener" title="Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah.">humas.polri.go.id · 2026-02-04</a></span></li><li><b>Fee before a contract</b><span class="src"><a href="https://www.kemnaker.go.id/news/detail/kemnaker-imbau-masyarakat-waspada-penipuan-lowongan-pekerjaan" rel="noopener" title="Jangan pernah memberikan apapun untuk mendapatkan pekerjaan.">kemnaker.go.id · 2024-10-10</a></span></li><li><b>Passport held</b><span class="src"><a href="https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo" rel="noopener" title="M-enolak, apabila diminta menyerahkan dokumen asli seperti paspor atau KTP kepada pihak perorangan yang tidak jelas.">humas.polri.go.id · 2026-02-04</a></span></li></ol><p>12 more are CAUTION rules; a named company is checked against the licence list (534 agencies, dated snapshot).</p><div class="chips"><span class="chip">rubric.ts</span><span class="chip">registry.ts</span></div></article><article class="bc b3"><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 6h18v20H8a3 3 0 0 1-3-3z"/><path d="M23 10h4v13a3 3 0 0 1-3 3"/><path d="M9 11h10M9 15h10M9 19h6"/></svg><h3>Looks it up</h3><p>Tavily searches the exact company and number, and scam reports for the destination — context, never a rule input.</p><div class="chips"><span class="chip">tavily search · exact_match</span><span class="chip">tavily extract</span></div></article><article class="bc b4"><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="m19 5 8 8-11 11H8v-8z"/><path d="m8 24-3 3h7"/><path d="M4 29h24"/></svg><h3>Checks every quote</h3><p>Nemotron 3 Super proposes lines from the pages Tavily returned; code shows a quote only if 6+ words sit verbatim in one of them — else it is dropped, on screen.</p><figure class="frag"><img src="/landing/media/polri-fragment.webp" width="1168" height="392" loading="lazy" alt="Awas — an official Polri page opened from a gate link: the browser scrolls to the quoted sentence and marks it"><figcaption>A gate link, opened: the page scrolls to the sentence and marks it.</figcaption></figure><div class="chips"><span class="chip">nvidia/nemotron-3-super-120b-a12b</span><span class="chip">call 2</span><span class="chip">gate.ts</span></div></article><article class="bc b5"><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 4h8v6l-2 4h-4l-2-4z"/><path d="M6 18h20v5H6z"/><path d="M5 27h22"/></svg><h3>Decides, then writes</h3><p>A truth table sets the verdict; Super writes the Bahasa family message from verified lines only.</p><p class="trio" aria-label="The three verdicts"><span class="st s">STOP</span><span class="st v">VERIFY FIRST</span><span class="st n">NO RED FLAGS FOUND</span></p><div class="chips"><span class="chip">verdict.ts</span><span class="chip">nvidia/nemotron-3-super-120b-a12b</span><span class="chip">call 3</span></div></article></div>
-  <div class="sponsors" aria-label="Sponsor methods used"><div><b>Nebius Token Factory</b><code>src/lib/tf.ts</code></div><div><b>Tavily search</b><code>src/lib/tavily.ts</code></div><div><b>Tavily extract</b><code>src/lib/tavily.ts</code></div><div><b>Nebius Object Storage</b><code>src/lib/nebius/storage.ts</code></div><div><b>Nebius Serverless Jobs</b><code>src/lib/nebius/jobs.ts</code></div></div>
-</section>
-
-<!-- ============================== THE LAB ============================== -->
-<section class="sec page" id="lab" aria-labelledby="lab-h">
-  <p class="mnote"><span>in your browser</span></p>
-  <div class="sec-head">
-    <h2 id="lab-h">Try to fool the gate.</h2>
-    <p class="sec-lede">The rules and the quote gate run here, in your browser — the app’s own <code>src/lib</code>. The highlighter paints only what is on the page.</p>
-  </div>
-  <div class="labs">
-    <div class="panel">
-      <h3>The quote gate</h3>
-      <p class="hint">At least 6 words, verbatim, inside the page.</p>
-      <span class="field-lab" id="page-lab">the page · <a href="https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo" rel="noopener">humas.polri.go.id · 2026-02-04</a></span>
-      <div class="pagebox" id="page-text" tabindex="0" role="region" aria-labelledby="page-lab" lang="id">Identitas perusahaan tidak jelas, alamat kantor tidak pasti dan komunikasi hanya dilakukan melalui media sosial atau WhatsApp tanpa pertemuan langsung di kantor resmi.
-Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah.</div>
-      <label class="field-lab" for="quote">a proposed quote</label>
-      <textarea id="quote" lang="id" maxlength="600" spellcheck="false">Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah.</textarea>
-      <div class="presets" role="group" aria-label="Try a quote"><button class="preset" type="button" data-quote="Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah." aria-pressed="true">The page’s own sentence</button><button class="preset" type="button" data-quote="Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja adalah visa kerja yang sah." aria-pressed="false">One clause flipped</button><button class="preset" type="button" data-quote="Polisi menyebut gaji yang ditawarkan sangat tinggi untuk pekerjaan ringan seperti layanan pelanggan." aria-pressed="false">A paraphrase</button><button class="preset" type="button" data-quote="visa turis" aria-pressed="false">Two words</button><button class="preset" type="button" data-quote="DOKUMEN BERMASALAH, menggunakan VISA TURIS atau visa kunjungan untuk bekerja" aria-pressed="false">SHOUTED</button><button class="preset" type="button" data-quote="visa kerja (work permit) yang sah." aria-pressed="false">Cut short</button></div>
-      <div class="out" id="gate-result" aria-live="polite"><div class="gate-card verified"><span class="q" lang="id"><span class="hl">“Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah.”</span></span><span class="why">found verbatim in one chunk of humas.polri.go.id · 17 words · <a href="https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo#:~:text=Dokumen%20bermasalah%2C%20menggunakan%20visa,(work%20permit)%20yang%20sah." rel="noopener">open it on the page</a></span></div></div>
-    </div>
-    <div class="panel">
-      <h3>The rules</h3>
-      <p class="hint">Edit it; the rules re-run as you type.</p>
-      <label class="field-lab" for="adtext">the offer</label>
-      <textarea id="adtext" lang="id" maxlength="6000" spellcheck="false">Dibutuhkan CS online untuk Kamboja. Gaji Rp 15 jt/bulan, tanpa pengalaman.
-Visa turis diurus, tiket ditanggung. Biaya admin Rp 3 jt sebelum berangkat.</textarea>
-      <div class="presets" role="group" aria-label="Try an offer"><button class="preset" type="button" data-ad="Dibutuhkan CS online untuk Kamboja. Gaji Rp 15 jt/bulan, tanpa pengalaman.
-Visa turis diurus, tiket ditanggung. Biaya admin Rp 3 jt sebelum berangkat." aria-pressed="true">A composite offer</button><button class="preset" type="button" data-ad="Kerja pabrik di Korea. Biaya administrasi Rp 3,5 jt sebelum kontrak ditandatangani." aria-pressed="false">Fee before a contract</button><button class="preset" type="button" data-ad="Hiring online customer service for Cambodia. Visit visa holders may apply.
-Your passport will be held by the company on arrival." aria-pressed="false">Said in English</button><button class="preset" type="button" data-ad="Contoh Manufacturing Co. Ltd. (Malaysia) membutuhkan operator produksi. Tanpa visa turis: visa kerja diurus resmi.
-Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negated</button></div>
-      <div class="out" id="rules-result" aria-live="polite"><p class="vline v-stop"><b>STOP</b> <span>— rule: tourist or visit visa offered for work + rule: the destination is not an official placement country for Indonesian workers. 6 rules fired; a sourced NEVER rule decides it.</span></p></div>
-    </div>
-  </div>
+  <div class="bento"><article class="bc b1"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><circle cx="8" cy="8" r="4"/><circle cx="8" cy="24" r="4"/><path d="M11 10.5 27 25M11 21.5 27 7"/></svg><h3>Reads the offer</h3><p>Nemotron 3 Ultra copies typed fields; code checks each is in the text.</p><div class="chips"><span class="chip">nvidia/Nemotron-3-Ultra-550b-a55b</span><span class="chip">call 1</span></div></article><article class="bc b2"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="11" width="26" height="10" rx="1"/><path d="M8 11v4M13 11v6M18 11v4M23 11v6"/></svg><h3>Applies the rules</h3><p>16 rules in code: 14 quote an official page, 2 check the licence list. Any NEVER rule is a STOP; each link opens its sentence:</p><ol class="nevers"><li><b>Not a placement country</b><span class="src"><a href="https://kp2mi.go.id/berita-detail/waspada-tawaran-kerja-ke-kamboja-menteri-mukhtarudin-itu-bukan-negara-penempatan-pekerja-migran-indonesia#:~:text=Perlu%20saya%20tegaskan%2C%20Kamboja%20itu%20bukan%20negara%20penempatan." rel="noopener" title="Perlu saya tegaskan, Kamboja itu bukan negara penempatan.">kp2mi.go.id · 2025-10-28</a> <span class="data">+1</span></span></li><li><b>Tourist visa for work</b><span class="src"><a href="https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo#:~:text=Dokumen%20bermasalah%2C%20menggunakan%20visa,(work%20permit)%20yang%20sah." rel="noopener" title="Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah.">humas.polri.go.id · 2026-02-04</a></span></li><li><b>Fee before a contract</b><span class="src"><a href="https://www.kemnaker.go.id/news/detail/kemnaker-imbau-masyarakat-waspada-penipuan-lowongan-pekerjaan#:~:text=Jangan%20pernah%20memberikan%20apapun%20untuk%20mendapatkan%20pekerjaan." rel="noopener" title="Jangan pernah memberikan apapun untuk mendapatkan pekerjaan.">kemnaker.go.id · 2024-10-10</a></span></li><li><b>Passport held</b><span class="src"><a href="https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo#:~:text=M%2Denolak%2C%20apabila%20diminta%20menyerahkan,perorangan%20yang%20tidak%20jelas." rel="noopener" title="M-enolak, apabila diminta menyerahkan dokumen asli seperti paspor atau KTP kepada pihak perorangan yang tidak jelas.">humas.polri.go.id · 2026-02-04</a></span></li></ol><p>The other 12 lead to VERIFY FIRST; the licence list is a dated snapshot of 534 agencies.</p><div class="chips"><span class="chip">rubric.ts</span><span class="chip">registry.ts</span></div></article><article class="bc b3"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 6h18v20H8a3 3 0 0 1-3-3z"/><path d="M23 10h4v13a3 3 0 0 1-3 3"/><path d="M9 11h10M9 15h10M9 19h6"/></svg><h3>Looks it up</h3><p>Tavily searches the exact company and number, and scam reports for the destination: context, never a rule input. Only a verified line naming the offer’s own company can raise the verdict.</p><div class="chips"><span class="chip">tavily search · exact_match</span><span class="chip">tavily extract</span></div></article><article class="bc b4"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="m19 5 8 8-11 11H8v-8z"/><path d="m8 24-3 3h7"/><path d="M4 29h24"/></svg><h3>Checks every quote</h3><p>Nemotron 3 Super proposes lines; code shows a quote only if 6+ words sit verbatim in a page Tavily returned. Else it is dropped, on screen.</p><figure class="frag"><img src="/landing/media/polri-fragment.webp" width="1168" height="392" loading="lazy" alt="Awas — an official Polri page opened from a gate link: the browser scrolls to the quoted sentence and marks it"><figcaption>A gate link, opened: the page scrolls to the sentence and marks it.</figcaption></figure><div class="chips"><span class="chip">nvidia/nemotron-3-super-120b-a12b</span><span class="chip">call 2</span><span class="chip">gate.ts</span></div></article><article class="bc b5"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 4h8v6l-2 4h-4l-2-4z"/><path d="M6 18h20v5H6z"/><path d="M5 27h22"/></svg><h3>Decides, then writes</h3><p>A truth table sets the verdict; Super writes the family message from verified lines.</p><p class="trio" aria-label="The three verdicts"><span class="st s">STOP</span><span class="st v">VERIFY FIRST</span><span class="st n">NO RED FLAGS FOUND</span></p><div class="chips"><span class="chip">verdict.ts</span><span class="chip">nvidia/nemotron-3-super-120b-a12b</span><span class="chip">call 3</span></div></article></div>
+  <div class="sponsors" role="group" aria-label="Sponsor methods used"><div><b>Nebius Token Factory</b><code>src/lib/tf.ts</code></div><div><b>Tavily search</b><code>src/lib/tavily.ts</code></div><div><b>Tavily extract</b><code>src/lib/tavily.ts</code></div><div><b>Nebius Object Storage</b><code>src/lib/nebius/storage.ts</code></div><div><b>Nebius Serverless Jobs</b><code>src/lib/nebius/jobs.ts</code></div></div>
 </section>
 
 <!-- ============================== RALAT ============================== -->
@@ -634,22 +667,22 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
   <p class="mnote"><span>README limits</span></p>
   <div class="sec-head">
     <h2 id="ralat-h">What failed, printed first.</h2>
-    <p class="sec-lede">A newspaper’s corrections box is the <i lang="id">ralat</i>. These are verbatim from the README.</p>
+    <p class="sec-lede">A newspaper’s corrections box is the <i lang="id">ralat</i>. Four of the README’s six honest limits, verbatim:</p>
   </div>
-  <div class="ralat"><span class="kop" lang="id">RALAT</span><ol><li><div><blockquote>“Our day-0 search-coverage gate failed (8 of 20 known cases had a relevant item; we had set 12). The web evidence is therefore context; the verdict rests on the cited rules.”</blockquote><cite>— README · Honest limits, 1</cite><p class="did"><b>Done:</b> the verdict moved onto rules quoted from official pages (amendment 4, before tranche 1).</p></div></li><li><div><blockquote>“The benchmark&#x27;s reported cases are reporters&#x27; descriptions of offers, not the ads.”</blockquote><cite>— README · Honest limits, 2</cite><p class="did"><b>Done:</b> labelled everywhere — the file at the top is KP2MI’s description.</p></div></li><li><div><blockquote>“The phone path is unbenchmarked. A phone number with no company name returns VERIFY FIRST, not a verdict.”</blockquote><cite>— README · Honest limits, 4</cite><p class="did"><b>Why:</b> benchmark rows carry no phone numbers.</p></div></li></ol></div>
-  <p class="withdrawn">53 collected rows were discarded before any model saw them: their publishers forbid AI use (protocol amendment 2).</p>
+  <div class="ralat"><span class="kop" lang="id">RALAT</span><ol><li><div><blockquote>“Our day-0 search-coverage gate failed (8 of 20 known cases had a relevant item; we had set 12). The web evidence is therefore context; the verdict rests on the cited rules.”</blockquote><cite>— README · Honest limits, 1</cite><p class="did"><b>Done:</b> the verdict moved onto cited rules, before tranche 1 ran.</p></div></li><li><div><blockquote>“The benchmark&#x27;s reported cases are reporters&#x27; descriptions of offers, not the ads.”</blockquote><cite>— README · Honest limits, 2</cite><p class="did"><b>Done:</b> each case says what it is: the file at the top is “as KP2MI described it”.</p></div></li><li><div><blockquote>“Indonesian is not a listed language for the Nemotron models used (per their model cards)”</blockquote><cite>— README · Honest limits, 3</cite><p class="did"><b>Measured instead:</b> field accuracy on 25 dev texts, against labels our agent drafted, not yet reviewed.</p></div></li><li><div><blockquote>“The phone path is unbenchmarked. A phone number with no company name returns VERIFY FIRST, not a verdict.”</blockquote><cite>— README · Honest limits, 4</cite><p class="did"><b>Why:</b> benchmark rows carry no phone numbers.</p></div></li></ol></div>
+  <p class="withdrawn">Also: 53 collected rows discarded unread — their publishers forbid AI use (protocol amendment 2).</p>
 </section>
 
 <!-- ============================== FAQ ============================== -->
 <section class="sec page" id="faq" aria-labelledby="faq-h">
   <p class="mnote"><span lang="id">tanya jawab</span></p>
   <h2 id="faq-h">Questions a judge would ask.</h2>
-  <div class="faq"><details><summary>Does Awas ever say an offer is safe?</summary><div class="a"><p>No. NO RED FLAGS FOUND says on screen that it is not a guarantee. No score, no green.</p></div></details><details><summary>Who decides STOP — the model?</summary><div class="a"><p>Code: <code>verdict.ts</code>. A sourced NEVER rule, or a verified line naming the offer’s own company beside a harm word. In tranche 2, 8 of 9 STOPs came from rules.</p></div></details><details><summary>What if the model invents a quote?</summary><div class="a"><p>The gate drops it, on screen — 6 of 54 in tranche 2. Flip one word in the lab and watch.</p></div></details><details><summary>How accurate is it?</summary><div class="a"><p>Out of sample: 0/10 licensed vacancies stopped; 25 reported scam offers: 9 STOP, 15 VERIFY FIRST, 1 missed — descriptions, not ads. Every row: <a href="https://github.com/edycutjong/awas/blob/main/DEMO.md">DEMO.md</a>.</p></div></details><details><summary>Does it accuse companies?</summary><div class="a"><p>Its own sentences never name one. A name appears only in the pasted offer, a verified quote, or beside “Dilaporkan oleh &lt;sumber&gt;, bukan tuduhan kami” — reported by the source, not our accusation.</p></div></details></div>
+  <div class="faq"><details><summary>Who decides STOP — the model?</summary><div class="a"><p>Code: <code>verdict.ts</code> — a sourced NEVER rule, or a verified line naming the offer’s own company beside a harm word. 8 of 9 tranche-2 STOPs came from rules. There is no score and no green; the mildest verdict says it is not a guarantee.</p></div></details><details><summary>What if the model invents a quote?</summary><div class="a"><p>The gate drops it, on screen — 6 of 54 in tranche 2. Flip one word in the lab and watch.</p></div></details><details><summary>How accurate is it?</summary><div class="a"><p>Out of sample: 0 of 10 licensed vacancies got STOP; of 25 reported scam offers, 9 STOP, 15 VERIFY FIRST, 1 missed — reporters’ descriptions, not the ads. Every row: <a href="https://github.com/edycutjong/awas/blob/main/bench/results-t2.jsonl">bench/results-t2.jsonl</a>.</p></div></details><details><summary>Does it accuse companies?</summary><div class="a"><p>Its own sentences never name one. A name appears only in the pasted offer, a verified quote, or beside “Dilaporkan oleh &lt;sumber&gt;, bukan tuduhan kami” — reported by the source, not our accusation.</p></div></details></div>
 </section>
 
 <section class="close page" aria-labelledby="close-h">
   <h2 id="close-h">Paste one offer.</h2>
-  <p>No login, no daily cap. Or replay 5 recorded runs on <a href="/judge">/judge</a>.</p>
+  <p>No login, no daily cap (60 checks an hour per connection) — or replay 5 recorded runs on <a href="/judge">/judge</a>.</p>
   <div class="ctas"><a class="btn btn-ink" href="/">Open the app <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="btn" href="/judge">Recorded runs</a><a class="btn" href="/pitch">Pitch deck</a></div>
 </section>
 </main>
@@ -660,65 +693,64 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
       <p><b>Awas</b> — Indonesian for “watch out”. Built for the Nebius Global AI Hackathon.</p>
       <p class="links" style="margin-top:10px"><a href="/">The app</a><a href="/judge">/judge</a><a href="/integrations">/integrations</a><a href="/pitch">Pitch deck</a><a href="https://github.com/edycutjong/awas" rel="noopener">Source</a><a href="https://github.com/edycutjong/awas/blob/main/DEMO.md" rel="noopener">DEMO.md</a><a href="https://github.com/edycutjong/awas/blob/main/docs/SOURCES.md" rel="noopener">SOURCES.md</a><a href="https://github.com/edycutjong/awas/blob/main/FEEDBACK.md" rel="noopener">FEEDBACK.md</a></p>
     </div>
-    <p class="meta">v0.1.0 · MIT<br>names masked in recordings</p>
+    <p class="meta">v0.1.0 · MIT<br>names masked in this page’s captures</p>
   </div>
 </footer>
 
 <script src="/landing/lab.js" defer></script>
 <script>
 (() => {
+  window.__awas = true;
   const PAGE = {"url": "https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo", "title": "Waspada Penipuan Lowongan Kerja Luar Negeri (TPPO)", "domain": "humas.polri.go.id", "text": "Saat ini, keinginan masyarakat untuk mencari nafkah demi keluarga kerap dimanfaatkan oleh oknum-oknum tidak bertanggung jawab. Polrestabes Medan terus memantau maraknya tawaran pekerjaan di luar negeri yang berujung pada Tindak Pidana Perdagangan Orang (TPPO). Jangan sampai niat tulus mencari rezeki justru berakhir pada penderitaan.\n\nAgar tidak menjadi korban, masyarakat diimbau untuk waspada apabila menemukan tawaran kerja di luar negeri dengan ciri-ciri sebagai berikut:\n\nProses sangat instan, menjanjikan keberangkatan cepat tanpa melalui seleksi resmi maupun pelatihan bahasa dan keterampilan.\nGaji tidak masuk akal, menawarkan upah sangat tinggi untuk pekerjaan yang terlihat ringan, seperti admin media sosial atau layanan pelanggan.\nIdentitas perusahaan tidak jelas, alamat kantor tidak pasti dan komunikasi hanya dilakukan melalui media sosial atau WhatsApp tanpa pertemuan langsung di kantor resmi.\nDokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah.\n\nBiaya keberangkatan “ditalangi”, dengan iming-iming gratis di awal, namun pada akhirnya menjadi utang besar yang dipotong dari gaji (jeratan utang).\n\nSebagai langkah aman sebelum melamar pekerjaan ke luar negeri, masyarakat diimbau untuk menerapkan prinsip 3M, yaitu:\n\nM-eriset, dengan mengecek legalitas perusahaan melalui website resmi BP2MI (Badan Pelindungan Pekerja Migran Indonesia) atau Dinas Tenaga Kerja setempat.\nM-enanyakan, dengan mengonsultasikan tawaran pekerjaan kepada aparat desa, Bhabinkamtibmas, atau kantor kepolisian terdekat.\nM-enolak, apabila diminta menyerahkan dokumen asli seperti paspor atau KTP kepada pihak perorangan yang tidak jelas.\n\nPerlu diingat, bekerja di luar negeri secara ilegal sangat berisiko. Selain berpotensi dideportasi, korban tidak akan mendapatkan perlindungan hukum dan dapat mengalami kekerasan fisik tanpa adanya jaminan keselamatan.\n\nPolrestabes Medan mengimbau kepada seluruh warga Kota Medan, apabila melihat atau mengetahui adanya penampungan tenaga kerja yang mencurigakan di lingkungan sekitar, agar segera melaporkannya melalui Call Centre 110. Polrestabes Medan siap bertindak demi mewujudkan keamanan dan kenyamanan masyarakat.\n\nMedan harus aman, warga harus pintar!"};
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-  const motion = document.documentElement.classList.contains("motion");
+  const root = document.documentElement;
+  const motion = root.classList.contains("motion");
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
-  const seen = (el, fn, threshold = 0.35) => {
+  // Seen: a tall element (zoomed page, short landscape screen) can never be 40 % visible, so the threshold shrinks to fit.
+  const seen = (el, fn, t = 0.35) => {
     if (!("IntersectionObserver" in window)) return fn();
-    const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); fn(); } }, { threshold });
+    const th = Math.max(0.01, Math.min(t, (0.5 * innerHeight) / Math.max(1, el.offsetHeight)));
+    const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); fn(); } }, { threshold: th });
     io.observe(el);
   };
-  // A sequence: arm (the pencil state), play once in view, then settle (no animation left behind for print or capture).
-  const sequence = (els, ms, after) => {
-    els.forEach((e) => { e.classList.remove("settled", "play"); e.classList.add("armed"); });
-    void els[0].offsetWidth;
-    requestAnimationFrame(() => els.forEach((e) => { e.classList.add("play"); e.classList.remove("armed"); }));
-    setTimeout(() => { els.forEach((e) => { e.classList.remove("play"); e.classList.add("settled"); }); after && after(); }, ms);
+  // A sequence: paused on its first frame until seen, then plays once and settles (no animation left for print or capture).
+  const timers = new WeakMap();
+  const play = (el, ms) => {
+    clearTimeout(timers.get(el));
+    if (el.classList.contains("play")) { el.classList.add("settled"); void el.offsetWidth; }
+    el.classList.remove("settled");
+    el.classList.add("play");
+    timers.set(el, setTimeout(() => el.classList.add("settled"), ms));
   };
+  const settleAll = () => $$("#top, #file, #slips, #axis, #receipt").forEach((e) => e.classList.add("play", "settled"));
 
   // Copy buttons.
   $$("[data-copy]").forEach((b) => b.addEventListener("click", async () => {
     const t = $(b.dataset.copy)?.textContent ?? "";
-    const label = b.lastChild;
+    const label = b.querySelector("span");
     try { await navigator.clipboard.writeText(t); label.textContent = "copied"; } catch { label.textContent = "select + copy"; }
     setTimeout(() => (label.textContent = "copy"), 1600);
   }));
 
   if (motion) {
-    // Hero: the recorded file assembles in the run's order; the stamp lands last, then the pencil strikes "scores".
-    const hero = $("#top"), file = $("#file"), rf = $("#replay-file");
-    const playFile = () => {
-      sequence([file, hero], 6500);
-      setTimeout(() => { file.classList.remove("thud"); void file.offsetWidth; file.classList.add("thud"); }, 5250);
-    };
-    file.classList.add("armed"); hero.classList.add("armed");
-    // On a phone the file starts below the fold: the headline's strike plays on its own, the file when it is seen.
+    const top = $("#top"), file = $("#file");
+    // On a phone the file starts below the fold: the headline's pencil strike plays at once, the file when it is seen.
     const solo = file.getBoundingClientRect().top > innerHeight * 0.75;
-    if (solo) { hero.dataset.solo = "1"; sequence([hero], 1600, () => delete hero.dataset.solo); }
-    seen(file, () => (solo ? sequence([file], 6500) : playFile()), 0.4);
-    rf.hidden = false; rf.addEventListener("click", playFile);
-
-    // The register: 35 stamps land in order.
-    const slips = $("#slips");
-    slips.classList.add("armed");
-    seen(slips, () => sequence([slips], 3600));
-
-    // One run: the seconds axis draws and the receipt prints, step by step.
+    if (solo) { top.style.setProperty("--hd", "700ms"); play(top, 1400); }
+    const runFile = () => { play(file, 3800); if (!solo) play(top, 4500); };
+    seen(file, runFile, 0.4);
+    const rf = $("#replay-file");
+    rf.hidden = false;
+    rf.addEventListener("click", () => {
+      if (file.getBoundingClientRect().top < 0) file.scrollIntoView({ block: "start", behavior: "smooth" });
+      runFile();
+    });
+    seen($("#slips"), () => play($("#slips"), 3200));
     const axis = $("#axis"), receipt = $("#receipt"), rr = $("#replay-receipt");
-    axis.classList.add("armed"); receipt.classList.add("armed");
-    const playRun = () => sequence([axis, receipt], 3800);
-    seen(receipt, playRun);
-    rr.hidden = false; rr.addEventListener("click", playRun);
-
+    const runReceipt = () => { play(axis, 2400); play(receipt, 3000); };
+    seen(receipt, runReceipt);
+    rr.hidden = false; rr.addEventListener("click", runReceipt);
     // Count-ups: the final number is in the HTML; motion only replays the count.
     $$("[data-count]").forEach((el) => seen(el, () => {
       const end = Number(el.dataset.count), t0 = performance.now(), dur = 900;
@@ -727,7 +759,7 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
       requestAnimationFrame(step);
     }, 0.6));
   }
-  addEventListener("beforeprint", () => { $$(".armed, .play").forEach((e) => { e.classList.remove("armed", "play"); e.classList.add("settled"); }); $$("details").forEach((d) => (d.open = true)); });
+  addEventListener("beforeprint", () => { settleAll(); $$("details").forEach((d) => (d.open = true)); });
 
   document.addEventListener("DOMContentLoaded", () => {
     const lab = window.AwasLab;
@@ -736,7 +768,7 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
     lab.addToCorpus(corpus, PAGE.url, "advisory", { title: PAGE.title, pageText: PAGE.text });
     const gate = (quote) => lab.gateLine({ url: PAGE.url, quote, claim: "" }, corpus, { phones: [] });
 
-    // The gate lab.
+    // The gate lab: the whole Polri page is the corpus; the box shows it, the gate marks what it found.
     const pageBox = $("#page-text"), quoteBox = $("#quote"), gateOut = $("#gate-result");
     pageBox.textContent = PAGE.text;
     const REASON = { not_in_page: "not in the page", too_short: "fewer than " + lab.MIN_QUOTE_WORDS + " words", spans_chunks: "runs across two separate chunks", url_not_returned: "a page this run did not fetch" };
@@ -765,7 +797,7 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
         if (sen.length > line.quote.trim().length + 2) cut = `<span class="cut"><b>Cut from a longer sentence.</b> The gate checks words, not meaning; the page reads: <span lang="id">“${esc(sen)}”</span></span>`;
       }
       gateOut.innerHTML = line.status === "verified"
-        ? `<div class="gate-card verified"><span class="q" lang="id"><span class="hl">“${esc(line.quote)}”</span></span><span class="why">found verbatim in one chunk of ${esc(PAGE.domain)} · ${line.quote.split(/\s+/).length} words · <a href="${esc(line.fragmentUrl)}" rel="noopener">open it on the page</a></span>${cut}</div>`
+        ? `<div class="gate-card verified"><span class="q" lang="id"><span class="hl">“${esc(line.quote)}”</span></span><span class="why">found verbatim in one chunk of <span class="data">${esc(PAGE.domain)}</span> · ${line.quote.split(/\s+/).length} words · <a href="${esc(line.fragmentUrl)}" rel="noopener">open it on the page</a></span>${cut}</div>`
         : `<div class="gate-card dropped"><span class="q" lang="id">“${esc(q)}”</span><span class="fold" lang="id">kutipan tidak ditemukan di halaman — tidak ditampilkan · <span lang="en">quote not found in the page — not shown</span></span><span class="why">dropped: ${esc(REASON[line.reason] ?? line.reason)}</span></div>`;
     };
     let gt = null;
@@ -779,11 +811,12 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
     // The rules lab.
     const adBox = $("#adtext"), rulesOut = $("#rules-result");
     const runRules = () => {
+      if (!adBox.value.trim()) { rulesOut.innerHTML = `<p class="hint">Paste or type an offer.</p>`; return; }
       const flags = lab.evaluateRubric(adBox.value, null);
       const d = lab.decide(flags, [], []);
       const rows = flags.map((f) => `<li><i class="tick ${f.class === "NEVER" ? "" : "check"}" aria-hidden="true"></i><div><b>${esc(f.label)}</b> · <span class="sp" lang="id">“${esc(f.span.text)}”</span><span class="src">${f.class === "NEVER" ? "NEVER" : "CAUTION"} rule · ${f.source ? `<a href="${esc(f.source.url)}" rel="noopener">${esc(f.source.domain)} · ${esc(f.source.date)}</a>` : "no source recorded"}</span></div></li>`).join("");
       let v;
-      if (d.verdict === "STOP") v = `<p class="vline v-stop"><b>STOP</b> <span>— ${esc(d.reasons.join(" + "))}. A sourced rule decides it; the rest of a check is context for the family.</span></p>`;
+      if (d.verdict === "STOP") v = `<p class="vline v-stop"><b>STOP</b> <span>— ${esc(d.reasons.join(" + "))}. A sourced NEVER rule decides it; the rest of a check is context for the family.</span></p>`;
       else if (flags.length) v = `<p class="vline v-check"><b>VERIFY FIRST</b> <span>— ${esc(d.reasons.join("; "))}.</span></p>`;
       else v = `<p class="vline v-none"><b>NO RULE FIRED</b> <span>— that is not a pass. A full check still looks the company up, and even NO RED FLAGS FOUND is never a guarantee.</span></p>`;
       rulesOut.innerHTML = (rows ? `<ol class="flags">${rows}</ol>` : "") + v;

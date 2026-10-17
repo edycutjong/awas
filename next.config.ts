@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
     return [
       { source: "/fonts/:file*", headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }] },
       { source: "/landing/media/:file*", headers: [{ key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" }] },
+      // The lab bundle changes only with src/lib (frozen); the icons and the card are versioned by name or query.
+      { source: "/landing/lab.js", headers: [{ key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" }] },
+      { source: "/:icon(icon.svg|favicon.ico|apple-touch-icon.png|og-image.png)", headers: [{ key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" }] },
     ];
   },
   // The story page and the pitch deck are static single-file pages in public/; give them clean URLs.
