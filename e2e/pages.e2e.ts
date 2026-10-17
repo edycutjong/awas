@@ -13,12 +13,14 @@ for (const [name, width, height] of [["phone", 375, 812], ["tablet", 768, 1024],
   }
 }
 
-test("/about: the hero highlighter is set by the quote gate running in the page", async ({ page }) => {
+test("/about: the hero's recorded run shows its yellow quote as a link to the sentence, and the stamp lands", async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(String(e)));
   await page.goto("/about");
-  await expect(page.locator("#hero-hl")).not.toHaveClass(/\boff\b/);
-  await expect(page.locator("a.hero-frag").first()).toHaveAttribute("href", /#:~:text=/);
+  await expect(page.locator("#file .card.verified a.q")).toHaveAttribute("href", /#:~:text=/);
+  await expect(page.locator("#file .card.dropped .mask")).toHaveCount(1);
+  await expect(page.locator("#stamp")).toBeVisible();
+  await expect(page.locator("#file a[href^='/case/']")).toHaveCount(1);
   expect(errors).toEqual([]);
 });
 
@@ -37,7 +39,7 @@ test("/about: the rules lab fires no rule on a negated ad and STOP on the compos
   await page.goto("/about");
   await page.getByRole("button", { name: "Negated" }).click();
   await expect(page.locator("#rules-result")).toContainText("NO RULE FIRED");
-  await page.getByRole("button", { name: "The composite ad" }).click();
+  await page.getByRole("button", { name: "A composite offer" }).click();
   await expect(page.locator("#rules-result .v-stop")).toContainText("tourist or visit visa offered for work");
 });
 
