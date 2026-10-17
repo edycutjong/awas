@@ -1,0 +1,66 @@
+{
+ "what": "The five /judge samples: real texts that are NOT benchmark rows (seed.py --check: no shared URL or company; kitchen overlap check: no shared case). Each is pasted as-is into the live app; the stored pack is that real run, labelled with when it was recorded. Pre-registered mix (spec §4): 2 STOP with ≥1 company-matched line, 1 licensed-agency ad, 1 English ad, 1 'name used by others' — published reports almost never name the recruiting company (benchmark x = 1/0/1), so the two STOP samples are the nearest real cases: STOPs on cited rules, without a company-matched line.",
+ "samples": [
+  {
+   "slug": "kamboja-cs",
+   "label": "Offer to Cambodia, as KP2MI described it (2022) — description, not the ad",
+   "lang": "id",
+   "ad_text": "PMI ([nama]) asal Medan mengaku mendapat tawaran bekerja di Kamboja dari Facebook. [nama] dijanjikan bekerja sebagai Costumer Service sebuah perusahaan dengan gaji sebesar 2000 USD.",
+   "kind": "description, not the ad",
+   "source_url": "https://kp2mi.go.id/berita-detail/bp2mi-kembali-sambut-para-pmi-korban-penipuan-dari-kamboja-di-bandara-soekarno-hatta",
+   "source_title": "BP2MI Kembali Sambut Para PMI Korban Penipuan dari Kamboja di Bandara Soekarno-Hatta",
+   "published": "2022-08-23",
+   "company": null,
+   "redactions": 2
+  },
+  {
+   "slug": "visa-turis",
+   "label": "Tourist-visa job offer, as Polri described it (2026) — not the ad",
+   "lang": "id",
+   "ad_text": "Untuk memperkuat modus tersebut, sindikat menyiapkan dokumen perjalanan wisata ke empat negara, yakni China, Jepang, Taiwan, dan Korea. Para korban juga dibekali pemesanan hotel serta apartemen di luar negeri agar tampak seperti wisatawan. \"Modusnya menawarkan pekerjaan perkebunan dengan visa turis atau seolah-olah holiday,\" ucapnya. Setiap CPMI diminta membayar Rp90 juta kepada para pelaku sebagai biaya keberangkatan ke luar negeri. \"Rinciannya terdiri atas Rp75 juta untuk biaya operasional dan Rp15 juta untuk pengurusan visa,\" katanya.",
+   "kind": "description, not the ad",
+   "source_url": "https://tribratanews.polri.go.id/blog/nasional-3/polresta-bandara-gagalkan-pengiriman-pmi-ilegal-dengan-modus-liburan-ke-jepang-106361",
+   "source_title": "Polresta Bandara Gagalkan Pengiriman PMI Ilegal dengan Modus Liburan ke Jepang",
+   "published": "2026-09-24",
+   "company": null,
+   "redactions": 0
+  },
+  {
+   "slug": "english-telegram",
+   "label": "English recruitment ad quoted by UNODC (2026) — the ad's own words",
+   "lang": "en",
+   "ad_text": "We are hiring for Cambodia and Myanmar. Strictly preferred who is inside the country. Nationality: India, Pakistan, Bangladesh, Nepal, Africa. Pic up [sic] facilities available after interview. Full freedom company, we respect our employees. So we need only good employees with English proficiency. Original passport must be in hand.",
+   "kind": "verbatim ad (as quoted by UNODC, p. 26)",
+   "source_url": "https://www.unodc.org/documents/human-trafficking/2026/Publications/UNODC_Trafficked_to_Scam.pdf",
+   "source_title": "UNODC — Trafficked to Scam: South Asian Responses to Trafficking in Persons for the Purpose of Forced Criminality in Scam Operations",
+   "published": "2026-09-01",
+   "company": null,
+   "redactions": 0
+  },
+  {
+   "slug": "nama-dicatut",
+   "label": "Fake vacancy using a real company's name — turnbackhoax.id (2024)",
+   "lang": "id",
+   "ad_text": "SPS GROUP\nGrowing Together\nNEED CREW:\nVESSEL CARGO FU YUN GT 1000\nLINE TAIWAN (KINMEN – TAIPEI)\n2ND ENGINER 2000 USD\n2 AB SALARY 800 USD\n3 OILMAN SALARY 800 USD\nPERSYARATAN\nCONTRACT 1TAHUN\nEXPERIENCE MINIMUM 1YEAR\nDOCUMENT VALID\nGOOD ENGLISH\nJOINT AGUSTUS 2024\nOFFICE : PT Samudera Perdana Selaras, Jalan Madukoro Raya, Ruko Semarang Indah…\nSEND CV WHATSAPP “ [nomor] ([nama])”",
+   "kind": "verbatim ad (as quoted by the fact-checker)",
+   "source_url": "https://turnbackhoax.id/articles/21889-penipuan-poster-lowongan-kerja-di-pt-samudera-perdana-selaras",
+   "source_title": "[PENIPUAN] Poster Lowongan Kerja di PT Samudera Perdana Selaras",
+   "published": "2024-08-16",
+   "company": "PT Samudera Perdana Selaras",
+   "redactions": 2
+  },
+  {
+   "slug": "agensi-resmi",
+   "label": "Licensed agency's vacancy — official SISKOP2MI board (2026)",
+   "lang": "id",
+   "ad_text": "General Workers Rubber\nELSHAFAH ADI WIGUNA MANDIRI\nACEH BARAT\nACROOS BORDERLAND CONSULTING S.R.O Slovakia\n816 Bulanan\nDeskripsi Pekerjaan\na. Loading and unloading raw rubber semiprocessed materials and chemicals into mixing and processing machines according to specified formulas\nb. Operating various machines and presses involved in the rubber manufacturing processsuch as molding extruding and curing machines\nc. Performing routine maintenance cleaning and lubricating machinery and tools to ensure they function properly\nd. Monitoring machines for blockages inspecting products for defects and reporting issues to maintain production standards\ne. Assisting machine operators and assemblers with their duties preparing raw materials and transporting items between work areas\nKualifikasi\nBerlaku :\n23 April 2026 s.d. 23 October 2026\nLowongan Tersisa :\nLaki - laki : 30 Orang\nWanita : 0 Orang\nUsia :\n18 Tahun s.d. 48 Tahun\nPengalaman :\nTidak Ada Pengalaman\nBahasa :\nEnglish Level : Speaking 1 (Elementary Proficiency)\nFasilitas :\nAkomodasi\nSkill Lainnya :\nTinggi badan:\n160 cm s.d. 180 cm\nBerat badan:\n50 kg s.d. 80 kg\nGaji :\n816 - 950 Euro (EUR) Bulanan\nPendidikan :\nSMP s.d. SARJANA",
+   "kind": "verbatim ad (the board's own text)",
+   "source_url": "https://siskop2mi.bp2mi.go.id/lowongan/detail/481060",
+   "source_title": "SISKOP2MI lowongan 481060 — General Workers Rubber, Slovakia",
+   "published": "2026-04-23",
+   "company": "ELSHAFAH ADI WIGUNA MANDIRI",
+   "sip_no": "B. 1314/SIP2MI/IV/2026",
+   "redactions": 0
+  }
+ ]
+}
