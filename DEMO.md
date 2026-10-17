@@ -189,10 +189,13 @@ AWAS_BENCH_SECRET=pick-one python3 scripts/bench.py --set bench/tranche1.jsonl -
     still gives a company-matched STOP; `decide` does not read the P3MI result (`src/lib/gate.ts`, `src/lib/verdict.ts`).
   - The company match checks the word after the name for a capitalised continuation, not the word before it (`gate.ts` `entityMatch`).
   - The passport rule matches worker-protective wording ("workers keep their passports").
-  - The personal-recruiter rule stores the matched phone digits in the case's flag excerpt (`rubric.ts`); the ad text and the
-    extracted phone fields are masked (`mask.ts`); flag excerpts and the other extracted spans are not. The recorded /judge samples carry no digits.
   - The English gloss is checked for dropped hedge words, not dropped negations (`message.ts`); the family message is not
     scanned for the word "safe". The Indonesian quote is always the page's own text.
   - The Tavily alarm at 900 credits is a flag, not a limit; a live check can use up to 5 credits.
   - The bench secret also unlocks `/api/bench/dispatch`, `/api/samples` and the per-IP limit bypass; the tranche-2 job
     held it. It is an environment value and can be rotated without a code change.
+
+- **Fixed after the freeze (2026-10-18, verdict-neutral):** phone digits in flag excerpts (`flags[].span`) are now masked with `maskPhoneDigits`,
+  the same last-4 format as the stored ad text, after the verdict is computed. Proof: re-scoring the recorded tranche-2 run offline
+  through the patched code gives the same verdict for 105 of 105 case-columns (35 cases), 0 spans newly masked because no recorded excerpt held
+  digits; see `docs/proof/p0-3-verdict-neutral-2026-10-18.json` and `tests/p0-3-neutrality.test.ts`. The other four findings above stay frozen.

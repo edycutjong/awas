@@ -1,0 +1,301 @@
+{
+ "what": "P0-3 (raw phone digits in flags[].span) fixed post-freeze by masking flag excerpts with maskPhoneDigits after the verdict; offline re-score of the recorded tranche-2 run",
+ "method": "bench/tranche2.jsonl ad text + each row's recorded full_pack (frozen extraction, lines, failed steps) -> patched evaluateRubric/decide; compared with the recorded rubric, extract and full verdict + rule; maskFlags applied to the re-scored flags. No Nebius job, no Token Factory, no Tavily.",
+ "source": "bench/results-t2.jsonl",
+ "cases": 35,
+ "columns_compared": 105,
+ "verdicts_identical": 105,
+ "rule_text_identical": 104,
+ "verdicts_differing": 0,
+ "rule_text_only_differences": [
+  "t2-p18: recorded \"VERIFY FIRST — the ad names no company\" vs re-scored from the full column's extraction \"VERIFY FIRST — a fee is asked to get the job; the ad names no company\""
+ ],
+ "rule_text_note": "The extract column ran its own Token Factory extraction call; only the full column's extraction is stored in full_pack. Where the two extractions differ the reasons in the rule text can differ while the verdict is the same. The code under test (rubric.ts, verdict.ts) is unmodified by the P0-3 patch, so this is a property of the recording, not of the change.",
+ "flag_sets_identical_to_recorded": 35,
+ "flags_total": 47,
+ "spans_newly_masked": 0,
+ "note": "No tranche-2 flag excerpt carried phone digits, so no span changed; the unit tests cover the masking itself.",
+ "per_case": [
+  {
+   "id": "t2-n01",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": [],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-n02",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": [],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-n03",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": [],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-n04",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": [],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-n05",
+   "verdict": "VERIFY_FIRST",
+   "flags": [],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-n06",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": [],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-n07",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": [],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-n08",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": [],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-n09",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": [],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-n10",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": [],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p11",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    "high_pay_light_work",
+    "personal_recruiter"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p12",
+   "verdict": "STOP",
+   "flags": [
+    "non_placement_country",
+    "no_company"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p13",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    "no_company"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p14",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    "fee_asked"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p15",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    "quick_departure",
+    "no_company"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p16",
+   "verdict": "STOP",
+   "flags": [
+    "tourist_visa",
+    "fee_asked",
+    "no_company"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p17",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    "fee_asked",
+    "debt_bondage",
+    "no_company"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p18",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    "fee_asked",
+    "no_company"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p19",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    "fee_asked",
+    "advisory_destination",
+    "no_company"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p20",
+   "verdict": "STOP",
+   "flags": [
+    "non_placement_country",
+    "no_company"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p21",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    "fee_asked",
+    "no_company"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p22",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    "high_pay_light_work",
+    "no_company"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p23",
+   "verdict": "STOP",
+   "flags": [
+    "non_placement_country",
+    "no_company"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p24",
+   "verdict": "NO_RED_FLAGS_FOUND",
+   "flags": [],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p25",
+   "verdict": "STOP",
+   "flags": [
+    "non_placement_country",
+    "personal_recruiter"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p26",
+   "verdict": "STOP",
+   "flags": [
+    "non_placement_country",
+    "no_company"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p27",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    "no_company"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p28",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    "fee_asked",
+    "no_company"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p29",
+   "verdict": "STOP",
+   "flags": [
+    "quick_departure",
+    "not_on_p3mi_list"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p30",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    "high_pay_light_work",
+    "advisory_destination",
+    "no_company"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p31",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    "advisory_destination",
+    "no_company"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p32",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    "no_company"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p33",
+   "verdict": "STOP",
+   "flags": [
+    "non_placement_country",
+    "no_company"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p34",
+   "verdict": "VERIFY_FIRST",
+   "flags": [
+    "no_company"
+   ],
+   "spansMasked": 0
+  },
+  {
+   "id": "t2-p35",
+   "verdict": "STOP",
+   "flags": [
+    "tourist_visa",
+    "fee_asked"
+   ],
+   "spansMasked": 0
+  }
+ ]
+}

@@ -11,7 +11,7 @@
 import { createHash } from "node:crypto";
 import { addToCorpus, gateLine, type Corpus, type GateContext } from "./gate";
 import { extractFields } from "./extract";
-import { maskAll, newCaseId, sanitise } from "./mask";
+import { maskAll, maskFlags, newCaseId, sanitise } from "./mask";
 import { domainOf, verifySteps, writeMessage } from "./message";
 import { BUDGET, filterCorpus, pickSentences, proposeLines } from "./propose";
 import { checkRegistry } from "./registry";
@@ -170,7 +170,7 @@ export async function runCheck(input: CheckInput, deps: Deps, emit: Emit = () =>
   pack.flags = evaluateRubric(input.adText, ex);
   const reg = checkRegistry(input.adText, ex?.company);
   pack.registry = { asOf: reg.asOf, source: reg.source, found: reg.found ? { name: reg.found.name, status: reg.found.status } : null, notListed: reg.notListed.map((s) => s.text) };
-  emit("flags", { flags: pack.flags, registry: pack.registry });
+  emit("flags", { flags: maskFlags(pack.flags), registry: pack.registry });
   const ruleStop = pack.flags.filter((f) => f.class === "NEVER");
   if (ruleStop.length > 0) emit("rule_stop", { flags: ruleStop.map((f) => f.id) });
   await save();

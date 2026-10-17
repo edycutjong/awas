@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { maskAdPhones, maskCompany, maskPhoneDigits, mentionsCompany, newCaseId, sanitise } from "@/lib/mask";
-import type { EvidencePack } from "@/lib/types";
+import { maskFlags, maskAdPhones, maskCompany, maskPhoneDigits, mentionsCompany, newCaseId, sanitise } from "@/lib/mask";
+import type { EvidencePack, Flag } from "@/lib/types";
 
 describe("company masking", () => {
   it("replaces the company with flexible spacing and legal-form punctuation", () => {
@@ -42,5 +42,24 @@ describe("case ids", () => {
     const id = newCaseId();
     expect(id).toMatch(/^[a-z2-7]{26}$/);
     expect(newCaseId()).not.toBe(id);
+  });
+});
+
+describe("P0-3: phone digits in flag excerpts", () => {
+  const flag = { id: "personal_recruiter", class: "CAUTION", sourced: true, via: "pattern", span: { text: "0812-3456-7890", start: 3, end: 17 }, label: "x", source: null };
+
+  it("maskFlags masks the excerpt with the same format as adTextMasked and changes nothing else", () => {
+    const [m] = maskFlags([flag] as unknown as Flag[]);
+    expect(m.span.text).toBe("••••-••••-7890");
+    expect(m.span.text).toBe(maskPhoneDigits(flag.span.text));
+    expect(m.span.text.length).toBe(flag.span.text.length);
+    expect({ ...m, span: { ...m.span, text: "" } }).toEqual({ ...flag, span: { ...flag.span, text: "" } });
+    expect(maskFlags([{ ...flag, span: { text: "Rp 15.000.000", start: 0, end: 13 } }] as unknown as Flag[])[0].span.text).toBe("Rp 15.000.000");
+  });
+
+  it("sanitise masks flags[].span.text and does not mutate the input pack", () => {
+    const pack = { adTextMasked: "", extraction: null, tavily: [], flags: [flag] } as unknown as EvidencePack;
+    expect(sanitise(pack).flags[0].span.text).toBe("••••-••••-7890");
+    expect(pack.flags[0].span.text).toBe("0812-3456-7890");
   });
 });

@@ -5,12 +5,14 @@
  * the attribution string. Everywhere else — the claim ("Awas's reading"), the English gloss, every dropped quote and
  * the model's own sentences in the family message — code replaces the company name and the ad's phone digits.
  * `sanitise()` runs before every write: phone digits are masked except the last 4 in the stored ad text, the extracted
- * phones and the stored Tavily parameters.
+ * phones, the stored Tavily parameters and every flag excerpt (`flags[].span.text`). Masking runs after the rubric and the
+ * verdict: the rubric reads the raw ad, only the copy that leaves the function is masked ("•" keeps each span's length, so
+ * offsets stay valid).
  */
 
 import { companyTokens } from "./rubric";
 import { digits, escapeRegExp } from "./text";
-import type { EvidencePack } from "./types";
+import type { EvidencePack, Flag } from "./types";
 
 export const MASK = {
   company: { id: "[perusahaan dalam iklan]", en: "[the company in the ad]" },
@@ -66,12 +68,18 @@ export function maskPhoneDigits(text: string): string {
   });
 }
 
+/** The flags with phone digits masked in each excerpt; id, class, via, offsets and everything else are untouched. */
+export function maskFlags(flags: Flag[]): Flag[] {
+  return flags.map((f) => ({ ...f, span: { ...f.span, text: maskPhoneDigits(f.span.text) } }));
+}
+
 /** Runs before EVERY write of a pack. */
 export function sanitise(pack: EvidencePack): EvidencePack {
   const ex = pack.extraction;
   return {
     ...pack,
     adTextMasked: maskPhoneDigits(pack.adTextMasked),
+    flags: maskFlags(pack.flags ?? []),
     extraction: ex ? { ...ex, phones: ex.phones.map((p) => ({ ...p, text: maskPhoneDigits(p.text) })) } : ex,
     tavily: pack.tavily.map((t) => ({
       ...t,

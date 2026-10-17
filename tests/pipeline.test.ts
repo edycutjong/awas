@@ -146,4 +146,26 @@ describe("runCheck", () => {
     expect(patternQuery({ ...base, job: { text: "CS online", start: 0, end: 9 } })).toBe("WNI korban penipuan lowongan kerja luar negeri");
     expect(patternQuery(null)).toBeNull();
   });
+
+
+describe("P0-3: raw phone digits never leave the pipeline in a flag excerpt", () => {
+  it("the live flags event, the stored pack and the API copy are masked; the verdict is computed from the raw ad", async () => {
+    const ad = "Lowongan kerja ke luar negeri, gaji besar. Hubungi 0812-3456-7890 sekarang.";
+    const ex = { is_job_offer: true, company: null, recruiter: null, phones: ["0812-3456-7890"], destination: null, job: "kerja", visa: null, fees: [], promises: [] };
+    const { fetchImpl } = fake({ extraction: ex });
+    const st = store();
+    const events: { event: string; data: unknown }[] = [];
+    const pack = await runCheck({ adText: ad, lang: "id", mode: "live", stage: "full" }, { tf, tavily, store: st, fetchImpl }, (event, data) => events.push({ event, data }));
+    const flagsEvent = events.find((e) => e.event === "flags")?.data as { flags: { id: string; span: { text: string } }[] };
+    const recruiter = flagsEvent.flags.filter((f) => f.id === "personal_recruiter");
+    expect(recruiter.length).toBeGreaterThan(0);
+    expect(JSON.stringify(events)).not.toMatch(/0812-3456/);
+    // The rule ran on the raw ad: the same flags exist in memory, so the verdict is unchanged by masking.
+    expect(pack.flags.map((f) => f.id)).toEqual(flagsEvent.flags.map((f) => f.id));
+    expect(pack.verdict).not.toBeNull();
+    const stored = JSON.stringify(await st.getPack(pack.id));
+    expect(stored).not.toMatch(/0812-3456/);
+    expect(stored).toContain("7890");
+  });
+});
 });
