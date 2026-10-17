@@ -477,13 +477,13 @@ a.mast:hover {
   animation: fold 300ms ease-out both;
 }
 .card.dropped .quote {
-  color: var(--before);
+  color: var(--muted);
   font-size: 16px;
   margin: 0;
-  background: linear-gradient(var(--before), var(--before)) no-repeat 0 55% / 100% 2px;
+  background: linear-gradient(var(--before), var(--before)) no-repeat 0 55% / 100% 1px;
   animation: strike 300ms ease-out both;
   display: -webkit-box;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -786,15 +786,15 @@ a.mast:hover {
     content: "";
     float: right;
     width: 370px;
-    height: 84px;
+    height: 40px;
   }
   .file:has(.stamp.check) .ad::before {
     width: 340px;
-    height: 84px;
+    height: 44px;
   }
   .file:has(.stamp.none) .ad::before {
     width: 280px;
-    height: 112px;
+    height: 76px;
   }
 }
 

@@ -143,7 +143,7 @@ export function Checker({ judgeCode = null, judge = false }: { judgeCode?: strin
             {samples.map((s) => (
               <button key={s.id} type="button" className={`chip-btn ${active === s.id ? "on" : ""}`} onClick={() => replay(s)} aria-pressed={active === s.id}>
                 <span className="chip-label">{s.sampleLabel ?? s.verdict?.replace(/_/g, " ")}</span>
-                <span className="chip-meta">recorded run · {s.recordedAt?.slice(0, 10)}</span>
+                <span className="chip-meta">rekaman · recorded run · {s.recordedAt?.slice(0, 10)}</span>
               </button>
             ))}
           </div>

@@ -135,11 +135,26 @@ const REASON_ID: [RegExp, string][] = [
   [/^step not completed: (.*)$/, "langkah tidak selesai: $1"],
 ];
 
-function ruleLineId(view: View): string {
-  if (view.verdict === "NO_RED_FLAGS_FOUND") return "Semua langkah selesai dan tidak ada aturan yang terpicu. Ini bukan jaminan.";
-  const parts = view.flags.map((f) => FLAG_LABELS[f.id].id);
-  for (const r of view.reasons) for (const [re, id] of REASON_ID) if (re.test(r)) parts.push(r.replace(re, id));
-  return capitalise(parts.join("; ")) + ".";
+/**
+ * Why the verdict is what it is, in both languages from one list: for STOP the rules that decide it (the NEVER rules)
+ * and any report naming the company; otherwise every flag that fired, and the evidence and step reasons.
+ */
+function ruleLine(view: View): { id: string; en: string } {
+  if (view.verdict === "NO_RED_FLAGS_FOUND") {
+    return { id: "Semua langkah selesai dan tidak ada aturan yang terpicu. Ini bukan jaminan.", en: "Every step completed and no rule fired. This is not a guarantee." };
+  }
+  const deciding = view.verdict === "STOP" ? view.flags.filter((f) => f.class === "NEVER") : view.flags;
+  const id = deciding.map((f) => FLAG_LABELS[f.id].id);
+  const en = deciding.map((f) => FLAG_LABELS[f.id].en);
+  for (const r of view.reasons) {
+    for (const [re, idText] of REASON_ID) {
+      if (re.test(r)) {
+        id.push(r.replace(re, idText));
+        en.push(r);
+      }
+    }
+  }
+  return { id: `${capitalise(id.join("; "))}.`, en: `${capitalise(en.join("; "))}.` };
 }
 
 function chipFor(line: ViewLine, calls: TavilyReceipt[]): TavilyReceipt | undefined {
@@ -215,7 +230,7 @@ function EvidenceCard({ line, calls, showGloss }: { line: ViewLine; calls: Tavil
           </a>
           <div className="find">
             {line.fragmentFoundAt
-              ? `found on the live page ${line.fragmentFoundAt}`
+              ? `ditemukan di halaman langsung · found on the live page ${line.fragmentFoundAt}`
               : `buka halaman dan cari · open the page and search for: “${firstWords(line.quote, 6)}”`}
           </div>
         </>
@@ -322,6 +337,7 @@ export function EvidenceFile({ view, judge = false }: { view: View; judge?: bool
   const verifiedIdx = view.lines.filter((l) => l.state === "verified").map((l) => l.index);
   const foldedIdx = new Set(finished && verifiedIdx.length > OPEN_CARDS + 1 ? verifiedIdx.slice(OPEN_CARDS) : []);
   const bilingualSteps = verifySteps(view.flags);
+  const reason = view.verdict ? ruleLine(view) : { id: "", en: "" };
 
   return (
     <article className="file" aria-live="polite">
@@ -420,7 +436,7 @@ export function EvidenceFile({ view, judge = false }: { view: View; judge?: bool
         <section className={`verdict ${view.verdict === "STOP" ? "stop" : view.verdict === "VERIFY_FIRST" ? "check" : "nrf"}`} aria-labelledby="verdict-h">
           <h2 id="verdict-h">{STAMP_WORD[view.verdict]}</h2>
           <p className="rule-line">
-            {ruleLineId(view)} <span className="en">· {capitalise(view.rule.replace(/^(STOP|VERIFY FIRST|NO RED FLAGS FOUND)\s+—\s+/, ""))}</span>
+            {reason.id} <span className="en">· {reason.en}</span>
           </p>
           <ol className="steps">
             {bilingualSteps.id.map((s, i) => (

@@ -17,7 +17,7 @@ export function JudgeStrip() {
   return (
     <footer className="foot">
       <p>
-        Tanpa login, tanpa batas harian · no login, no daily cap. Disimpan 75 hari, tidak diindeks · kept 75 days, not indexed.
+        Tanpa login, tanpa batas harian · no login, no daily cap.
       </p>
       <p>
         <a href={REPO}>source</a> · <a href={`${REPO}/blob/main/DEMO.md`}>DEMO.md</a> · <Link href="/integrations">/integrations</Link> · <Link href="/judge">/judge</Link> · <a href="/about">/about</a> · <a href="/pitch">/pitch</a>

@@ -71,6 +71,17 @@ for (const vp of [{ name: "390", width: 390, height: 844 }, { name: "1280", widt
     check(`${tag}: retention and noindex stated on the file`, /75 (hari|days)/i.test(t));
     check(`${tag}: phone digits masked except the last 4`, !/(?:\+?62|\b0)8\d{2}[\s.-]?\d{3,4}[\s.-]?\d{2,}/.test(s.adTextMasked));
     check(`${tag}: no horizontal scroll`, await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
+    // The stamp is ink on the clipping's corner: its box may never cross a rendered line of the ad's own words.
+    const overlap = await page.evaluate(() => {
+      const stamp = document.querySelector(".stamp")?.getBoundingClientRect();
+      const ad = document.querySelector(".ad");
+      if (!stamp || !ad) return 0;
+      const range = document.createRange();
+      range.selectNodeContents(ad);
+      return [...range.getClientRects()].filter((r) => r.width > 0 && r.left < stamp.right && r.right > stamp.left && r.top < stamp.bottom && r.bottom > stamp.top).length;
+    });
+    check(`${tag}: the stamp covers none of the ad's words`, overlap === 0, overlap ? `${overlap} text line box(es) under the stamp` : "");
+    if (s.verdict) check(`${tag}: the verdict reason reads in Indonesian and English`, /·/.test(await page.locator(".rule-line").innerText()) && !/\bRule:/.test(await page.locator(".rule-line").innerText()));
     if (SHOTS) await page.screenshot({ path: path.join(SHOTS, `case-${s.sampleLabel?.slice(0, 12).replace(/\W+/g, "-") ?? s.id}-${vp.name}.png`), fullPage: true });
   }
 
