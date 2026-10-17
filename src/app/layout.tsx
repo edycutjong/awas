@@ -53,9 +53,9 @@ export const metadata: Metadata = {
     siteName: "Awas",
     type: "website",
     // Bump ?v= whenever og-image.png changes: platforms cache cards by URL.
-    images: [{ url: "/og-image.png?v=bcff0a6398", width: 1200, height: 630, alt: "Awas — a recorded evidence file: the rule and its official page, a quote found word for word, a STOP stamp" }],
+    images: [{ url: "/og-image.png?v=ddf251002d", width: 1200, height: 630, alt: "Awas — a recorded evidence file: the rule and its official page, a quote found word for word, a STOP stamp" }],
   },
-  twitter: { card: "summary_large_image", title: TITLE, description: OG_DESCRIPTION, images: ["/og-image.png?v=bcff0a6398"] },
+  twitter: { card: "summary_large_image", title: TITLE, description: OG_DESCRIPTION, images: ["/og-image.png?v=ddf251002d"] },
 };
 
 export const viewport: Viewport = {
