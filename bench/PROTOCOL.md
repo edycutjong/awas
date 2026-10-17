@@ -180,3 +180,44 @@ name one in their offer text (x, computed by `seed.py --check`) are 1 in dev, 0 
 **Collection log.** `collection-log.jsonl` lists every link the named listings produced and every board record read,
 in listing order, with its outcome (`row:<id>`, `unused:<id>`, a reject reason, or `withdrawn`). URLs and reason codes
 only; the readers' notes stay out of the repository because they can name people.
+
+## Amendment 4 — option B: the cited rules carry the verdict (2026-10-17, dev set only, before tranche 1 first runs)
+
+**Why.** Stage V failed its pre-registered gate (8/20, `docs/proof/stage-v.json`). The builder chose to continue with
+the gate failure disclosed: the evidence layer becomes context, the verdict comes from cited rules. On the dev set
+(in-sample), the full pipeline ended **NO RED FLAGS FOUND on 10 of the 20 dev positives** (`stage-v.json`): the
+rubric implemented two of the five red flags on the official Polri checklist it already cites, and no rule covered a
+country the government says is not a placement destination. Tranche 1 and tranche 2 have not been run and are not
+read; they stay frozen (tags `bench-t1`, `bench-t2`).
+
+**What changes, tuned on the dev set only.** Every new rule quotes an official page, read on the rendered page
+2026-10-17, and is recorded in `src/lib/rule-sources.ts` and `docs/SOURCES.md`:
+
+| New rule | Class | Source (verbatim) |
+|---|---|---|
+| Work in a country that is not a placement destination (Cambodia, Myanmar) | NEVER | kp2mi.go.id 2025-10-28: "Perlu saya tegaskan, Kamboja itu bukan negara penempatan." · kp2mi.go.id 2026-07-21: "Kami tegaskan bahwa Myanmar bukan negara penempatan resmi Pekerja Migran Indonesia." |
+| Very fast departure, no selection or training | CAUTION | humas.polri.go.id 2026-02-04 (checklist item 1): "Proses sangat instan, menjanjikan keberangkatan cepat tanpa melalui seleksi resmi maupun pelatihan bahasa dan keterampilan." |
+| Very high pay for light office work (admin, customer service, …) | CAUTION | same checklist, item 2: "Gaji tidak masuk akal, menawarkan upah sangat tinggi untuk pekerjaan yang terlihat ringan, seperti admin media sosial atau layanan pelanggan." Threshold unchanged (Rp 6 juta / USD 700). |
+| Costs advanced, then deducted from pay | CAUTION | same checklist, item 5: "Biaya keberangkatan “ditalangi”, dengan iming-iming gratis di awal, namun pada akhirnya menjadi utang besar yang dipotong dari gaji (jeratan utang)." |
+| Any fee asked to get the job | CAUTION | kemnaker.go.id 2024-10-10: "Jangan pernah memberikan apapun untuk mendapatkan pekerjaan." (the fee-before-contract NEVER rule is unchanged) |
+| The ad names no company and gives no contact | CAUTION | humas.polri.go.id checklist item 3: "Identitas perusahaan tidak jelas, …" (with a personal contact, the existing personal-recruiter rule fires instead) |
+| Thailand joins the advisory rule's sources | CAUTION | kp2mi.go.id 2025-04-17: "Indonesia tidak memiliki kerja sama penempatan dengan Kamboja, Thailand dan Myanmar" (Thailand stays CAUTION: no statement that it is never a destination) |
+
+**Rule-writing constraint (construct validity).** The dev positives are reporters' descriptions of offers, not the
+ads. Rules match the content of an offer — pay figures, fees, visa type, destination, departure speed, debt, company
+identity — never the narrative words of a report (korban, iming-iming, dijanjikan, tergiur, modus). A unit test
+asserts that narrative words alone fire nothing.
+
+**Guard term.** `palsu` alone ("lowongan kerja palsu" is the scam itself) no longer guards a line; only impersonation
+artefacts do (`akun / website / situs / nama / logo … palsu`), beside mengatasnamakan, mencatut, membantah, tidak
+terlibat. No dev verdict-input line contains `palsu` (one pattern line does; pattern lines are context only).
+
+**Pattern query (context only, never a verdict input).** Candidate C, the destination-centred form of the post-gate
+diagnostic: `WNI korban penipuan lowongan kerja <destination as extracted, else "luar negeri">`, topic general,
+country indonesia, no time range, social-media domains excluded (their posts are by private persons). C is adopted
+if, on the 20 dev positives, more cases get a relevant item than the pre-registered query did (8/20), read by the
+stage-V definition by a reader that did not see the old reading; the count is reported as in-sample.
+
+**Acceptance on the dev set (in-sample, reported, never a benchmark number):** 0 STOP on the 5 dev negatives; the
+verdict distribution on the 20 dev positives before and after. Then tranche 1 runs once on the tuned code; tranche 2
+runs once on code tagged `code-freeze`.
