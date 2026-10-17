@@ -125,3 +125,82 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "lint, types, tests, audit, secrets, build and browser tests passed"
+
+  # Deploy (main only) → GitHub environment "production". Deploys THIS commit from GitHub through the Vercel API
+  # (gitSource), waits until it is READY, checks awas.edycu.dev is aliased to it, then smoke-tests the live routes.
+  # Frozen after the submission deadline so the judged build never moves; a manual run can still redeploy.
+  deploy:
+    name: Deploy (Vercel production)
+    needs: [gate]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    environment:
+      name: production
+      url: https://awas.edycu.dev
+    concurrency:
+      group: production
+      cancel-in-progress: false
+    env:
+      TEAM_ID: team_RJcQx4a22v5LqjetHv8HhhLY
+      PROJECT: awas
+      DOMAIN: awas.edycu.dev
+      FREEZE_AT: "2026-10-30T17:00:00Z"   # Devpost deadline, 10:00 PDT
+    steps:
+      - name: Deadline freeze
+        id: freeze
+        run: |
+          if [ "$(date -u +%s)" -ge "$(date -u -d "$FREEZE_AT" +%s)" ]; then
+            echo "frozen=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::Past the submission deadline: production stays on the judged commit."
+          fi
+      - name: Create deployment from ${{ github.sha }}
+        if: steps.freeze.outputs.frozen != 'true'
+        id: create
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          body=$(jq -n --arg sha "$GITHUB_SHA" --arg p "$PROJECT" \
+            '{name:$p, project:$p, target:"production",
+              gitSource:{type:"github", org:"edycutjong", repo:"awas", ref:"main", sha:$sha}}')
+          res=$(curl -sS -X POST "https://api.vercel.com/v13/deployments?teamId=$TEAM_ID&forceNew=1" \
+            -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" -d "$body")
+          id=$(echo "$res" | jq -r '.id // empty')
+          if [ -z "$id" ]; then echo "$res" | jq '{error}'; exit 1; fi
+          echo "id=$id" >> "$GITHUB_OUTPUT"
+          echo "url=https://$(echo "$res" | jq -r '.url')" >> "$GITHUB_OUTPUT"
+      - name: Wait until READY and aliased
+        if: steps.freeze.outputs.frozen != 'true'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          DEPLOY_ID: ${{ steps.create.outputs.id }}
+        run: |
+          for i in $(seq 1 60); do
+            state=$(curl -sS "https://api.vercel.com/v13/deployments/$DEPLOY_ID?teamId=$TEAM_ID" \
+              -H "Authorization: Bearer $VERCEL_TOKEN" | jq -r '.readyState')
+            echo "readyState=$state"
+            case "$state" in READY) break ;; ERROR|CANCELED) exit 1 ;; esac
+            sleep 10
+          done
+          [ "$state" = READY ] || { echo "::error::deployment not READY after 10 minutes"; exit 1; }
+          for i in $(seq 1 30); do
+            aliased=$(curl -sS "https://api.vercel.com/v4/aliases/$DOMAIN?teamId=$TEAM_ID" \
+              -H "Authorization: Bearer $VERCEL_TOKEN" | jq -r '.deploymentId // empty')
+            echo "alias $DOMAIN -> $aliased"
+            [ "$aliased" = "$DEPLOY_ID" ] && exit 0
+            sleep 10
+          done
+          echo "::error::$DOMAIN is not aliased to $DEPLOY_ID"; exit 1
+      - name: Smoke-test production
+        if: steps.freeze.outputs.frozen != 'true'
+        run: |
+          for path in / /about /pitch /api/healthz; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' -L "https://$DOMAIN$path")
+            echo "$path $code"; [ "$code" = 200 ] || exit 1
+          done
+          curl -s "https://$DOMAIN/api/healthz" | jq -e '.ok == true' > /dev/null
+          {
+            echo "### Deployed ${GITHUB_SHA::7} to production"
+            echo ""
+            echo "- Live: https://$DOMAIN (alias verified on the new deployment)"
+            echo "- Deployment: ${{ steps.create.outputs.url }}"
+          } >> "$GITHUB_STEP_SUMMARY"
