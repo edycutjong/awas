@@ -22,3 +22,5 @@ coverage/
 
 *.tsbuildinfo
 .vercel
+.coverage
+.pytest_cache/

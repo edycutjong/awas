@@ -38,10 +38,14 @@ def run_as_main(name, *argv):
 class FakeResp:
     """What urllib.request.urlopen returns, as a context manager."""
 
-    def __init__(self, body=b"", status=200, headers=None):
+    def __init__(self, body=b"", status=200, headers=None, url=""):
         self._body = body if isinstance(body, bytes) else body.encode()
         self.status = status
         self.headers = headers or {}
+        self.url = url
+
+    def geturl(self):
+        return self.url
 
     def read(self, *a):
         return self._body
