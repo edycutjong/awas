@@ -18,13 +18,13 @@ unverifiable by plain GET   https://www.facebook.com/groups/1193729411177896/pos
                             “PT DUTA PUTRA KAHURIPAN Membuka lowongan Kerja untuk Ke luar Negeri Jika berminat bisa hubungi no wa.”
 present                     https://www.bbc.com/indonesia/articles/cn0er9nd5gpo
                             “Memungut biaya berlebihan, meminta "uang membeli posisi kerja", atau memotong gaji secara langsung adalah tind”
-present                     https://www.batamnews.co.id/berita-91774-sindikat-penipuan-lowongan-kerja-lewat-aplikasi-b
+unverifiable by plain GET   https://www.batamnews.co.id/berita-91774-sindikat-penipuan-lowongan-kerja-lewat-aplikasi-b
                             “Kepolisian Malaysia membongkar sindikat penipuan penawaran kerja melalui call center sebuah aplikasi belanja o”
 unverifiable by plain GET   http://eprints.umpo.ac.id/4888/1/Buku%201%20%28TKI%20Perspektif%20Hukum%20dan%20HAM%29.pdf
                             “Korban yang berumur 38 tahun, diduga mengalami kekerasan seksual. ditemukan luka pada bagian intim WNI yang be”
-present                     https://tirto.id/krisis-pasar-kerja-berlapis-buka-celah-maraknya-job-scam-hqtz
+unverifiable by plain GET   https://tirto.id/krisis-pasar-kerja-berlapis-buka-celah-maraknya-job-scam-hqtz
                             “Isinya tawaran kerja paruh waktu dengan komisi yang lumayan besar, bahkan bisa mencapai 50 persen atau lebih,”
-present                     https://www.batamnews.co.id/berita-91774-sindikat-penipuan-lowongan-kerja-lewat-aplikasi-b
+unverifiable by plain GET   https://www.batamnews.co.id/berita-91774-sindikat-penipuan-lowongan-kerja-lewat-aplikasi-b
                             “Kepolisian Malaysia membongkar sindikat penipuan penawaran kerja melalui call center sebuah aplikasi belanja o”
 present                     https://www.kompas.id/artikel/penipuan-lowongan-kerja-daring-jadi-ancaman-negara-negara-di
                             “Pada periode Januari-Oktober 2023, terdapat 760 WNI yang menjadi korban penipuan tenaga kerja secara daring di”
@@ -40,7 +40,7 @@ present                     https://www.beritasatu.com/nasional/2962617/pemerint
                             “Sebanyak 91 WNI terlibat praktik online scam dipulangkan dari Myanmar ke Indonesia melalui Thailand dan tiba d”
 present                     https://www.kompas.id/artikel/wni-tertipu-terus-berulang
                             “Kasus penipuan kerja pada perusahaan investasi bodong di Kamboja dengan korban warga Indonesia terus berulang.”
-present                     https://pekalongan.suaramerdeka.com/nasional/pr-1814090887/15-wni-korban-penipuan-lowongan
+unverifiable by plain GET   https://pekalongan.suaramerdeka.com/nasional/pr-1814090887/15-wni-korban-penipuan-lowongan
                             “Sebanyak 15 korban penipuan lowongan kerja di Kamboja telah dipulangkan”
 unverifiable by plain GET   https://putusan3.mahkamahagung.go.id/direktori/download_file/c933c428459707b7379ac3119167a
                             “Bahwa saat para korban bertanya kapan berangkat ke tempat kerja, tidak mendapat jawaban yang pasti dengan meng”
@@ -78,9 +78,9 @@ present                     https://www.kompas.id/artikel/pengaduan-korban-kerja
                             “Pemerintah Inggris dan AS menjatuhkan sanksi kepada jaringan multinasional yang berbasis di Asia Tenggara kare”
 present                     https://liks.suara.com/read/2026/02/10/183352/dilema-wni-bermasalah-di-kamboja-korban-perd
                             “Hingga awal Februari 2026, Juru Bicara Kementerian Luar Negeri Yvonne Mewengkang mengungkapkan bahwa KBRI Phno”
-present                     https://www.batamnews.co.id/berita-91774-sindikat-penipuan-lowongan-kerja-lewat-aplikasi-b
+unverifiable by plain GET   https://www.batamnews.co.id/berita-91774-sindikat-penipuan-lowongan-kerja-lewat-aplikasi-b
                             “Sindikat Penipuan Lowongan Kerja Lewat Aplikasi Belanja Online di Malaysia Sasar WNI”
-present                     https://www.batamnews.co.id/berita-91774-sindikat-penipuan-lowongan-kerja-lewat-aplikasi-b
+unverifiable by plain GET   https://www.batamnews.co.id/berita-91774-sindikat-penipuan-lowongan-kerja-lewat-aplikasi-b
                             “Kepala Polisi Brickfields, Ajun Komisaris Besar Amihizam Abdul Shukor, mengatakan sindikat yang beroperasi sej”
 
-changed since fetch: 1 · present: 33 · unverifiable by plain GET: 8
+changed since fetch: 1 · present: 27 · unverifiable by plain GET: 14

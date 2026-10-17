@@ -63,8 +63,9 @@ estimate.
 - **Evidence shown:** 42 lines, every one a URL plus a quote the gate found verbatim in the text Tavily returned
   (cited-line invariant asserted by `scripts/bench.py`: holds); 8 of 50 proposed lines dropped (16 %).
   Re-checked afterwards by plain GET with no Awas code (`scripts/verify_quotes.py --bench`,
-  `docs/proof/verify-quotes-t1-2026-10-17.txt`): 33 present,
-  1 changed since fetch, 8 not checkable by plain GET (JavaScript pages and PDFs).
+  `docs/proof/verify-quotes-t1-2026-10-17.txt`): 27 present; 14 not checkable by a script (the site refused it — 403
+  or 404 to a repeated fetch — or the page is JavaScript or a PDF; a browser still shows them); 1 "changed since
+  fetch", a company-directory table row that Tavily's text writes with ";" separators while the page's HTML has none.
 - **Seconds to verdict** (full column, on the deployed Vercel function): p50 **10.0 s**, p95 **15.8 s**.
 - **Bill:** 235,206 Token Factory tokens and 52 Tavily credits for the full column (0–3 credits a check, mostly 1–2).
 
@@ -75,9 +76,51 @@ the company — a kind of recruiter is no longer counted as a name. One more NO 
 has no rule: the ministerial decree behind the Middle-East domestic-work moratorium appears to have been revoked in
 2026, so Awas does not encode it.
 
-## 4. Tranche 2 — the headline (out-of-sample)
+## 4. Tranche 2 — the headline (out-of-sample: run once, 2026-10-17, on code tagged `code-freeze`)
 
-Not run yet. It runs once, on code tagged `code-freeze`; its numbers replace this paragraph.
+`bench/results-t2.jsonl` · `bench/results-t2-summary.json` · `bench/results-t2-variance.jsonl` · `bench/results-t2-job.json`
+
+**It ran as a Nebius Serverless Job.** `POST /api/bench/dispatch` checked `bench/tranche2.jsonl` against
+`bench/MANIFEST.json` (sha256 `1e333cdf…`) before creating job `aijob-e03nhcfcwc4vnee33m` in uk-south1 (`cpu-d3`,
+`python:3.11`). The job ran the committed `scripts/bench.py` (sha256 `35614ce4…`, the file at `code-freeze`) against
+the production app in bench mode and wrote its rows through presigned Object Storage URLs — it held no credential.
+
+**Licensed ads (10): 0/10 stopped** in every column. Full verdicts: NO RED FLAGS FOUND 9 · VERIFY FIRST 1 (a page
+mentioned a similar name) · STOP 0.
+
+**Reported cases (25):**
+
+| Column | STOP | VERIFY FIRST | NO RED FLAGS FOUND |
+|---|---|---|---|
+| rubric only (rules on the raw text, no model, no search) | 8 | 16 | 1 |
+| rubric + Nemotron extraction (no search) | 8 | 16 | 1 |
+| full Awas with the evidence proposal replaced by a code sentence-picker | 8 | 16 | 1 |
+| **full Awas** | **9** | **15** | **1** |
+
+- **8 STOPs come from cited rules alone** (8/25): not a placement country, tourist visa.
+- **The 9th is a company-matched STOP — 1 of 1.** Only one of the 25 reports names the company in its description of
+  the offer (x = 1). Its own article (merdeka.com) was excluded from every search; Tavily's exact-match search found
+  **another outlet's report of the same case** (rri.co.id), whose sentence names the company next to "bisnis TPPO";
+  the gate found that sentence verbatim. Rules plus extraction alone said VERIFY FIRST, so the evidence decided this
+  one (an evidence-flipped STOP, 1/1). With x = 1 this shows the mechanism working once; it is not a rate.
+- **The one NO RED FLAGS FOUND:** the model returned "rumah sakit Suriah" (a hospital in Syria) as the company, so the
+  no-company rule did not fire. The filter added after tranche 1 drops kinds of recruiter ("LPK", "agen"), not
+  descriptions of an employer. Reported as it fell; the code is frozen.
+- Rules that fired (full column): no company named 19 (the only flag on 4), fee asked 8, not a placement country 6,
+  high pay for light work 3, advisory destination 3, personal number 2, fast departure 2, tourist visa 2, advanced
+  costs 1, not on the P3MI list 1.
+- **Evidence shown:** 48 lines, every one a URL plus a quote the gate found verbatim (cited-line invariant: holds);
+  6 of 54 proposed lines dropped (11 %); 44 of the 48 carry an English gloss, 1 is marked "translation unavailable"
+  because the translation lost a hedge word. Re-checked by plain GET (`docs/proof/verify-quotes-t2-2026-10-17.txt`):
+  33 present, 14 not checkable by a script, 1 "changed since fetch" — again a directory table row written with ";".
+- **Run to run:** 10 cases run twice more: **19/20** reruns give the same verdict as the first run.
+- **Seconds to verdict** (the app's own receipts, full column): p50 **13.7 s**, p95 **31.7 s**.
+- **Bill:** 269,623 Token Factory tokens and 51 Tavily credits for the full column (1–3 credits a check). At the
+  prices `GET /v1/models` returns (`docs/proof/models-2026-10-17.json`), the median full check costs **$0.0078** in
+  Token Factory tokens.
+
+Pooled with tranche 1 (mixed code versions — an appendix, not a headline): licensed ads 0/20 stopped; reported cases
+18 STOP, 28 VERIFY FIRST, 3 NO RED FLAGS FOUND, 1 no verdict, of 50.
 
 ## 5. Day-0 stages (dev set, 2026-10-15)
 

@@ -1,0 +1,52 @@
+{
+ "what": "GET https://api.tokenfactory.nebius.com/v1/models?verbose=true \u2014 the NVIDIA models listed, with the prices Token Factory returned (USD per token).",
+ "recorded_at": "2026-10-17T06:35:13+00:00",
+ "total_models": 28,
+ "nvidia": [
+  {
+   "id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+   "context_length": 262144,
+   "quantization": "fp8",
+   "price_per_token": {
+    "prompt": "0.00000006",
+    "completion": "0.00000024"
+   }
+  },
+  {
+   "id": "nvidia/Nemotron-3_5-Lightning",
+   "context_length": 1048576,
+   "quantization": "bf16",
+   "price_per_token": {
+    "prompt": "0.00000006",
+    "completion": "0.00000024"
+   }
+  },
+  {
+   "id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+   "context_length": 1048576,
+   "quantization": "fp4",
+   "price_per_token": {
+    "prompt": "0.000001",
+    "completion": "0.000003"
+   }
+  },
+  {
+   "id": "nvidia/nemotron-3-super-120b-a12b",
+   "context_length": 262144,
+   "quantization": "fp4",
+   "price_per_token": {
+    "prompt": "0.0000003",
+    "completion": "0.0000009"
+   }
+  },
+  {
+   "id": "nvidia/Nemotron-3.5-Super-VL",
+   "context_length": 1048576,
+   "quantization": "bf16",
+   "price_per_token": {
+    "prompt": "0.0000003",
+    "completion": "0.0000009"
+   }
+  }
+ ]
+}

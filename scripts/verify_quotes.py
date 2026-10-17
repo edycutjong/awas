@@ -37,9 +37,24 @@ def norm(s: str) -> str:
     return re.sub(r"\s+", " ", s).strip()
 
 
+def _tls_context():
+    """Python's own CA store lacks some intermediate certificates (several .go.id sites); certifi's bundle has them."""
+    try:
+        import certifi  # optional
+        import ssl
+        return ssl.create_default_context(cafile=certifi.where())
+    except Exception:
+        return None
+
+
+TLS = _tls_context()
+# Tags that break a line of text; every other tag (a, span, strong, em …) sits inside a sentence and leaves no space.
+BLOCK_TAGS = r"p|div|br|li|ul|ol|h[1-6]|tr|td|th|table|section|article|header|footer|blockquote|figure|figcaption|hr"
+
+
 def page_text(url: str) -> tuple[int, str]:
     try:
-        with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": UA}), timeout=40) as r:
+        with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": UA}), timeout=40, context=TLS) as r:
             ctype = r.headers.get("Content-Type", "")
             raw = r.read()
             if "pdf" in ctype:
@@ -50,7 +65,8 @@ def page_text(url: str) -> tuple[int, str]:
     except Exception:
         return 0, ""
     body = re.sub(r"<script.*?</script>|<style.*?</style>|<!--.*?-->", " ", body, flags=re.S)
-    return 200, html.unescape(re.sub(r"<[^>]+>", " ", body))
+    body = re.sub(rf"</?(?:{BLOCK_TAGS})\b[^>]*>", " ", body, flags=re.I)
+    return 200, html.unescape(re.sub(r"<[^>]+>", "", body))
 
 
 def tavily_text(url: str) -> str:
@@ -69,7 +85,13 @@ def check_line(line: dict, use_tavily: bool) -> str:
     status, text = page_text(line["url"])
     if status != 200 or len(text) < 400:
         return "unverifiable by plain GET"
-    return "present" if q in norm(text) else ("unverifiable by plain GET" if len(norm(text)) < 2000 else "changed since fetch")
+    page = norm(text)
+    if q in page:
+        return "present"
+    # Markup can still split words differently from the text Tavily returned; compare ignoring spaces.
+    if re.sub(r"\s+", "", q) in re.sub(r"\s+", "", page):
+        return "present"
+    return "unverifiable by plain GET" if len(page) < 2000 else "changed since fetch"
 
 
 def load_packs(target: str, bench: bool) -> list[dict]:
