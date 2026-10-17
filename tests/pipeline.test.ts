@@ -124,8 +124,10 @@ describe("runCheck", () => {
     expect(calls).toEqual([]);
   });
 
-  it("builds the pattern query from the ad's own job and destination", () => {
-    expect(patternQuery({ isJobOffer: true, phones: [], fees: [], promises: [], droppedFields: [], job: { text: "CS online", start: 0, end: 9 }, destination: { text: "Kamboja", start: 0, end: 7 }, visa: { text: "visa turis", start: 0, end: 10 } }))
-      .toBe("lowongan CS online Kamboja visa turis korban penipuan");
+  it("builds the destination-centred pattern query (Amendment 4), falling back to 'luar negeri'", () => {
+    const base = { isJobOffer: true, phones: [], fees: [], promises: [], droppedFields: [] };
+    expect(patternQuery({ ...base, job: { text: "CS online", start: 0, end: 9 }, destination: { text: "Kamboja", start: 0, end: 7 } })).toBe("WNI korban penipuan lowongan kerja Kamboja");
+    expect(patternQuery({ ...base, job: { text: "CS online", start: 0, end: 9 } })).toBe("WNI korban penipuan lowongan kerja luar negeri");
+    expect(patternQuery(null)).toBeNull();
   });
 });

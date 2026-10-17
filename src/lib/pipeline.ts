@@ -97,12 +97,19 @@ export function validateAd(text: string): BadInput | null {
   return null;
 }
 
-/** The pattern query: the ad's own job and destination in Indonesian news, plus the tourist-visa words if the ad has them. */
+/**
+ * The pattern query — context only, never a verdict input: published reports of Indonesians deceived by job offers for
+ * the ad's destination. Destination-centred, tuned on the dev set (bench/PROTOCOL.md Amendment 4); the first
+ * pre-registered form (job + destination in the news topic, past year) found a relevant item for 8 of 20 dev cases.
+ */
 export function patternQuery(ex: Extraction | null): string | null {
-  if (!ex || (!ex.job && !ex.destination)) return null;
-  const visa = ex.visa && /turis|kunjungan|wisata|tourist|visit/i.test(ex.visa.text) ? "visa turis" : "";
-  return ["lowongan", ex.job?.text, ex.destination?.text, visa, "korban penipuan"].filter(Boolean).join(" ").replace(/\s+/g, " ").slice(0, 300);
+  if (!ex) return null;
+  const destination = ex.destination?.text.replace(/\s+/g, " ").trim() || "luar negeri";
+  return `WNI korban penipuan lowongan kerja ${destination}`.slice(0, 300);
 }
+
+/** Posts on these platforms are by private persons; the pattern search leaves them out. */
+export const SOCIAL_DOMAINS = ["facebook.com", "instagram.com", "tiktok.com", "x.com", "twitter.com", "youtube.com", "threads.net", "linkedin.com"];
 
 export async function runCheck(input: CheckInput, deps: Deps, emit: Emit = () => {}): Promise<EvidencePack> {
   const started = Date.now();
@@ -214,7 +221,10 @@ export async function runCheck(input: CheckInput, deps: Deps, emit: Emit = () =>
       }
       const pq = patternQuery(ex);
       if (pq) {
-        const params = { query: pq, topic: "news", time_range: "year", language: "id", search_depth: "basic", max_results: 5, include_raw_content: "text", ...excludeDomains };
+        const params = {
+          query: pq, topic: "general", country: "indonesia", search_depth: "basic", max_results: 5, include_raw_content: "text",
+          exclude_domains: [...SOCIAL_DOMAINS, ...(input.exclude ? [input.exclude.domain] : [])],
+        };
         searches.push(search(tv, "pattern", params, fetchImpl).then((o) => { record(o); addSearch(o, "pattern"); }));
       }
       await Promise.all(searches);
