@@ -5,7 +5,7 @@
  * saw; every other card says "open the page and search for: <first 6 words>". A failed fragment opens the page top with
  * no error, which is why this is checked in a browser and not assumed.
  *
- *   node scripts/fragment_check.mjs --case <caseId> [--base https://awas-cek.vercel.app]   # prints {"<index>": "<date>"}
+ *   node scripts/fragment_check.mjs --case <caseId> [--base https://awas.edycu.dev]   # prints {"<index>": "<date>"}
  *   node scripts/fragment_check.mjs --pack pack.json
  *
  * Needs Playwright's Chromium (`npx playwright install chromium`). Output: JSON on stdout, one line per check on stderr.
@@ -33,7 +33,7 @@ function normalise(s) {
 
 async function loadPack() {
   if (args.pack) return JSON.parse(readFileSync(args.pack, "utf8"));
-  const base = (args.base || "https://awas-cek.vercel.app").replace(/\/+$/, "");
+  const base = (args.base || "https://awas.edycu.dev").replace(/\/+$/, "");
   const res = await fetch(`${base}/api/case/${args.case}`);
   if (!res.ok) throw new Error(`GET /api/case/${args.case} → ${res.status}`);
   return res.json();

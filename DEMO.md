@@ -5,12 +5,12 @@ estimate.
 
 ## 0. Try it without any key (30 seconds)
 
-1. Open **https://awas-cek.vercel.app/judge** — five recorded real runs, each labelled with the date it was recorded
+1. Open **https://awas.edycu.dev/judge** — five recorded real runs, each labelled with the date it was recorded
    (`bench/samples.json` says where each text comes from; none is a benchmark row). No login, no key.
 2. Open any evidence card's link: it carries a `#:~:text=` fragment, so the browser highlights the quoted sentence on
    the source page. A card says "found on the live page <date>" only when a real browser saw the quote there
    (`scripts/fragment_check.mjs`); otherwise it tells you which words to search for.
-3. Paste your own ad at **https://awas-cek.vercel.app**. No login, no daily cap. A connection gets 60 live checks per
+3. Paste your own ad at **https://awas.edycu.dev**. No login, no daily cap. A connection gets 60 live checks per
    hour; the judge code in the Devpost testing notes lifts that limit.
 
 ## 1. Read this first: what changed on 2026-10-17
@@ -66,8 +66,8 @@ estimate.
   `docs/proof/verify-quotes-t1-2026-10-17.txt`): 27 present; 14 not checkable by a script (the site refused it — 403
   or 404 to a repeated fetch — or the page is JavaScript or a PDF; a browser still shows them); 1 "changed since
   fetch", a company-directory table row that Tavily's text writes with ";" separators while the page's HTML has none.
-- **Seconds to verdict** (full column, the app's own receipts; run with `--base https://awas-cek.vercel.app`, so
-  every case id in the file opens at `https://awas-cek.vercel.app/case/<id>`): p50 **10.0 s**, p95 **15.8 s**.
+- **Seconds to verdict** (full column, the app's own receipts; run with `--base https://awas.edycu.dev`, so
+  every case id in the file opens at `https://awas.edycu.dev/case/<id>`): p50 **10.0 s**, p95 **15.8 s**.
 - **Bill:** 235,206 Token Factory tokens and 52 Tavily credits for the full column (0–3 credits a check, mostly 1–2).
 
 **What tranche 1 made visible** (fixed before code-freeze; only tranche 2 measures the fixes): one case ended with no

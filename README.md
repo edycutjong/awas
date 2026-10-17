@@ -6,9 +6,9 @@
 
   <br/>
 
-  [![Live app](https://img.shields.io/badge/▶_Live-awas--cek.vercel.app-1C2333?style=for-the-badge)](https://awas-cek.vercel.app)
-  [![Story page](https://img.shields.io/badge/📰_Story-/about-B42318?style=for-the-badge)](https://awas-cek.vercel.app/about)
-  [![Pitch deck](https://img.shields.io/badge/🖥️_Pitch-deck-4B2C8F?style=for-the-badge)](https://awas-cek.vercel.app/pitch)
+  [![Live app](https://img.shields.io/badge/▶_Live-awas--cek.vercel.app-1C2333?style=for-the-badge)](https://awas.edycu.dev)
+  [![Story page](https://img.shields.io/badge/📰_Story-/about-B42318?style=for-the-badge)](https://awas.edycu.dev/about)
+  [![Pitch deck](https://img.shields.io/badge/🖥️_Pitch-deck-4B2C8F?style=for-the-badge)](https://awas.edycu.dev/pitch)
   [![Measured Results](https://img.shields.io/badge/📊_Measured-Results-f59e0b?style=for-the-badge)](DEMO.md)
   [![Nebius Feedback](https://img.shields.io/badge/📝_Nebius-Feedback-76B900?style=for-the-badge)](FEEDBACK.md)
   [![Built for Nebius](https://img.shields.io/badge/Nebius-Global_AI_Hackathon-8b5cf6?style=for-the-badge)](https://nebiusglobalaihackathon.devpost.com/)
@@ -33,9 +33,9 @@
 
 ## 📸 See it in Action
 
-**No credentials needed:** [`/judge`](https://awas-cek.vercel.app/judge) replays five recorded real runs — three STOPs on cited rules (one of them an English ad), a fake vacancy that borrowed a real company's name (VERIFY FIRST), a licensed agency's vacancy (NO RED FLAGS FOUND) — each labelled with its recording date ([`bench/samples.json`](bench/samples.json) says where each text comes from). Live checks need no login (60 per hour per connection). Run locally with the commands in [Getting Started](#-getting-started).
+**No credentials needed:** [`/judge`](https://awas.edycu.dev/judge) replays five recorded real runs — three STOPs on cited rules (one of them an English ad), a fake vacancy that borrowed a real company's name (VERIFY FIRST), a licensed agency's vacancy (NO RED FLAGS FOUND) — each labelled with its recording date ([`bench/samples.json`](bench/samples.json) says where each text comes from). Live checks need no login (60 per hour per connection). Run locally with the commands in [Getting Started](#-getting-started).
 
-**Live:** [awas-cek.vercel.app](https://awas-cek.vercel.app) (the app) · [/about](https://awas-cek.vercel.app/about) (the story page, with the rules and the quote gate running in your browser) · [/pitch](https://awas-cek.vercel.app/pitch) (the deck).
+**Live:** [awas-cek.vercel.app](https://awas.edycu.dev) (the app) · [/about](https://awas.edycu.dev/about) (the story page, with the rules and the quote gate running in your browser) · [/pitch](https://awas.edycu.dev/pitch) (the deck).
 
 > **Measured, out of sample** (tranche 2 of a benchmark frozen before it ran, run once on code tagged `code-freeze`, as a Nebius Serverless Job — [`DEMO.md`](DEMO.md)): **0 of 10 licensed agencies' vacancies stopped**; of 25 publicly reported scam-recruitment cases, **9 STOP, 15 VERIFY FIRST, 1 NO RED FLAGS FOUND**. Every one of the 48 evidence lines shown carries a URL and a quote the code found verbatim in the page text Tavily returned. One honest note first: our own day-0 gate on search coverage failed (a relevant item for 8 of 20 known cases), so Awas does not promise "published reports about this company" — the verdict comes from rules quoted from official pages, and the web evidence is context.
 

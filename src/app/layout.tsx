@@ -40,7 +40,7 @@ const OG_DESCRIPTION = "Paste a job ad: official rules, quotes checked word for 
 
 export const metadata: Metadata = {
   // The project's production domain (awas.vercel.app belongs to someone else).
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://awas-cek.vercel.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://awas.edycu.dev"),
   title: TITLE,
   description: DESCRIPTION,
   applicationName: "Awas",

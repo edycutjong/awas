@@ -3,7 +3,7 @@
  * The spec's MUST list and its product guards, checked on the live app in a real browser at phone and laptop width.
  * Reads only what any visitor can read: the paste page, /judge, every recorded sample's evidence file, /integrations.
  *
- *   node scripts/live_check.mjs [--base https://awas-cek.vercel.app] [--shots <dir>]
+ *   node scripts/live_check.mjs [--base https://awas.edycu.dev] [--shots <dir>]
  *
  * Prints one PASS/FAIL line per check and exits 1 on any FAIL. With --shots, saves full-page screenshots.
  */
@@ -16,7 +16,7 @@ const arg = (k, d) => {
   const i = process.argv.indexOf(`--${k}`);
   return i > 0 ? process.argv[i + 1] : d;
 };
-const BASE = arg("base", "https://awas-cek.vercel.app").replace(/\/+$/, "");
+const BASE = arg("base", "https://awas.edycu.dev").replace(/\/+$/, "");
 const SHOTS = arg("shots", "");
 if (SHOTS) mkdirSync(SHOTS, { recursive: true });
 

@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Judge paths answer without credentials
         env:
-          BASE_URL: ${{ vars.AWAS_BASE_URL || 'https://awas-cek.vercel.app' }}
+          BASE_URL: ${{ vars.AWAS_BASE_URL || 'https://awas.edycu.dev' }}
         run: |
           set -uo pipefail
           fail=0
@@ -34,7 +34,7 @@ jobs:
 
       - name: Spend alarm (Tavily credits this month)
         env:
-          BASE_URL: ${{ vars.AWAS_BASE_URL || 'https://awas-cek.vercel.app' }}
+          BASE_URL: ${{ vars.AWAS_BASE_URL || 'https://awas.edycu.dev' }}
         run: |
           set -uo pipefail
           curl -sS --max-time 40 "${BASE_URL}/api/integrations" > /tmp/i.json

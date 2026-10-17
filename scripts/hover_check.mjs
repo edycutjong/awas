@@ -3,13 +3,13 @@
  * Interaction feedback, measured: every interactive element class must look different when hovered and when focused
  * from the keyboard (screenshot, act, screenshot, byte-compare). Exits 1 if any element shows no change.
  *
- *   node scripts/hover_check.mjs [--base https://awas-cek.vercel.app]
+ *   node scripts/hover_check.mjs [--base https://awas.edycu.dev]
  */
 
 import { chromium } from "@playwright/test";
 
 const i = process.argv.indexOf("--base");
-const BASE = (i > 0 ? process.argv[i + 1] : "https://awas-cek.vercel.app").replace(/\/+$/, "");
+const BASE = (i > 0 ? process.argv[i + 1] : "https://awas.edycu.dev").replace(/\/+$/, "");
 const sample = (await (await fetch(`${BASE}/api/samples`)).json()).samples.find((s) => s.lines.some((l) => l.status === "verified")) ?? null;
 
 const targets = [
