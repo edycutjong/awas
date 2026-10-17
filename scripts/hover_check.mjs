@@ -39,6 +39,8 @@ for (const t of targets) {
     await page.goto(`${BASE}${t.page}`, { waitUntil: "networkidle" });
     current = t.page;
   }
+  // The Check button is disabled until there is text to check.
+  if (t.name === "Check button") await page.locator("textarea").fill("Dibutuhkan admin online untuk Kamboja, gaji Rp 15 jt.");
   const el = page.locator(t.sel).first();
   if ((await el.count()) === 0) {
     console.log(`SKIP  ${t.name} — not on ${t.page}`);

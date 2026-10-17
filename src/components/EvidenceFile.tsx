@@ -294,7 +294,10 @@ export function EvidenceFile({ view, judge = false }: { view: View; judge?: bool
   const verifiedCount = view.lines.filter((l) => l.state === "verified").length;
   // Recorded runs are what judges open: English glosses and the receipt start open there.
   const showGloss = judge || !!view.recordedAt;
-  const folded = finished && view.lines.length > OPEN_CARDS + 1;
+  // Once done, verified cards after the first two fold away; a dropped line is never folded — seeing what the gate
+  // refused is part of the evidence.
+  const verifiedIdx = view.lines.filter((l) => l.state === "verified").map((l) => l.index);
+  const foldedIdx = new Set(finished && verifiedIdx.length > OPEN_CARDS + 1 ? verifiedIdx.slice(OPEN_CARDS) : []);
   const bilingualSteps = verifySteps(view.flags);
 
   return (
@@ -353,15 +356,15 @@ export function EvidenceFile({ view, judge = false }: { view: View; judge?: bool
               <span className="en">yellow = a quote code found word for word on its source page.</span>
             </p>
           ) : null}
-          {(folded ? view.lines.slice(0, OPEN_CARDS) : view.lines).map((l) => (
+          {view.lines.filter((l) => !foldedIdx.has(l.index)).map((l) => (
             <EvidenceCard key={l.index} line={l} calls={view.tavily} showGloss={showGloss} />
           ))}
-          {folded ? (
+          {foldedIdx.size > 0 ? (
             <details className="more">
               <summary>
-                Tampilkan {view.lines.length - OPEN_CARDS} lagi · show {view.lines.length - OPEN_CARDS} more
+                Tampilkan {foldedIdx.size} kutipan lagi · show {foldedIdx.size} more quotes
               </summary>
-              {view.lines.slice(OPEN_CARDS).map((l) => (
+              {view.lines.filter((l) => foldedIdx.has(l.index)).map((l) => (
                 <EvidenceCard key={l.index} line={l} calls={view.tavily} showGloss={showGloss} />
               ))}
             </details>

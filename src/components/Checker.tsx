@@ -122,6 +122,7 @@ export function Checker({ judgeCode = null, judge = false }: { judgeCode?: strin
         <div className="paste-row">
           <span className="counter">
             {ad.length}/{MAX_AD_CHARS}
+            {ad.trim().length === 0 ? " · tempel iklan dulu · paste an ad first" : ""}
           </span>
           <button type="button" className="btn" onClick={check} disabled={running || ad.trim().length === 0}>
             {running ? "Memeriksa… · Checking…" : "Periksa · Check"}
