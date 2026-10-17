@@ -116,7 +116,7 @@ export function Checker({ judgeCode = null, judge = false }: { judgeCode?: strin
           maxLength={MAX_AD_CHARS}
           value={ad}
           onChange={(e) => setAd(e.target.value)}
-          placeholder="Contoh: Dibutuhkan CS online, gaji tinggi, visa diurus… (tempel teks iklan apa adanya)"
+          placeholder="Contoh · example: Dibutuhkan CS online, gaji tinggi, visa diurus… (tempel teks iklan apa adanya · paste the ad's text as it is)"
           disabled={running}
         />
         <div className="paste-row">

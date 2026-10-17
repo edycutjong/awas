@@ -6,27 +6,31 @@
  */
 
 import { useMemo, useState } from "react";
+import { verifySteps } from "@/lib/message";
 import { FLAG_LABELS } from "@/lib/rubric";
 import type { Flag, Span, TavilyReceipt } from "@/lib/types";
 import type { View, ViewLine } from "@/lib/view";
 
 const STAMP_WORD = { STOP: "STOP", VERIFY_FIRST: "VERIFY FIRST", NO_RED_FLAGS_FOUND: "NO RED FLAGS FOUND" } as const;
 const STAMP_SUB = {
-  STOP: "jangan berangkat dulu",
-  VERIFY_FIRST: "periksa dulu",
+  STOP: "jangan berangkat dulu · don't travel yet",
+  VERIFY_FIRST: "periksa dulu · check first",
   NO_RED_FLAGS_FOUND: "bukan jaminan · not a guarantee",
 } as const;
 
 const FIELD_LABEL: Record<string, string> = {
-  company: "perusahaan",
-  recruiter: "perekrut",
-  phones: "nomor",
-  destination: "negara",
-  job: "pekerjaan",
+  company: "perusahaan · company",
+  recruiter: "perekrut · recruiter",
+  phones: "nomor · number",
+  destination: "negara · country",
+  job: "pekerjaan · job",
   visa: "visa",
-  fees: "biaya",
-  promises: "janji",
+  fees: "biaya · fee",
+  promises: "janji · promise",
 };
+
+/** How many evidence cards stay open once a run is done; the rest fold under "show n more". */
+const OPEN_CARDS = 2;
 
 function domainOf(url: string): string {
   try {
@@ -75,7 +79,26 @@ function AdClipping({ text, extraction }: { text: string; extraction: View["extr
   return <div className="clip ad">{parts}</div>;
 }
 
-function FlagRow({ flag }: { flag: Flag }) {
+/**
+ * What a flag row quotes from the ad. The rule's match is exact, but two of its shapes read badly on their own: an
+ * amount the match ends inside ("membayar Rp9" of "Rp90 juta") is finished from the ad, and a long context span that
+ * stops mid-word is cut back to a word and marked with an ellipsis.
+ */
+function displaySpan(span: Span, ad: string): string {
+  let end = span.end;
+  if (/\d$/.test(span.text)) {
+    const amount = ad.slice(end).match(/^[\d.,]*\d(?:\s?(?:juta|jt|ribu|rb|miliar|k)\b)?|^\s?(?:juta|jt|ribu|rb|miliar)\b/i);
+    if (amount) end += amount[0].length;
+  }
+  const text = ad.slice(span.start, end) || span.text;
+  if (text.length >= 60 && /[\p{L}\p{N}]/u.test(ad[end] ?? "")) {
+    const cut = text.lastIndexOf(" ");
+    if (cut > 30) return `${text.slice(0, cut)}…`;
+  }
+  return text;
+}
+
+function FlagRow({ flag, ad }: { flag: Flag; ad: string }) {
   const never = flag.class === "NEVER";
   const label = FLAG_LABELS[flag.id];
   return (
@@ -84,7 +107,7 @@ function FlagRow({ flag }: { flag: Flag }) {
       <div>
         <b>{label.id}</b> <span className="en">· {label.en}</span>
         <div className="flag-span">
-          <q>{flag.span.text}</q> <span className="via">{flag.via === "both" ? "model + rule" : flag.via === "model" ? "model" : "rule"}</span>
+          <q>{displaySpan(flag.span, ad)}</q> <span className="via">{flag.via === "both" ? "model + rule" : flag.via === "model" ? "model" : "rule"}</span>
         </div>
         <div className="rule-src">
           {flag.source ? (
@@ -235,11 +258,11 @@ function FamilyMessage({ view, caseUrl, enabled }: { view: View; caseUrl: string
   );
 }
 
-function RunReceipt({ view }: { view: View }) {
+function RunReceipt({ view, open }: { view: View; open: boolean }) {
   const r = view.receipt;
   const dropped = view.lines.filter((l) => l.state === "dropped").length;
   return (
-    <details className="receipt" open={false}>
+    <details className="receipt" open={open}>
       <summary>Bagaimana ini diperiksa · How this was checked</summary>
       {view.explanationEn ? <p className="explain">{view.explanationEn}</p> : null}
       <ul>
@@ -269,6 +292,10 @@ export function EvidenceFile({ view, judge = false }: { view: View; judge?: bool
   const caseUrl = view.caseId && typeof window !== "undefined" ? `${window.location.origin}/case/${view.caseId}` : null;
   const ruleBanner = view.ruleStop.length > 0 && !finished;
   const verifiedCount = view.lines.filter((l) => l.state === "verified").length;
+  // Recorded runs are what judges open: English glosses and the receipt start open there.
+  const showGloss = judge || !!view.recordedAt;
+  const folded = finished && view.lines.length > OPEN_CARDS + 1;
+  const bilingualSteps = verifySteps(view.flags);
 
   return (
     <article className="file" aria-live="polite">
@@ -296,7 +323,7 @@ export function EvidenceFile({ view, judge = false }: { view: View; judge?: bool
         <section aria-labelledby="flags-h">
           <h2 id="flags-h">Tanda bahaya · red flags</h2>
           {view.flags.map((f) => (
-            <FlagRow key={f.id} flag={f} />
+            <FlagRow key={f.id} flag={f} ad={view.adText} />
           ))}
         </section>
       ) : null}
@@ -315,10 +342,30 @@ export function EvidenceFile({ view, judge = false }: { view: View; judge?: bool
       {view.lines.length > 0 || view.tavily.length > 0 ? (
         <section aria-labelledby="ev-h">
           <h2 id="ev-h">Konteks dari halaman yang sudah terbit · context from published pages</h2>
-          {view.lines.length === 0 && view.status === "done" ? <p className="none">No evidence line was proposed from the pages this search returned.</p> : null}
-          {view.lines.map((l) => (
-            <EvidenceCard key={l.index} line={l} calls={view.tavily} showGloss={judge} />
+          {view.lines.length === 0 && view.status === "done" ? (
+            <p className="empty">
+              Tidak ada kutipan dari halaman yang ditemukan yang menyangkut iklan ini · no page the search returned gave a quote that bears on this ad.
+            </p>
+          ) : null}
+          {verifiedCount > 0 ? (
+            <p className="legend">
+              <span className="hl on">Kuning</span> = kutipan yang ditemukan kode, kata demi kata, di halaman sumbernya ·{" "}
+              <span className="en">yellow = a quote code found word for word on its source page.</span>
+            </p>
+          ) : null}
+          {(folded ? view.lines.slice(0, OPEN_CARDS) : view.lines).map((l) => (
+            <EvidenceCard key={l.index} line={l} calls={view.tavily} showGloss={showGloss} />
           ))}
+          {folded ? (
+            <details className="more">
+              <summary>
+                Tampilkan {view.lines.length - OPEN_CARDS} lagi · show {view.lines.length - OPEN_CARDS} more
+              </summary>
+              {view.lines.slice(OPEN_CARDS).map((l) => (
+                <EvidenceCard key={l.index} line={l} calls={view.tavily} showGloss={showGloss} />
+              ))}
+            </details>
+          ) : null}
           {view.lines.length > 0 ? (
             <p className="gate-note">
               {verifiedCount} kutipan ditemukan di halaman · {view.lines.length - verifiedCount} dibuang. Every quote shown was found verbatim, by code, in the page text Tavily returned in this run.
@@ -339,21 +386,21 @@ export function EvidenceFile({ view, judge = false }: { view: View; judge?: bool
       ) : null}
 
       {finished && view.verdict ? (
-        <section className={`verdict ${view.verdict === "STOP" ? "stop" : view.verdict === "VERIFY_FIRST" ? "check" : "none"}`} aria-labelledby="verdict-h">
+        <section className={`verdict ${view.verdict === "STOP" ? "stop" : view.verdict === "VERIFY_FIRST" ? "check" : "nrf"}`} aria-labelledby="verdict-h">
           <h2 id="verdict-h">{STAMP_WORD[view.verdict]}</h2>
-          <p className="rule-line">{view.rule}</p>
-          {view.steps.length > 0 ? (
-            <ol className="steps">
-              {view.steps.map((s, i) => (
-                <li key={i}>{s}</li>
-              ))}
-            </ol>
-          ) : null}
+          <p className="rule-line">{view.rule.replace(/^(STOP|VERIFY FIRST|NO RED FLAGS FOUND)\s+—\s+/, "")}</p>
+          <ol className="steps">
+            {bilingualSteps.id.map((s, i) => (
+              <li key={i}>
+                {s} <span className="en">· {bilingualSteps.en[i]}</span>
+              </li>
+            ))}
+          </ol>
         </section>
       ) : null}
 
       <FamilyMessage view={view} caseUrl={caseUrl} enabled={finished} />
-      {view.receipt || view.tavily.length > 0 ? <RunReceipt view={view} /> : null}
+      {view.receipt || view.tavily.length > 0 ? <RunReceipt view={view} open={!!view.recordedAt} /> : null}
       <p className="retention">
         Disimpan 75 hari, tidak diindeks mesin pencari, nomor telepon disamarkan · kept 75 days, not indexed by search engines, phone numbers masked.
       </p>

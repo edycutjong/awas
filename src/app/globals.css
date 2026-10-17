@@ -43,11 +43,24 @@ body {
 
 a {
   color: var(--ink);
+  /* Tailwind's reset leaves links undecorated; a link on this paper is an underlined line, like a pencil annotation. */
+  text-decoration-line: underline;
   text-decoration-color: var(--before);
+  text-decoration-thickness: 1px;
   text-underline-offset: 3px;
+  transition: text-decoration-color 120ms ease-out, text-decoration-thickness 120ms ease-out;
 }
 a:hover {
   text-decoration-color: var(--ink);
+  text-decoration-thickness: 2px;
+}
+a.btn,
+a.mast,
+a.chip-btn {
+  text-decoration-line: none;
+}
+summary:hover {
+  color: var(--ink);
 }
 :where(a, button, textarea, summary, [tabindex]):focus-visible {
   outline: 3px solid var(--focus);
@@ -88,7 +101,7 @@ code {
   text-decoration: none;
 }
 .mast-sub {
-  font: 500 13px/1.3 var(--font-data);
+  font: 400 15px/1.35 var(--font-body);
   color: var(--muted);
 }
 .lede {
@@ -107,6 +120,7 @@ code {
 h2 {
   font: 700 20px/1.25 var(--font-body);
   margin: 24px 0 8px;
+  text-wrap: balance;
 }
 .label {
   display: block;
@@ -157,7 +171,7 @@ textarea.clip::placeholder {
   color: var(--muted);
 }
 .hint {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--muted);
   margin: 8px 0 0;
 }
@@ -267,10 +281,17 @@ textarea.clip::placeholder {
 }
 .u[data-k]::after {
   content: attr(data-k);
-  font: 500 11px/1 var(--font-data);
+  display: inline-block;
+  text-decoration: none;
+  font: 500 12px/1 var(--font-data);
   color: var(--muted);
   vertical-align: super;
-  margin-left: 3px;
+  margin-left: 4px;
+}
+
+.back {
+  margin: 6px 0 0;
+  font-size: 16px;
 }
 
 .registry {
@@ -355,6 +376,10 @@ textarea.clip::placeholder {
 .claim {
   font-size: 16px;
 }
+.claim .tag {
+  display: block;
+  margin-bottom: 2px;
+}
 .tag {
   font: 500 12px/1.3 var(--font-data);
   color: var(--muted);
@@ -367,13 +392,42 @@ textarea.clip::placeholder {
 }
 .gloss summary,
 .en-msg summary,
-.receipt summary {
+.receipt summary,
+.more summary {
   cursor: pointer;
   font: 700 14px/1.4 var(--font-data);
   color: var(--muted);
-  min-height: 32px;
+  min-height: 44px;
   display: flex;
   align-items: center;
+  gap: 8px;
+  list-style: none;
+}
+.gloss summary::-webkit-details-marker,
+.en-msg summary::-webkit-details-marker,
+.receipt summary::-webkit-details-marker,
+.more summary::-webkit-details-marker {
+  display: none;
+}
+/* A drawn chevron, so a closed row reads as something to open. */
+.gloss summary::before,
+.en-msg summary::before,
+.receipt summary::before,
+.more summary::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 150ms ease-out;
+  flex: none;
+}
+details[open] > summary::before {
+  transform: rotate(45deg);
+}
+.more {
+  margin: 4px 0 8px;
 }
 .gloss p {
   margin: 4px 0;
@@ -381,7 +435,8 @@ textarea.clip::placeholder {
 .url {
   display: block;
   font: 400 13px/1.35 var(--font-data);
-  word-break: break-all;
+  word-break: normal;
+  overflow-wrap: anywhere;
   margin-top: 6px;
 }
 .find {
@@ -445,10 +500,22 @@ textarea.clip::placeholder {
   }
 }
 
-.gate-note,
-.none {
+.gate-note {
   font: 500 13px/1.45 var(--font-data);
   color: var(--muted);
+}
+.empty {
+  font: 400 16px/1.5 var(--font-body);
+  color: var(--muted);
+}
+/* What the yellow means, said once above the first card, in the reading face. */
+.legend {
+  font: 400 16px/1.5 var(--font-body);
+  color: var(--ink);
+  margin: 4px 0 10px;
+}
+.legend .hl {
+  padding: 0 4px;
 }
 
 /* The rubber stamp: lands after the last card, rotated −6°, ink texture from a mask. */
@@ -465,7 +532,9 @@ textarea.clip::placeholder {
   border-radius: 10px;
   padding: 6px 16px 4px;
   text-align: center;
-  background: rgba(251, 250, 245, 0.6);
+  background: transparent;
+  mix-blend-mode: multiply;
+  pointer-events: none;
   -webkit-mask-image: radial-gradient(circle at 30% 40%, #000 60%, rgba(0, 0, 0, 0.82) 61%), repeating-linear-gradient(17deg, #000 0 7px, rgba(0, 0, 0, 0.86) 7px 9px);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
@@ -477,6 +546,11 @@ textarea.clip::placeholder {
 .stamp.none {
   color: var(--muted);
   border-style: dashed;
+}
+/* NO RED FLAGS FOUND is three words: set on two lines, the stamp keeps the size of the other two. */
+.stamp.none .w {
+  max-width: 7.5em;
+  line-height: 1.05;
 }
 .stamp .w {
   font: 800 30px/1 var(--font-body);
@@ -520,9 +594,14 @@ textarea.clip::placeholder {
 .verdict.check {
   border-color: var(--check);
 }
-.verdict.none {
+.verdict.nrf {
   border-color: var(--muted);
   border-left-style: dashed;
+}
+.verdict,
+.verdict p,
+.verdict li {
+  font-family: var(--font-body);
 }
 .verdict h2 {
   margin: 0 0 4px;
@@ -539,8 +618,8 @@ textarea.clip::placeholder {
   font-size: 16px;
 }
 .steps {
-  margin: 6px 0 0 20px;
-  padding: 0;
+  margin: 6px 0 0;
+  padding: 0 0 0 20px;
   font-size: 16px;
 }
 .steps li {
@@ -580,9 +659,11 @@ textarea.clip::placeholder {
   color: var(--ink);
 }
 .retention {
-  font: 500 12px/1.5 var(--font-data);
+  font: 400 14px/1.5 var(--font-body);
   color: var(--muted);
   margin-top: 14px;
+  border-top: 1px solid var(--rule);
+  padding-top: 10px;
 }
 .errors p {
   font: 500 13px/1.5 var(--font-data);
@@ -633,10 +714,14 @@ textarea.clip::placeholder {
 
 .foot {
   margin-top: 28px;
-  font: 500 12px/1.5 var(--font-data);
+  font: 400 14px/1.6 var(--font-body);
   color: var(--muted);
   border-top: 1px solid var(--rule);
   padding-top: 10px;
+}
+.foot a {
+  display: inline-block;
+  padding: 8px 2px;
 }
 .foot p {
   margin: 4px 0;
@@ -666,12 +751,24 @@ textarea.clip::placeholder {
   .stamp .w {
     font-size: 40px;
   }
-  /* The stamp lands on the clipping's corner, never on the ad's words: the first lines wrap around it. */
+  .stamp.none .w {
+    font-size: 30px;
+  }
+  /* The stamp lands on the clipping's corner, never on the ad's words: the first lines wrap around it, and the
+     space kept free is as large as the stamp that landed. */
   .file:has(.stamp) .ad::before {
     content: "";
     float: right;
-    width: 200px;
-    height: 72px;
+    width: 210px;
+    height: 76px;
+  }
+  .file:has(.stamp.check) .ad::before {
+    width: 340px;
+    height: 84px;
+  }
+  .file:has(.stamp.none) .ad::before {
+    width: 280px;
+    height: 112px;
   }
 }
 
@@ -681,11 +778,17 @@ textarea.clip::placeholder {
     position: sticky;
     top: 0;
     z-index: 2;
+    margin-bottom: 18px;
+  }
+  .stamp .w {
+    font-size: 26px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hl {
+  a,
+  .hl,
+  summary::before {
     transition: none;
   }
   .stamp,

@@ -12,12 +12,21 @@ export const metadata: Metadata = { title: "Awas — evidence file", robots: { i
 export default async function CasePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   if (!isCaseId(id)) notFound();
-  const pack = await getStore().getPack(id);
-  if (!pack) notFound();
+  const store = getStore();
+  // A recorded sample opens as itself — labelled, with its recording date — and outlives the 75-day case expiry.
+  const [pack, samples] = await Promise.all([store.getPack(id), store.listSamples().catch(() => [])]);
+  const sample = samples.find((s) => s.id === id && s.recordedAt) ?? null;
+  const shown = sample ?? pack;
+  if (!shown) notFound();
   return (
     <main className="sheet">
-      <Masthead sub={`evidence file · ${pack.createdAt.slice(0, 10)}`} />
-      <EvidenceFile view={viewFromPack(pack)} />
+      <Masthead sub={`evidence file · ${shown.createdAt.slice(0, 10)}`} />
+      {sample ? (
+        <p className="back">
+          <a href="/judge">← Coba kasus lain · try another recorded case</a>
+        </p>
+      ) : null}
+      <EvidenceFile view={viewFromPack(shown)} />
       <JudgeStrip />
     </main>
   );
