@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Awas — pages, not scores</title>
-<meta name="description" content="Paste an overseas job offer. Awas checks it against rules quoted from official Indonesian pages and shows a quote only when code finds it word for word.">
+<meta name="description" content="Paste an overseas job offer. Awas checks it against rules quoted from official Indonesian pages and shows evidence only when code finds it word for word.">
 <meta name="author" content="Edy Cu">
 <meta name="theme-color" content="#FBFAF5">
 <link rel="canonical" href="https://awas.edycu.dev/about">
@@ -13,16 +13,16 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Awas">
 <meta property="og:title" content="Awas — pages, not scores">
-<meta property="og:description" content="Rules from official pages, quotes checked word for word in code: STOP, VERIFY FIRST or NO RED FLAGS FOUND. Never a score.">
+<meta property="og:description" content="Official rules; evidence quotes checked word for word in code: STOP, VERIFY FIRST or NO RED FLAGS FOUND. Never a score.">
 <meta property="og:url" content="https://awas.edycu.dev/about">
-<meta property="og:image" content="https://awas.edycu.dev/og-image.png?v=6790adc007">
+<meta property="og:image" content="https://awas.edycu.dev/og-image.png?v=bcff0a6398">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Awas — a recorded evidence file: the rule and its official page, a quote found word for word, a STOP stamp">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Awas — pages, not scores">
-<meta name="twitter:description" content="Rules from official pages, quotes checked word for word in code: STOP, VERIFY FIRST or NO RED FLAGS FOUND. Never a score.">
-<meta name="twitter:image" content="https://awas.edycu.dev/og-image.png?v=6790adc007">
+<meta name="twitter:description" content="Official rules; evidence quotes checked word for word in code: STOP, VERIFY FIRST or NO RED FLAGS FOUND. Never a score.">
+<meta name="twitter:image" content="https://awas.edycu.dev/og-image.png?v=bcff0a6398">
 <link rel="preload" href="/fonts/abril-fatface-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/atkinson-hyperlegible-next-wght.woff2" as="font" type="font/woff2" crossorigin>
 <script>
@@ -68,7 +68,7 @@
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 * { box-sizing: border-box; }
-html { overflow-x: clip; scroll-padding-top: 24px; scroll-padding-bottom: 24px; color-scheme: light; scrollbar-color: var(--muted) var(--bg); -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: rgba(199, 213, 232, 0.5); }
+html { overflow-x: clip; scroll-padding-top: 104px; scroll-padding-bottom: 24px; color-scheme: light; scrollbar-color: var(--muted) var(--bg); -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: rgba(199, 213, 232, 0.5); }
 html.motion { scroll-behavior: smooth; }
 body {
   margin: 0; color: var(--ink); background-color: var(--bg);
@@ -85,6 +85,7 @@ a { color: inherit; text-decoration-thickness: 1.5px; text-underline-offset: 3px
 a:hover { text-decoration-thickness: 3px; text-underline-offset: 4px; }
 :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
 code, .data { font-family: var(--font-data); font-size: 0.86em; }
+.why .data, .src .data { font-size: 12.5px; }
 .nw { white-space: nowrap; }
 p, li, blockquote { text-wrap: pretty; }
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -102,6 +103,7 @@ p, li, blockquote { text-wrap: pretty; }
 
 /* Masthead */
 .mast { position: sticky; top: 0; z-index: 40; padding: 10px 0 8px; background: var(--bg); border-bottom: 1px solid var(--rule); }
+@media (max-height: 500px) { .mast { position: static; } html { scroll-padding-top: 24px; } }
 .mast .page { display: flex; align-items: center; gap: 28px; min-height: 64px; }
 .word { display: inline-flex; align-items: baseline; gap: 10px; text-decoration: none; }
 .word b { font: 400 34px/1 var(--font-display); letter-spacing: 0.005em; }
@@ -126,7 +128,8 @@ h1 { font-size: clamp(44px, 5.4vw, 82px); line-height: 0.98; }
 h2 { font-size: clamp(36px, 4.4vw, 64px); line-height: 1.0; }
 h3 { font: 700 20px/1.3 var(--font-body); margin: 0; }
 .strike { color: var(--before); position: relative; white-space: nowrap; }
-.strike > span { background: linear-gradient(var(--before), var(--before)) no-repeat 0 56% / 100% 0.075em; }
+.strike > span { position: relative; }
+.strike > span::after { content: ""; position: absolute; left: -3%; right: -3%; top: 47%; height: 0.06em; background: var(--ink); border-radius: 0.03em; transform: rotate(-3.5deg); transform-origin: 0 50%; }
 .sec { padding-top: 120px; }
 .sec-head { max-width: 860px; }
 .sec-lede { font-size: 19px; max-width: 40em; margin: 18px 0 0; }
@@ -179,7 +182,7 @@ h3 { font: 700 20px/1.3 var(--font-body); margin: 0; }
 .mask { display: inline-block; width: 4.2em; height: 1em; vertical-align: -0.12em; background: var(--ink); border: 1px solid var(--ink); border-radius: 2px; }
 .mask-lab { font: 700 12.5px/1 var(--font-body); color: var(--ink); border: 1px solid var(--muted); padding: 1px 4px; margin-left: 4px; white-space: nowrap; }
 .f-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin-top: 12px; font: 500 13.5px/1.5 var(--font-body); color: var(--muted); }
-.f-foot a { color: var(--ink); font-weight: 600; }
+.f-foot a { color: var(--ink); font-weight: 600; padding-block: 12px; }
 .linkbtn { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 12px; background: transparent; border: 1.5px solid var(--muted); color: var(--ink); font: 600 13.5px/1 var(--font-body); cursor: pointer; transition: border-color 120ms ease-out, background-color 120ms ease-out; }
 .linkbtn:hover { border-color: var(--ink); background: rgba(199, 213, 232, 0.35); }
 .linkbtn .ic { width: 15px; height: 15px; }
@@ -199,8 +202,8 @@ h3 { font: 700 20px/1.3 var(--font-body); margin: 0; }
 @keyframes k-strike { from { background-size: 0 1.5px; } }
 @keyframes k-stamp { 0% { opacity: 0; transform: rotate(-2deg) scale(1.24); } 55% { opacity: 1; } 100% { opacity: 1; transform: rotate(-6deg) scale(1); } }
 @keyframes k-thud { 0%, 100% { transform: rotate(var(--rot)); } 35% { transform: rotate(var(--rot)) translateY(3px) scale(0.997); } }
-@keyframes k-hstrike { from { background-size: 0 0.075em; } }
-@keyframes k-slip { 0% { transform: rotate(-1deg) scale(1.32); } 100% { transform: rotate(-6deg) scale(1); } }
+@keyframes k-hstrike { from { transform: rotate(-3.5deg) scaleX(0); } }
+@keyframes k-slip { 0% { transform: rotate(-1deg) scale(1.08); } 100% { transform: rotate(-6deg) scale(1); } }
 @keyframes k-type { from { clip-path: inset(0 100% 0 0); } }
 .motion #file:not(.settled) .u { animation: k-under 450ms var(--d) var(--ease) both; }
 .motion #file:not(.settled) .u::after { animation: k-fade 300ms var(--d) ease-out both; }
@@ -212,11 +215,11 @@ h3 { font: 700 20px/1.3 var(--font-body); margin: 0; }
 .motion #file:not(.settled) .f-foot { animation: k-rise 400ms 3050ms var(--ease) both; }
 .motion #file:not(.settled) .stamp { animation: k-stamp 260ms 3300ms cubic-bezier(.2,.9,.3,1.25) both; }
 .motion #file:not(.settled) { animation: k-thud 260ms 3480ms ease-out both; }
-.motion #top:not(.settled) .strike > span { animation: k-hstrike 520ms var(--hd, 3850ms) var(--ease) both; }
+.motion #top:not(.settled) .strike > span::after { animation: k-hstrike 520ms var(--hd, 3850ms) var(--ease) both; }
 .motion #slips:not(.settled) .st { animation: k-slip 200ms calc(var(--i) * 70ms + 150ms) cubic-bezier(.2,.9,.3,1.25) both; }
 .motion #receipt:not(.settled) li { animation: k-type 420ms calc(var(--i) * 280ms + 200ms) steps(18, end) both; }
 .motion #file:not(.play), .motion #file:not(.play) *, .motion #file:not(.play) .u::after,
-.motion #top:not(.play) .strike > span, .motion #slips:not(.play) .st, .motion #receipt:not(.play) li { animation-play-state: paused !important; } /* the shorthand above resets play-state */
+.motion #top:not(.play) .strike > span::after, .motion #slips:not(.play) .st, .motion #receipt:not(.play) li { animation-play-state: paused !important; } /* the shorthand above resets play-state */
 
 /* ============================== THE REGISTER ============================== */
 .reg-top { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 48px; align-items: end; }
@@ -277,6 +280,7 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 
 /* ============================== ONE RUN ============================== */
 .run-grid { margin-top: 44px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 44px; align-items: start; }
+.run-grid > div:last-child { position: sticky; top: 104px; }
 .shots { display: grid; gap: 22px; }
 .shot { position: relative; margin: 0; background: var(--card); padding: 10px 10px 10px; box-shadow: var(--shadow); }
 .shot:nth-child(1) { transform: rotate(-0.8deg); } .shot:nth-child(2) { transform: rotate(0.6deg); margin-left: 34px; } .shot:nth-child(3) { transform: rotate(-0.4deg); margin-left: 12px; }
@@ -372,7 +376,7 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 
 /* ============================== CLOSE + FOOTER ============================== */
 .close { padding-top: 140px; padding-bottom: 40px; }
-.close h2 { font-size: clamp(54px, 8vw, 128px); line-height: 0.95; }
+.close h2 { font-size: clamp(54px, 6.6vw, 96px); line-height: 0.95; }
 .close p { margin: 18px 0 0; font-size: 19px; max-width: 36em; }
 .close .ctas { margin-top: 26px; }
 .foot { margin-top: 90px; padding: 26px 0 40px; border-top: 2px solid var(--ink); background: var(--bg); }
@@ -402,16 +406,18 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   .mast nav { display: none; }
   .mast .btn { margin-left: auto; }
   .mnote { display: none; }
-  .b1, .b3 { grid-column: span 6; } .b2 { grid-column: span 12; grid-row: auto; } .b4, .b5 { grid-column: span 6; }
+  .b1, .b3 { grid-column: span 6; } .b2 { grid-column: span 12; grid-row: auto; } .b4 { grid-column: span 6; }
+  .b5 { display: block; grid-column: span 12; } .b5 .trio { margin: 16px 0 4px; }
   .sponsors { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .sponsors div:nth-child(4) { padding-left: 0; border-left: 0; }
 }
 @media (max-width: 1023px) {
   .hero { grid-template-columns: minmax(0, 1fr); }
   .hero-copy { display: contents; }
-  .hero h1 { order: 1; } .hero .file { order: 2; margin-top: 26px; } .hero .lede { order: 3; } .hero .ctas { order: 4; } .hero .proof { order: 5; }
+  .hero h1 { order: 1; } .hero .lede { order: 2; } .hero .ctas { order: 3; } .hero .proof { order: 4; } .hero .file { order: 5; margin-top: 30px; }
   .file { max-width: 680px; }
   .reg-top, .run-grid, .labs { grid-template-columns: minmax(0, 1fr); }
+  .run-grid > div:last-child { position: static; }
   .slips-wrap { grid-template-columns: minmax(0, 1fr); }
   .slips.lic { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .cuts { grid-template-columns: minmax(0, 1fr); max-width: 680px; }
@@ -450,7 +456,7 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   .verdicts .big { font-size: 64px; }
   .slips, .slips.lic { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
   .slip { min-height: 0; padding: 8px 7px; }
-  .slip .st { font-size: 11.5px; letter-spacing: 0.02em; padding: 3px 5px 2px; white-space: normal; max-width: 100%; transform: rotate(-3deg); }
+  .slip .st { font-size: 12px; letter-spacing: 0.02em; padding: 3px 5px 2px; white-space: normal; max-width: 100%; transform: rotate(-3deg); }
   .slip .why { font-size: 13px; margin-top: 6px; }
   .axis .seg.narrow { font-size: 0; }
   .verdicts .stopbig { border-width: 4px; padding: 0 10px; }
@@ -480,7 +486,8 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 /* Forced colours: the highlight and the strikes are backgrounds, so restate them in system colours. */
 @media (forced-colors: active) {
   .hl, .pagebox mark { background: Mark; color: MarkText; forced-color-adjust: none; }
-  .strike > span, .card.dropped .q s { background: none; text-decoration: line-through; }
+  .strike > span::after { background: CanvasText; }
+  .card.dropped .q s { background: none; text-decoration: line-through; }
   .u { background: none; text-decoration: underline; }
   .stamp, .slip .st, .trio .st, .verdicts .stopbig { forced-color-adjust: none; }
   .mask { forced-color-adjust: none; background: CanvasText; }
@@ -507,7 +514,7 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   <div class="page">
     <a class="word" href="/about"><b>Awas</b><i>— watch out</i></a>
     <nav aria-label="Sections">
-      <a href="#register">The register</a><a href="#ralat">Ralat</a><a href="#lab">Try the gate</a><a href="#run">One run</a><a href="#how">How it decides</a><a href="#faq">FAQ</a>
+      <a href="#register">Results</a><a href="#ralat">What failed</a><a href="#lab">Try to fool it</a><a href="#run">One run</a><a href="#how">How it decides</a><a href="#faq">FAQ</a>
     </nav>
     <a class="btn btn-ink btn-sm" href="/">Open the app <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
   </div>
@@ -519,20 +526,20 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   <p class="mnote"><span>17 Okt 2026</span> <span lang="id">rekaman</span></p>
   <div class="hero-copy">
     <h1 id="h1">Awas answers the family chat with pages, not <span class="strike"><span>scores</span></span>.</h1>
-    <p class="lede">A job offer arrives — customer service in Cambodia, 2,000 USD — and someone must answer tonight. Awas answers with <b>the official rule</b>, quotes code found <b>word for word</b>, and a stamp. Out of sample: <b>9 of 25</b> scam offers got STOP; <b>0 of 10</b> licensed vacancies did.</p>
+    <p class="lede">A job offer arrives — customer service in Cambodia, 2,000 USD — and someone must answer tonight. Awas answers with <b>the official rule</b>, evidence code found <b>word for word</b>, and a stamp. Out of sample: <b>9 of 25</b> reported scam offers got STOP and 15 more VERIFY FIRST; <b>0 of 10</b> licensed vacancies got STOP.</p>
     <div class="ctas">
       <a class="btn btn-ink" href="/">Paste an offer <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       <a class="btn" href="/pitch">Pitch deck</a>
       <a class="btn" href="https://github.com/edycutjong/awas" rel="noopener">Source on GitHub</a>
     </div>
-    <p class="proof">No login · <a href="/judge">5 recorded runs on /judge</a> · every quote opens on its page</p>
+    <p class="proof">No login · <a href="/judge">5 recorded runs on /judge</a> · <a href="#lab">try to fool the gate</a></p>
   </div>
 
   <figure class="file" id="file" aria-labelledby="file-cap">
     <i class="tape t1" aria-hidden="true"></i><i class="tape t2" aria-hidden="true"></i>
     <div class="f-head">
       <div><span class="mk">Awas</span><span class="sub">berkas bukti · evidence file<br>rekaman · recorded 2026-10-17</span>
-        <button class="linkbtn" type="button" id="replay-file" hidden><svg class="ic" aria-hidden="true"><use href="#i-replay"/></svg>replay the check</button></div>
+        <button class="linkbtn" type="button" id="replay-file" hidden><svg class="ic" aria-hidden="true"><use href="#i-replay"/></svg>replay the recording</button></div>
       <div class="stamp" id="stamp" role="img" aria-label="Verdict: STOP — jangan berangkat dulu, don't travel yet"><span class="w">STOP</span><span class="s">jangan berangkat dulu<br>don’t travel yet</span></div>
     </div>
     <span class="lab cap">the offer, as KP2MI described it (2022) — not the ad</span>
@@ -540,12 +547,12 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
     <div class="rule">
       <i class="tick" aria-hidden="true"></i>
       <div><b lang="id">Negara tujuan bukan negara penempatan resmi pekerja migran</b> <span class="en">· The destination is not an official placement country</span>
-        <span class="src">NEVER rule · <a href="https://kp2mi.go.id/berita-detail/waspada-tawaran-kerja-ke-kamboja-menteri-mukhtarudin-itu-bukan-negara-penempatan-pekerja-migran-indonesia#:~:text=Perlu%20saya%20tegaskan%2C%20Kamboja%20itu%20bukan%20negara%20penempatan." rel="noopener" title="Opens the official page at this sentence">kp2mi.go.id · 2025-10-28</a></span>
+        <span class="src">NEVER rule → STOP · <a href="https://kp2mi.go.id/berita-detail/waspada-tawaran-kerja-ke-kamboja-menteri-mukhtarudin-itu-bukan-negara-penempatan-pekerja-migran-indonesia#:~:text=Perlu%20saya%20tegaskan%2C%20Kamboja%20itu%20bukan%20negara%20penempatan." rel="noopener" title="Opens the official page at this sentence">kp2mi.go.id · 2025-10-28</a></span>
         <blockquote lang="id">“Perlu saya tegaskan, Kamboja itu bukan negara penempatan.”</blockquote>
       </div>
     </div>
     <div class="card verified">
-      <span class="row1"><span class="why"><span class="data">liks.suara.com</span> · context, not a verdict input</span><span class="legend"><span class="hl" lang="id">kuning</span> = found word for word</span></span>
+      <span class="row1"><span class="why"><span class="data">liks.suara.com</span> · context, not a verdict input</span><span class="legend"><span class="hl" lang="id">kuning</span> (yellow) = found word for word</span></span>
       <a class="q" href="https://liks.suara.com/read/2026/02/10/183352/dilema-wni-bermasalah-di-kamboja-korban-perdagangan-orang-atau-operator-penipuan#:~:text=Para%20WNI%20direkrut%20melalui,Kamboja%2C%20mereka%20justru%20terperangkap." rel="noopener" lang="id"><span class="hl">“Para WNI direkrut melalui media sosial dengan janji pekerjaan legal. Kenyataannya, setibanya di Kamboja, mereka justru terperangkap.”</span></a>
       <span class="gl">These Indonesian citizens were recruited via social media with promises of legal work. In reality, upon arriving in Cambodia, they instead became trapped. <a class="open" href="https://liks.suara.com/read/2026/02/10/183352/dilema-wni-bermasalah-di-kamboja-korban-perdagangan-orang-atau-operator-penipuan#:~:text=Para%20WNI%20direkrut%20melalui,Kamboja%2C%20mereka%20justru%20terperangkap." rel="noopener">open the sentence <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></span>
     </div>
@@ -567,7 +574,7 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   <div class="reg-top">
     <div class="sec-head">
       <h2 id="reg-h">Thirty-five cases. One graded run.</h2>
-      <p class="sec-lede">25 reported scam offers and 10 licensed vacancies, never tuned on, scored in one run by a Nebius Serverless Job on <code>code-freeze</code>.</p>
+      <p class="sec-lede">25 reported scam offers and 10 licensed vacancies, never tuned on, graded in one run: a Nebius Serverless Job sent them through the live app, its <code>src/lib</code> frozen at <code>code-freeze</code>.</p>
     </div>
     <div class="verdicts">
       <div><span class="big"><span class="stopbig"><span data-count="9">9</span><small> / 25</small></span></span><p>reported scam offers got STOP — 15 more VERIFY FIRST, 1 missed</p></div>
@@ -577,7 +584,7 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   <div class="slips-wrap" id="slips">
     <div>
       <h3 class="cap">25 publicly reported scam offers</h3>
-      <ol class="slips" aria-label="Tranche 2, reported scam offers: each case's verdict and deciding rule"><li class="slip v" style="--i:0" title="t2-p11: VERIFY FIRST — very high pay, light work"><span class="st">VERIFY FIRST</span><span class="why">very high pay, light work</span></li><li class="slip s" style="--i:1" title="t2-p12: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip v" style="--i:2" title="t2-p13: VERIFY FIRST — no company named"><span class="st">VERIFY FIRST</span><span class="why">no company named</span></li><li class="slip v" style="--i:3" title="t2-p14: VERIFY FIRST — a fee to get the job"><span class="st">VERIFY FIRST</span><span class="why">a fee to get the job</span></li><li class="slip v" style="--i:4" title="t2-p15: VERIFY FIRST — a very fast departure"><span class="st">VERIFY FIRST</span><span class="why">a very fast departure</span></li><li class="slip s" style="--i:5" title="t2-p16: STOP — tourist visa for work"><span class="st">STOP</span><span class="why">tourist visa for work</span></li><li class="slip v" style="--i:6" title="t2-p17: VERIFY FIRST — a fee to get the job"><span class="st">VERIFY FIRST</span><span class="why">a fee to get the job</span></li><li class="slip v" style="--i:7" title="t2-p18: VERIFY FIRST — a fee to get the job"><span class="st">VERIFY FIRST</span><span class="why">a fee to get the job</span></li><li class="slip v" style="--i:8" title="t2-p19: VERIFY FIRST — a fee to get the job"><span class="st">VERIFY FIRST</span><span class="why">a fee to get the job</span></li><li class="slip s" style="--i:9" title="t2-p20: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip v" style="--i:10" title="t2-p21: VERIFY FIRST — a fee to get the job"><span class="st">VERIFY FIRST</span><span class="why">a fee to get the job</span></li><li class="slip v" style="--i:11" title="t2-p22: VERIFY FIRST — very high pay, light work"><span class="st">VERIFY FIRST</span><span class="why">very high pay, light work</span></li><li class="slip s" style="--i:12" title="t2-p23: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip n" style="--i:13" title="t2-p24: NO RED FLAGS FOUND — no rule fired"><span class="st">NO RED FLAGS FOUND</span></li><li class="slip s" style="--i:14" title="t2-p25: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip s" style="--i:15" title="t2-p26: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip v" style="--i:16" title="t2-p27: VERIFY FIRST — no company named"><span class="st">VERIFY FIRST</span><span class="why">no company named</span></li><li class="slip v" style="--i:17" title="t2-p28: VERIFY FIRST — a fee to get the job"><span class="st">VERIFY FIRST</span><span class="why">a fee to get the job</span></li><li class="slip s" style="--i:18" title="t2-p29: STOP — another outlet’s report names the company"><span class="st">STOP</span><span class="why">another outlet’s report names the company</span></li><li class="slip v" style="--i:19" title="t2-p30: VERIFY FIRST — very high pay, light work"><span class="st">VERIFY FIRST</span><span class="why">very high pay, light work</span></li><li class="slip v" style="--i:20" title="t2-p31: VERIFY FIRST — in an official warning"><span class="st">VERIFY FIRST</span><span class="why">in an official warning</span></li><li class="slip v" style="--i:21" title="t2-p32: VERIFY FIRST — no company named"><span class="st">VERIFY FIRST</span><span class="why">no company named</span></li><li class="slip s" style="--i:22" title="t2-p33: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip v" style="--i:23" title="t2-p34: VERIFY FIRST — no company named"><span class="st">VERIFY FIRST</span><span class="why">no company named</span></li><li class="slip s" style="--i:24" title="t2-p35: STOP — tourist visa for work"><span class="st">STOP</span><span class="why">tourist visa for work</span></li></ol>
+      <ol class="slips" aria-label="Tranche 2, reported scam offers: each case's verdict and its first-listed reason"><li class="slip v" style="--i:0" title="t2-p11: VERIFY FIRST — very high pay, light work; a personal number only"><span class="st">VERIFY FIRST</span><span class="why">very high pay, light work</span></li><li class="slip s" style="--i:1" title="t2-p12: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip v" style="--i:2" title="t2-p13: VERIFY FIRST — no company named"><span class="st">VERIFY FIRST</span><span class="why">no company named</span></li><li class="slip v" style="--i:3" title="t2-p14: VERIFY FIRST — a fee to get the job"><span class="st">VERIFY FIRST</span><span class="why">a fee to get the job</span></li><li class="slip v" style="--i:4" title="t2-p15: VERIFY FIRST — a very fast departure; no company named"><span class="st">VERIFY FIRST</span><span class="why">a very fast departure</span></li><li class="slip s" style="--i:5" title="t2-p16: STOP — tourist visa for work"><span class="st">STOP</span><span class="why">tourist visa for work</span></li><li class="slip v" style="--i:6" title="t2-p17: VERIFY FIRST — a fee to get the job; costs advanced, then deducted; no company named"><span class="st">VERIFY FIRST</span><span class="why">a fee to get the job</span></li><li class="slip v" style="--i:7" title="t2-p18: VERIFY FIRST — a fee to get the job; no company named"><span class="st">VERIFY FIRST</span><span class="why">a fee to get the job</span></li><li class="slip v" style="--i:8" title="t2-p19: VERIFY FIRST — a fee to get the job; in an official warning; no company named"><span class="st">VERIFY FIRST</span><span class="why">a fee to get the job</span></li><li class="slip s" style="--i:9" title="t2-p20: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip v" style="--i:10" title="t2-p21: VERIFY FIRST — a fee to get the job; no company named"><span class="st">VERIFY FIRST</span><span class="why">a fee to get the job</span></li><li class="slip v" style="--i:11" title="t2-p22: VERIFY FIRST — very high pay, light work; no company named"><span class="st">VERIFY FIRST</span><span class="why">very high pay, light work</span></li><li class="slip s" style="--i:12" title="t2-p23: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip n" style="--i:13" title="t2-p24: NO RED FLAGS FOUND — no rule fired"><span class="st">NO RED FLAGS FOUND</span></li><li class="slip s" style="--i:14" title="t2-p25: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip s" style="--i:15" title="t2-p26: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip v" style="--i:16" title="t2-p27: VERIFY FIRST — no company named"><span class="st">VERIFY FIRST</span><span class="why">no company named</span></li><li class="slip v" style="--i:17" title="t2-p28: VERIFY FIRST — a fee to get the job; no company named"><span class="st">VERIFY FIRST</span><span class="why">a fee to get the job</span></li><li class="slip s" style="--i:18" title="t2-p29: STOP — another outlet’s report names the company"><span class="st">STOP</span><span class="why">another outlet’s report names the company</span></li><li class="slip v" style="--i:19" title="t2-p30: VERIFY FIRST — very high pay, light work; in an official warning; no company named"><span class="st">VERIFY FIRST</span><span class="why">very high pay, light work</span></li><li class="slip v" style="--i:20" title="t2-p31: VERIFY FIRST — in an official warning; no company named"><span class="st">VERIFY FIRST</span><span class="why">in an official warning</span></li><li class="slip v" style="--i:21" title="t2-p32: VERIFY FIRST — no company named"><span class="st">VERIFY FIRST</span><span class="why">no company named</span></li><li class="slip s" style="--i:22" title="t2-p33: STOP — not a placement country"><span class="st">STOP</span><span class="why">not a placement country</span></li><li class="slip v" style="--i:23" title="t2-p34: VERIFY FIRST — no company named"><span class="st">VERIFY FIRST</span><span class="why">no company named</span></li><li class="slip s" style="--i:24" title="t2-p35: STOP — tourist visa for work"><span class="st">STOP</span><span class="why">tourist visa for work</span></li></ol>
     </div>
     <div>
       <h3 class="cap">10 licensed agencies’ vacancies</h3>
@@ -585,12 +592,12 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
     </div>
   </div>
   <dl class="receipts">
-    <div><dt><span data-count="48">48</span>/48</dt><dd>quotes shown, all found word for word<span class="sm">6 of 54 dropped · plain-GET re-check: 33 found, 14 unreadable, 1 changed</span></dd></div>
+    <div><dt><span data-count="48">48</span>/48</dt><dd>quotes shown, all found word for word<span class="sm">6 of 54 dropped · plain-GET re-check: 33 found, 14 not checkable by script, 1 changed</span></dd></div>
     <div><dt>13.7 s</dt><dd>median to a verdict<span class="sm">p95 31.7 s</span></dd></div>
-    <div><dt>$0.0078</dt><dd>median Token Factory cost per check<span class="sm">+ 1–3 Tavily credits</span></dd></div>
-    <div><dt><span data-count="19">19</span>/20</dt><dd>same verdict on the pre-registered rerun (10 licensed)<span class="sm">20/20 on a later rerun of the first 10 reported cases</span></dd></div>
+    <div><dt>$0.0078</dt><dd>median Token Factory cost per check<span class="sm">at list prices · + 1–3 Tavily credits</span></dd></div>
+    <div><dt><span data-count="19">19</span>/20</dt><dd>same verdict on the rerun set in bench.py before the run (10 licensed)<span class="sm">20/20 on a later rerun of the first 10 reported cases</span></dd></div>
   </dl>
-  <p class="fine">The ninth STOP is the one report naming its company, matched in another outlet’s report: one case, not a rate. An earlier tranche, run before the freeze, showed two misses that were fixed first. <a href="https://github.com/edycutjong/awas/blob/main/bench/results-t2.jsonl" rel="noopener">every row</a> · <span class="data">aijob-e03nhcfcwc4vnee33m</span></p>
+  <p class="fine">The ninth STOP is the one report naming its company, matched in another outlet’s report: one case, not a rate. An earlier tranche, run before the freeze, made three misses visible: two were fixed first, one (domestic work in Qatar) is a documented gap. <a href="https://github.com/edycutjong/awas/blob/main/bench/results-t2.jsonl" rel="noopener">every row</a> · <span class="data">aijob-e03nhcfcwc4vnee33m</span></p>
 </section>
 
 <!-- ============================== RALAT ============================== -->
@@ -601,7 +608,7 @@ textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
     <p class="sec-lede">A newspaper’s corrections box is the <i lang="id">ralat</i>. Four of the README’s six honest limits, verbatim:</p>
   </div>
   <div class="ralat"><span class="kop" lang="id">RALAT</span><ol><li><div><blockquote>“Our day-0 search-coverage gate failed (8 of 20 known cases had a relevant item; we had set 12). The web evidence is therefore context; the verdict rests on the cited rules.”</blockquote><cite>— README · Honest limits, 1</cite><p class="did"><b>Done:</b> the verdict moved onto cited rules, before tranche 1 ran.</p></div></li><li><div><blockquote>“The benchmark&#x27;s reported cases are reporters&#x27; descriptions of offers, not the ads.”</blockquote><cite>— README · Honest limits, 2</cite><p class="did"><b>Done:</b> each case says what it is: the file at the top is “as KP2MI described it”.</p></div></li><li><div><blockquote>“Indonesian is not a listed language for the Nemotron models used (per their model cards)”</blockquote><cite>— README · Honest limits, 3</cite><p class="did"><b>Measured instead:</b> field accuracy on 25 dev texts, against labels our agent drafted, not yet reviewed.</p></div></li><li><div><blockquote>“The phone path is unbenchmarked. A phone number with no company name returns VERIFY FIRST, not a verdict.”</blockquote><cite>— README · Honest limits, 4</cite><p class="did"><b>Why:</b> benchmark rows carry no phone numbers.</p></div></li></ol></div>
-  <p class="withdrawn">Also: 53 collected rows were discarded before any model saw them — their publishers forbid AI use (protocol amendment 2).</p>
+  <p class="withdrawn">Also: 53 collected rows were discarded before the pipeline read any of them — their publishers forbid AI use (protocol amendment 2).</p>
 </section>
 
 <!-- ============================== THE LAB ============================== -->
@@ -648,7 +655,7 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
   <div class="run-grid">
     <div class="shots">
       <figure class="shot"><i class="tape" aria-hidden="true"></i><picture><source media="(max-width: 759px)" srcset="/landing/media/run-top.webp" width="692" height="1882"><img src="/landing/media/deck-dtop.webp" width="1488" height="1078" loading="lazy" alt="Awas — the recorded evidence file in the live app: the offer underlined, the STOP stamp, the rules with their official sources"></picture><figcaption>the live app’s file: the stamp and its rules</figcaption></figure>
-      <figure class="shot"><picture><source media="(max-width: 759px)" srcset="/landing/media/run-suara.webp" width="692" height="1340"><img src="/landing/media/deck-dsuara.webp" width="1488" height="716" loading="lazy" alt="Awas — a context card: the quote highlighted yellow because the gate found it word for word on liks.suara.com, with its translation and link"></picture><figcaption>a line the gate found word for word</figcaption></figure>
+      <figure class="shot"><picture><source media="(max-width: 759px)" srcset="/landing/media/run-suara.webp" width="692" height="1318"><img src="/landing/media/deck-dsuara.webp" width="1488" height="716" loading="lazy" alt="Awas — a context card: the quote highlighted yellow because the gate found it word for word on liks.suara.com, with its translation and link"></picture><figcaption>a line the gate found word for word</figcaption></figure>
       <figure class="shot"><picture><source media="(max-width: 759px)" srcset="/landing/media/run-message.webp" width="692" height="910"><img src="/landing/media/deck-dmessage.webp" width="1488" height="526" loading="lazy" alt="Awas — the message to forward to the family, in Bahasa, with copy and share buttons"></picture><figcaption>the answer for the family chat, ready to forward</figcaption></figure>
     </div>
     <div>
@@ -673,8 +680,8 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
     <h2 id="rec-h">12,019 asked to come home.</h2>
     <p class="sec-lede">Cut from the ministries’ own pages; each sentence is in docs/SOURCES.md.</p>
   </div>
-  <div class="cuts"><figure class="cut"><span class="num">12,019</span><span class="what">Indonesians from scam networks in Cambodia asked the embassy to bring them home, Jan–Jun 2026</span><span class="src"><a href="https://www.kemlu.go.id/berita/lebih-dari-12000-wni-eks-jaringan-penipuan-daring-di-kamboja-minta-bantuan-kepulangan?type=publication" rel="noopener">kemlu.go.id · KBRI Phnom Penh · 2 July 2026</a></span></figure><figure class="cut"><span class="num">1,301<small> · 85%</small></span><span class="what">cases at the embassy in Cambodia, Q1 2025 — 85% online scams</span><span class="src"><a href="https://www.kemlu.go.id/berita/kbri-phnom-penh-tangani-1301-kasus-wni-selama-jan-mar-2025-mayoritas-terkait-penipuan-daring-online-scam?type=publication" rel="noopener">kemlu.go.id · KBRI Phnom Penh · 24 April 2025</a></span></figure><figure class="cut"><span class="num" style="font-size:clamp(30px,2.8vw,40px);line-height:1.08" lang="id">“kerja di IT atau marketing digital”</span><span class="what">how the offer arrives, in the ministry’s words</span><span class="src"><a href="https://kp2mi.go.id/berita-detail/waspada-tawaran-kerja-ke-kamboja-menteri-mukhtarudin-itu-bukan-negara-penempatan-pekerja-migran-indonesia" rel="noopener">kp2mi.go.id · KP2MI · 28 October 2025</a></span></figure></div>
-  <p class="framing"><span class="k cap">catatan</span>The same pages count people who ran scams, not only victims. Awas claims less: the offers follow a pattern a family can check before anyone leaves.</p>
+  <div class="cuts"><figure class="cut"><span class="num">12,019</span><span class="what">Indonesians from scam networks in Cambodia asked the embassy for help getting home, Jan–Jun 2026</span><span class="src"><a href="https://www.kemlu.go.id/berita/lebih-dari-12000-wni-eks-jaringan-penipuan-daring-di-kamboja-minta-bantuan-kepulangan?type=publication" rel="noopener">kemlu.go.id · KBRI Phnom Penh · 2 July 2026</a></span></figure><figure class="cut"><span class="num">1,301<small> · 85%</small></span><span class="what">cases at the embassy in Cambodia, Q1 2025 — 85% online scams</span><span class="src"><a href="https://www.kemlu.go.id/berita/kbri-phnom-penh-tangani-1301-kasus-wni-selama-jan-mar-2025-mayoritas-terkait-penipuan-daring-online-scam?type=publication" rel="noopener">kemlu.go.id · KBRI Phnom Penh · 24 April 2025</a></span></figure><figure class="cut"><span class="num" style="font-size:clamp(30px,2.8vw,40px);line-height:1.08" lang="id">“kerja di IT atau marketing digital”</span><span class="what">how the offer arrives, in the ministry’s words</span><span class="src"><a href="https://kp2mi.go.id/berita-detail/waspada-tawaran-kerja-ke-kamboja-menteri-mukhtarudin-itu-bukan-negara-penempatan-pekerja-migran-indonesia" rel="noopener">kp2mi.go.id · KP2MI · 28 October 2025</a></span></figure></div>
+  <p class="framing"><span class="k cap">catatan</span>The embassy’s 1,301-case page counts people who ran scams, not only victims. Awas claims less: the offers follow a pattern a family can check before anyone leaves.</p>
 </section>
 
 <!-- ============================== HOW IT DECIDES ============================== -->
@@ -684,7 +691,7 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
     <h2 id="how-h">The model reads. Code decides.</h2>
     <p class="sec-lede">Nemotron reads and proposes; code decides — unchanged since <code>code-freeze</code>, under 144 unit and 56 browser tests.</p>
   </div>
-  <div class="bento"><article class="bc b1"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><circle cx="8" cy="8" r="4"/><circle cx="8" cy="24" r="4"/><path d="M11 10.5 27 25M11 21.5 27 7"/></svg><h3>Reads the offer</h3><p>Nemotron 3 Ultra copies typed fields; code checks each is in the text.</p><div class="chips"><span class="chip">nvidia/Nemotron-3-Ultra-550b-a55b</span><span class="chip">call 1</span></div></article><article class="bc b2"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="11" width="26" height="10" rx="1"/><path d="M8 11v4M13 11v6M18 11v4M23 11v6"/></svg><h3>Applies the rules</h3><p>16 rules in code: 14 quote an official page, 2 check the licence list. Any NEVER rule is a STOP; each link points to its sentence:</p><ol class="nevers"><li><b>Not a placement country</b><span class="src"><a href="https://kp2mi.go.id/berita-detail/waspada-tawaran-kerja-ke-kamboja-menteri-mukhtarudin-itu-bukan-negara-penempatan-pekerja-migran-indonesia#:~:text=Perlu%20saya%20tegaskan%2C%20Kamboja%20itu%20bukan%20negara%20penempatan." rel="noopener" title="Perlu saya tegaskan, Kamboja itu bukan negara penempatan.">kp2mi.go.id · 2025-10-28</a> <span class="data">+1</span></span></li><li><b>Tourist visa for work</b><span class="src"><a href="https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo#:~:text=Dokumen%20bermasalah%2C%20menggunakan%20visa,(work%20permit)%20yang%20sah." rel="noopener" title="Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah.">humas.polri.go.id · 2026-02-04</a></span></li><li><b>Fee before a contract</b><span class="src"><a href="https://www.kemnaker.go.id/news/detail/kemnaker-imbau-masyarakat-waspada-penipuan-lowongan-pekerjaan#:~:text=Jangan%20pernah%20memberikan%20apapun%20untuk%20mendapatkan%20pekerjaan." rel="noopener" title="Jangan pernah memberikan apapun untuk mendapatkan pekerjaan.">kemnaker.go.id · 2024-10-10</a></span></li><li><b>Passport held</b><span class="src"><a href="https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo#:~:text=M%2Denolak%2C%20apabila%20diminta%20menyerahkan,perorangan%20yang%20tidak%20jelas." rel="noopener" title="M-enolak, apabila diminta menyerahkan dokumen asli seperti paspor atau KTP kepada pihak perorangan yang tidak jelas.">humas.polri.go.id · 2026-02-04</a></span></li></ol><p>The other 12 lead to VERIFY FIRST; the licence list is a dated snapshot of 534 agencies.</p><div class="chips"><span class="chip">rubric.ts</span><span class="chip">registry.ts</span></div></article><article class="bc b3"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 6h18v20H8a3 3 0 0 1-3-3z"/><path d="M23 10h4v13a3 3 0 0 1-3 3"/><path d="M9 11h10M9 15h10M9 19h6"/></svg><h3>Looks it up</h3><p>Tavily searches the exact company and number, and scam reports for the destination: context, never a rule input. Only a verified line naming the offer’s own company beside a harm word can raise it to STOP.</p><div class="chips"><span class="chip">tavily search · exact_match</span><span class="chip">tavily extract</span></div></article><article class="bc b4"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="m19 5 8 8-11 11H8v-8z"/><path d="m8 24-3 3h7"/><path d="M4 29h24"/></svg><h3>Checks every quote</h3><p>Nemotron 3 Super proposes lines; code shows a quote only if 6+ words sit verbatim in a page Tavily returned. Else it is dropped, on screen.</p><figure class="frag"><img src="/landing/media/polri-fragment.webp" width="1168" height="392" loading="lazy" alt="Awas — an official Polri page opened from a gate link: the browser scrolls to the quoted sentence and marks it"><figcaption>A gate link, opened: the page scrolls to the sentence and marks it.</figcaption></figure><div class="chips"><span class="chip">nvidia/nemotron-3-super-120b-a12b</span><span class="chip">call 2</span><span class="chip">gate.ts</span></div></article><article class="bc b5"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 4h8v6l-2 4h-4l-2-4z"/><path d="M6 18h20v5H6z"/><path d="M5 27h22"/></svg><h3>Decides, then writes</h3><p>A truth table sets the verdict; Super writes the family message from verified lines.</p><p class="trio" aria-label="The three verdicts"><span class="st s">STOP</span><span class="st v">VERIFY FIRST</span><span class="st n">NO RED FLAGS FOUND</span></p><div class="chips"><span class="chip">verdict.ts</span><span class="chip">nvidia/nemotron-3-super-120b-a12b</span><span class="chip">call 3</span></div></article></div>
+  <div class="bento"><article class="bc b1"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><circle cx="8" cy="8" r="4"/><circle cx="8" cy="24" r="4"/><path d="M11 10.5 27 25M11 21.5 27 7"/></svg><h3>Reads the offer</h3><p>Nemotron 3 Ultra copies typed fields; code checks each is in the text.</p><div class="chips"><span class="chip">nvidia/Nemotron-3-Ultra-550b-a55b</span><span class="chip">call 1</span></div></article><article class="bc b2"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="11" width="26" height="10" rx="1"/><path d="M8 11v4M13 11v6M18 11v4M23 11v6"/></svg><h3>Applies the rules</h3><p>16 rules in code: 14 quote an official page, 2 check the licence list. Any NEVER rule is a STOP; each link points to its sentence:</p><ol class="nevers"><li><b>Not a placement country</b><span class="src"><a href="https://kp2mi.go.id/berita-detail/waspada-tawaran-kerja-ke-kamboja-menteri-mukhtarudin-itu-bukan-negara-penempatan-pekerja-migran-indonesia#:~:text=Perlu%20saya%20tegaskan%2C%20Kamboja%20itu%20bukan%20negara%20penempatan." rel="noopener" title="Perlu saya tegaskan, Kamboja itu bukan negara penempatan.">kp2mi.go.id · 2025-10-28</a> <span class="data">+1</span></span></li><li><b>Tourist visa for work</b><span class="src"><a href="https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo#:~:text=Dokumen%20bermasalah%2C%20menggunakan%20visa,(work%20permit)%20yang%20sah." rel="noopener" title="Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah.">humas.polri.go.id · 2026-02-04</a></span></li><li><b>Fee before a contract</b><span class="src"><a href="https://www.kemnaker.go.id/news/detail/kemnaker-imbau-masyarakat-waspada-penipuan-lowongan-pekerjaan#:~:text=Jangan%20pernah%20memberikan%20apapun%20untuk%20mendapatkan%20pekerjaan." rel="noopener" title="Jangan pernah memberikan apapun untuk mendapatkan pekerjaan.">kemnaker.go.id · 2024-10-10</a></span></li><li><b>Passport held</b><span class="src"><a href="https://humas.polri.go.id/news/detail/2270595-waspada-penipuan-lowongan-kerja-luar-negeri-tppo#:~:text=M%2Denolak%2C%20apabila%20diminta%20menyerahkan,perorangan%20yang%20tidak%20jelas." rel="noopener" title="M-enolak, apabila diminta menyerahkan dokumen asli seperti paspor atau KTP kepada pihak perorangan yang tidak jelas.">humas.polri.go.id · 2026-02-04</a></span></li></ol><p>The other 12 lead to VERIFY FIRST; the licence list is a dated snapshot of 534 agencies.</p><div class="chips"><span class="chip">rubric.ts</span><span class="chip">registry.ts</span></div></article><article class="bc b3"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 6h18v20H8a3 3 0 0 1-3-3z"/><path d="M23 10h4v13a3 3 0 0 1-3 3"/><path d="M9 11h10M9 15h10M9 19h6"/></svg><h3>Looks it up</h3><p>Tavily searches the exact company and number, and scam reports for the destination: context, never a rule input. Only a verified line naming the offer’s own company beside a harm word can raise it to STOP.</p><div class="chips"><span class="chip">tavily search · exact_match</span><span class="chip">tavily extract</span></div></article><article class="bc b4"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="m19 5 8 8-11 11H8v-8z"/><path d="m8 24-3 3h7"/><path d="M4 29h24"/></svg><h3>Checks every quote</h3><p>Nemotron 3 Super proposes lines; code shows a quote only if 6+ words sit verbatim in a page Tavily returned. Else it is dropped, on screen.</p><figure class="frag"><img src="/landing/media/polri-fragment.webp" width="1168" height="392" loading="lazy" alt="Awas — an official Polri page opened from a gate link: the browser scrolls to the quoted sentence and marks it"><figcaption>A gate link, opened: the page scrolls to the sentence and marks it.</figcaption></figure><div class="chips"><span class="chip">nvidia/nemotron-3-super-120b-a12b</span><span class="chip">call 2</span><span class="chip">gate.ts</span></div></article><article class="bc b5"><i class="tape" aria-hidden="true"></i><svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 4h8v6l-2 4h-4l-2-4z"/><path d="M6 18h20v5H6z"/><path d="M5 27h22"/></svg><h3>Decides, then writes</h3><p>A truth table sets the verdict; Super writes the family message from verified lines.</p><p class="trio" role="group" aria-label="The three verdicts"><span class="st s">STOP</span><span class="st v">VERIFY FIRST</span><span class="st n">NO RED FLAGS FOUND</span></p><div class="chips"><span class="chip">verdict.ts</span><span class="chip">nvidia/nemotron-3-super-120b-a12b</span><span class="chip">call 3</span></div></article></div>
   <div class="sponsors" role="group" aria-label="Sponsor methods used"><div><b>Nebius Token Factory</b><code>src/lib/tf.ts</code></div><div><b>Tavily search</b><code>src/lib/tavily.ts</code></div><div><b>Tavily extract</b><code>src/lib/tavily.ts</code></div><div><b>Nebius Object Storage</b><code>src/lib/nebius/storage.ts</code></div><div><b>Nebius Serverless Jobs</b><code>src/lib/nebius/jobs.ts</code></div></div>
 </section>
 
@@ -692,7 +699,7 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
 <section class="sec page" id="faq" aria-labelledby="faq-h">
   <p class="mnote"><span lang="id">tanya jawab</span></p>
   <h2 id="faq-h">Questions a judge would ask.</h2>
-  <div class="faq"><details><summary>Who decides STOP — the model?</summary><div class="a"><p>Code: <code>verdict.ts</code> — a sourced NEVER rule, or a verified line naming the offer’s own company beside a harm word. 8 of 9 tranche-2 STOPs came from rules. There is no score and no green; the mildest verdict says it is not a guarantee.</p></div></details><details><summary>What if the model invents a quote?</summary><div class="a"><p>The gate drops it, on screen — 6 of 54 in tranche 2. Flip one word in the lab and watch.</p></div></details><details><summary>How accurate is it?</summary><div class="a"><p>Out of sample: 0 of 10 licensed vacancies got STOP; of 25 reported scam offers, 9 STOP, 15 VERIFY FIRST, 1 missed — reporters’ descriptions, not the ads. Every row: <a href="https://github.com/edycutjong/awas/blob/main/bench/results-t2.jsonl">bench/results-t2.jsonl</a>.</p></div></details><details><summary>Does it accuse companies?</summary><div class="a"><p>Its own sentences never name one. A name appears only in the pasted offer, a verified quote, or beside “Dilaporkan oleh &lt;sumber&gt;, bukan tuduhan kami” — reported by the source, not our accusation.</p></div></details><details><summary>What happens to what I paste?</summary><div class="a"><p>Each check is stored as an evidence file in Nebius Object Storage, so its link keeps working. The app tells the user: <i lang="id">disimpan 75 hari, tidak diindeks mesin pencari, nomor telepon disamarkan</i> — kept 75 days, not indexed, phone numbers masked. Don’t paste your own personal data.</p></div></details></div>
+  <div class="faq"><details><summary>Who decides STOP — the model?</summary><div class="a"><p>Code: <code>verdict.ts</code> — a sourced NEVER rule, or a verified line naming the offer’s own company beside a harm word. 8 of 9 tranche-2 STOPs came from rules. No score, no green; the mildest verdict says it is not a guarantee.</p></div></details><details><summary>What if the model invents a quote?</summary><div class="a"><p>The gate drops it, on screen — 6 of 54 in tranche 2. Flip one word in the lab and watch.</p></div></details><details><summary>How accurate is it?</summary><div class="a"><p>Out of sample: 0 of 10 licensed vacancies got STOP; of 25 reported scam offers, 9 STOP, 15 VERIFY FIRST, 1 missed — reporters’ descriptions, not the ads. Every row: <a href="https://github.com/edycutjong/awas/blob/main/bench/results-t2.jsonl">bench/results-t2.jsonl</a>.</p></div></details><details><summary>Does it accuse companies?</summary><div class="a"><p>Its own sentences are checked in code not to name the offer’s company. A name appears only in the pasted offer, a verified quote and its translation, or beside “Dilaporkan oleh &lt;sumber&gt;, bukan tuduhan kami” — reported by the source, not our accusation.</p></div></details><details><summary>What happens to what I paste?</summary><div class="a"><p>The text goes to Nemotron on Token Factory; only a company name or number goes to Tavily. Each check is stored in Nebius Object Storage so its link keeps working; the app says <i lang="id">disimpan 75 hari, tidak diindeks mesin pencari, nomor telepon disamarkan</i> — kept 75 days, not indexed, phone numbers masked (the expiry rule’s receipt is still pending). Don’t paste personal data.</p></div></details></div>
 </section>
 
 <section class="close page" aria-labelledby="close-h">
@@ -708,7 +715,7 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
       <p><b>Awas</b> — Indonesian for “watch out”. Built for the Nebius Global AI Hackathon.</p>
       <p class="links" style="margin-top:10px"><a href="/">The app</a><a href="/judge">/judge</a><a href="/integrations">/integrations</a><a href="/pitch">Pitch deck</a><a href="https://github.com/edycutjong/awas" rel="noopener">Source</a><a href="https://github.com/edycutjong/awas/blob/main/DEMO.md" rel="noopener">DEMO.md</a><a href="https://github.com/edycutjong/awas/blob/main/docs/SOURCES.md" rel="noopener">SOURCES.md</a><a href="https://github.com/edycutjong/awas/blob/main/FEEDBACK.md" rel="noopener">FEEDBACK.md</a></p>
     </div>
-    <p class="meta">v0.1.0 · MIT<br>names masked in this page’s captures; stored case records are unedited</p>
+    <p class="meta">v0.1.2 · MIT<br>names masked in this page’s captures; stored case records are unedited</p>
   </div>
 </footer>
 
@@ -761,7 +768,7 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
       if (file.getBoundingClientRect().top < 0) file.scrollIntoView({ block: "start", behavior: "smooth" });
       runFile();
     });
-    seen($("#slips"), () => play($("#slips"), 3200));
+    seen($("#slips"), () => play($("#slips"), 3200), 0.12);
     const receipt = $("#receipt"), rr = $("#replay-receipt");
     const runReceipt = () => play(receipt, 2900);
     seen(receipt, runReceipt);
@@ -833,7 +840,7 @@ Semua biaya ditanggung perusahaan sebelum berangkat." aria-pressed="false">Negat
       if (!adBox.value.trim()) { rulesOut.innerHTML = `<p class="hint">Paste or type an offer.</p>`; return; }
       const flags = lab.evaluateRubric(adBox.value, null);
       const d = lab.decide(flags, [], []);
-      const rows = flags.map((f) => `<li><i class="tick ${f.class === "NEVER" ? "" : "check"}" aria-hidden="true"></i><div><b>${esc(f.label)}</b> · <span class="sp" lang="id">“${esc(f.span.text)}”</span><span class="src">${f.class === "NEVER" ? "NEVER" : "CAUTION"} rule · ${f.source ? `<a href="${esc(f.source.url)}" rel="noopener">${esc(f.source.domain)} · <span class="nw">${esc(f.source.date)}</span></a>` : "no source recorded"}</span></div></li>`).join("");
+      const rows = flags.map((f) => `<li><i class="tick ${f.class === "NEVER" ? "" : "check"}" aria-hidden="true"></i><div><b>${esc(f.label)}</b> · <span class="sp" lang="id">“${esc(f.span.text)}”</span><span class="src">${f.class === "NEVER" ? "NEVER rule → STOP" : "CAUTION rule → VERIFY FIRST"} · ${f.source ? `<a href="${esc(f.source.url)}" rel="noopener">${esc(f.source.domain)} · <span class="nw">${esc(f.source.date)}</span></a>` : "no source recorded"}</span></div></li>`).join("");
       let v;
       if (d.verdict === "STOP") v = `<p class="vline v-stop"><b>STOP</b> <span>— ${esc(d.reasons.join(" + "))}. A sourced NEVER rule decides it; the rest of a check is context for the family.</span></p>`;
       else if (flags.length) v = `<p class="vline v-check"><b>VERIFY FIRST</b> <span>— ${esc(d.reasons.join("; "))}.</span></p>`;

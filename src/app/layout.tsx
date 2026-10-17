@@ -36,7 +36,7 @@ const DESCRIPTION =
 const TITLE = "Awas — check a job ad before anyone boards";
 
 // Cards clip descriptions on mobile beyond ~125 characters.
-const OG_DESCRIPTION = "Paste a job ad: official rules, quotes checked word for word in code, then STOP, VERIFY FIRST or NO RED FLAGS FOUND.";
+const OG_DESCRIPTION = "Paste a job ad: official rules, evidence checked word for word in code, then STOP, VERIFY FIRST or NO RED FLAGS FOUND.";
 
 export const metadata: Metadata = {
   // The project's production domain (awas.vercel.app belongs to someone else).
@@ -53,9 +53,9 @@ export const metadata: Metadata = {
     siteName: "Awas",
     type: "website",
     // Bump ?v= whenever og-image.png changes: platforms cache cards by URL.
-    images: [{ url: "/og-image.png?v=6790adc007", width: 1200, height: 630, alt: "Awas — a recorded evidence file: the rule and its official page, a quote found word for word, a STOP stamp" }],
+    images: [{ url: "/og-image.png?v=bcff0a6398", width: 1200, height: 630, alt: "Awas — a recorded evidence file: the rule and its official page, a quote found word for word, a STOP stamp" }],
   },
-  twitter: { card: "summary_large_image", title: TITLE, description: OG_DESCRIPTION, images: ["/og-image.png?v=6790adc007"] },
+  twitter: { card: "summary_large_image", title: TITLE, description: OG_DESCRIPTION, images: ["/og-image.png?v=bcff0a6398"] },
 };
 
 export const viewport: Viewport = {
