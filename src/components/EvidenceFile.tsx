@@ -314,7 +314,7 @@ export function EvidenceFile({ view, judge = false }: { view: View; judge?: bool
 
       {view.lines.length > 0 || view.tavily.length > 0 ? (
         <section aria-labelledby="ev-h">
-          <h2 id="ev-h">Yang sudah dipublikasikan · what has been published</h2>
+          <h2 id="ev-h">Konteks dari halaman yang sudah terbit · context from published pages</h2>
           {view.lines.length === 0 && view.status === "done" ? <p className="none">No evidence line was proposed from the pages this search returned.</p> : null}
           {view.lines.map((l) => (
             <EvidenceCard key={l.index} line={l} calls={view.tavily} showGloss={judge} />

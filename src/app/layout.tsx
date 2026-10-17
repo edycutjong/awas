@@ -36,7 +36,7 @@ const DESCRIPTION =
 const TITLE = "Awas — check a job ad before anyone boards";
 
 // Cards clip descriptions on mobile beyond ~125 characters.
-const OG_DESCRIPTION = "Paste a job ad: published pages, quotes checked word for word in code, then STOP or VERIFY FIRST.";
+const OG_DESCRIPTION = "Paste a job ad: official rules, quotes checked word for word in code, then STOP or VERIFY FIRST.";
 
 export const metadata: Metadata = {
   // The project's production domain (awas.vercel.app belongs to someone else).

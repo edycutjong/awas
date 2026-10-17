@@ -6,8 +6,8 @@ export default function Home() {
     <main className="sheet">
       <Masthead />
       <p className="lede">
-        Tempel iklan lowongan. Awas mencari apa yang sudah dipublikasikan tentangnya, dan hanya menampilkan kutipan yang benar-benar ada di halaman sumbernya.
-        <span className="en"> Paste the job ad. Awas looks up what has been published about it, and shows only quotes that code found on the source page.</span>
+        Tempel iklan lowongan. Awas memeriksanya dengan aturan yang dikutip dari halaman resmi pemerintah, lalu mencari laporan yang sudah terbit — dan hanya menampilkan kutipan yang benar-benar ada di halaman sumbernya.
+        <span className="en"> Paste the job ad. Awas checks it against rules quoted from official government pages, then searches published reports — and shows only quotes that code found on the source page.</span>
       </p>
       <Checker />
       <JudgeStrip />
