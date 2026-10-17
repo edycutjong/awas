@@ -1,6 +1,6 @@
 /* Awas lab: src/lib compiled for the browser by scripts/build-lab.mjs (MIT).
 * lab-sources: src/lib/text.ts src/lib/rubric.ts src/lib/rule-sources.ts src/lib/gate.ts src/lib/verdict.ts src/lib/types.ts scripts/lab/entry.ts scripts/lab/sha256.ts
-* source-sha256: 569fa66d4e828a20f3d9c904a40d5e8536e351cd800f416def3083588f3dc72f */
+* source-sha256: d0ffea23380d09496517f0927dab9ca1d564b882b18b288200291323af056423 */
 var AwasLab = (function(exports) {
 	Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
 	//#region src/lib/text.ts
@@ -584,7 +584,9 @@ var AwasLab = (function(exports) {
 		return [...figures, ...words].sort((a, b) => a.start - b.start);
 	}
 	const LEGAL_COMPANY = /\b(?:PT|CV)\.?\s+[A-Z0-9][\p{L}\p{N}&.'-]*/u;
-	const FOREIGN_COMPANY = /\b[A-Z][\p{L}&'-]+(?:\s+[A-Z][\p{L}&'-]+)*\s+(?:Co\.?,?\s*Ltd\.?|Ltd\.?|Inc\.?|LLC|Sdn\.?\s*Bhd\.?|Group|Company|Corporation)\b/u;
+	/** A foreign legal form, in title case or ALL CAPS as board listings print them ("CO.LTD.", "SDN BHD", "S.R.O"). */
+	const FOREIGN_FORM = String.raw`(?:[Cc][Oo]\.?,?\s*[Ll][Tt][Dd]\.?|[Ll][Tt][Dd]\.?|[Ll]imited|LIMITED|[Ii]nc\.?|INC\.?|LLC|[Ss]\.[Rr]\.[Oo]\.?|S\.?R\.?O\.?|[Gg]mb[Hh]|GMBH|[Pp]te\.?\s*[Ll]td\.?|PTE\.?\s*LTD\.?|[Ss]dn\.?\s*[Bb]hd\.?|SDN\.?\s*BHD\.?|Group|GROUP|Company|COMPANY|Corporation|CORPORATION)`;
+	const FOREIGN_COMPANY = new RegExp(String.raw`\b[A-Z][\p{L}&'-]+(?:\s+[A-Z][\p{L}&'-]+)*\s+${FOREIGN_FORM}(?![\p{L}])`, "u");
 	const CONTACT = /(?:\+?62|\b0)8\d{1,3}[\s.-]?\d{3,4}[\s.-]?\d{3,5}|\b(?:wa|whatsapp|whats\s?app|hubungi|telp|telepon|hp|dm|inbox)\b/giu;
 	function patternHits(id, text) {
 		const hits = [];
@@ -762,15 +764,14 @@ var AwasLab = (function(exports) {
 		});
 		return hits;
 	}
-	/** Words that make a text read as a job offer — the no-company rule never fires on text that is not one. */
-	const JOB_CONTEXT = /\b(?:lowongan|loker|dibutuhkan|dicari|rekrut|direkrut|perekrutan|bekerja|pekerjaan|kerja|gaji|upah|hiring|vacanc(?:y|ies)|jobs?|work|salary)\b/iu;
 	/**
-	* The ad names no company and gives no contact (with a personal contact, the personal-recruiter rule fires instead).
-	* Only for text that reads as a job offer, and never when the model read it as something else — so a pasted recipe
-	* is still "not a job ad", not a check.
+	* Wording of a job offer, in the raw text — the no-company rule never fires on text without it ("kerja bakti", a
+	* recipe). Raw text only, like every rubric rule: the model's "not a job offer" reading can never switch a flag off.
 	*/
+	const JOB_OFFER = /\b(?:lowongan|loker|dibutuhkan|dicari|rekrut\p{L}*|direkrut|perekrut\p{L}*|gaji|upah|hiring|vacanc(?:y|ies)|salary|(?:di)?tawar(?:i|kan|an)\s+(?:pekerjaan|kerja|bekerja)|(?:bekerja|kerja|pekerjaan)\s+(?:di|ke|sebagai|dengan\s+gaji)|jobs?\s+(?:in|at|offer)|work\s+(?:in|at|as))\b/iu;
+	/** The ad names no company and gives no contact (with a personal contact, the personal-recruiter rule fires instead). */
 	function noCompanyHits(text, ex) {
-		if (!JOB_CONTEXT.test(text) || ex && !ex.isJobOffer) return [];
+		if (!JOB_OFFER.test(text)) return [];
 		if (LEGAL_COMPANY.test(text) || FOREIGN_COMPANY.test(text) || ex?.company) return [];
 		const first = text.match(/^\s*([^\n]{1,80})/u);
 		if (!first) return [];

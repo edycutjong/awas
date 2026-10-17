@@ -17,7 +17,7 @@ export interface Extraction {
   visa?: Span;
   fees: Span[];
   promises: Span[];
-  /** Fields the model returned whose text is not a substring of the ad — dropped, never used. */
+  /** Fields the model returned whose text is not a substring of the ad, or a "company" that is only a kind of recruiter — dropped, never used. */
   droppedFields: string[];
 }
 

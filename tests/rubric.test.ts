@@ -257,11 +257,29 @@ describe("Amendment 4 — the Polri checklist items, the Kemnaker fee rule and t
       expect(ids(t), t).not.toContain("no_company");
     }
     expect(ids("Resep sambal matah: bawang merah, cabai rawit, serai")).not.toContain("no_company");
-    const ex: Extraction = { isJobOffer: false, phones: [], fees: [], promises: [], droppedFields: [] };
-    expect(evaluateRubric("Info kerja bakti warga hari Minggu", ex).map((f) => f.id)).not.toContain("no_company");
+    expect(ids("Info kerja bakti warga hari Minggu")).not.toContain("no_company");
+    // The model's "not a job offer" reading never switches a raw-text rule off (tranche 1, row t1-p11).
+    const notAnOffer: Extraction = { isJobOffer: false, phones: [], fees: [], promises: [], droppedFields: [] };
+    expect(evaluateRubric("Korban ditawari pekerjaan di Malaysia dengan gaji Rp 9 juta", notAnOffer).map((f) => f.id)).toContain("no_company");
   });
 
   it("narrative words of a news report alone fire nothing (the rules read offers, not reports)", () => {
     expect(ids("Korban dijanjikan dan diiming-imingi, lalu tergiur. Modusnya menipu korban.")).toEqual([]);
+  });
+});
+
+describe("a kind of recruiter is not a company name (tranche 1, row t1-p16)", () => {
+  it("drops 'Lembaga Pelatihan Kerja (LPK)' and 'CPMI non-prosedural', keeps real names", async () => {
+    const { toExtraction, isGenericRecruiter } = await import("@/lib/extract");
+    expect(isGenericRecruiter("Lembaga Pelatihan Kerja (LPK)")).toBe(true);
+    expect(isGenericRecruiter("CPMI non-prosedural")).toBe(true);
+    expect(isGenericRecruiter("PT Samudera Perdana Selaras")).toBe(false);
+    expect(isGenericRecruiter("TRIAS INSAN MADANI")).toBe(false);
+    const ad = "Korban dijanjikan bekerja sebagai waitress di Bahrain melalui Lembaga Pelatihan Kerja (LPK) di Lampung.";
+    const raw = { is_job_offer: true, company: "Lembaga Pelatihan Kerja (LPK)", recruiter: null, phones: [], destination: "Bahrain", job: "waitress", visa: null, fees: [], promises: [] };
+    const ex = toExtraction(ad, raw);
+    expect(ex.company).toBeUndefined();
+    expect(ex.droppedFields).toContain("company (not a name)");
+    expect(evaluateRubric(ad, ex).map((f) => f.id)).toContain("no_company");
   });
 });

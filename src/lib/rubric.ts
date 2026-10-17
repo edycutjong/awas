@@ -440,16 +440,15 @@ function lightWorkHits(text: string, ex: Extraction | null): Hit[] {
   return hits;
 }
 
-/** Words that make a text read as a job offer — the no-company rule never fires on text that is not one. */
-const JOB_CONTEXT = /\b(?:lowongan|loker|dibutuhkan|dicari|rekrut|direkrut|perekrutan|bekerja|pekerjaan|kerja|gaji|upah|hiring|vacanc(?:y|ies)|jobs?|work|salary)\b/iu;
-
 /**
- * The ad names no company and gives no contact (with a personal contact, the personal-recruiter rule fires instead).
- * Only for text that reads as a job offer, and never when the model read it as something else — so a pasted recipe
- * is still "not a job ad", not a check.
+ * Wording of a job offer, in the raw text — the no-company rule never fires on text without it ("kerja bakti", a
+ * recipe). Raw text only, like every rubric rule: the model's "not a job offer" reading can never switch a flag off.
  */
+const JOB_OFFER = /\b(?:lowongan|loker|dibutuhkan|dicari|rekrut\p{L}*|direkrut|perekrut\p{L}*|gaji|upah|hiring|vacanc(?:y|ies)|salary|(?:di)?tawar(?:i|kan|an)\s+(?:pekerjaan|kerja|bekerja)|(?:bekerja|kerja|pekerjaan)\s+(?:di|ke|sebagai|dengan\s+gaji)|jobs?\s+(?:in|at|offer)|work\s+(?:in|at|as))\b/iu;
+
+/** The ad names no company and gives no contact (with a personal contact, the personal-recruiter rule fires instead). */
 function noCompanyHits(text: string, ex: Extraction | null): Hit[] {
-  if (!JOB_CONTEXT.test(text) || (ex && !ex.isJobOffer)) return [];
+  if (!JOB_OFFER.test(text)) return [];
   if (LEGAL_COMPANY.test(text) || FOREIGN_COMPANY.test(text) || ex?.company) return [];
   // The flag is about the ad as a whole: it points at the ad's first line.
   const first = text.match(/^\s*([^\n]{1,80})/u);

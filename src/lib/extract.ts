@@ -99,6 +99,23 @@ export function locate(ad: string, piece: string, taken: Span[] = []): Span | nu
   }
 }
 
+/**
+ * Words that describe a kind of recruiter, not a name: "Lembaga Pelatihan Kerja (LPK)", "agen penyalur", "CPMI
+ * non-prosedural". A "company" made only of these is no name at all — searching it would cost a credit and find
+ * nothing about this ad, and counting it would hide that the ad names no company (tranche 1, row t1-p16).
+ */
+const GENERIC_RECRUITER_WORDS = new Set([
+  "lembaga", "pelatihan", "kerja", "lpk", "blk", "blkln", "perusahaan", "agen", "agensi", "agency", "penyalur", "jasa",
+  "tenaga", "tki", "pmi", "cpmi", "p3mi", "pjtki", "sponsor", "calo", "perekrut", "rekrutmen", "yayasan", "kantor",
+  "pihak", "oknum", "non", "prosedural", "nonprosedural", "ilegal", "resmi", "swasta", "asing", "luar", "negeri",
+  "company", "recruiter", "recruitment", "employer", "the", "a", "an", "dan", "and", "atau", "or", "di", "ke", "dari",
+]);
+
+export function isGenericRecruiter(name: string): boolean {
+  const tokens = normalise(name).match(/[\p{L}\p{N}]+/gu) ?? [];
+  return tokens.length > 0 && tokens.every((t) => GENERIC_RECRUITER_WORDS.has(t));
+}
+
 /** Turn the model's raw fields into code-located spans; anything not found in the ad is dropped and named. */
 export function toExtraction(ad: string, raw: RawExtraction): Extraction {
   const dropped: string[] = [];
@@ -107,6 +124,11 @@ export function toExtraction(ad: string, raw: RawExtraction): Extraction {
     if (typeof v !== "string" || !v.trim()) return undefined;
     const span = locate(ad, v);
     if (!span) dropped.push(k);
+    // A kind of recruiter is not a company name: dropped, so the ad still counts as naming no company.
+    if (span && k === "company" && isGenericRecruiter(span.text)) {
+      dropped.push("company (not a name)");
+      return undefined;
+    }
     return span ?? undefined;
   };
   const many = (k: (typeof LISTS)[number]): Span[] => {
