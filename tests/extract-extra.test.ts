@@ -4,6 +4,7 @@
  */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ChatOutcome } from "@/lib/tf";
+import type { Span } from "@/lib/types";
 
 const chatMock = vi.fn<(...a: unknown[]) => Promise<ChatOutcome>>();
 vi.mock("@/lib/tf", async (orig) => ({ ...(await orig<typeof import("@/lib/tf")>()), chat: (...a: unknown[]) => chatMock(...a) }));
@@ -39,14 +40,14 @@ describe("locate", () => {
   });
   it("skips spans already taken, exact and normalised, and moves on to the next occurrence", () => {
     const ad = "Gaji 5 juta. Gaji 5 juta lagi";
-    const first = locate(ad, "Gaji 5 juta")!;
+    const first = locate(ad, "Gaji 5 juta") as Span;
     expect(first.start).toBe(0);
-    const second = locate(ad, "Gaji 5 juta", [first])!;
+    const second = locate(ad, "Gaji 5 juta", [first]) as Span;
     expect(second.start).toBe(13);
     expect(locate(ad, "Gaji 5 juta", [first, second])).toBeNull();
     const fancy = "Kirim “CV” sekarang. Kirim “CV” lagi";
-    const a = locate(fancy, 'kirim "cv"')!;
-    const b = locate(fancy, 'kirim "cv"', [a])!;
+    const a = locate(fancy, 'kirim "cv"') as Span;
+    const b = locate(fancy, 'kirim "cv"', [a]) as Span;
     expect(b.start).toBeGreaterThan(a.start);
     expect(locate(fancy, 'kirim "cv"', [a, b])).toBeNull();
   });

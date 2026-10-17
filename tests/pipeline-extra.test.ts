@@ -56,6 +56,7 @@ function world(w: World = {}) {
   }) as typeof fetch;
   return { fetchImpl, log };
 }
+type Logged = { host: string; kind: string; body: Record<string, unknown> };
 const store = () => localStore(mkdtempSync(path.join(tmpdir(), "awas-test-")));
 const ONE = { source: "S1", quote: "PT Sinar Harapan Abadi diduga merekrut 12 korban penipuan daring", claim_id: "c", claim_en: "c" };
 const TWO = { source: "S2", quote: "PT Sinar Harapan Abadi diduga merekrut 12 korban penipuan daring", claim_id: "c", claim_en: "c" };
@@ -141,15 +142,15 @@ describe("runCheck: searches, gates and messages", () => {
       { adText: AD, lang: "id", mode: "bench", stage: "full", exclude: { domain: "source.example.com", title: "Sumber asli" }, endDate: "2026-01-01" },
       { tf, tavily, store: store(), fetchImpl: w.fetchImpl },
     );
-    const company = w.log.find((l) => l.kind === "exact")!;
+    const company = w.log.find((l) => l.kind === "exact") as Logged;
     expect(company.body).toMatchObject({ end_date: "2026-01-01", exclude_domains: ["source.example.com"] });
     expect(w.log.filter((l) => l.kind === "exact")).toHaveLength(1);
-    expect((w.log.find((l) => l.kind === "pattern")!.body.exclude_domains as string[])).toContain("source.example.com");
+    expect(((w.log.find((l) => l.kind === "pattern") as Logged).body.exclude_domains as string[])).toContain("source.example.com");
     expect(pack.tavily.length).toBeGreaterThan(0);
     const noExclude = world({ results });
     await runCheck({ adText: AD, lang: "id", mode: "bench", stage: "full" }, { tf, tavily, store: store(), fetchImpl: noExclude.fetchImpl });
-    expect(noExclude.log.find((l) => l.kind === "exact")!.body.end_date).toBeUndefined();
-    expect(noExclude.log.find((l) => l.kind === "exact")!.body.exclude_domains).toBeUndefined();
+    expect((noExclude.log.find((l) => l.kind === "exact") as Logged).body.end_date).toBeUndefined();
+    expect((noExclude.log.find((l) => l.kind === "exact") as Logged).body.exclude_domains).toBeUndefined();
   });
   it("an agency on the official list is recorded in the pack's registry block", async () => {
     const { REGISTRY } = await import("@/lib/registry");

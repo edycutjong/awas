@@ -24,8 +24,8 @@ describe("sigv4 odd inputs", () => {
     expect(uriEncode("a/b c", false)).toBe("a/b%20c");
     expect(canonicalQueryString({ a: undefined as unknown as string, b: "1" })).toBe("a=&b=1");
     const signed = signRequest({
-      method: "GET", origin: "https://h.example", path: "/k", region: "r", service: "s3",
-      accessKeyId: "a", secretAccessKey: "s", payload: "", headers: { "X-Dup": "1", "x-dup": "2" },
+      method: "GET", path: "/k", region: "r", service: "s3",
+      accessKeyId: "a", secretAccessKey: "s", payload: "", headers: { host: "h.example", "X-Dup": "1", "x-dup": "2" },
     });
     expect(signed.headers.Authorization).toContain("SignedHeaders=");
   });
@@ -84,7 +84,7 @@ describe("registry name tokens", () => {
 
 describe("case ids", () => {
   it("handles a byte count that ends on a 5-bit boundary", () => {
-    vi.spyOn(crypto, "getRandomValues").mockImplementation(((a: Uint8Array) => new Uint8Array(5)) as unknown as typeof crypto.getRandomValues);
+    vi.spyOn(crypto, "getRandomValues").mockImplementation(((_a: Uint8Array) => new Uint8Array(5)) as unknown as typeof crypto.getRandomValues);
     expect(newCaseId()).toHaveLength(8);
   });
 });

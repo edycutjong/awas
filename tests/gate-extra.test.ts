@@ -22,10 +22,10 @@ describe("addToCorpus merging", () => {
     addToCorpus(c, URL_A, "advisory", { title: "Late title", pageText: "page one" });
     addToCorpus(c, URL_A, "pattern", { title: "Ignored", pageText: "page one" });
     addToCorpus(c, URL_A, "company", { pageText: "   " });
-    const doc = c.get(URL_A)!;
-    expect(doc.purpose).toBe("company");
-    expect(doc.title).toBe("Late title");
-    expect(doc.chunks.map((x) => `${x.basis}:${x.text}`)).toEqual(["ranked:alpha beta gamma", "page:page one"]);
+    const doc = c.get(URL_A);
+    expect(doc?.purpose).toBe("company");
+    expect(doc?.title).toBe("Late title");
+    expect(doc?.chunks.map((x) => `${x.basis}:${x.text}`)).toEqual(["ranked:alpha beta gamma", "page:page one"]);
   });
 });
 

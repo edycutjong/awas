@@ -97,7 +97,7 @@ describe("writeMessage", () => {
     chatMock.mockResolvedValue(ok(raw()));
     const bare = await writeMessage(tf, input({ reasons: [], lines: [] }));
     expect(bare.source).toBe("model");
-    expect(String((chatMock.mock.calls.at(-1)![1] as { user: string }).user)).toContain("(none)");
+    expect(String((chatMock.mock.calls[chatMock.mock.calls.length - 1][1] as { user: string }).user)).toContain("(none)");
   });
   it("falls back to the template when the call fails, keeping the receipt and the error", async () => {
     chatMock.mockResolvedValue({ ok: false, content: null, value: null, receipt, error: "boom" });

@@ -24,6 +24,7 @@ describe("runCheck with a stray gloss number", () => {
       (event, data) => events.push({ event, data }),
     );
     expect(pack.done).toBe(true);
-    expect((events.find((e) => e.event === "message")!.data as { glosses: object }).glosses).toEqual({});
+    const message = events.find((e) => e.event === "message") as { data: { glosses: object } };
+    expect(message.data.glosses).toEqual({});
   });
 });
