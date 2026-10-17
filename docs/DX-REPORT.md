@@ -50,7 +50,7 @@ Ultra therefore does call 1 (extraction); Super does calls 2 and 3 (`docs/proof/
 pre-registered query (job + destination, `topic: "news"`, `time_range: "year"`, `language: "id"` — `patternQuery` in
 `src/lib/pipeline.ts` before commit 3d19b31) surfaced a relevant item for **8/20** (`docs/proof/stage-v.json`, `stage-v-relevance.json`) — the day-0 gate Awas had set itself (≥ 12/20)
 failed. A destination-centred query (`topic: "general"`, `country: "indonesia"`, no time range) surfaced one for
-**18/20** on the same cases (`docs/proof/dev-tune-2026-10-17.json` — in-sample, the dev set the query was tuned on).
+**18/20** on the same cases (an agent's reading, like the 8/20) (`docs/proof/dev-tune-2026-10-17.json` — in-sample, the dev set the query was tuned on).
 `country` boosts only with `topic: "general"` (Tavily's search reference, `country`), which is easy to miss.
 
 **7. `extract` failed quietly on a social-media URL** (`Failed to fetch url`, 0 credits, `spike-2026-10-15.json`); Awas

@@ -1,7 +1,7 @@
 <div align="center">
   <img src="docs/assets/icon.svg" alt="Awas Icon" width="144">
   <h1>Awas 🚨</h1>
-  <p><em>Paste an overseas job offer. Get an evidence file — every line a URL plus a quote that code checked against the page — and a STOP or VERIFY FIRST before anyone boards.</em></p>
+  <p><em>Paste an overseas job offer. Get an evidence file — every line a URL plus a quote that code checked against the page's text — and a STOP or VERIFY FIRST before anyone boards.</em></p>
   <img src="docs/assets/readme-hero.png" alt="Illustration with sample text: the quote gate checks a quote against fetched page text, then a verdict stamp" width="100%">
 
   <br/>
@@ -33,7 +33,7 @@
 
 ## 📸 See it in Action
 
-**No credentials needed:** [`/judge`](https://awas-cek.vercel.app/judge) replays five recorded real runs — two STOPs on cited rules, an English ad, a fake vacancy that borrowed a real company's name, a licensed agency's vacancy — each labelled with its recording date ([`bench/samples.json`](bench/samples.json) says where each text comes from). Live checks need no login (60 per hour per connection). Run locally with the commands in [Getting Started](#-getting-started).
+**No credentials needed:** [`/judge`](https://awas-cek.vercel.app/judge) replays five recorded real runs — three STOPs on cited rules (one of them an English ad), a fake vacancy that borrowed a real company's name (VERIFY FIRST), a licensed agency's vacancy (NO RED FLAGS FOUND) — each labelled with its recording date ([`bench/samples.json`](bench/samples.json) says where each text comes from). Live checks need no login (60 per hour per connection). Run locally with the commands in [Getting Started](#-getting-started).
 
 **Live:** [awas-cek.vercel.app](https://awas-cek.vercel.app) (the app) · [/about](https://awas-cek.vercel.app/about) (the story page, with the rules and the quote gate running in your browser) · [/pitch](https://awas-cek.vercel.app/pitch) (the deck).
 
@@ -49,7 +49,7 @@ The scale is official: Indonesia's foreign ministry reports **1,301 cases handle
 
 ### The Solution
 
-> The scam checkers we looked at give a risk score. Awas gives no score, only evidence: every quote has a URL and is checked in code against the page, and lines that fail are dropped on screen.
+> The scam checkers we looked at give a risk score. Awas gives no score, only evidence: every quote has a URL and is checked in code against the page's text, and lines that fail are dropped on screen.
 
 1. **Extract** — Nemotron 3 Ultra on Nebius Token Factory copies typed fields (company, destination, job, visa, fees, promises, phones) out of the pasted ad; code checks every field is literally in the ad.
 2. **Rubric** — fixed rules, each quoting an official page ([`src/lib/rule-sources.ts`](src/lib/rule-sources.ts), [`docs/SOURCES.md`](docs/SOURCES.md)): a job in Cambodia or Myanmar (not placement countries, KP2MI), a tourist or visit visa for work, a fee before a contract and a held passport are `NEVER` rules (STOP); the police checklist's fast departure, high pay for light work, costs advanced then deducted, no company named, and any fee are `CAUTION` (VERIFY FIRST). A named Indonesian company is looked up in a dated snapshot of the official licensed-agency (P3MI) list.

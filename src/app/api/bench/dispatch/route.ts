@@ -14,7 +14,8 @@ export const maxDuration = 60;
  *
  * POST {set, variance?, n?} creates a job in the bench region (BENCH_JOB_TARGET, not faultline's eu-west1 slots) that
  * runs the committed scripts/bench.py over the committed bench/<set>.jsonl against this deployment, in bench mode. The
- * job holds no credential: its results leave through presigned PUT URLs for exactly two keys. Before dispatch the set
+ * job holds no Nebius or model-provider credential — only the app's bench secret and presigned PUT URLs for exactly
+ * two keys, through which its results leave. Before dispatch the set
  * file is checked against bench/MANIFEST.json, so the job can only run a frozen tranche as frozen.
  * GET ?runId=… returns the job's state and presigned GET URLs for its rows.
  */

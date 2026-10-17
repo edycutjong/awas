@@ -32,12 +32,13 @@ Each measured item points at a recorded call in `docs/proof/` or `bench/`; the l
 
 ## Nebius AI Cloud
 
-6. **Creating a Serverless Job over REST worked on the first try** — `POST /ai/v1/jobs` (an Operation with
+6. **Creating a Serverless Job over REST worked** — `POST /ai/v1/jobs` (an Operation with
    `resourceId`), injected files (≤ 64 KiB fits a small script and a benchmark file), environment variables for
    presigned result URLs. Two notes: about 4 minutes of provisioning before the container starts (the one-row smoke job
-   then ran 20 seconds, the 35-row benchmark 20 minutes — `docs/proof/serverless-job-smoke-2026-10-17.json`,
-   `bench/results-t2-job.json`), and the container's stdout is readable with `nebius ai job logs` but we found no REST
-   endpoint for it, so the job writes its own results to Object Storage.
+   then ran 20 seconds; the tranche-2 job — 35 rows in four columns, plus 20 reruns — 20 minutes:
+   `docs/proof/serverless-job-smoke-2026-10-17.json`, `bench/results-t2-job.json`), and the container's stdout is
+   readable with `nebius ai job logs` (`docs/proof/serverless-job-logs-2026-10-17.txt`) but we found no REST endpoint
+   for it, so the job writes its own results to Object Storage.
 7. **Object Storage conditional writes are a quiet superpower.** A second `PUT` with `If-None-Match: "*"` returns
    **412** (`docs/proof/spike-2026-10-15.json`); Awas builds its per-connection rate limit on it, with no database. It
    deserves a prominent example in the S3-compatibility docs.

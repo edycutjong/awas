@@ -143,7 +143,8 @@ Pooled with tranche 1 (mixed code versions — an appendix, not a headline): lic
 **Dev set after Amendment 4 (in-sample — the rules were tuned on these rows; never a benchmark number):** reported
 cases, full pipeline, 3 STOP · 17 VERIFY FIRST · 0 NO RED FLAGS FOUND (before, full pipeline in stage V: 1 · 9 · 10 —
 stage R above is the rules-only column); licensed ads 0 stopped in any column; the
-destination-centred context search found a relevant item for 18/20 (before: 8/20). `docs/proof/dev-tune-2026-10-17.json`.
+destination-centred context search found a relevant item for 18/20 (before: 8/20; both are an agent's reading, not yet
+a human's). `docs/proof/dev-tune-2026-10-17.json`.
 
 ## 6. Bench mode differs from live use in exactly four ways
 
