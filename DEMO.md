@@ -68,11 +68,10 @@ estimate.
   fetch", a company-directory table row that Tavily's text writes with ";" separators while the page's HTML has none.
 - **Seconds to verdict** (full column, the app's own receipts; run with `--base https://awas.edycu.dev`, so
   every case id in the file opens at `https://awas.edycu.dev/case/<id>`): p50 **10.0 s**, p95 **15.8 s**.
-- **Bill:** 235,206 Token Factory tokens and 52 Tavily credits for the full column (0–3 credits a check, mostly 1–2).
+- **Bill:** 235,206 Token Factory tokens and 52 Tavily credits for the full column (0–3 credits a check in bench mode, mostly 1–2; a live check with two phone numbers can use up to 5).
 
 **What tranche 1 made visible** (fixed before code-freeze; only tranche 2 measures the fixes): one case ended with no
-verdict because the model read the text as "not a job offer" and that switched off a raw-text rule — rules now read
-only the raw text; one case ended NO RED FLAGS FOUND because the model returned "Lembaga Pelatihan Kerja (LPK)" as
+verdict because the model read the text as "not a job offer" and that switched off a raw-text rule — the pattern path now reads the raw text only (the model's extracted company can still switch off the no-company rule); one case ended NO RED FLAGS FOUND because the model returned "Lembaga Pelatihan Kerja (LPK)" as
 the company — a kind of recruiter is no longer counted as a name. One more NO RED FLAGS FOUND (domestic work in Qatar)
 has no rule: Indonesia's 2015 moratorium on placing domestic workers with private households in Middle-East countries
 (Kepmenaker 260/2015) is not encoded — its current scope was not verified (a lifting for Saudi Arabia was announced as
@@ -86,7 +85,7 @@ planned in 2025), so it stays a gap rather than a guess.
 `bench/MANIFEST.json` (sha256 `1e333cdf…`) before creating job `aijob-e03nhcfcwc4vnee33m` in uk-south1 (`cpu-d3`,
 `python:3.11`). The job ran the committed `scripts/bench.py` (sha256 `35614ce4…`, the file at `code-freeze`) against
 the production app in bench mode and wrote its rows through presigned Object Storage URLs. It held no Nebius or
-model-provider credential — only the app's bench secret and the two presigned upload URLs.
+model-provider credential — only the app's bench secret (which also unlocks job dispatch, sample publishing and the per-IP limit bypass) and the two presigned upload URLs.
 
 **Licensed ads (10): 0/10 stopped** in every column. Full verdicts: NO RED FLAGS FOUND 9 · VERIFY FIRST 1 (a page
 mentioned a similar name) · STOP 0.
@@ -100,7 +99,7 @@ mentioned a similar name) · STOP 0.
 | full Awas with the evidence proposal replaced by a code sentence-picker | 8 | 16 | 1 |
 | **full Awas** | **9** | **15** | **1** |
 
-The first three columns are identical by design: the verdict is decided in code, so a model cannot stamp STOP by itself. Nemotron's measured effect on the STOP count is the one evidence-flipped case below (8 → 9); the rest of what it supplies is not a STOP count: the typed fields (the company name feeds the no-company rule, the licence-list lookup and the gate's company match), the evidence lines with their quotes, and the Bahasa family message.
+The first three columns happen to be identical in tranche 2. The verdict is decided in code, but the model's extracted fields feed 14 of the 16 rules, so the model can add a rule hit (tranche 1: 8 → 9). Nemotron's measured effect on the STOP count is the one evidence-flipped case below (8 → 9); the rest of what it supplies is not a STOP count: the typed fields (the company name feeds the no-company rule, the licence-list lookup and the gate's company match), the evidence lines with their quotes, and the Bahasa family message.
 
 - **8 STOPs come from cited rules alone** (8/25): not a placement country, tourist visa.
 - **The 9th is a company-matched STOP — 1 of 1.** Only one of the 25 reports names the company in its description of
@@ -125,7 +124,7 @@ The first three columns are identical by design: the verdict is decided in code,
   the first run): **20/20** reruns gave the first run's verdict (3 STOP cases and 7 VERIFY FIRST cases, each run
   twice more).
 - **Seconds to verdict** (the app's own receipts, full column): p50 **13.7 s**, p95 **31.7 s**.
-- **Bill:** 269,623 Token Factory tokens and 51 Tavily credits for the full column (1–3 credits a check). At the
+- **Bill:** 269,623 Token Factory tokens and 51 Tavily credits for the full column (1–3 credits a check in bench mode). At the
   prices `GET /v1/models` returns (`docs/proof/models-2026-10-17.json`), the median full check costs **$0.0078** in
   Token Factory tokens.
 
@@ -148,13 +147,15 @@ stage R above is the rules-only column); licensed ads 0 stopped in any column; t
 destination-centred context search found a relevant item for 18/20 (before: 8/20; both are an agent's reading, not yet
 a human's). `docs/proof/dev-tune-2026-10-17.json`.
 
-## 6. Bench mode differs from live use in exactly four ways
+## 6. Bench mode differs from live use in six ways
 
 1. `exclude`: the row's own source domain, and results whose title shares ≥ 60 % of its words with the source title, are
    removed from every Tavily result — a case cannot be "found" by its own article.
 2. A secret header skips the per-IP limit.
 3. `stage` (`rubric` / `extract` / `full`) produces the ablation columns through the same TypeScript code.
 4. An optional `endDate` (the V-time column).
+5. The phone-number search never runs (below).
+6. No /integrations receipt is written (the monthly credit ledger is still updated).
 
 The phone-number search never runs in bench mode: benchmark rows carry no phone numbers, so that path is live-only and
 unmeasured.
@@ -179,3 +180,19 @@ AWAS_BENCH_SECRET=pick-one python3 scripts/bench.py --set bench/tranche1.jsonl -
 - The phone-number search is unbenchmarked (live use only).
 - Tavily's `end_date` also counts "last updated", so a "published before" test can leak.
 - Indonesian is not a listed language on the Super, Lightning or Ultra model cards; stage T is the evidence we have.
+- **Found by a blind architecture re-review after `code-freeze` (2026-10-18), not fixed — `src/lib` stays as tranche 2 measured it.**
+  Each is reachable in the code; none produced a false STOP in a benchmark row (0 of 20 licensed ads stopped, 48 of 48 shown lines gate-verified):
+  - The model's copied field span is read through the negation check on one side only — before the span for the tourist-visa
+    and fee-before-contract rules, inside it for the not-a-placement-country rule — so a negator on the other side is never
+    seen: `src/lib/rubric.ts` `modelHits`. Extracted fields feed 14 of the 16 rules (all but the passport and visit-visa-holder rules).
+  - A reported denial outside the fixed guard list ("tidak pernah terlibat …", "bukan pelaku …", "memulangkan korban …")
+    still gives a company-matched STOP; `decide` does not read the P3MI result (`src/lib/gate.ts`, `src/lib/verdict.ts`).
+  - The company match checks the word after the name for a capitalised continuation, not the word before it (`gate.ts` `entityMatch`).
+  - The passport rule matches worker-protective wording ("workers keep their passports").
+  - The personal-recruiter rule stores the matched phone digits in the case's flag excerpt (`rubric.ts`); the ad text and the
+    extracted phone fields are masked (`mask.ts`); flag excerpts and the other extracted spans are not. The recorded /judge samples carry no digits.
+  - The English gloss is checked for dropped hedge words, not dropped negations (`message.ts`); the family message is not
+    scanned for the word "safe". The Indonesian quote is always the page's own text.
+  - The Tavily alarm at 900 credits is a flag, not a limit; a live check can use up to 5 credits.
+  - The bench secret also unlocks `/api/bench/dispatch`, `/api/samples` and the per-IP limit bypass; the tranche-2 job
+    held it. It is an environment value and can be rotated without a code change.

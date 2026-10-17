@@ -21,7 +21,7 @@
   ![Nebius Token Factory](https://img.shields.io/badge/Nebius-Token_Factory-6057F7?style=flat)
   ![NVIDIA Nemotron](https://img.shields.io/badge/NVIDIA-Nemotron-76B900?style=flat)
   ![Tavily](https://img.shields.io/badge/Tavily-search_+_extract-0ea5e9?style=flat)
-  ![Tests](https://img.shields.io/badge/tests-144_passing-10B981?style=flat)
+  ![Tests](https://img.shields.io/badge/tests-164_passing-10B981?style=flat)
   [![CI](https://github.com/edycutjong/awas/actions/workflows/ci.yml/badge.svg)](https://github.com/edycutjong/awas/actions/workflows/ci.yml)
   [![CodeQL](https://github.com/edycutjong/awas/actions/workflows/codeql.yml/badge.svg)](https://github.com/edycutjong/awas/actions/workflows/codeql.yml)
   [![Release](https://img.shields.io/github/v/release/edycutjong/awas?style=flat&sort=semver)](https://github.com/edycutjong/awas/releases)
@@ -105,21 +105,21 @@ The one extension no sponsor ships is the **quote gate**: two generic APIs becom
 
 | Metric | Value |
 |---|---|
-| Unit tests | **144 passing** (`npm test`, 12 files) |
+| Unit tests | **164 passing** (`npm test`, 13 files) |
 | Browser tests | **56 passing** (`npm run e2e`: 28 checks × phone and desktop projects; credential-free paths only: home, `/judge`, `/integrations`, `/about`, `/pitch`, guards, the in-page quote gate and rules, no horizontal scroll at 375/768/1440 px) |
 | Benchmark protocol | written before any row was collected: [`bench/PROTOCOL.md`](bench/PROTOCOL.md), with four dated amendments, each committed before the runs it affects |
 | Stage-T scoring rules | pre-registered before labels or model runs: [`bench/STAGE-T.md`](bench/STAGE-T.md) |
 | Reported cases (tranche 2, 25, out of sample) | **9 STOP · 15 VERIFY FIRST · 1 NO RED FLAGS FOUND** — 8 STOPs on cited rules; 1 on another outlet's report of the same case naming the company (x = 1: only one report names its company, so this is a single case, not a rate) |
 | Licensed agencies' vacancies wrongly stopped | **0 / 10** (NO RED FLAGS FOUND 9, VERIFY FIRST 1) |
-| Ablation, STOPs on the 25 cases | rules only 8 · rules + Nemotron extraction 8 · code sentence-picker 8 · full Awas 9. The verdict is decided in code on purpose, so that a model cannot stamp STOP by itself; Nemotron's measured effect on the count is the one evidence-flipped STOP (8 → 9). What it supplies besides: the typed fields (the company name feeds the no-company rule, the licence-list lookup and the gate's company match), the 48 evidence lines with their quotes, and the Bahasa family message |
+| Ablation, STOPs on the 25 cases | rules only 8 · rules + Nemotron extraction 8 · code sentence-picker 8 · full Awas 9. The verdict is decided in code on purpose, so that a model's wording alone cannot stamp STOP (its extracted fields can still raise a rule hit — limit 7 below); Nemotron's measured effect on the count is the one evidence-flipped STOP (8 → 9). What it supplies besides: the typed fields (the company name feeds the no-company rule, the licence-list lookup and the gate's company match), the 48 evidence lines with their quotes, and the Bahasa family message |
 | Evidence lines shown | 48, each a URL plus a quote found verbatim in code; 6 of 54 proposed dropped (11 %) |
 | Same verdict on a rerun | 19 / 20 on the pre-registered rerun (10 licensed vacancies); 20 / 20 on 10 reported cases (3 STOP, 7 VERIFY FIRST, each run twice more), a rerun added afterwards |
 | Seconds to verdict, p50 / p95 | **13.7 s / 31.7 s** |
-| Cost of a full check | median **$0.0078** in Token Factory tokens, 1–3 Tavily credits |
+| Cost of a full check | median **$0.0078** in Token Factory tokens, 1–3 Tavily credits in bench mode (a live check with two phone numbers can use up to 5) |
 
 Every row comes from [`bench/results-t2-summary.json`](bench/results-t2-summary.json) and [`DEMO.md`](DEMO.md); tranche 1 (development-visible) and the dev-set results are there too.
 
-### Honest limits (6)
+### Honest limits (12)
 
 1. **Our day-0 search-coverage gate failed** (8 of 20 known cases had a relevant item; we had set 12 in our own plan before the run, a threshold that first appears in this repository's history afterwards). The web evidence is therefore context; the verdict rests on the cited rules.
 2. **The benchmark's reported cases are reporters' descriptions of offers, not the ads.** Real ads carry more red-flag wording; and "no company named" fires on most descriptions partly because reports rarely name the company.
@@ -127,6 +127,12 @@ Every row comes from [`bench/results-t2-summary.json`](bench/results-t2-summary.
 4. **The phone path is unbenchmarked.** A phone number with no company name returns VERIFY FIRST, not a verdict.
 5. **Tavily's `end_date` also counts "last updated"**, so a "published before" test can leak.
 6. **The licensed-ad set is plainer than social-media ads** (official vacancy-board listings), so reassurance wording is under-sampled.
+7. **The model can raise a rule the raw text would not.** Extracted fields feed 14 of the 16 rules (all but the passport and visit-visa-holder rules). For the tourist-visa and fee-before-contract NEVER rules the negation check reads only the text before the span the model copied, and for the not-a-placement-country rule only inside that span, so a negator on the other side of the boundary is never seen: a model that copies "Work visa provided (not a tourist visa)" as the visa field can raise a NEVER flag the raw-text path suppresses. Seen once in tranche 1 (t1-p14: the copied span "bukan izin kerja hanya wisata" raised the tourist-visa flag; correct there: the reported offer was tourism-only). No false STOP on a licensed ad (0 of 20). The same fields can also switch the no-company rule off.
+8. **A denial outside a fixed phrase list can still produce a company-matched STOP.** The quote gate keeps a verified line naming the company but downgrades it from STOP to VERIFY FIRST when a guard term ("tidak terlibat", "membantah", "mencatut", "akun palsu" …) appears anywhere in the quote or "bukan" appears up to five words before the name; "tidak pernah terlibat kasus TPPO", "PT X bukan pelaku …" and "memulangkan korban TPPO" match no guard. The P3MI lookup is shown but does not override a matched report, so a listed agency named beside a harm word on a fetched page is still stopped. It needs a search result that names the company.
+9. **The company match checks the word after the name for a capitalised continuation, not the word before it.** An extracted "Sinar Langgeng" can match a page about "PT Cahaya Sinar Langgeng".
+10. **The passport rule is wording-based.** "Workers keep their passports at all times" and "paspor diambil di kantor imigrasi" match it, because only a negation or "own/sendiri" exempts a phrase. Benign wording like this on a licensed ad would be stopped; none of the 25 licensed benchmark ads mentions a passport.
+11. **Phone masking covers the stored ad text and the extracted phone fields only; flag excerpts and the other extracted spans are stored as pasted.** When the personal-recruiter rule fires on a number, its excerpt keeps the digits in the stored case (served only to someone holding its unguessable id, kept 75 days). The five recorded /judge samples contain none.
+12. **The Tavily free tier is a shared budget and the 900-credit alarm only raises a flag.** A live check with two phone numbers can use up to 5 credits (bench mode 1–3); at the 60-per-hour limit one client could drain the month, after which checks return VERIFY FIRST with "step not completed" (or STOP if a cited rule fired). The English gloss is checked for dropped hedge words, not for dropped negations, and the family message is not scanned for the word "safe"; the Indonesian quote itself is always the page's own text.
 
 Two outlets (antaranews.com, kompas.com) were removed from the benchmark before any model call because their terms prohibit AI use; see Amendment 2 in [`bench/PROTOCOL.md`](bench/PROTOCOL.md).
 
@@ -147,7 +153,7 @@ npm run dev               # http://localhost:3000
 ## 🧪 Testing & CI
 
 ```bash
-npm test          # 144 vitest tests: quote gate, verdict, rubric, registry, masking, SigV4 vectors, clients, store, pipeline, landing lab
+npm test          # 164 vitest tests: quote gate, verdict, rubric, registry, masking, SigV4 vectors, clients, store, pipeline, landing lab
 npm run typecheck && npm run lint
 npm run build && npm run e2e   # 56 Playwright tests, no credentials needed
 ```

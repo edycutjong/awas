@@ -11,7 +11,7 @@ This is a hackathon project maintained by one person; expect a reply within a fe
 - **Secrets:** Token Factory, Tavily and Object Storage credentials exist only as deployment environment variables. They
   are never committed. CI runs gitleaks on every pushed commit and pull request, and the full history is scanned
   (`gitleaks git`) before the repository is made public.
-- **Pasted ads:** stored under an unguessable case id, served `noindex`, phone numbers masked except the last 4 digits.
+- **Pasted ads:** stored under an unguessable case id, served `noindex`, phone numbers masked except the last 4 digits in the stored ad text and extracted phone fields (flag excerpts and other extracted spans are stored as pasted, so a personal-recruiter excerpt can still hold the digits; see DEMO.md §8).
   Retention is a bucket lifecycle rule on `cases/` (75 days, set when the bucket was created); the local fallback store
   used for a judge's own run never expires. The per-connection limit stores a daily-salted hash of the IP, never the
   address; set `AWAS_RATE_SALT` in production, because without it the salt's secret part is a public default.
