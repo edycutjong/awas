@@ -4,14 +4,14 @@
   Keys: → / Space / PageDown next · ← / PageUp previous · Home / End · Esc overview · P presenter notes · C contrast check.
   Touch: swipe, or tap the left / right third. Deep link: /pitch#4.
   PDF: Cmd/Ctrl+P → Save as PDF → one slide per page (16 × 9 in).
-  Images: /landing/media/case-phone.webp, case-verdict.webp (live app captures), /icon.svg. Built by the project's site generator from files in the repo.
+  Images: /landing/media/deck-*.webp and run-*.webp (captures of the live app, names masked), /icon.svg. Built from files in the repo.
 -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Awas — pitch deck · pages, not scores</title>
-<meta name="description" content="Paste an overseas job ad. Awas checks it against 8 sourced rules and shows a quote only when code finds it word for word on the page. No score.">
+<meta name="description" content="Paste an overseas job offer. Awas checks it against rules quoted from official Indonesian pages and shows a quote only when code finds it word for word. No score.">
 <meta name="author" content="Edy Cu">
 <meta name="theme-color" content="#FBFAF5">
 <meta name="color-scheme" content="light">
@@ -19,9 +19,11 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Awas">
 <meta property="og:title" content="Awas — pitch deck">
-<meta property="og:description" content="Paste a job ad: sourced rules, published pages, quotes checked word for word in code. STOP or VERIFY FIRST.">
+<meta property="og:image:alt" content="Awas — an evidence file with a highlighted quote and a red STOP stamp">
+<link rel="canonical" href="https://awas-cek.vercel.app/pitch">
+<meta property="og:description" content="Official rules, quotes checked word for word in code, STOP or VERIFY FIRST. 0 of 10 licensed vacancies stopped.">
 <meta property="og:url" content="https://awas-cek.vercel.app/pitch">
-<meta property="og:image" content="https://awas-cek.vercel.app/og-image.png?v=2">
+<meta property="og:image" content="https://awas-cek.vercel.app/og-image.png?v=4dc3ec66b3">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -82,9 +84,8 @@ h1, h2, h3, p, figure { margin: 0; font-weight: 400; }
 .speaker-notes { display: none; }
 
 /* paper objects */
-.card { position: absolute; background: var(--card); box-shadow: 0 2px 0 color-mix(in srgb, var(--ink) 7%, transparent), 0 34px 60px -40px color-mix(in srgb, var(--ink) 75%, transparent);
-  clip-path: polygon(0 6px, 9% 0, 27% 5px, 46% 0, 64% 4px, 83% 0, 100% 6px, 100% calc(100% - 5px), 87% 100%, 63% calc(100% - 6px), 41% 100%, 19% calc(100% - 4px), 0 100%); }
-.tape { position: absolute; width: 170px; height: 40px; background: color-mix(in srgb, var(--card) 58%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 6%, transparent); transform: rotate(-4deg); z-index: 3; }
+.card { position: absolute; background: var(--card); box-shadow: 0 2px 0 rgba(28,35,51,.06), 0 34px 60px -40px rgba(28,35,51,.62); }
+.tape { position: absolute; width: 170px; height: 40px; background: rgba(222, 211, 168, 0.62); box-shadow: 0 1px 1px rgba(28,35,51,.08); transform: rotate(-4deg); z-index: 3; }
 .lbl { font: 600 22px/1.3 var(--font-data); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .hl { padding: 0.04em 0.1em; margin: 0 -0.1em; border-radius: 0.28em 0.12em 0.34em 0.14em; -webkit-box-decoration-break: clone; box-decoration-break: clone; background: linear-gradient(var(--after), var(--after)) no-repeat 0 55% / 100% 86%; }
 .tick { display: inline-block; width: 22px; height: 22px; border: 5px solid var(--check); vertical-align: -2px; margin-right: 14px; }
@@ -105,106 +106,116 @@ h1, h2, h3, p, figure { margin: 0; font-weight: 400; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 
 
-/* 1 cover */
-.s1 .word { font: 400 176px/0.9 var(--font-display); letter-spacing: -0.015em; }
-.s1 h2 { margin-top: 30px; font-size: 104px; }
-.s1 .lead { max-width: 760px; }
-.s1 .badge { display: inline-block; margin-top: 40px; padding: 12px 18px; border: 2px solid var(--ink); font: 600 24px/1 var(--font-data); }
-.s1 .icon { position: absolute; top: 70px; right: 120px; width: 96px; height: 96px; }
-.s1 .file { left: 1030px; top: 150px; width: 730px; padding: 32px 34px 26px; }
-.s1 .file .ad { font-size: 23px; line-height: 1.42; padding: 14px 16px; border: 2px dashed var(--rule); margin: 10px 0 16px; }
-.s1 .file .ad::before { content: ""; float: right; width: 310px; height: 128px; }
-.s1 .file .row { font-size: 24px; line-height: 1.35; padding-top: 14px; border-top: 2px dashed var(--rule); }
-.s1 .file .clip { margin-top: 14px; padding: 12px 16px; background: color-mix(in srgb, var(--bg) 55%, var(--card)); font-size: 24px; line-height: 1.45; }
-.s1 .file .stamp { top: 58px; right: 36px; }
-.s1 .file .stamp .w { font-size: 60px; }
-.s1 .file .stamp .s { font-size: 16px; }
-.s1 .rcpt { left: 1060px; top: 862px; width: 700px; padding: 18px 26px; font: 500 22px/1.5 var(--font-data); transform: rotate(0.6deg); }
-.s1 .rcpt .stop { color: var(--stop); font-weight: 800; }
-/* 2 hook */
-.s2 h2 { max-width: 760px; }
-.s2 .lead { max-width: 700px; }
-.s2 .chat { position: absolute; left: 1030px; top: 110px; width: 770px; }
-.s2 .bub { background: var(--card); border: 2px solid color-mix(in srgb, var(--ink) 14%, transparent); border-radius: 26px 26px 26px 6px; padding: 22px 28px; font-size: 29px; line-height: 1.45; box-shadow: 0 24px 40px -32px color-mix(in srgb, var(--ink) 70%, transparent); }
-.s2 .bub + .bub { margin-top: 28px; width: 560px; }
-.s2 .who { display: block; font: 600 22px/1.3 var(--font-data); color: var(--muted); margin-bottom: 8px; letter-spacing: 0.04em; }
-.s2 .sub { display: block; margin-top: 10px; font: 400 24px/1.4 var(--font-body); color: var(--muted); }
-.s2 .clock { position: absolute; left: 200px; bottom: 120px; font: 400 230px/1 var(--font-display); color: color-mix(in srgb, var(--ink) 12%, transparent); letter-spacing: -0.02em; }
-.s2 .note { position: absolute; left: 1030px; top: 640px; font: 400 24px var(--font-body); color: var(--muted); }
-/* 3 problem */
-.s3 .cuts { position: absolute; left: 210px; right: 120px; top: 360px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-.s3 .cut { position: relative; background: var(--card); padding: 28px 30px 24px; box-shadow: 0 30px 50px -40px color-mix(in srgb, var(--ink) 75%, transparent); clip-path: polygon(0 5px, 14% 0, 33% 5px, 57% 0, 79% 4px, 100% 0, 100% calc(100% - 4px), 78% 100%, 51% calc(100% - 5px), 26% 100%, 0 calc(100% - 3px)); }
-.s3 .num { display: block; font: 400 112px/0.95 var(--font-display); letter-spacing: -0.015em; white-space: nowrap; }
-.s3 .num small { font-size: 0.4em; }
-.s3 .what { display: block; margin: 16px 0 14px; font-size: 30px; line-height: 1.3; font-weight: 700; }
-.s3 .num small { font: 700 0.36em var(--font-body); }
-.s3 .modus { position: absolute; left: 210px; right: 120px; top: 790px; font: 400 52px/1.1 var(--font-display); }
-.s3 .modus .src { display: block; margin-top: 12px; }
-/* 4 solution */
-.s4 h2 { max-width: 700px; }
-.s4 .lead { max-width: 640px; }
-.s4 .callouts { list-style: none; margin: 46px 0 0; padding: 0; max-width: 640px; }
-.s4 .callouts li { display: grid; grid-template-columns: 56px 1fr; gap: 16px; align-items: start; font-size: 30px; line-height: 1.35; margin-bottom: 26px; }
-.s4 .src { margin-top: 30px; max-width: 660px; }
-.s4 .callouts b { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; border: 3px solid var(--stop); color: var(--stop); font: 800 24px/1 var(--font-body); }
-.s4 .shot { position: absolute; background: var(--card); padding: 12px; box-shadow: 0 34px 60px -40px color-mix(in srgb, var(--ink) 80%, transparent); }
-.s4 .shot img { display: block; border: 1px solid var(--rule); }
-.s4 .shot.a { left: 1000px; top: 110px; transform: rotate(-0.8deg); }
-.s4 .shot.a img { width: 600px; height: auto; }
-.s4 .shot .tape { top: -14px; left: 50%; margin-left: -85px; }
-.s4 .pin { position: absolute; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--card); border: 4px solid var(--stop); color: var(--stop); font: 800 26px/1 var(--font-body); z-index: 5; box-shadow: 0 6px 14px -6px color-mix(in srgb, var(--ink) 60%, transparent); }
+/* 1 · cover */
+.s1 .mark { display: flex; align-items: center; gap: 26px; margin-top: 70px; }
+.s1 .mark img { width: 92px; height: 92px; }
+.s1 .mark b { font: 400 132px/1 var(--font-display); }
+.s1 h2 { margin-top: 48px; font-size: 118px; max-width: 780px; }
+.s1 .lead { max-width: 720px; }
+.s1 .badge { margin-top: 46px; font: 600 22px/1.5 var(--font-data); color: var(--muted); }
+.s1 .badge b { color: var(--ink); }
+.s1 .shot { left: 1010px; top: 96px; width: 760px; padding: 14px 14px 10px; transform: rotate(1deg); }
+.s1 .shot img { width: 100%; height: auto; display: block; }
+.s1 .t1 { left: 1060px; top: 74px; } .s1 .t2 { left: 1560px; top: 80px; transform: rotate(5deg); }
+.s1 .term { left: 1010px; top: 740px; width: 800px; padding: 24px 30px 22px; background: var(--ink); color: var(--bg); font: 500 23px/1.6 var(--font-data); transform: rotate(-1deg); z-index: 5; white-space: nowrap; }
+.s1 .term .p { color: #9ba7c0; }
+.s1 .term .stop { color: #ff8a7a; font-weight: 700; }
+.s1 .term .cur { display: inline-block; width: 12px; height: 24px; background: var(--bg); vertical-align: -4px; }
+.slide.play .term .cur { animation: blink 1s steps(1) 4; }
+@keyframes blink { 50% { opacity: 0; } }
+.s1 h2 .strike::after { transform-origin: left; }
 
-/* 5 how */
-.s5 .lead { max-width: 1250px; }
-.s5 svg { position: absolute; left: 190px; top: 410px; width: 1600px; height: 560px; }
-/* 6 gate */
-.s6 .lead { max-width: 1250px; }
-.s6 .page { position: absolute; left: 210px; top: 400px; width: 900px; padding: 30px 34px 26px; font-size: 27px; line-height: 1.55; }
-.s6 .page .src { margin-bottom: 12px; }
-.s6 .prop { position: absolute; left: 1170px; width: 620px; padding: 24px 28px; font-size: 26px; line-height: 1.45; }
-.s6 .prop.ok { top: 400px; }
-.s6 .prop.no { top: 690px; }
-.s6 .prop .k { display: block; font: 700 22px/1.3 var(--font-data); letter-spacing: 0.06em; margin-bottom: 10px; }
-.s6 .prop.no s { color: var(--muted); text-decoration: line-through var(--before) 3px; }
-.s6 .prop.no s u { color: var(--ink); text-decoration: underline var(--stop) 4px; text-underline-offset: 5px; }
-.s6 .prop.ok .k { color: var(--ink); }
-.s6 .prop.no .k { color: var(--stop); }
-.s6 .prop .fold { display: block; margin-top: 10px; font-size: 24px; color: var(--muted); }
-.s6 .cap { position: absolute; left: 210px; top: 960px; font: 500 24px var(--font-data); color: var(--muted); }
-/* 7 rules */
-.s7 .lead { max-width: 1250px; }
-.s7 .nevers { position: absolute; left: 210px; right: 120px; top: 360px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
-.s7 .never { position: relative; background: var(--card); padding: 30px 30px 26px; border-top: 8px solid var(--stop); box-shadow: 0 30px 50px -40px color-mix(in srgb, var(--ink) 75%, transparent); }
-.s7 .never b { display: block; font: 400 46px/1.05 var(--font-display); margin-bottom: 18px; }
-.s7 .never .src { color: var(--ink); font-size: 22px; white-space: nowrap; }
-.s7 .caution { position: absolute; left: 210px; right: 120px; top: 720px; font-size: 30px; line-height: 1.5; }
-.s7 .caution .src { display: block; margin-top: 10px; }
-/* 8 honest */
-.s8 .lead { max-width: 1250px; }
-.s8 .cells { position: absolute; left: 210px; right: 120px; top: 370px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
-.s8 .cell { border: 3px dashed color-mix(in srgb, var(--ink) 35%, transparent); padding: 22px 24px; min-height: 200px; background: color-mix(in srgb, var(--card) 70%, transparent); }
-.s8 .cell .dash { display: block; font: 400 72px/1 var(--font-display); color: var(--before); }
-.s8 .cell span { display: block; margin-top: 12px; font-size: 26px; line-height: 1.3; font-weight: 700; }
-.s8 .withdrawn { position: absolute; left: 210px; right: 120px; top: 880px; font-size: 28px; color: var(--ink); }
-/* 9 built */
-.s9 .receipt { position: absolute; left: 860px; top: 330px; width: 940px; padding: 34px 40px 40px; font: 500 24px/1.8 var(--font-data);
-  -webkit-mask: conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / 22px 51% repeat-x, conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 22px 51% repeat-x;
-  mask: conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / 22px 51% repeat-x, conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 22px 51% repeat-x; }
-.s9 .receipt .r { display: flex; justify-content: space-between; gap: 30px; border-bottom: 2px dotted var(--rule); }
-.s9 .receipt .r span:first-child { white-space: nowrap; }
-.s9 .receipt .r span:last-child { text-align: right; color: var(--ink); font-weight: 700; }
-.s9 .receipt .stop { color: var(--stop); }
-.s9 .big { position: absolute; left: 210px; top: 320px; width: 600px; }
-.s9 .big b { display: block; font: 400 140px/0.95 var(--font-display); }
-.s9 .big span { display: block; font-size: 28px; line-height: 1.35; margin: 6px 0 26px; }
-/* 10 ask */
-.s10 .qr { position: absolute; left: 1290px; top: 150px; width: 470px; padding: 26px; }
+/* 2 · hook */
+.s2 h2 { font-size: 104px; }
+.s2 .offer { left: 210px; top: 300px; width: 1180px; padding: 40px 48px 38px; transform: rotate(-0.6deg); }
+.s2 .offer .t1 { left: 70px; top: -18px; } .s2 .offer .t2 { right: 90px; top: -16px; transform: rotate(4deg); }
+.s2 .offer .lbl { display: block; margin-bottom: 14px; }
+.s2 .offer p { font-size: 44px; line-height: 2.05; }
+.s2 .u { background: linear-gradient(var(--muted), var(--muted)) no-repeat 0 100% / 100% 3px; padding-bottom: 2px; }
+.s2 .u::after { content: attr(data-f); font: 600 20px/1 var(--font-data); color: var(--muted); margin-left: 6px; vertical-align: 0.9em; }
+.s2 .side { position: absolute; left: 1470px; top: 330px; width: 330px; font: 500 26px/1.5 var(--font-data); color: var(--muted); }
+.s2 .side b { display: block; font: 400 64px/1.05 var(--font-display); color: var(--ink); margin-bottom: 16px; }
+
+/* 3 · problem */
+.s3 .c1 { left: 210px; top: 330px; width: 820px; padding: 34px 40px 30px; transform: rotate(-0.8deg); }
+.s3 .c1 .n { font: 400 200px/0.9 var(--font-display); }
+.s3 .c1 .w { margin-top: 18px; font: 700 34px/1.3 var(--font-body); }
+.s3 .c2 { left: 1110px; top: 380px; width: 690px; padding: 34px 40px 30px; transform: rotate(1.2deg); }
+.s3 .c2 .q { font: 400 72px/1.05 var(--font-display); }
+.s3 .c2 .w { margin-top: 18px; font: 700 30px/1.3 var(--font-body); }
+.s3 .src { margin-top: 18px; }
+
+/* 4 · solution */
+.s4 .ph { top: 226px; width: 430px; padding: 10px; }
+.s4 .ph img { width: 100%; height: auto; display: block; }
+.s4 .p1 { left: 210px; transform: rotate(-1deg); }
+.s4 .p2 { left: 690px; top: 300px; transform: rotate(1deg); }
+.s4 .pin { position: absolute; z-index: 6; width: 56px; height: 56px; border-radius: 50%; background: var(--ink); color: var(--bg); font: 800 30px/56px var(--font-body); text-align: center; box-shadow: 0 0 0 5px var(--bg); }
+.s4 .keys { position: absolute; left: 1210px; top: 330px; width: 590px; list-style: none; margin: 0; padding: 0; }
+.s4 .keys li { display: grid; grid-template-columns: 70px 1fr; align-items: start; margin-bottom: 44px; font-size: 36px; line-height: 1.3; }
+.s4 .keys .pin { position: static; }
+
+/* 5 · how it works */
+.s5 .flow { position: absolute; left: 210px; top: 300px; width: 1590px; height: 620px; }
+.s5 .flow text { font-family: var(--font-body); fill: var(--ink); }
+.s5 .flow .t { font-size: 30px; font-weight: 700; }
+.s5 .flow .m { font: 500 21px var(--font-data); fill: var(--muted); }
+.s5 .legend { position: absolute; left: 210px; bottom: 120px; display: flex; gap: 44px; font: 600 24px/1 var(--font-data); color: var(--muted); }
+.s5 .legend i { display: inline-block; width: 30px; height: 22px; vertical-align: -3px; margin-right: 10px; }
+
+/* 6 · the gate (frozen) */
+.s6 .g1 { left: 210px; top: 262px; width: 1000px; padding: 12px; transform: rotate(-0.5deg); }
+.s6 .g2 { left: 250px; top: 760px; width: 1000px; padding: 12px; transform: rotate(0.6deg); }
+.s6 .g1 img, .s6 .g2 img { width: 100%; height: auto; display: block; }
+.s6 .note { position: absolute; left: 1400px; width: 400px; font-size: 34px; line-height: 1.3; }
+.s6 .n1 { top: 290px; } .s6 .n2 { top: 760px; }
+.s6 .note b { display: block; font: 400 64px/1 var(--font-display); margin-bottom: 10px; }
+.s6 .tally { position: absolute; left: 1400px; top: 560px; width: 400px; font: 500 24px/1.6 var(--font-data); color: var(--muted); border-top: 3px solid var(--ink); padding-top: 14px; }
+.s6 .tally b { color: var(--ink); }
+
+/* 7 · rules */
+.s7 .big { left: 210px; top: 320px; width: 780px; padding: 40px 44px 34px; transform: rotate(-0.8deg); }
+.s7 .big .q { font: 400 64px/1.12 var(--font-display); }
+.s7 .big .src { margin-top: 24px; }
+.s7 .list { position: absolute; left: 1080px; top: 300px; width: 720px; list-style: none; margin: 0; padding: 0; }
+.s7 .list li { padding: 20px 0 18px; border-top: 3px solid var(--rule); }
+.s7 .list b { display: block; font: 700 38px/1.2 var(--font-body); }
+.s7 .list .src { margin-top: 6px; }
+.s7 .more { position: absolute; left: 1080px; top: 900px; width: 720px; font: 600 26px/1.4 var(--font-data); color: var(--muted); }
+
+/* 8 · measured */
+.s8 .sheet { position: absolute; left: 210px; top: 300px; width: 800px; display: grid; grid-template-columns: repeat(7, 1fr); gap: 16px; }
+.s8 .sheet i { display: block; height: 64px; background: var(--card); box-shadow: 0 10px 18px -12px rgba(28,35,51,.45); position: relative; }
+.s8 .sheet i::after { content: ""; position: absolute; left: 14px; top: 18px; width: 58%; height: 22px; border: 4px solid currentColor; border-radius: 5px; transform: rotate(-6deg); }
+.s8 .sheet i.s { color: var(--stop); } .s8 .sheet i.v { color: var(--check); } .s8 .sheet i.n { color: var(--muted); } .s8 .sheet i.n::after { border-style: dashed; }
+.s8 .sheet i.lic { background: #fffef4; }
+.s8 .gap { grid-column: 1 / -1; height: 8px; border-top: 3px dashed var(--rule); }
+.s8 .legend { position: absolute; left: 210px; top: 930px; display: flex; gap: 34px; font: 600 24px/1 var(--font-data); }
+.s8 .legend span { display: inline-flex; align-items: center; gap: 10px; }
+.s8 .legend i { width: 34px; height: 22px; border: 4px solid currentColor; border-radius: 5px; display: inline-block; }
+.s8 .stats { position: absolute; left: 1110px; top: 290px; width: 700px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px 36px; }
+.s8 .stats div { border-top: 4px solid var(--ink); padding-top: 14px; }
+.s8 .stats b { display: block; font: 400 104px/1 var(--font-display); }
+.s8 .stats span { display: block; margin-top: 10px; font-size: 30px; line-height: 1.25; }
+.s8 .job { position: absolute; left: 1110px; top: 930px; font: 500 22px/1.4 var(--font-data); color: var(--muted); }
+
+/* 9 · honest */
+.s9 .ralat { position: absolute; left: 210px; top: 320px; width: 1380px; background: var(--card); border: 4px solid var(--ink); padding: 52px 56px 30px; box-shadow: 0 34px 60px -40px rgba(28,35,51,.62); }
+.s9 .ralat .kop { position: absolute; top: -28px; left: 40px; background: var(--ink); color: var(--bg); padding: 10px 20px 8px; font: 800 30px/1 var(--font-body); letter-spacing: 0.16em; }
+.s9 .ralat ol { margin: 0; padding: 0; list-style: none; counter-reset: r; }
+.s9 .ralat li { counter-increment: r; display: grid; grid-template-columns: 70px 1fr; gap: 18px; padding: 18px 0; border-bottom: 2px solid var(--rule); font-size: 40px; line-height: 1.3; }
+.s9 .ralat li:last-child { border-bottom: 0; }
+.s9 .ralat li::before { content: counter(r); font: 400 62px/0.9 var(--font-display); }
+
+/* 10 · the ask */
+.s10 h2 { font-size: 150px; }
+.s10 .qr { left: 1300px; top: 200px; width: 500px; padding: 30px; }
 .s10 .qr svg { display: block; width: 100%; height: auto; }
-
-.s10 .url { margin-top: 60px; font: 400 76px/1 var(--font-display); }
-.s10 .paths { list-style: none; margin: 40px 0 0; padding: 0; font: 500 26px/1.9 var(--font-data); }
-.s10 .paths b { color: var(--ink); }
-.s10 .closer { position: absolute; left: 210px; bottom: 140px; font: 400 52px/1.1 var(--font-display); max-width: 1500px; }
+.s10 .qr .src { text-align: center; margin-top: 14px; font-size: 24px; }
+.s10 .url { margin-top: 44px; font: 600 54px/1.2 var(--font-data); }
+.s10 .lead { max-width: 960px; }
+.s10 .built { position: absolute; left: 210px; top: 820px; width: 1000px; font: 500 26px/1.5 var(--font-data); color: var(--muted); }
+.s10 .built b { color: var(--ink); }
 
 
 /* chrome */
@@ -243,113 +254,106 @@ body.overview .slide.active { outline-color: var(--check); }
 <p class="hint">rotate the phone for a larger slide · swipe to move</p>
 <h1 class="sr">Awas — pitch deck</h1>
 <main class="stage" id="stage" aria-roledescription="slide deck" aria-live="polite">
-<section class="slide s1" aria-label="Slide 1: cover">
-  <p class="word">Awas</p>
-  <h2 class="contrast-check">Pages, not <s class="strike">scores</s>.</h2>
-  <p class="lead contrast-check">Paste an overseas job ad. Get rules with official sources, quotes checked word for word, and a verdict.</p>
-  <p class="badge">Built for the Nebius Global AI Hackathon · v0.1.0</p>
-  <img class="icon" src="/icon.svg" alt="" width="96" height="96">
-  <div class="art card file">
-    <div class="stamp anim" aria-label="Verdict: STOP — jangan berangkat dulu, don't leave yet"><span class="w">STOP</span><span class="s" lang="id">jangan berangkat dulu</span></div>
-    <p class="lbl">the ad · composite</p>
-    <p class="ad" lang="id">Dibutuhkan CS online untuk Kamboja. Gaji Rp 15 jt/bulan, tanpa pengalaman.
-Visa turis diurus, tiket ditanggung. Biaya admin Rp 3 jt sebelum berangkat.</p>
-    <p class="row"><span class="tick never"></span><b>The ad offers a tourist or visit visa for work</b> · <span lang="id">“Visa turis”</span><span class="src">NEVER rule · humas.polri.go.id · 2026-02-04</span></p>
-    <p class="clip"><span class="src">the rule’s source sentence — checked by the quote gate on /about</span><span class="hl anim" lang="id">Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah.</span></p>
-  </div>
-  <div class="art card rcpt"><span class="stop">event: verdict STOP</span> — rule: tourist or visit visa offered for work<br>receipt · models [] · tfCalls 0 · credits 0 · 332 ms server</div>
-  <aside class="speaker-notes"><p>Awas is Indonesian for “watch out”. A family pastes a job ad and gets an evidence file, not a score.</p><p>The receipt is a real run of the live app’s rubric stage on our composite ad: a sourced rule says STOP, with no model call. The yellow sentence is that rule’s source, checked by the same quote-gate code running on the story page — it is not part of the 332 ms run.</p></aside>
-  <p class="foot"><span>Awas · v0.1.0</span><span>Nebius Global AI Hackathon · Best Apps and Agents</span></p>
+
+<section class="slide s1" aria-label="Cover">
+  <div class="mark"><img src="/icon.svg" alt="Awas icon" width="92" height="92"><b>Awas</b></div>
+  <h2>Pages, not <span class="strike">scores</span>.</h2>
+  <p class="lead">Paste a job offer. Get the rule, its page and a stamp — decided in code.</p>
+  <p class="badge"><b>Nebius Global AI Hackathon</b> · <b>v0.1.0</b></p>
+  <i class="tape t1" aria-hidden="true"></i><i class="tape t2" aria-hidden="true"></i>
+  <figure class="card shot"><img src="/landing/media/deck-dtop.webp" width="1488" height="1078" alt="Awas — the live evidence file of a recorded run: STOP stamp, the offer with its fields underlined, the rule and its official source"></figure>
+  <div class="card term" role="img" aria-label="The recorded run's receipt: STOP in 13.6 seconds"><span class="p">$</span> curl …/api/case/qm5h5l…<br><span class="stop">STOP</span> · 13.6 s · 3 Nemotron calls <span class="cur"></span></div>
+  <div class="foot"><span>recorded run · frozen code · names masked</span><span>Awas · v0.1.0 · 01 / 10</span></div>
+  <aside class="speaker-notes">Awas answers a forwarded job offer the way a careful clerk would: the rule, the official page it comes from, and a stamp. This is a real recorded run, not a mock-up — the receipt on the right is one curl away.</aside>
 </section>
-<section class="slide s2" aria-label="Slide 2: the scene">
-  <h2>23:41. Someone answers tonight.</h2>
-  <p class="lead">Ads like this circulate in family group chats. Nobody in the group can say what has been published about the company.</p>
-  <div class="art chat">
-    <p class="bub" lang="id"><span class="who">diteruskan · forwarded</span>Dibutuhkan CS online untuk Kamboja. Gaji Rp 15 jt/bulan, tanpa pengalaman.
-Visa turis diurus, tiket ditanggung. Biaya admin Rp 3 jt sebelum berangkat.</p>
-    <p class="bub"><span class="who">Tante</span><span lang="id">Ini beneran nggak? Ada yang tahu?</span><span class="sub">Is this real? Does anyone know?</span></p>
-  </div>
-  <p class="art note">a composite of the pattern — not a real ad; no person or company</p>
-  <aside class="speaker-notes"><p>The scene is a composite. The pattern is the one the police, the manpower ministry and the foreign ministry warn about: light office work abroad, high pay for no experience, a tourist or visit visa for work, money asked up front.</p><p>Someone in the family has to answer before morning.</p></aside>
-  <p class="foot"><span>Awas · v0.1.0</span><span>Nebius Global AI Hackathon · Best Apps and Agents</span></p>
+<section class="slide s2" aria-label="Hook">
+  <h2>Someone answers tonight.</h2>
+  <figure class="card offer"><i class="tape t1" aria-hidden="true"></i><i class="tape t2" aria-hidden="true"></i>
+    <span class="lbl">as KP2MI described it, 2022</span>
+    <p lang="id">PMI ([nama]) asal Medan mengaku mendapat tawaran bekerja di <span class="u" data-f="negara">Kamboja</span> dari Facebook. [nama] dijanjikan bekerja sebagai <span class="u" data-f="pekerjaan">Costumer Service</span> sebuah perusahaan dengan <span class="u" data-f="janji">gaji sebesar 2000 USD</span>.</p></figure>
+  <p class="side"><b>Customer service in Cambodia, 2,000 USD.</b></p>
+  <div class="foot"><span>bench/samples.json · kamboja-cs</span><span>Awas · v0.1.0 · 02 / 10</span></div>
+  <aside class="speaker-notes">Offers like this circulate in family chats. Customer service in Cambodia, two thousand dollars. Someone in the family has to answer tonight, and the rules that would stop it are scattered across police, ministry and embassy pages.</aside>
 </section>
-<section class="slide s3" aria-label="Slide 3: the problem">
+<section class="slide s3" aria-label="Problem">
   <h2>12,019 asked to come home.</h2>
-  <p class="lead">January–June 2026: Indonesians from scam networks in Cambodia asked their embassy for help getting home (kemlu.go.id, 2 Jul 2026).</p>
-  <div class="art cuts"><div class="cut"><span class="num">1,301<small> · 85%</small></span><span class="what">cases at the embassy in Phnom Penh, Q1 2025 — 85% tied to online scams</span><span class="src">kemlu.go.id · KBRI Phnom Penh · 24 Apr 2025</span></div><div class="cut"><span class="num">12,000+<small></small></span><span class="what">Indonesians affected 2021–2025, many trafficked and forced into scam work</span><span class="src">kemlu.go.id · 18 Dec 2025</span></div></div>
-  <p class="art modus"><span lang="id">“katanya kerja di IT atau marketing digital”</span><span class="src">KP2MI · 28 Oct 2025 · how the offer arrives: “supposedly work in IT or digital marketing”</span></p>
-  <aside class="speaker-notes"><p>Every number here is quoted verbatim, with its page, in docs/SOURCES.md. The embassy’s cases include Indonesians who ran scams, not only victims — the ministry says so, and so do we.</p><p>What matters for Awas: the recruiting ad follows a pattern a family can check before anyone leaves.</p></aside>
-  <p class="foot"><span>Awas · v0.1.0</span><span>Nebius Global AI Hackathon · Best Apps and Agents</span></p>
+  <figure class="card c1"><span class="n">12,019</span><p class="w">Indonesians asked the embassy in Cambodia to bring them home, Jan–Jun 2026.</p><span class="src">kemlu.go.id · 2 Jul 2026</span></figure>
+  <figure class="card c2"><span class="q" lang="id">“kerja di IT atau marketing digital”</span><p class="w">how the offer arrives</p><span class="src">kp2mi.go.id · 28 Oct 2025</span></figure>
+  <div class="foot"><span>docs/SOURCES.md — every sentence, with its page</span><span>Awas · v0.1.0 · 03 / 10</span></div>
+  <aside class="speaker-notes">Twelve thousand and nineteen Indonesians asked the embassy in Phnom Penh to bring them home in the first half of 2026. The offer arrives as "work in IT or digital marketing". The same pages also count people who ran scams, so we claim something narrower: the offers follow a pattern a family can check.</aside>
 </section>
-<section class="slide s4" aria-label="Slide 4: the evidence file">
+<section class="slide s4" aria-label="Solution">
   <h2>An evidence file, not a score.</h2>
-  <p class="lead">The live app, on the composite ad.</p>
-  <ol class="callouts">
-    <li><b>1</b><span>The rule that fired cites its official page and date.</span></li>
-    <li><b>2</b><span>STOP comes from a sourced rule — code decides.</span></li>
-    <li><b>3</b><span>The ad’s own words that triggered it.</span></li>
+  <figure class="card ph p1" style="height:710px;overflow:hidden"><img src="/landing/media/run-top.webp" width="692" height="1882" alt="Awas — the evidence file on a phone: STOP stamp, the offer underlined, the rule with its official source"></figure>
+  <figure class="card ph p2" style="height:600px;overflow:hidden"><img src="/landing/media/run-suara.webp" width="692" height="1340" alt="Awas — a context card: the quote highlighted because code found it word for word on the source page"></figure>
+  <span class="pin" style="left:198px;top:825px" aria-hidden="true">1</span>
+  <span class="pin" style="left:678px;top:346px" aria-hidden="true">2</span>
+  <span class="pin" style="left:584px;top:339px" aria-hidden="true">3</span>
+  <ol class="keys">
+    <li><span class="pin">1</span><span>The rule, with its official page and date.</span></li>
+    <li><span class="pin">2</span><span>A quote code found word for word.</span></li>
+    <li><span class="pin">3</span><span>The stamp, set by a truth table.</span></li>
   </ol>
-  <p class="art src">live app · case yeliyt2i… · rubric stage, 0 model calls · phone, 390 px</p>
-  <figure class="art shot a"><span class="tape"></span><img src="/landing/media/case-top.webp" width="780" height="1120" alt="Awas — the live app's evidence file on a phone: the masthead, the STOP stamp, the pasted ad and the first red-flag row with its official source"></figure>
-  <span class="art pin" style="left:938px;top:887px">1</span>
-  <span class="art pin" style="left:1205px;top:281px">2</span>
-  <span class="art pin" style="left:1224px;top:840px">3</span>
-  <aside class="speaker-notes"><p>This is the deployed app, not a mock: the composite ad through the rubric stage. Each flag row names its official source and date; the quoted words are the ad’s own.</p><p>The STOP comes from a NEVER rule with a recorded source. Further down, the file lists what to check next, ending at the KP2MI call centre.</p></aside>
-  <p class="foot"><span>Awas · v0.1.0</span><span>Nebius Global AI Hackathon · Best Apps and Agents</span></p>
+  <div class="foot"><span>/case/qm5h5lnv… · phone, 390 px · names masked</span><span>Awas · v0.1.0 · 04 / 10</span></div>
+  <aside class="speaker-notes">The answer is a file, not a number. One: the rule that fired, with the page and the date it comes from. Two: context from published pages — highlighted only because code found the sentence on the page. Three: the stamp, which no model sets.</aside>
 </section>
-<section class="slide s5" aria-label="Slide 5: how it works">
-  <h2>The model looks. Code decides.</h2>
-  <p class="lead">Up to three Nemotron calls on Nebius Token Factory. Tavily finds the pages. Code decides what is shown and what the verdict is.</p>
-  <div class="art"><svg viewBox="0 0 1600 560" role="img" aria-label="One Awas check: paste, extract with Nemotron, rules in code, Tavily look-up, Nemotron proposes quotes, the code gate, the code verdict, Nemotron writes the family message; the evidence pack is stored in Nebius Object Storage"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10z" fill="#1C2333"/></marker></defs><rect x="0" y="40" width="300" height="150" rx="6" fill="#FFFFFF" stroke="#1C2333" stroke-width="3"/><text x="22" y="102" font-family="Atkinson Hyperlegible Next, Arial, sans-serif" font-weight="700" font-size="36" fill="#1C2333">Paste the ad</text><text x="22" y="150" font-family="Atkinson Hyperlegible Next, Arial, sans-serif" font-size="24" fill="#586071">Indonesian or English</text><rect x="380" y="40" width="360" height="150" rx="6" fill="#FFFFFF" stroke="#1C2333" stroke-width="3"/><text x="402" y="102" font-family="Atkinson Hyperlegible Next, Arial, sans-serif" font-weight="700" font-size="36" fill="#1C2333">Extract</text><text x="402" y="150" font-family="Atkinson Hyperlegible Next, Arial, sans-serif" font-size="24" fill="#586071">Nemotron 3 Super · call 1</text><rect x="820" y="40" width="300" height="150" rx="6" fill="#1C2333" stroke="#1C2333" stroke-width="3"/><text x="842" y="102" font-family="Atkinson Hyperlegible Next, Arial, sans-serif" font-weight="700" font-size="36" fill="#FFFFFF">Rules</text><text x="842" y="150" font-family="Atkinson Hyperlegible Next, Arial, sans-serif" font-size="24" fill="#D5DAE3">rubric.ts · 8 rules</text><rect x="1200" y="40" width="380" height="150" rx="6" fill="#FFFFFF" stroke="#1C2333" stroke-width="3" stroke-dasharray="10 7"/><text x="1222" y="102" font-family="Atkinson Hyperlegible Next, Arial, sans-serif" font-weight="700" font-size="36" fill="#1C2333">Look up</text><text x="1222" y="150" font-family="Atkinson Hyperlegible Next, Arial, sans-serif" font-size="24" fill="#586071">Tavily search + extract</text><rect x="0" y="330" width="360" height="150" rx="6" fill="#FFFFFF" stroke="#1C2333" stroke-width="3"/><text x="22" y="392" font-family="Atkinson Hyperlegible Next, Arial, sans-serif" font-weight="700" font-size="36" fill="#1C2333">Propose quotes</text><text x="22" y="440" font-family="Atkinson Hyperlegible Next, Arial, sans-serif" font-size="24" fill="#586071">Nemotron 3 Super · call 2</text><rect x="430" y="330" width="390" height="150" rx="6" fill="#1C2333" stroke="#1C2333" stroke-width="3"/><text x="452" y="392" font-family="Atkinson Hyperlegible Next, Arial, sans-serif" font-weight="700" font-size="36" fill="#FFFFFF">Gate</text><text x="452" y="440" font-family="Atkinson Hyperlegible Next, Arial, sans-serif" font-size="24" fill="#D5DAE3">gate.ts · ≥ 6 words verbatim</text><rect x="890" y="330" width="260" height="150" rx="6" fill="#1C2333" stroke="#1C2333" stroke-width="3"/><text x="912" y="392" font-family="Atkinson Hyperlegible Next, Arial, sans-serif" font-weight="700" font-size="36" fill="#FFFFFF">Verdict</text><text x="912" y="440" font-family="Atkinson Hyperlegible Next, Arial, sans-serif" font-size="24" fill="#D5DAE3">verdict.ts</text><rect x="1220" y="330" width="380" height="150" rx="6" fill="#FFFFFF" stroke="#1C2333" stroke-width="3"/><text x="1242" y="392" font-family="Atkinson Hyperlegible Next, Arial, sans-serif" font-weight="700" font-size="36" fill="#1C2333">Family message</text><text x="1242" y="440" font-family="Atkinson Hyperlegible Next, Arial, sans-serif" font-size="24" fill="#586071">Nemotron 3 Super · call 3</text><line x1="300" y1="115" x2="374" y2="115" stroke="#1C2333" stroke-width="3" marker-end="url(#ar)"/><line x1="740" y1="115" x2="814" y2="115" stroke="#1C2333" stroke-width="3" marker-end="url(#ar)"/><line x1="1120" y1="115" x2="1194" y2="115" stroke="#1C2333" stroke-width="3" marker-end="url(#ar)"/><line x1="360" y1="405" x2="424" y2="405" stroke="#1C2333" stroke-width="3" marker-end="url(#ar)"/><line x1="820" y1="405" x2="884" y2="405" stroke="#1C2333" stroke-width="3" marker-end="url(#ar)"/><line x1="1150" y1="405" x2="1214" y2="405" stroke="#1C2333" stroke-width="3" marker-end="url(#ar)"/><path d="M1390 190 C1390 260, 165 250, 165 326" fill="none" stroke="#1C2333" stroke-width="3" marker-end="url(#ar)"/><text x="0" y="512" font-family="Atkinson Hyperlegible Next, Arial, sans-serif" font-size="24" fill="#586071">dark: code · outlined: the model or your input · dashed: an external API</text><text x="0" y="550" font-family="Atkinson Hyperlegible Mono, Menlo, monospace" font-size="24" fill="#1C2333">nvidia/nemotron-3-super-120b-a12b · Nebius Token Factory · packs in Nebius Object Storage</text></svg></div>
-  <aside class="speaker-notes"><p>Nemotron 3 Super extracts typed fields with their spans, proposes quotes over the pages Tavily returned, and writes the Bahasa family message — each call is optional, with code fallbacks.</p><p>The rules, the quote gate and the verdict are plain code. The evidence pack is stored in Nebius Object Storage under a case id.</p></aside>
-  <p class="foot"><span>Awas · v0.1.0</span><span>Nebius Global AI Hackathon · Best Apps and Agents</span></p>
+<section class="slide s5" aria-label="How it works">
+  <h2>The model reads. Code decides.</h2>
+  <svg class="flow" viewBox="0 0 1590 620" role="img" aria-label="Awas flow: Nemotron 3 Ultra extracts fields, 16 rules in code and the P3MI list decide, Tavily searches, Nemotron 3 Super proposes quotes, a code gate verifies each, verdict.ts sets the verdict, Super writes the family message, the pack is stored in Nebius Object Storage"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#1C2333"/></marker></defs><g><rect x="0" y="40" width="230" height="120" rx="6" fill="#FBFAF5" stroke="#1C2333" stroke-width="3" stroke-dasharray="10 7"/><text x="22" y="90" class="t">Offer</text><text x="22" y="128" class="m">pasted text</text></g><path d="M230 100 L290 100" stroke="#1C2333" stroke-width="3" fill="none" marker-end="url(#ah)"/><g><rect x="290" y="40" width="380" height="120" rx="6" fill="#FFFFFF" stroke="#1C2333" stroke-width="3"/><text x="312" y="90" class="t">Extract</text><text x="312" y="128" class="m">Nemotron 3 Ultra</text></g><path d="M670 100 L730 100" stroke="#1C2333" stroke-width="3" fill="none" marker-end="url(#ah)"/><g><rect x="730" y="40" width="400" height="120" rx="6" fill="#1C2333" stroke="#1C2333" stroke-width="3"/><text x="752" y="90" class="t" style=fill:#FBFAF5>16 rules</text><text x="752" y="128" class="m" style=fill:#C7D5E8>4 NEVER · P3MI list 534</text></g><path d="M1130 100 L1190 100" stroke="#1C2333" stroke-width="3" fill="none" marker-end="url(#ah)"/><g><rect x="1190" y="40" width="400" height="120" rx="6" fill="#1C2333" stroke="#1C2333" stroke-width="3"/><text x="1212" y="90" class="t" style=fill:#FBFAF5>Verdict</text><text x="1212" y="128" class="m" style=fill:#C7D5E8>verdict.ts truth table</text></g><path d="M480 160 L480 290" stroke="#1C2333" stroke-width="3" fill="none" marker-end="url(#ah)"/><g><rect x="290" y="290" width="380" height="120" rx="6" fill="#C7D5E8" stroke="#1C2333" stroke-width="3"/><text x="312" y="340" class="t">Search</text><text x="312" y="378" class="m">Tavily search + extract</text></g><path d="M670 350 L730 350" stroke="#1C2333" stroke-width="3" fill="none" marker-end="url(#ah)"/><g><rect x="730" y="290" width="400" height="120" rx="6" fill="#FFFFFF" stroke="#1C2333" stroke-width="3"/><text x="752" y="340" class="t">Propose</text><text x="752" y="378" class="m">Nemotron 3 Super</text></g><path d="M1130 350 L1190 350" stroke="#1C2333" stroke-width="3" fill="none" marker-end="url(#ah)"/><g><rect x="1190" y="290" width="400" height="120" rx="6" fill="#1C2333" stroke="#1C2333" stroke-width="3"/><text x="1212" y="340" class="t" style=fill:#FBFAF5>Quote gate</text><text x="1212" y="378" class="m" style=fill:#C7D5E8>≥ 6 words, verbatim</text></g><path d="M1390 290 L1390 160" stroke="#1C2333" stroke-width="3" fill="none" marker-end="url(#ah)"/><path d="M1390 410 L1390 470" stroke="#1C2333" stroke-width="3" fill="none" marker-end="url(#ah)"/><g><rect x="1190" y="470" width="400" height="120" rx="6" fill="#FFFFFF" stroke="#1C2333" stroke-width="3"/><text x="1212" y="520" class="t">Message</text><text x="1212" y="558" class="m">Nemotron 3 Super</text></g><path d="M1190 530 L1130 530" stroke="#1C2333" stroke-width="3" fill="none" marker-end="url(#ah)"/><g><rect x="730" y="470" width="400" height="120" rx="6" fill="#FBFAF5" stroke="#1C2333" stroke-width="3" stroke-dasharray="10 7"/><text x="752" y="520" class="t">Evidence pack</text><text x="752" y="558" class="m">Nebius Object Storage</text></g></svg>
+  <p class="legend"><span><i style="background:#fff;border:3px solid var(--ink)"></i>Nemotron on Token Factory</span><span><i style="background:var(--ink)"></i>code</span><span><i style="background:var(--rule);border:3px solid var(--ink)"></i>Tavily</span></p>
+  <div class="foot"><span>src/lib/pipeline.ts · live /api/healthz routing</span><span>Awas · v0.1.0 · 05 / 10</span></div>
+  <aside class="speaker-notes">Nemotron 3 Ultra reads the offer into typed fields; code checks every field is really in the text. Sixteen rules quoted from official pages, and a dated snapshot of the licensed-agency list, decide. Tavily finds context; Nemotron 3 Super proposes quotes; a code gate keeps only quotes found word for word; a truth table sets the verdict.</aside>
 </section>
-<section class="slide s6" aria-label="Slide 6: the quote gate">
-  <h2>Verbatim, or it’s gone.</h2>
-  <p class="lead">A proposed quote is shown only if code finds it, word for word, on a page fetched in this run.</p>
-  <div class="art card page" lang="id"><span class="src">humas.polri.go.id · 4 Feb 2026 · as rendered 15 Oct 2026</span>Identitas perusahaan tidak jelas, alamat kantor tidak pasti dan komunikasi hanya dilakukan melalui media sosial atau WhatsApp tanpa pertemuan langsung di kantor resmi.<br><span class="hl">Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah.</span><br><br>Biaya keberangkatan “ditalangi”, dengan iming-iming gratis di awal, namun pada akhirnya menjadi utang besar yang dipotong dari gaji (jeratan utang).</div>
-  <div class="art card prop ok"><span class="k">✓ FOUND · 17 WORDS · SHOWN</span><span class="hl" lang="id">“Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja, bukan visa kerja (work permit) yang sah.”</span></div>
-  <div class="art card prop no drop"><span class="k">✕ NOT IN THE PAGE · DROPPED</span><s lang="id">“Dokumen bermasalah, menggunakan visa turis atau visa kunjungan untuk bekerja <u>adalah</u> visa kerja yang sah.”</s><span class="fold">one word flipped — bukan → adalah, “not” → “is”</span></div>
-  <p class="art cap">gate.ts: ≥ 6 words · one chunk fetched in this run · the same source runs in your browser at /about</p>
-  <aside class="speaker-notes"><p>This is the mechanism. The model may propose a quote that flips one word — “is” for “is not” — and the meaning turns over. The gate drops it on screen.</p><p>Only the verbatim sentence gets the highlighter, and its link opens the official page at that sentence. The gate checks words, not meaning: a quote cut short can pass, which is why every shown quote links to its whole sentence.</p></aside>
-  <p class="foot"><span>Awas · v0.1.0</span><span>Nebius Global AI Hackathon · Best Apps and Agents</span></p>
+<section class="slide s6" aria-label="The quote gate">
+  <h2>Verbatim, or it’s dropped.</h2>
+  <figure class="card g1"><img src="/landing/media/deck-dsuara.webp" width="1488" height="716" alt="Awas — the quote highlighted yellow because code found it word for word in the page Tavily fetched"></figure>
+  <p class="note n1"><b>Found.</b>Word for word, on the fetched page.</p>
+  <p class="tally">this run: <b>5 of 6 found</b><br>tranche 2: <b>6 of 54 dropped</b></p>
+  <figure class="card g2"><img src="/landing/media/deck-ddropped.webp" width="1504" height="256" alt="Awas — a dropped line, struck through because it was not on the page; a person's name masked in this recording"></figure>
+  <p class="note n2"><b>Not there.</b>Struck, dropped.</p>
+  <div class="foot"><span>recorded run · a person’s name masked in this recording</span><span>Awas · v0.1.0 · 06 / 10</span></div>
+  <aside class="speaker-notes">This is the line I want you to remember. The model proposed both quotes. Code found the first one, word for word, in the page Tavily returned — so it gets the yellow. The second was not on the page, so it is struck and never shown as evidence.</aside>
 </section>
-<section class="slide s7" aria-label="Slide 7: the rules">
+<section class="slide s7" aria-label="Rules">
   <h2>Every rule has a page.</h2>
-  <p class="lead">Three NEVER rules stop an ad on their own. Five CAUTION rules ask the family to verify first.</p>
-  <div class="art nevers"><div class="never"><b>Tourist or visit visa for work</b><span class="src">humas.polri.go.id · 2026-02-04</span></div><div class="never"><b>A fee before a signed contract</b><span class="src">kemnaker.go.id · 2024-10-10</span></div><div class="never"><b>Passport held or handed over</b><span class="src">humas.polri.go.id · 2026-02-04</span></div></div>
-  <p class="art caution"><span class="tick"></span>Five CAUTION rules: A fee before departure · High pay, no experience needed · Destination in an official warning · A personal number, no company · “Visit visa holders may apply”.<span class="src">each with its own official page and date — docs/SOURCES.md</span></p>
-  <aside class="speaker-notes"><p>Each rule cites an official page — a police checklist published on humas.polri.go.id, the manpower ministry, the foreign ministry — and the statutes behind them are listed in docs/SOURCES.md.</p><p>A NEVER rule with no recorded source would be drawn as CAUTION. Red marks NEVER, violet marks CAUTION. No green, anywhere.</p></aside>
-  <p class="foot"><span>Awas · v0.1.0</span><span>Nebius Global AI Hackathon · Best Apps and Agents</span></p>
+  <figure class="card big"><span class="q" lang="id">“Perlu saya tegaskan, Kamboja itu bukan negara penempatan.”</span><span class="src">kp2mi.go.id · 2025</span></figure>
+  <ol class="list" aria-label="The four NEVER rules"><li><b>Not a placement country</b><span class="src">kp2mi.go.id</span></li><li><b>Tourist visa for work</b><span class="src">humas.polri.go.id</span></li><li><b>Fee before a contract</b><span class="src">kemnaker.go.id</span></li><li><b>Passport held</b><span class="src">humas.polri.go.id</span></li></ol>
+  <div class="foot"><span>src/lib/rule-sources.ts · docs/SOURCES.md</span><span>Awas · v0.1.0 · 07 / 10</span></div>
+  <aside class="speaker-notes">Any one of four NEVER rules is a STOP, and each one quotes an official page — here the Minister for migrant workers: "Cambodia is not a placement country." 12 more rules lead to VERIFY FIRST, and a named company is checked against a dated snapshot of the licensed-agency list (534 agencies).</aside>
 </section>
-<section class="slide s8" aria-label="Slide 8: what is not measured">
-  <h2>Not measured yet. Said so.</h2>
-  <p class="lead">The benchmark protocol was committed before any row was collected. Until a row has a number, it has no number.</p>
-  <div class="art cells"><div class="cell"><span class="dash" aria-hidden="true">—</span><span>Scam ads stopped, company-matched (tranche 2)</span></div><div class="cell"><span class="dash" aria-hidden="true">—</span><span>Licensed ads wrongly stopped</span></div><div class="cell"><span class="dash" aria-hidden="true">—</span><span>False-stop distribution</span></div><div class="cell"><span class="dash" aria-hidden="true">—</span><span>Ablation: rules · extraction · picker · full</span></div><div class="cell"><span class="dash" aria-hidden="true">—</span><span>Latency p50 / p95</span></div><div class="cell"><span class="dash" aria-hidden="true">—</span><span>Cost per check</span></div></div>
-  <p class="art withdrawn">53 collected rows were withdrawn before any model saw them: two publishers forbid AI use (PROTOCOL.md, Amendment 2).</p>
-  <aside class="speaker-notes"><p>We would rather show an empty scoreboard than a number chosen after seeing results. The headline will be tranche 2, run once on frozen code.</p><p>The protocol, the stage-T scoring rules and both amendments are in the repo with their commit dates.</p></aside>
-  <p class="foot"><span>Awas · v0.1.0</span><span>Nebius Global AI Hackathon · Best Apps and Agents</span></p>
+<section class="slide s8" aria-label="Measured">
+  <h2>Run once, on frozen code.</h2>
+  <div class="sheet" role="img" aria-label="Tranche 2: 25 reported scam offers — 9 STOP, 15 VERIFY FIRST, 1 NO RED FLAGS FOUND; then 10 licensed vacancies — 0 STOP"><i class="v"></i><i class="s"></i><i class="v"></i><i class="v"></i><i class="v"></i><i class="s"></i><i class="v"></i><i class="v"></i><i class="v"></i><i class="s"></i><i class="v"></i><i class="v"></i><i class="s"></i><i class="n"></i><i class="s"></i><i class="s"></i><i class="v"></i><i class="v"></i><i class="s"></i><i class="v"></i><i class="v"></i><i class="v"></i><i class="s"></i><i class="v"></i><i class="s"></i><span class="gap"></span><i class="n lic"></i><i class="n lic"></i><i class="n lic"></i><i class="n lic"></i><i class="v lic"></i><i class="n lic"></i><i class="n lic"></i><i class="n lic"></i><i class="n lic"></i><i class="n lic"></i></div>
+  <p class="legend"><span style="color:var(--stop)"><i></i>STOP</span><span style="color:var(--check)"><i></i>VERIFY FIRST</span><span style="color:var(--muted)"><i style="border-style:dashed"></i>NO RED FLAGS</span></p>
+  <div class="stats">
+    <div><b>0/10</b><span>licensed vacancies stopped</span></div>
+    <div><b>9/25</b><span>scam offers stopped</span></div>
+    <div><b>13.7 s</b><span>median check</span></div>
+    <div><b>$0.0078</b><span>median cost</span></div>
+  </div>
+  <p class="job">a Nebius Serverless Job</p>
+  <div class="foot"><span>bench/results-t2.jsonl · DEMO.md</span><span>Awas · v0.1.0 · 08 / 10</span></div>
+  <aside class="speaker-notes">Thirty-five texts we never tuned on, frozen before the pipeline first ran and run once, as a Nebius Serverless Job on the code tagged code-freeze. Top: twenty-five publicly reported scam offers — nine STOP, fifteen VERIFY FIRST, one missed. Bottom: ten vacancies from licensed agencies — none stopped. The reported cases are reporters' descriptions, not the ads.</aside>
 </section>
-<section class="slide s9" aria-label="Slide 9: what is built">
-  <h2>Shipped, tested, live.</h2>
-  <p class="lead">Everything below is a file in the repo or a URL you can open.</p>
-  <div class="art big"><b>122</b><span>unit tests passing</span><b>56</b><span>browser tests passing</span></div>
-  <div class="art card receipt"><div class="r"><span>live app</span><span>awas-cek.vercel.app · /api/healthz ok</span></div><div class="r"><span>model</span><span>nvidia/nemotron-3-super-120b-a12b</span></div><div class="r"><span>Token Factory</span><span>configured · up to 3 calls</span></div><div class="r"><span>Tavily</span><span>configured · keyless</span></div><div class="r"><span>Object Storage</span><span>awas-edycu-ew1</span></div><div class="r"><span>full checks recorded</span><span>none yet</span></div><div class="r"><span>rubric-stage run</span><span class="stop">STOP · 0 model calls</span></div></div>
-  <aside class="speaker-notes"><p>The app is deployed with no login and no daily cap. The tests run with npm test and npm run e2e; the configuration is reported live at /api/healthz.</p><p>No full check has run on the live app yet — the benchmark protocol comes first. The rubric-stage receipt is the run on slide 4.</p></aside>
-  <p class="foot"><span>Awas · v0.1.0</span><span>Nebius Global AI Hackathon · Best Apps and Agents</span></p>
+<section class="slide s9" aria-label="Honest limits">
+  <h2>What failed, printed first.</h2>
+  <div class="ralat"><span class="kop" lang="id">RALAT</span><ol>
+    <li><span>Our coverage gate failed, 8 of 20 — rules now decide.</span></li>
+    <li><span>Benchmark cases are descriptions, not ads.</span></li>
+    <li><span>Field labels: agent-drafted, unreviewed.</span></li>
+    <li><span>The phone path is unbenchmarked.</span></li>
+  </ol></div>
+  <div class="foot"><span>README · Honest limits · DEMO.md §1</span><span>Awas · v0.1.0 · 09 / 10</span></div>
+  <aside class="speaker-notes">We set ourselves a gate before the benchmark: Tavily had to surface a relevant report for twelve of twenty known cases. It found eight. So we changed the claim: the verdict comes from cited rules, and the web evidence is context. A newspaper prints this in a box called ralat — corrections. We print ours first.</aside>
 </section>
-<section class="slide s10" aria-label="Slide 10: the ask">
-  <h2>Paste one ad.</h2>
-  <p class="url contrast-check">awas-cek.vercel.app</p>
-  <ul class="paths">
-    <li><b>/judge</b> — no login, no daily cap</li>
-    <li><b>/about</b> — try to fool the gate</li>
-    <li><b>github.com/edycutjong/awas</b></li>
-  </ul>
-  <div class="art card qr"><svg role="img" aria-label="QR code: https://awas-cek.vercel.app" version="1.1" viewBox="0 0 31 31" xmlns="http://www.w3.org/2000/svg"><path fill="#1C2333" d="M1,1H2V2H1zM2,1H3V2H2zM3,1H4V2H3zM4,1H5V2H4zM5,1H6V2H5zM6,1H7V2H6zM7,1H8V2H7zM9,1H10V2H9zM10,1H11V2H10zM11,1H12V2H11zM12,1H13V2H12zM13,1H14V2H13zM16,1H17V2H16zM17,1H18V2H17zM18,1H19V2H18zM19,1H20V2H19zM20,1H21V2H20zM21,1H22V2H21zM23,1H24V2H23zM24,1H25V2H24zM25,1H26V2H25zM26,1H27V2H26zM27,1H28V2H27zM28,1H29V2H28zM29,1H30V2H29zM1,2H2V3H1zM7,2H8V3H7zM9,2H10V3H9zM13,2H14V3H13zM15,2H16V3H15zM16,2H17V3H16zM18,2H19V3H18zM19,2H20V3H19zM23,2H24V3H23zM29,2H30V3H29zM1,3H2V4H1zM3,3H4V4H3zM4,3H5V4H4zM5,3H6V4H5zM7,3H8V4H7zM10,3H11V4H10zM12,3H13V4H12zM14,3H15V4H14zM15,3H16V4H15zM16,3H17V4H16zM20,3H21V4H20zM21,3H22V4H21zM23,3H24V4H23zM25,3H26V4H25zM26,3H27V4H26zM27,3H28V4H27zM29,3H30V4H29zM1,4H2V5H1zM3,4H4V5H3zM4,4H5V5H4zM5,4H6V5H5zM7,4H8V5H7zM9,4H10V5H9zM17,4H18V5H17zM18,4H19V5H18zM19,4H20V5H19zM23,4H24V5H23zM25,4H26V5H25zM26,4H27V5H26zM27,4H28V5H27zM29,4H30V5H29zM1,5H2V6H1zM3,5H4V6H3zM4,5H5V6H4zM5,5H6V6H5zM7,5H8V6H7zM11,5H12V6H11zM14,5H15V6H14zM20,5H21V6H20zM23,5H24V6H23zM25,5H26V6H25zM26,5H27V6H26zM27,5H28V6H27zM29,5H30V6H29zM1,6H2V7H1zM7,6H8V7H7zM10,6H11V7H10zM11,6H12V7H11zM12,6H13V7H12zM13,6H14V7H13zM15,6H16V7H15zM18,6H19V7H18zM19,6H20V7H19zM20,6H21V7H20zM21,6H22V7H21zM23,6H24V7H23zM29,6H30V7H29zM1,7H2V8H1zM2,7H3V8H2zM3,7H4V8H3zM4,7H5V8H4zM5,7H6V8H5zM6,7H7V8H6zM7,7H8V8H7zM9,7H10V8H9zM11,7H12V8H11zM13,7H14V8H13zM15,7H16V8H15zM17,7H18V8H17zM19,7H20V8H19zM21,7H22V8H21zM23,7H24V8H23zM24,7H25V8H24zM25,7H26V8H25zM26,7H27V8H26zM27,7H28V8H27zM28,7H29V8H28zM29,7H30V8H29zM9,8H10V9H9zM10,8H11V9H10zM11,8H12V9H11zM14,8H15V9H14zM15,8H16V9H15zM18,8H19V9H18zM20,8H21V9H20zM21,8H22V9H21zM1,9H2V10H1zM3,9H4V10H3zM4,9H5V10H4zM6,9H7V10H6zM7,9H8V10H7zM8,9H9V10H8zM10,9H11V10H10zM12,9H13V10H12zM14,9H15V10H14zM15,9H16V10H15zM17,9H18V10H17zM18,9H19V10H18zM19,9H20V10H19zM20,9H21V10H20zM23,9H24V10H23zM26,9H27V10H26zM28,9H29V10H28zM29,9H30V10H29zM2,10H3V11H2zM3,10H4V11H3zM5,10H6V11H5zM11,10H12V11H11zM12,10H13V11H12zM16,10H17V11H16zM17,10H18V11H17zM19,10H20V11H19zM20,10H21V11H20zM21,10H22V11H21zM22,10H23V11H22zM23,10H24V11H23zM25,10H26V11H25zM29,10H30V11H29zM3,11H4V12H3zM4,11H5V12H4zM6,11H7V12H6zM7,11H8V12H7zM9,11H10V12H9zM10,11H11V12H10zM11,11H12V12H11zM12,11H13V12H12zM13,11H14V12H13zM15,11H16V12H15zM16,11H17V12H16zM18,11H19V12H18zM21,11H22V12H21zM22,11H23V12H22zM23,11H24V12H23zM25,11H26V12H25zM27,11H28V12H27zM28,11H29V12H28zM1,12H2V13H1zM2,12H3V13H2zM3,12H4V13H3zM8,12H9V13H8zM9,12H10V13H9zM10,12H11V13H10zM12,12H13V13H12zM13,12H14V13H13zM14,12H15V13H14zM15,12H16V13H15zM16,12H17V13H16zM19,12H20V13H19zM22,12H23V13H22zM23,12H24V13H23zM29,12H30V13H29zM1,13H2V14H1zM3,13H4V14H3zM7,13H8V14H7zM8,13H9V14H8zM11,13H12V14H11zM12,13H13V14H12zM13,13H14V14H13zM17,13H18V14H17zM18,13H19V14H18zM21,13H22V14H21zM24,13H25V14H24zM26,13H27V14H26zM27,13H28V14H27zM1,14H2V15H1zM2,14H3V15H2zM3,14H4V15H3zM8,14H9V15H8zM9,14H10V15H9zM10,14H11V15H10zM11,14H12V15H11zM12,14H13V15H12zM13,14H14V15H13zM14,14H15V15H14zM18,14H19V15H18zM19,14H20V15H19zM20,14H21V15H20zM23,14H24V15H23zM27,14H28V15H27zM28,14H29V15H28zM29,14H30V15H29zM2,15H3V16H2zM3,15H4V16H3zM7,15H8V16H7zM8,15H9V16H8zM10,15H11V16H10zM12,15H13V16H12zM13,15H14V16H13zM15,15H16V16H15zM20,15H21V16H20zM21,15H22V16H21zM23,15H24V16H23zM24,15H25V16H24zM27,15H28V16H27zM28,15H29V16H28zM29,15H30V16H29zM1,16H2V17H1zM2,16H3V17H2zM4,16H5V17H4zM8,16H9V17H8zM9,16H10V17H9zM10,16H11V17H10zM14,16H15V17H14zM16,16H17V17H16zM19,16H20V17H19zM21,16H22V17H21zM23,16H24V17H23zM25,16H26V17H25zM28,16H29V17H28zM2,17H3V18H2zM3,17H4V18H3zM6,17H7V18H6zM7,17H8V18H7zM9,17H10V18H9zM10,17H11V18H10zM11,17H12V18H11zM12,17H13V18H12zM13,17H14V18H13zM19,17H20V18H19zM21,17H22V18H21zM22,17H23V18H22zM24,17H25V18H24zM25,17H26V18H25zM26,17H27V18H26zM28,17H29V18H28zM3,18H4V19H3zM4,18H5V19H4zM5,18H6V19H5zM10,18H11V19H10zM12,18H13V19H12zM14,18H15V19H14zM19,18H20V19H19zM21,18H22V19H21zM24,18H25V19H24zM26,18H27V19H26zM27,18H28V19H27zM28,18H29V19H28zM1,19H2V20H1zM3,19H4V20H3zM5,19H6V20H5zM6,19H7V20H6zM7,19H8V20H7zM8,19H9V20H8zM9,19H10V20H9zM13,19H14V20H13zM19,19H20V20H19zM24,19H25V20H24zM27,19H28V20H27zM3,20H4V21H3zM5,20H6V21H5zM6,20H7V21H6zM8,20H9V21H8zM16,20H17V21H16zM17,20H18V21H17zM18,20H19V21H18zM20,20H21V21H20zM22,20H23V21H22zM27,20H28V21H27zM2,21H3V22H2zM3,21H4V22H3zM4,21H5V22H4zM5,21H6V22H5zM7,21H8V22H7zM8,21H9V22H8zM9,21H10V22H9zM12,21H13V22H12zM13,21H14V22H13zM14,21H15V22H14zM16,21H17V22H16zM20,21H21V22H20zM21,21H22V22H21zM22,21H23V22H22zM23,21H24V22H23zM24,21H25V22H24zM25,21H26V22H25zM26,21H27V22H26zM27,21H28V22H27zM9,22H10V23H9zM10,22H11V23H10zM11,22H12V23H11zM12,22H13V23H12zM13,22H14V23H13zM14,22H15V23H14zM15,22H16V23H15zM16,22H17V23H16zM18,22H19V23H18zM19,22H20V23H19zM20,22H21V23H20zM21,22H22V23H21zM25,22H26V23H25zM26,22H27V23H26zM27,22H28V23H27zM28,22H29V23H28zM29,22H30V23H29zM1,23H2V24H1zM2,23H3V24H2zM3,23H4V24H3zM4,23H5V24H4zM5,23H6V24H5zM6,23H7V24H6zM7,23H8V24H7zM9,23H10V24H9zM11,23H12V24H11zM12,23H13V24H12zM14,23H15V24H14zM17,23H18V24H17zM19,23H20V24H19zM20,23H21V24H20zM21,23H22V24H21zM23,23H24V24H23zM25,23H26V24H25zM26,23H27V24H26zM28,23H29V24H28zM1,24H2V25H1zM7,24H8V25H7zM9,24H10V25H9zM17,24H18V25H17zM18,24H19V25H18zM21,24H22V25H21zM25,24H26V25H25zM26,24H27V25H26zM28,24H29V25H28zM1,25H2V26H1zM3,25H4V26H3zM4,25H5V26H4zM5,25H6V26H5zM7,25H8V26H7zM10,25H11V26H10zM13,25H14V26H13zM15,25H16V26H15zM16,25H17V26H16zM21,25H22V26H21zM22,25H23V26H22zM23,25H24V26H23zM24,25H25V26H24zM25,25H26V26H25zM27,25H28V26H27zM28,25H29V26H28zM29,25H30V26H29zM1,26H2V27H1zM3,26H4V27H3zM4,26H5V27H4zM5,26H6V27H5zM7,26H8V27H7zM9,26H10V27H9zM10,26H11V27H10zM11,26H12V27H11zM14,26H15V27H14zM15,26H16V27H15zM17,26H18V27H17zM18,26H19V27H18zM22,26H23V27H22zM25,26H26V27H25zM26,26H27V27H26zM28,26H29V27H28zM1,27H2V28H1zM3,27H4V28H3zM4,27H5V28H4zM5,27H6V28H5zM7,27H8V28H7zM9,27H10V28H9zM10,27H11V28H10zM12,27H13V28H12zM13,27H14V28H13zM14,27H15V28H14zM15,27H16V28H15zM16,27H17V28H16zM17,27H18V28H17zM21,27H22V28H21zM24,27H25V28H24zM27,27H28V28H27zM29,27H30V28H29zM1,28H2V29H1zM7,28H8V29H7zM17,28H18V29H17zM21,28H22V29H21zM22,28H23V29H22zM23,28H24V29H23zM24,28H25V29H24zM25,28H26V29H25zM26,28H27V29H26zM28,28H29V29H28zM1,29H2V30H1zM2,29H3V30H2zM3,29H4V30H3zM4,29H5V30H4zM5,29H6V30H5zM6,29H7V30H6zM7,29H8V30H7zM9,29H10V30H9zM10,29H11V30H10zM11,29H12V30H11zM12,29H13V30H12zM16,29H17V30H16zM17,29H18V30H17zM18,29H19V30H18zM21,29H22V30H21zM22,29H23V30H22zM23,29H24V30H23zM24,29H25V30H24zM28,29H29V30H28z" id="qr-path" fill="#000000" fill-opacity="1" fill-rule="nonzero" stroke="none"/></svg></div>
-  <p class="art closer">Awas answers the family group with pages, not scores.</p>
-  <aside class="speaker-notes"><p>Open the app, paste any job ad — Indonesian or English — and open a quote’s link to find it on its page.</p><p>We are asking judges to break the gate. If a quote reaches the evidence file without being on the page, that is a bug we want to see.</p></aside>
-  <p class="foot"><span>Awas · v0.1.0</span><span>Nebius Global AI Hackathon · Best Apps and Agents</span></p>
+<section class="slide s10" aria-label="The ask">
+  <h2>Paste one offer.</h2>
+  <p class="url">awas-cek.vercel.app</p>
+  <p class="lead">No login, no daily cap. <b>/judge</b> replays 5 recorded runs with no key.</p>
+  <figure class="card qr"><svg role="img" aria-label="QR code: https://awas-cek.vercel.app" version="1.1" viewBox="0 0 31 31" xmlns="http://www.w3.org/2000/svg"><path d="M1,1H2V2H1zM2,1H3V2H2zM3,1H4V2H3zM4,1H5V2H4zM5,1H6V2H5zM6,1H7V2H6zM7,1H8V2H7zM9,1H10V2H9zM10,1H11V2H10zM11,1H12V2H11zM12,1H13V2H12zM13,1H14V2H13zM16,1H17V2H16zM17,1H18V2H17zM18,1H19V2H18zM19,1H20V2H19zM20,1H21V2H20zM21,1H22V2H21zM23,1H24V2H23zM24,1H25V2H24zM25,1H26V2H25zM26,1H27V2H26zM27,1H28V2H27zM28,1H29V2H28zM29,1H30V2H29zM1,2H2V3H1zM7,2H8V3H7zM9,2H10V3H9zM13,2H14V3H13zM15,2H16V3H15zM16,2H17V3H16zM18,2H19V3H18zM19,2H20V3H19zM23,2H24V3H23zM29,2H30V3H29zM1,3H2V4H1zM3,3H4V4H3zM4,3H5V4H4zM5,3H6V4H5zM7,3H8V4H7zM10,3H11V4H10zM12,3H13V4H12zM14,3H15V4H14zM15,3H16V4H15zM16,3H17V4H16zM20,3H21V4H20zM21,3H22V4H21zM23,3H24V4H23zM25,3H26V4H25zM26,3H27V4H26zM27,3H28V4H27zM29,3H30V4H29zM1,4H2V5H1zM3,4H4V5H3zM4,4H5V5H4zM5,4H6V5H5zM7,4H8V5H7zM9,4H10V5H9zM17,4H18V5H17zM18,4H19V5H18zM19,4H20V5H19zM23,4H24V5H23zM25,4H26V5H25zM26,4H27V5H26zM27,4H28V5H27zM29,4H30V5H29zM1,5H2V6H1zM3,5H4V6H3zM4,5H5V6H4zM5,5H6V6H5zM7,5H8V6H7zM11,5H12V6H11zM14,5H15V6H14zM20,5H21V6H20zM23,5H24V6H23zM25,5H26V6H25zM26,5H27V6H26zM27,5H28V6H27zM29,5H30V6H29zM1,6H2V7H1zM7,6H8V7H7zM10,6H11V7H10zM11,6H12V7H11zM12,6H13V7H12zM13,6H14V7H13zM15,6H16V7H15zM18,6H19V7H18zM19,6H20V7H19zM20,6H21V7H20zM21,6H22V7H21zM23,6H24V7H23zM29,6H30V7H29zM1,7H2V8H1zM2,7H3V8H2zM3,7H4V8H3zM4,7H5V8H4zM5,7H6V8H5zM6,7H7V8H6zM7,7H8V8H7zM9,7H10V8H9zM11,7H12V8H11zM13,7H14V8H13zM15,7H16V8H15zM17,7H18V8H17zM19,7H20V8H19zM21,7H22V8H21zM23,7H24V8H23zM24,7H25V8H24zM25,7H26V8H25zM26,7H27V8H26zM27,7H28V8H27zM28,7H29V8H28zM29,7H30V8H29zM9,8H10V9H9zM10,8H11V9H10zM11,8H12V9H11zM14,8H15V9H14zM15,8H16V9H15zM18,8H19V9H18zM20,8H21V9H20zM21,8H22V9H21zM1,9H2V10H1zM3,9H4V10H3zM4,9H5V10H4zM6,9H7V10H6zM7,9H8V10H7zM8,9H9V10H8zM10,9H11V10H10zM12,9H13V10H12zM14,9H15V10H14zM15,9H16V10H15zM17,9H18V10H17zM18,9H19V10H18zM19,9H20V10H19zM20,9H21V10H20zM23,9H24V10H23zM26,9H27V10H26zM28,9H29V10H28zM29,9H30V10H29zM2,10H3V11H2zM3,10H4V11H3zM5,10H6V11H5zM11,10H12V11H11zM12,10H13V11H12zM16,10H17V11H16zM17,10H18V11H17zM19,10H20V11H19zM20,10H21V11H20zM21,10H22V11H21zM22,10H23V11H22zM23,10H24V11H23zM25,10H26V11H25zM29,10H30V11H29zM3,11H4V12H3zM4,11H5V12H4zM6,11H7V12H6zM7,11H8V12H7zM9,11H10V12H9zM10,11H11V12H10zM11,11H12V12H11zM12,11H13V12H12zM13,11H14V12H13zM15,11H16V12H15zM16,11H17V12H16zM18,11H19V12H18zM21,11H22V12H21zM22,11H23V12H22zM23,11H24V12H23zM25,11H26V12H25zM27,11H28V12H27zM28,11H29V12H28zM1,12H2V13H1zM2,12H3V13H2zM3,12H4V13H3zM8,12H9V13H8zM9,12H10V13H9zM10,12H11V13H10zM12,12H13V13H12zM13,12H14V13H13zM14,12H15V13H14zM15,12H16V13H15zM16,12H17V13H16zM19,12H20V13H19zM22,12H23V13H22zM23,12H24V13H23zM29,12H30V13H29zM1,13H2V14H1zM3,13H4V14H3zM7,13H8V14H7zM8,13H9V14H8zM11,13H12V14H11zM12,13H13V14H12zM13,13H14V14H13zM17,13H18V14H17zM18,13H19V14H18zM21,13H22V14H21zM24,13H25V14H24zM26,13H27V14H26zM27,13H28V14H27zM1,14H2V15H1zM2,14H3V15H2zM3,14H4V15H3zM8,14H9V15H8zM9,14H10V15H9zM10,14H11V15H10zM11,14H12V15H11zM12,14H13V15H12zM13,14H14V15H13zM14,14H15V15H14zM18,14H19V15H18zM19,14H20V15H19zM20,14H21V15H20zM23,14H24V15H23zM27,14H28V15H27zM28,14H29V15H28zM29,14H30V15H29zM2,15H3V16H2zM3,15H4V16H3zM7,15H8V16H7zM8,15H9V16H8zM10,15H11V16H10zM12,15H13V16H12zM13,15H14V16H13zM15,15H16V16H15zM20,15H21V16H20zM21,15H22V16H21zM23,15H24V16H23zM24,15H25V16H24zM27,15H28V16H27zM28,15H29V16H28zM29,15H30V16H29zM1,16H2V17H1zM2,16H3V17H2zM4,16H5V17H4zM8,16H9V17H8zM9,16H10V17H9zM10,16H11V17H10zM14,16H15V17H14zM16,16H17V17H16zM19,16H20V17H19zM21,16H22V17H21zM23,16H24V17H23zM25,16H26V17H25zM28,16H29V17H28zM2,17H3V18H2zM3,17H4V18H3zM6,17H7V18H6zM7,17H8V18H7zM9,17H10V18H9zM10,17H11V18H10zM11,17H12V18H11zM12,17H13V18H12zM13,17H14V18H13zM19,17H20V18H19zM21,17H22V18H21zM22,17H23V18H22zM24,17H25V18H24zM25,17H26V18H25zM26,17H27V18H26zM28,17H29V18H28zM3,18H4V19H3zM4,18H5V19H4zM5,18H6V19H5zM10,18H11V19H10zM12,18H13V19H12zM14,18H15V19H14zM19,18H20V19H19zM21,18H22V19H21zM24,18H25V19H24zM26,18H27V19H26zM27,18H28V19H27zM28,18H29V19H28zM1,19H2V20H1zM3,19H4V20H3zM5,19H6V20H5zM6,19H7V20H6zM7,19H8V20H7zM8,19H9V20H8zM9,19H10V20H9zM13,19H14V20H13zM19,19H20V20H19zM24,19H25V20H24zM27,19H28V20H27zM3,20H4V21H3zM5,20H6V21H5zM6,20H7V21H6zM8,20H9V21H8zM16,20H17V21H16zM17,20H18V21H17zM18,20H19V21H18zM20,20H21V21H20zM22,20H23V21H22zM27,20H28V21H27zM2,21H3V22H2zM3,21H4V22H3zM4,21H5V22H4zM5,21H6V22H5zM7,21H8V22H7zM8,21H9V22H8zM9,21H10V22H9zM12,21H13V22H12zM13,21H14V22H13zM14,21H15V22H14zM16,21H17V22H16zM20,21H21V22H20zM21,21H22V22H21zM22,21H23V22H22zM23,21H24V22H23zM24,21H25V22H24zM25,21H26V22H25zM26,21H27V22H26zM27,21H28V22H27zM9,22H10V23H9zM10,22H11V23H10zM11,22H12V23H11zM12,22H13V23H12zM13,22H14V23H13zM14,22H15V23H14zM15,22H16V23H15zM16,22H17V23H16zM18,22H19V23H18zM19,22H20V23H19zM20,22H21V23H20zM21,22H22V23H21zM25,22H26V23H25zM26,22H27V23H26zM27,22H28V23H27zM28,22H29V23H28zM29,22H30V23H29zM1,23H2V24H1zM2,23H3V24H2zM3,23H4V24H3zM4,23H5V24H4zM5,23H6V24H5zM6,23H7V24H6zM7,23H8V24H7zM9,23H10V24H9zM11,23H12V24H11zM12,23H13V24H12zM14,23H15V24H14zM17,23H18V24H17zM19,23H20V24H19zM20,23H21V24H20zM21,23H22V24H21zM23,23H24V24H23zM25,23H26V24H25zM26,23H27V24H26zM28,23H29V24H28zM1,24H2V25H1zM7,24H8V25H7zM9,24H10V25H9zM17,24H18V25H17zM18,24H19V25H18zM21,24H22V25H21zM25,24H26V25H25zM26,24H27V25H26zM28,24H29V25H28zM1,25H2V26H1zM3,25H4V26H3zM4,25H5V26H4zM5,25H6V26H5zM7,25H8V26H7zM10,25H11V26H10zM13,25H14V26H13zM15,25H16V26H15zM16,25H17V26H16zM21,25H22V26H21zM22,25H23V26H22zM23,25H24V26H23zM24,25H25V26H24zM25,25H26V26H25zM27,25H28V26H27zM28,25H29V26H28zM29,25H30V26H29zM1,26H2V27H1zM3,26H4V27H3zM4,26H5V27H4zM5,26H6V27H5zM7,26H8V27H7zM9,26H10V27H9zM10,26H11V27H10zM11,26H12V27H11zM14,26H15V27H14zM15,26H16V27H15zM17,26H18V27H17zM18,26H19V27H18zM22,26H23V27H22zM25,26H26V27H25zM26,26H27V27H26zM28,26H29V27H28zM1,27H2V28H1zM3,27H4V28H3zM4,27H5V28H4zM5,27H6V28H5zM7,27H8V28H7zM9,27H10V28H9zM10,27H11V28H10zM12,27H13V28H12zM13,27H14V28H13zM14,27H15V28H14zM15,27H16V28H15zM16,27H17V28H16zM17,27H18V28H17zM21,27H22V28H21zM24,27H25V28H24zM27,27H28V28H27zM29,27H30V28H29zM1,28H2V29H1zM7,28H8V29H7zM17,28H18V29H17zM21,28H22V29H21zM22,28H23V29H22zM23,28H24V29H23zM24,28H25V29H24zM25,28H26V29H25zM26,28H27V29H26zM28,28H29V29H28zM1,29H2V30H1zM2,29H3V30H2zM3,29H4V30H3zM4,29H5V30H4zM5,29H6V30H5zM6,29H7V30H6zM7,29H8V30H7zM9,29H10V30H9zM10,29H11V30H10zM11,29H12V30H11zM12,29H13V30H12zM16,29H17V30H16zM17,29H18V30H17zM18,29H19V30H18zM21,29H22V30H21zM22,29H23V30H22zM23,29H24V30H23zM24,29H25V30H24zM28,29H29V30H28z" id="qr-path" fill="#1C2333" fill-opacity="1" fill-rule="nonzero" stroke="none"/></svg></figure>
+  <p class="built">Built with <b>Nebius Token Factory</b> · <b>NVIDIA Nemotron</b> · <b>Tavily</b></p>
+  <div class="foot"><span>MIT · names masked in recordings</span><span>Awas · v0.1.0 · 10 / 10</span></div>
+  <aside class="speaker-notes">Paste one offer — any offer — and try to make it lie. If you only have a minute, open /judge: five recorded runs, every quote one click from its source sentence.</aside>
 </section>
 </main>
 <div class="notes" id="notes" aria-live="polite"></div>
