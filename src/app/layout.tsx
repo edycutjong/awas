@@ -31,7 +31,7 @@ const atkinsonMono = localFont({
 });
 
 const DESCRIPTION =
-  "Paste a job ad: an evidence file where every line is a URL and a quote found verbatim on that page, then STOP, VERIFY FIRST or NO RED FLAGS FOUND.";
+  "Paste a job ad: an evidence file of official rules and quotes code found word for word in pages it searched: STOP, VERIFY FIRST or NO RED FLAGS FOUND.";
 
 const TITLE = "Awas — check a job ad before anyone boards";
 
