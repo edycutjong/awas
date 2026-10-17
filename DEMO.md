@@ -62,10 +62,11 @@ estimate.
   tourist visa 3, high pay for light work 3, personal number 2, fee asked 2, passport held 1.
 - **Evidence shown:** 42 lines, every one a URL plus a quote the gate found verbatim in the text Tavily returned
   (cited-line invariant asserted by `scripts/bench.py`: holds); 8 of 50 proposed lines dropped (16 %).
-  Re-checked afterwards by plain GET with no Awas code (`scripts/verify_quotes.py --bench`): 33 present,
+  Re-checked afterwards by plain GET with no Awas code (`scripts/verify_quotes.py --bench`,
+  `docs/proof/verify-quotes-t1-2026-10-17.txt`): 33 present,
   1 changed since fetch, 8 not checkable by plain GET (JavaScript pages and PDFs).
 - **Seconds to verdict** (full column, on the deployed Vercel function): p50 **10.0 s**, p95 **15.8 s**.
-- **Bill:** 235,206 Token Factory tokens and 52 Tavily credits for the full column (0–3 credits a check, mostly 1–2; `docs/proof/verify-quotes-t1-2026-10-17.txt` holds the re-check).
+- **Bill:** 235,206 Token Factory tokens and 52 Tavily credits for the full column (0–3 credits a check, mostly 1–2).
 
 **What tranche 1 made visible** (fixed before code-freeze; only tranche 2 measures the fixes): one case ended with no
 verdict because the model read the text as "not a job offer" and that switched off a raw-text rule — rules now read
