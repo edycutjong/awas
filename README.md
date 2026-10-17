@@ -7,6 +7,7 @@
   <br/>
 
   [![Live app](https://img.shields.io/badge/▶_Live-awas.edycu.dev-1C2333?style=for-the-badge)](https://awas.edycu.dev)
+  [![Demo video](https://img.shields.io/badge/▶_Demo-YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/to4VOBm_eNM)
   [![Story page](https://img.shields.io/badge/📰_Story-/about-B42318?style=for-the-badge)](https://awas.edycu.dev/about)
   [![Pitch deck](https://img.shields.io/badge/🖥️_Pitch-deck-4B2C8F?style=for-the-badge)](https://awas.edycu.dev/pitch)
   [![Measured Results](https://img.shields.io/badge/📊_Measured-Results-f59e0b?style=for-the-badge)](DEMO.md)
