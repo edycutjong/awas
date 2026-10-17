@@ -1,0 +1,734 @@
+{
+ "what": "Dev-set re-run after bench/PROTOCOL.md Amendment 4 (option B). IN-SAMPLE: the rules were tuned on these 25 rows; this is never a benchmark number. Tranche 1 and tranche 2 were not run or read.",
+ "recorded_at": "2026-10-17T05:29:24+00:00",
+ "app": "local production build (next start), bench mode, the same TypeScript path as the deploy; call 1 nvidia/Nemotron-3-Ultra-550b-a55b, calls 2-3 nvidia/nemotron-3-super-120b-a12b; Tavily with a key",
+ "positives": {
+  "n": 20,
+  "full_before_amendment_4": {
+   "NO_RED_FLAGS_FOUND": 10,
+   "VERIFY_FIRST": 9,
+   "STOP": 1
+  },
+  "full": {
+   "VERIFY_FIRST": 17,
+   "STOP": 3
+  },
+  "extract": {
+   "VERIFY_FIRST": 17,
+   "STOP": 3
+  },
+  "rubric": {
+   "VERIFY_FIRST": 17,
+   "STOP": 3
+  },
+  "picker": {
+   "VERIFY_FIRST": 17,
+   "STOP": 3
+  },
+  "flag_counts_full": {
+   "no_company": 17,
+   "advisory_destination": 6,
+   "high_pay_light_work": 3,
+   "fee_asked": 3,
+   "non_placement_country": 2,
+   "debt_bondage": 2,
+   "personal_recruiter": 1,
+   "tourist_visa": 1
+  },
+  "positives_whose_only_flag_is_no_company": 5
+ },
+ "negatives": {
+  "n": 5,
+  "full": {
+   "NO_RED_FLAGS_FOUND": 5
+  },
+  "extract": {
+   "NO_RED_FLAGS_FOUND": 5
+  },
+  "rubric": {
+   "NO_RED_FLAGS_FOUND": 5
+  },
+  "picker": {
+   "NO_RED_FLAGS_FOUND": 5
+  },
+  "stopped_any_column": 0
+ },
+ "pattern_query": {
+  "adopted": "WNI korban penipuan lowongan kerja <destination as extracted, else luar negeri> · topic general · country indonesia · social-media domains excluded",
+  "relevant_cases": "18/20",
+  "firm": 14,
+  "pre_registered_query_relevant": "8/20 (docs/proof/stage-v-relevance.json)",
+  "reader": "agent (Sonnet subagent, unreviewed)",
+  "definition": "RELEVANT = an item (judge by its title, URL, and any verified quote from it) that EITHER (a) reports a case or pattern of Indonesians deceived by an overseas job offer into trafficking / online-scam work / illegal placement, matching THIS case's destination country (the offered or the actual one) OR its job type (e.g. \"admin/marketing/customer service in Thailand/Cambodia/Myanmar\", \"ABK/bartender in Spain\", \"ferienjob in Germany\"); OR (b) is an official warning (government ministry, KBRI/embassy, KP2MI/BP2MI, police, Kemnaker, Kemlu, Imigrasi) about deceptive overseas job offers in general. NOT relevant: generic job-scam tips about domestic fake vacancies (e.g. a bank's \"ciri-ciri lowongan kerja palsu\"), unrelated fraud (investment, VAT, visa scams in other countries' contexts), items about other countries' citizens, items whose title/quote gives no sign of the above. An Instagram/Facebook/YouTube item counts if its title or verified quote clearly meets (a) or (b); a bare \"Instagram\" title with no verified quote does not count.",
+  "cases": [
+   {
+    "id": "d-p06",
+    "relevant": true,
+    "strength": "thin",
+    "best_url": "https://www.suarasurabaya.net/kelanakota/2022/934-wni-jadi-korban-penipuan-online-masyarakat-diminta-waspada-tawaran-pekerjaan-di-luar-negeri",
+    "why": "Suara Surabaya's title reports 934 WNI victims of online fraud and urges caution about overseas job offers, which fits the offer's unspecified 'luar negeri' destination, but no result names a country (the dirham hint is not matched) or the computer-office job type, so the match is generic only."
+   },
+   {
+    "id": "d-p07",
+    "relevant": true,
+    "strength": "thin",
+    "best_url": "https://www.bbc.com/indonesia/articles/c9rke46n795o",
+    "why": "BBC Indonesia's title covers trafficking victims lured by job-vacancy pretexts across Southeast Asia, a region that includes Malaysia (where the flight went), but no result names Malaysia, Bali or a finance job and the other items are Cambodia-specific."
+   },
+   {
+    "id": "d-p08",
+    "relevant": true,
+    "strength": "firm",
+    "best_url": "https://megapolitan.antaranews.com/berita/541125/1200-lebih-wni-telah-diselamatkan-dan-pulang-dari-pusat-online-scam-myanmar",
+    "why": "Antara reports 1,200+ WNI rescued from Myanmar online-scam centres and its verified quote describes the repeated pattern of non-procedural departure, an exact Myanmar match."
+   },
+   {
+    "id": "d-p09",
+    "relevant": true,
+    "strength": "firm",
+    "best_url": "https://news.detik.com/berita/d-6745956/marak-penipuan-loker-ke-ln-puan-dorong-pemerintah-lakukan-mitigasi",
+    "why": "Detik's title reports widespread overseas job-offer fraud against WNI and its verified quote cites 30 WNI arrested in Malaysia over online gambling, matching the Malaysia destination."
+   },
+   {
+    "id": "d-p10",
+    "relevant": true,
+    "strength": "thin",
+    "best_url": "https://www.kompas.tv/nasional/581640/pemerintah-pulangkan-ribuan-wni-korban-tppo-dijebak-lowongan-kerja-ilegal",
+    "why": "Kompas TV's story on the government repatriating thousands of WNI trafficking victims lured by illegal job vacancies carries a verified warning against high-pay, fast, no-procedure overseas offers (general pattern/warning), but no result mentions Saudi Arabia or bartender, driver or restaurant jobs."
+   },
+   {
+    "id": "d-p11",
+    "relevant": true,
+    "strength": "firm",
+    "best_url": "https://nasional.kompas.com/read/2023/07/22/09125281/cerita-wni-korban-tppo-ditawari-jadi-telemarketing-di-dubai-dikirim-ke?page=all",
+    "why": "Kompas.com's title and verified quote report a WNI trafficking victim lured by a telemarketing job in Dubai and sent to Myanmar to run scams, an exact Dubai match."
+   },
+   {
+    "id": "d-p12",
+    "relevant": false,
+    "strength": null,
+    "best_url": null,
+    "why": "The search returned no results."
+   },
+   {
+    "id": "d-p13",
+    "relevant": true,
+    "strength": "firm",
+    "best_url": "https://www.batamnews.co.id/berita-91774-sindikat-penipuan-lowongan-kerja-lewat-aplikasi-belanja-online-di-malaysia-sasar-wni.html",
+    "why": "Batamnews' title and verified quote report Malaysian police dismantling a job-offer fraud syndicate targeting WNI, matching the Malaysia destination, although it is a call-centre job scam rather than plantation labour."
+   },
+   {
+    "id": "d-p14",
+    "relevant": true,
+    "strength": "firm",
+    "best_url": "https://www.kompas.id/artikel/penipuan-lowongan-kerja-daring-jadi-ancaman-negara-negara-di-asean",
+    "why": "Kompas.id's verified quote reports 760 WNI victims of online job fraud in countries including Thailand and Myanmar, matching both the offered (Thailand) and actual (Myanmar) destinations."
+   },
+   {
+    "id": "d-p15",
+    "relevant": true,
+    "strength": "firm",
+    "best_url": "https://www.batamnews.co.id/berita-91774-sindikat-penipuan-lowongan-kerja-lewat-aplikasi-belanja-online-di-malaysia-sasar-wni.html",
+    "why": "Batamnews reports Malaysian police dismantling a job-offer fraud syndicate that targeted WNI, and a Validnews quote notes WNI seeking illegal informal jobs in Malaysia, matching the Malaysia destination."
+   },
+   {
+    "id": "d-p16",
+    "relevant": true,
+    "strength": "firm",
+    "best_url": "https://www.kompas.id/artikel/penipuan-lowongan-kerja-daring-jadi-ancaman-negara-negara-di-asean",
+    "why": "Kompas.id's verified quote reports 760 WNI victims of online job fraud in countries including Thailand, and CNBC's verified quotes cover nearly 1,000 WNI scam victims repatriated with Thailand's help, matching the Thailand destination."
+   },
+   {
+    "id": "d-p17",
+    "relevant": true,
+    "strength": "firm",
+    "best_url": "https://www.bbc.com/indonesia/dunia-65426839",
+    "why": "BBC Indonesia's title reports WNI victims of an online-scam syndicate in Laos freed by Kemlu (Liputan6 also covers 8 WNI online-scam victims in Laos), an exact Laos match."
+   },
+   {
+    "id": "d-p18",
+    "relevant": true,
+    "strength": "firm",
+    "best_url": "https://www.batamnews.co.id/berita-91774-sindikat-penipuan-lowongan-kerja-lewat-aplikasi-belanja-online-di-malaysia-sasar-wni.html",
+    "why": "Batamnews' verified quote has the Brickfields police chief saying a job-offer fraud syndicate targeted Indonesian victims, matching Malaysia, although the scheme is a call-centre job scam rather than lady-companion recruitment."
+   },
+   {
+    "id": "d-p19",
+    "relevant": true,
+    "strength": "firm",
+    "best_url": "https://www.cnbcindonesia.com/news/20260803205219-4-756240/prabowo-apresiasi-thailand-bantu-pulangkan-1000-wni-korban-scam",
+    "why": "CNBC's verified quotes report nearly 1,000 WNI online-scam victims repatriated with Thailand's help, matching the Thailand destination and the online-scam job type."
+   },
+   {
+    "id": "d-p20",
+    "relevant": true,
+    "strength": "firm",
+    "best_url": "https://news.detik.com/berita/d-6745956/marak-penipuan-loker-ke-ln-puan-dorong-pemerintah-lakukan-mitigasi",
+    "why": "Detik's title reports widespread overseas job-offer fraud and its verified quote cites 30 WNI arrested in Malaysia over online gambling, matching the Malaysia destination of the illegal-agent route."
+   },
+   {
+    "id": "d-p21",
+    "relevant": true,
+    "strength": "firm",
+    "best_url": "https://www.kompas.id/artikel/penipuan-lowongan-kerja-daring-jadi-ancaman-negara-negara-di-asean",
+    "why": "Kompas.id's verified quote reports WNI victims of online job fraud in countries including Thailand, matching the Thailand marketing-job lure."
+   },
+   {
+    "id": "d-p22",
+    "relevant": false,
+    "strength": null,
+    "best_url": null,
+    "why": "The search returned no results."
+   },
+   {
+    "id": "d-p23",
+    "relevant": true,
+    "strength": "firm",
+    "best_url": "https://www.batamnews.co.id/berita-91774-sindikat-penipuan-lowongan-kerja-lewat-aplikasi-belanja-online-di-malaysia-sasar-wni.html",
+    "why": "Batamnews' title and verified quote report a job-offer fraud syndicate in Malaysia targeting WNI, matching the Malaysia destination, though the call-centre scheme differs from the ART/cleaning/admin offer."
+   },
+   {
+    "id": "d-p24",
+    "relevant": true,
+    "strength": "firm",
+    "best_url": "https://www.batamnews.co.id/berita-91774-sindikat-penipuan-lowongan-kerja-lewat-aplikasi-belanja-online-di-malaysia-sasar-wni.html",
+    "why": "Batamnews' verified quote reports Malaysian police dismantling a job-offer fraud syndicate targeting WNI, matching the Malaysia destination, though it is a call-centre scam rather than factory (kilang) recruitment."
+   },
+   {
+    "id": "d-p25",
+    "relevant": true,
+    "strength": "thin",
+    "best_url": "https://www.medcom.id/internasional/eropa-amerika/0kp554DK-dan-terjadi-lagi-kali-ini-inggris-jadi-sasaran-perekrutan-ilegal-tki",
+    "why": "Medcom's title reports illegal recruitment of Indonesian workers targeting the UK, a loosely related European destination, while nothing in the results names Spain, ABK or bartender work (the SISKOP2MI Spain page is official but its title gives no sign of a warning)."
+   }
+  ]
+ },
+ "lines": {
+  "shown": 34,
+  "proposed": 42,
+  "gate_drop_rate": "8/42 (19 %)",
+  "cited_line_invariant": "holds"
+ },
+ "seconds_full": {
+  "p50": 12.8,
+  "p95": 20.8,
+  "note": "local server, not the Vercel function"
+ },
+ "bill": {
+  "tf_tokens": 178717,
+  "tavily_credits": 34
+ },
+ "rows": [
+  {
+   "id": "d-n01",
+   "kind": "negative",
+   "rubric": "NO_RED_FLAGS_FOUND",
+   "rubric_flags": [],
+   "extract": "NO_RED_FLAGS_FOUND",
+   "picker": "NO_RED_FLAGS_FOUND",
+   "full": "NO_RED_FLAGS_FOUND",
+   "full_flags": [],
+   "full_rule": "NO RED FLAGS FOUND — every step completed and no rule fired. This is not a guarantee.",
+   "full_before_amendment_4": null,
+   "lines_shown": 0,
+   "lines_proposed": 0,
+   "seconds": 9.8,
+   "case_id": "sg5u756uxkbvaldsuttszdjod4"
+  },
+  {
+   "id": "d-n02",
+   "kind": "negative",
+   "rubric": "NO_RED_FLAGS_FOUND",
+   "rubric_flags": [],
+   "extract": "NO_RED_FLAGS_FOUND",
+   "picker": "NO_RED_FLAGS_FOUND",
+   "full": "NO_RED_FLAGS_FOUND",
+   "full_flags": [],
+   "full_rule": "NO RED FLAGS FOUND — every step completed and no rule fired. This is not a guarantee.",
+   "full_before_amendment_4": null,
+   "lines_shown": 0,
+   "lines_proposed": 0,
+   "seconds": 13.8,
+   "case_id": "y52crf6zgiayzlzufw6tp5mfrq"
+  },
+  {
+   "id": "d-n03",
+   "kind": "negative",
+   "rubric": "NO_RED_FLAGS_FOUND",
+   "rubric_flags": [],
+   "extract": "NO_RED_FLAGS_FOUND",
+   "picker": "NO_RED_FLAGS_FOUND",
+   "full": "NO_RED_FLAGS_FOUND",
+   "full_flags": [],
+   "full_rule": "NO RED FLAGS FOUND — every step completed and no rule fired. This is not a guarantee.",
+   "full_before_amendment_4": null,
+   "lines_shown": 0,
+   "lines_proposed": 0,
+   "seconds": 8.6,
+   "case_id": "rpa4bhkscf4av5zht3pvw53rtm"
+  },
+  {
+   "id": "d-n04",
+   "kind": "negative",
+   "rubric": "NO_RED_FLAGS_FOUND",
+   "rubric_flags": [],
+   "extract": "NO_RED_FLAGS_FOUND",
+   "picker": "NO_RED_FLAGS_FOUND",
+   "full": "NO_RED_FLAGS_FOUND",
+   "full_flags": [],
+   "full_rule": "NO RED FLAGS FOUND — every step completed and no rule fired. This is not a guarantee.",
+   "full_before_amendment_4": null,
+   "lines_shown": 0,
+   "lines_proposed": 0,
+   "seconds": 28.5,
+   "case_id": "kwxbsnhq3whnraodcwnzkheixi"
+  },
+  {
+   "id": "d-n05",
+   "kind": "negative",
+   "rubric": "NO_RED_FLAGS_FOUND",
+   "rubric_flags": [],
+   "extract": "NO_RED_FLAGS_FOUND",
+   "picker": "NO_RED_FLAGS_FOUND",
+   "full": "NO_RED_FLAGS_FOUND",
+   "full_flags": [],
+   "full_rule": "NO RED FLAGS FOUND — every step completed and no rule fired. This is not a guarantee.",
+   "full_before_amendment_4": null,
+   "lines_shown": 0,
+   "lines_proposed": 0,
+   "seconds": 12.8,
+   "case_id": "vbujr2elmftdbstjqc34h4efwq"
+  },
+  {
+   "id": "d-p06",
+   "kind": "positive",
+   "rubric": "VERIFY_FIRST",
+   "rubric_flags": [
+    "high_pay_light_work",
+    "no_company"
+   ],
+   "extract": "VERIFY_FIRST",
+   "picker": "VERIFY_FIRST",
+   "full": "VERIFY_FIRST",
+   "full_flags": [
+    "high_pay_light_work",
+    "no_company"
+   ],
+   "full_rule": "VERIFY FIRST — very high pay for light office work; the ad names no company",
+   "full_before_amendment_4": "NO_RED_FLAGS_FOUND",
+   "lines_shown": 2,
+   "lines_proposed": 2,
+   "seconds": 14.7,
+   "case_id": "rdnfxlekt7b2sdu4dcrqdem4ii"
+  },
+  {
+   "id": "d-p07",
+   "kind": "positive",
+   "rubric": "VERIFY_FIRST",
+   "rubric_flags": [
+    "no_company"
+   ],
+   "extract": "VERIFY_FIRST",
+   "picker": "VERIFY_FIRST",
+   "full": "VERIFY_FIRST",
+   "full_flags": [
+    "no_company"
+   ],
+   "full_rule": "VERIFY FIRST — the ad names no company",
+   "full_before_amendment_4": "NO_RED_FLAGS_FOUND",
+   "lines_shown": 0,
+   "lines_proposed": 0,
+   "seconds": 16.2,
+   "case_id": "hxlibqyhwohontygbaxym3dig4"
+  },
+  {
+   "id": "d-p08",
+   "kind": "positive",
+   "rubric": "STOP",
+   "rubric_flags": [
+    "non_placement_country",
+    "no_company"
+   ],
+   "extract": "STOP",
+   "picker": "STOP",
+   "full": "STOP",
+   "full_flags": [
+    "non_placement_country",
+    "no_company"
+   ],
+   "full_rule": "STOP — rule: the destination is not an official placement country for Indonesian workers",
+   "full_before_amendment_4": "VERIFY_FIRST",
+   "lines_shown": 1,
+   "lines_proposed": 3,
+   "seconds": 20.8,
+   "case_id": "lqwjvr6zpumkkmcoeado3jyf7a"
+  },
+  {
+   "id": "d-p09",
+   "kind": "positive",
+   "rubric": "VERIFY_FIRST",
+   "rubric_flags": [
+    "no_company"
+   ],
+   "extract": "VERIFY_FIRST",
+   "picker": "VERIFY_FIRST",
+   "full": "VERIFY_FIRST",
+   "full_flags": [
+    "no_company"
+   ],
+   "full_rule": "VERIFY FIRST — the ad names no company",
+   "full_before_amendment_4": "NO_RED_FLAGS_FOUND",
+   "lines_shown": 2,
+   "lines_proposed": 2,
+   "seconds": 10.1,
+   "case_id": "27i5kksuulsxxcks6f36sqkeai"
+  },
+  {
+   "id": "d-p10",
+   "kind": "positive",
+   "rubric": "VERIFY_FIRST",
+   "rubric_flags": [
+    "fee_asked",
+    "no_company"
+   ],
+   "extract": "VERIFY_FIRST",
+   "picker": "VERIFY_FIRST",
+   "full": "VERIFY_FIRST",
+   "full_flags": [
+    "fee_asked",
+    "no_company"
+   ],
+   "full_rule": "VERIFY FIRST — a fee is asked to get the job; the ad names no company",
+   "full_before_amendment_4": "NO_RED_FLAGS_FOUND",
+   "lines_shown": 3,
+   "lines_proposed": 4,
+   "seconds": 11.9,
+   "case_id": "dj5ga75ry3onitye2xj32ml2gq"
+  },
+  {
+   "id": "d-p11",
+   "kind": "positive",
+   "rubric": "VERIFY_FIRST",
+   "rubric_flags": [
+    "fee_asked",
+    "no_company"
+   ],
+   "extract": "VERIFY_FIRST",
+   "picker": "VERIFY_FIRST",
+   "full": "VERIFY_FIRST",
+   "full_flags": [
+    "fee_asked",
+    "no_company"
+   ],
+   "full_rule": "VERIFY FIRST — a fee is asked to get the job; the ad names no company",
+   "full_before_amendment_4": "NO_RED_FLAGS_FOUND",
+   "lines_shown": 2,
+   "lines_proposed": 2,
+   "seconds": 19.5,
+   "case_id": "ocv5hphbecbplzzdzaj6qhwifi"
+  },
+  {
+   "id": "d-p12",
+   "kind": "positive",
+   "rubric": "VERIFY_FIRST",
+   "rubric_flags": [
+    "advisory_destination",
+    "no_company"
+   ],
+   "extract": "VERIFY_FIRST",
+   "picker": "VERIFY_FIRST",
+   "full": "VERIFY_FIRST",
+   "full_flags": [
+    "advisory_destination"
+   ],
+   "full_rule": "VERIFY FIRST — the destination is named in an official warning",
+   "full_before_amendment_4": "VERIFY_FIRST",
+   "lines_shown": 3,
+   "lines_proposed": 3,
+   "seconds": 13.0,
+   "case_id": "yn3prl2bdkzm6sdxovh56w4j2a"
+  },
+  {
+   "id": "d-p13",
+   "kind": "positive",
+   "rubric": "VERIFY_FIRST",
+   "rubric_flags": [
+    "no_company"
+   ],
+   "extract": "VERIFY_FIRST",
+   "picker": "VERIFY_FIRST",
+   "full": "VERIFY_FIRST",
+   "full_flags": [
+    "no_company"
+   ],
+   "full_rule": "VERIFY FIRST — the ad names no company",
+   "full_before_amendment_4": "NO_RED_FLAGS_FOUND",
+   "lines_shown": 1,
+   "lines_proposed": 1,
+   "seconds": 12.3,
+   "case_id": "hvnig7brhlj3obj5knvlea72gq"
+  },
+  {
+   "id": "d-p14",
+   "kind": "positive",
+   "rubric": "STOP",
+   "rubric_flags": [
+    "non_placement_country",
+    "advisory_destination",
+    "no_company"
+   ],
+   "extract": "STOP",
+   "picker": "STOP",
+   "full": "STOP",
+   "full_flags": [
+    "non_placement_country",
+    "advisory_destination",
+    "no_company"
+   ],
+   "full_rule": "STOP — rule: the destination is not an official placement country for Indonesian workers",
+   "full_before_amendment_4": "VERIFY_FIRST",
+   "lines_shown": 1,
+   "lines_proposed": 2,
+   "seconds": 17.2,
+   "case_id": "kdgh7lx3ftxkhmmt3h2zzah3fy"
+  },
+  {
+   "id": "d-p15",
+   "kind": "positive",
+   "rubric": "VERIFY_FIRST",
+   "rubric_flags": [
+    "no_company"
+   ],
+   "extract": "VERIFY_FIRST",
+   "picker": "VERIFY_FIRST",
+   "full": "VERIFY_FIRST",
+   "full_flags": [
+    "no_company"
+   ],
+   "full_rule": "VERIFY FIRST — the ad names no company",
+   "full_before_amendment_4": "NO_RED_FLAGS_FOUND",
+   "lines_shown": 2,
+   "lines_proposed": 2,
+   "seconds": 8.3,
+   "case_id": "swjgubn4mmvcvt2zqr72xr62gm"
+  },
+  {
+   "id": "d-p16",
+   "kind": "positive",
+   "rubric": "VERIFY_FIRST",
+   "rubric_flags": [
+    "high_pay_light_work",
+    "advisory_destination",
+    "no_company"
+   ],
+   "extract": "VERIFY_FIRST",
+   "picker": "VERIFY_FIRST",
+   "full": "VERIFY_FIRST",
+   "full_flags": [
+    "high_pay_light_work",
+    "advisory_destination",
+    "no_company"
+   ],
+   "full_rule": "VERIFY FIRST — very high pay for light office work; the destination is named in an official warning; the ad names no company",
+   "full_before_amendment_4": "VERIFY_FIRST",
+   "lines_shown": 3,
+   "lines_proposed": 3,
+   "seconds": 13.7,
+   "case_id": "2jegdknrzolap3wphhwiv4irxq"
+  },
+  {
+   "id": "d-p17",
+   "kind": "positive",
+   "rubric": "VERIFY_FIRST",
+   "rubric_flags": [
+    "advisory_destination",
+    "no_company"
+   ],
+   "extract": "VERIFY_FIRST",
+   "picker": "VERIFY_FIRST",
+   "full": "VERIFY_FIRST",
+   "full_flags": [
+    "advisory_destination",
+    "no_company"
+   ],
+   "full_rule": "VERIFY FIRST — the destination is named in an official warning; the ad names no company",
+   "full_before_amendment_4": "VERIFY_FIRST",
+   "lines_shown": 1,
+   "lines_proposed": 2,
+   "seconds": 11.5,
+   "case_id": "sl5ygnw35pk2waceoqyn6ofjhe"
+  },
+  {
+   "id": "d-p18",
+   "kind": "positive",
+   "rubric": "VERIFY_FIRST",
+   "rubric_flags": [
+    "no_company"
+   ],
+   "extract": "VERIFY_FIRST",
+   "picker": "VERIFY_FIRST",
+   "full": "VERIFY_FIRST",
+   "full_flags": [
+    "no_company"
+   ],
+   "full_rule": "VERIFY FIRST — the ad names no company",
+   "full_before_amendment_4": "NO_RED_FLAGS_FOUND",
+   "lines_shown": 1,
+   "lines_proposed": 2,
+   "seconds": 12.9,
+   "case_id": "5ekkm7tslt6rtgnjp4mwpiljz4"
+  },
+  {
+   "id": "d-p19",
+   "kind": "positive",
+   "rubric": "VERIFY_FIRST",
+   "rubric_flags": [
+    "advisory_destination",
+    "no_company"
+   ],
+   "extract": "VERIFY_FIRST",
+   "picker": "VERIFY_FIRST",
+   "full": "VERIFY_FIRST",
+   "full_flags": [
+    "advisory_destination",
+    "no_company"
+   ],
+   "full_rule": "VERIFY FIRST — the destination is named in an official warning; the ad names no company",
+   "full_before_amendment_4": "VERIFY_FIRST",
+   "lines_shown": 1,
+   "lines_proposed": 2,
+   "seconds": 11.3,
+   "case_id": "kfmnb74plwgkt65qrxq2n3kac4"
+  },
+  {
+   "id": "d-p20",
+   "kind": "positive",
+   "rubric": "VERIFY_FIRST",
+   "rubric_flags": [
+    "fee_asked",
+    "no_company"
+   ],
+   "extract": "VERIFY_FIRST",
+   "picker": "VERIFY_FIRST",
+   "full": "VERIFY_FIRST",
+   "full_flags": [
+    "fee_asked",
+    "no_company"
+   ],
+   "full_rule": "VERIFY FIRST — a fee is asked to get the job; the ad names no company",
+   "full_before_amendment_4": "NO_RED_FLAGS_FOUND",
+   "lines_shown": 2,
+   "lines_proposed": 2,
+   "seconds": 10.7,
+   "case_id": "fuzi4xsl3v5l6z3ocs4fpg3daq"
+  },
+  {
+   "id": "d-p21",
+   "kind": "positive",
+   "rubric": "VERIFY_FIRST",
+   "rubric_flags": [
+    "advisory_destination",
+    "no_company"
+   ],
+   "extract": "VERIFY_FIRST",
+   "picker": "VERIFY_FIRST",
+   "full": "VERIFY_FIRST",
+   "full_flags": [
+    "advisory_destination",
+    "no_company"
+   ],
+   "full_rule": "VERIFY FIRST — the destination is named in an official warning; the ad names no company",
+   "full_before_amendment_4": "VERIFY_FIRST",
+   "lines_shown": 2,
+   "lines_proposed": 2,
+   "seconds": 10.9,
+   "case_id": "7wrpqrurnsnrkdozxzn2uusa5m"
+  },
+  {
+   "id": "d-p22",
+   "kind": "positive",
+   "rubric": "VERIFY_FIRST",
+   "rubric_flags": [
+    "debt_bondage"
+   ],
+   "extract": "VERIFY_FIRST",
+   "picker": "VERIFY_FIRST",
+   "full": "VERIFY_FIRST",
+   "full_flags": [
+    "debt_bondage"
+   ],
+   "full_rule": "VERIFY FIRST — costs are advanced, then deducted from pay; a page names this company without reporting harm",
+   "full_before_amendment_4": "VERIFY_FIRST",
+   "lines_shown": 5,
+   "lines_proposed": 5,
+   "seconds": 16.7,
+   "case_id": "lysxit2qml33bqj63vkis3w6cu"
+  },
+  {
+   "id": "d-p23",
+   "kind": "positive",
+   "rubric": "VERIFY_FIRST",
+   "rubric_flags": [
+    "debt_bondage",
+    "high_pay_light_work",
+    "no_company"
+   ],
+   "extract": "VERIFY_FIRST",
+   "picker": "VERIFY_FIRST",
+   "full": "VERIFY_FIRST",
+   "full_flags": [
+    "debt_bondage",
+    "high_pay_light_work",
+    "no_company"
+   ],
+   "full_rule": "VERIFY FIRST — costs are advanced, then deducted from pay; very high pay for light office work; the ad names no company",
+   "full_before_amendment_4": "NO_RED_FLAGS_FOUND",
+   "lines_shown": 1,
+   "lines_proposed": 1,
+   "seconds": 11.9,
+   "case_id": "o2xkrtujkmmnqmemjfl4bzhtvi"
+  },
+  {
+   "id": "d-p24",
+   "kind": "positive",
+   "rubric": "VERIFY_FIRST",
+   "rubric_flags": [
+    "personal_recruiter"
+   ],
+   "extract": "VERIFY_FIRST",
+   "picker": "VERIFY_FIRST",
+   "full": "VERIFY_FIRST",
+   "full_flags": [
+    "personal_recruiter"
+   ],
+   "full_rule": "VERIFY FIRST — the recruiter is a personal number with no company named",
+   "full_before_amendment_4": "VERIFY_FIRST",
+   "lines_shown": 1,
+   "lines_proposed": 2,
+   "seconds": 9.1,
+   "case_id": "zrqjnxgwnd2fl5xautgpyspf5e"
+  },
+  {
+   "id": "d-p25",
+   "kind": "positive",
+   "rubric": "STOP",
+   "rubric_flags": [
+    "tourist_visa",
+    "no_company"
+   ],
+   "extract": "STOP",
+   "picker": "STOP",
+   "full": "STOP",
+   "full_flags": [
+    "tourist_visa",
+    "no_company"
+   ],
+   "full_rule": "STOP — rule: tourist or visit visa offered for work",
+   "full_before_amendment_4": "STOP",
+   "lines_shown": 0,
+   "lines_proposed": 0,
+   "seconds": 15.3,
+   "case_id": "e32hn7hpvpsgqccfqj7h7vxnru"
+  }
+ ]
+}
