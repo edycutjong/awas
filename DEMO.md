@@ -100,6 +100,8 @@ mentioned a similar name) · STOP 0.
 | full Awas with the evidence proposal replaced by a code sentence-picker | 8 | 16 | 1 |
 | **full Awas** | **9** | **15** | **1** |
 
+The first three columns are identical by design: the verdict is decided in code, so a model cannot stamp STOP by itself. Nemotron's measured effect on the STOP count is the one evidence-flipped case below (8 → 9); the rest of what it supplies is not a STOP count: the typed fields (the company name feeds the no-company rule, the licence-list lookup and the gate's company match), the evidence lines with their quotes, and the Bahasa family message.
+
 - **8 STOPs come from cited rules alone** (8/25): not a placement country, tourist visa.
 - **The 9th is a company-matched STOP — 1 of 1.** Only one of the 25 reports names the company in its description of
   the offer (x = 1). Its own article (merdeka.com) was excluded from every search; Tavily's exact-match search found

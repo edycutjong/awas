@@ -1,0 +1,13 @@
+{
+  "what": "Read-back of the lifecycle configuration of the app's Object Storage bucket (S3 API GetBucketLifecycleConfiguration, read-only), recorded 2026-10-18.",
+  "command": "aws s3api get-bucket-lifecycle-configuration --bucket awas-edycu-ew1 --endpoint-url https://storage.eu-west1.nebius.cloud",
+  "bucket": "awas-edycu-ew1",
+  "region": "eu-west1",
+  "result": {
+    "Rules": [
+      { "ID": "cases-expire-75d", "Filter": { "Prefix": "cases/" }, "Status": "Enabled", "Expiration": { "Days": 75 } },
+      { "ID": "rate-slots-expire-1d", "Filter": { "Prefix": "rate/" }, "Status": "Enabled", "Expiration": { "Days": 1 } }
+    ]
+  },
+  "note": "The rules exist and are enabled. The bucket is younger than 75 days, so no evidence pack has expired yet; the read-back shows the configuration, not a deletion. samples/ has no rule, by design."
+}

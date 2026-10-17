@@ -41,7 +41,7 @@
 
 **Live:** [awas.edycu.dev](https://awas.edycu.dev) (the app) · [/about](https://awas.edycu.dev/about) (the story page, with the rules and the quote gate running in your browser) · [/pitch](https://awas.edycu.dev/pitch) (the deck).
 
-> **Measured, out of sample** (tranche 2 of a benchmark frozen before it ran, run once on code tagged `code-freeze`, as a Nebius Serverless Job — [`DEMO.md`](DEMO.md)): **0 of 10 licensed agencies' vacancies stopped**; of 25 publicly reported scam-recruitment cases, **9 STOP, 15 VERIFY FIRST, 1 NO RED FLAGS FOUND**. Every one of the 48 evidence lines shown carries a URL and a quote the code found verbatim in the page text Tavily returned. One honest note first: our own day-0 gate on search coverage failed (a relevant item for 8 of 20 known cases), so Awas does not promise "published reports about this company" — the verdict comes from rules quoted from official pages, and the web evidence is context.
+> **Measured, out of sample** (tranche 2 of a benchmark frozen before it ran, run once on code tagged `code-freeze`, as a Nebius Serverless Job — [`DEMO.md`](DEMO.md)): **0 of 10 licensed agencies' vacancies stopped**; of 25 publicly reported scam-recruitment cases, **9 STOP, 15 VERIFY FIRST, 1 NO RED FLAGS FOUND**. Every one of the 48 evidence lines shown carries a URL and a quote the code found verbatim in the page text Tavily returned. One honest note first: our own day-0 gate on search coverage failed (a relevant item for 8 of 20 known cases), so Awas does not promise "published reports about this company". The verdict rests on rules quoted from official pages; web evidence is context, and only a verified line about the offer's own company or phone number can change a verdict: to STOP when it sits beside a harm word and no denial (once in the 25 cases), otherwise to VERIFY FIRST.
 
 ## 💡 The Problem & Solution
 
@@ -49,15 +49,15 @@
 
 An aunt in a family WhatsApp group is forwarded an ad — "CS Kamboja, Rp 15 jt/bulan, visa turis OK, tiket ditanggung" — and must tell her nephew tonight whether to take it. The rules that would stop him exist — Cambodia is not a placement country, a tourist visa is not a work permit, a fee before a contract is a warning sign — but they are scattered across police, ministry and embassy pages, and nobody in the group can check them all before he decides. (A composite scene, not a single person.)
 
-The scale is official: Indonesia's foreign ministry reports **1,301 cases handled by the embassy in Cambodia in Q1 2025, 85 % of them online scams**, and **more than 12,000 Indonesians affected between 2021 and 2025**. Each statistic is quoted verbatim with its page in [`docs/SOURCES.md`](docs/SOURCES.md).
+The scale is official: Indonesia's foreign ministry reports **1,301 cases handled by the embassy in Cambodia in Q1 2025, 85 % of them online scams**, and **more than 12,000 Indonesians affected between 2021 and 2025**. Each statistic is quoted verbatim with its page in [`docs/SOURCES.md`](docs/SOURCES.md). One caveat from that file: the embassy's 1,301 "cases" include Indonesians who ran scams, not only victims, so Awas claims less than the headline: the offers follow a pattern that official pages describe.
 
 ### The Solution
 
 > Most of the scam checkers we looked at give a score or a safe/unsafe label ([`docs/COMPARISON.md`](docs/COMPARISON.md)). Awas gives no score, only evidence: every quote has a URL and is checked in code against the page's text, and lines that fail are dropped on screen.
 
 1. **Extract** — Nemotron 3 Ultra on Nebius Token Factory copies typed fields (company, destination, job, visa, fees, promises, phones) out of the pasted ad; code checks every field is literally in the ad.
-2. **Rubric** — fixed rules, each quoting an official page ([`src/lib/rule-sources.ts`](src/lib/rule-sources.ts), [`docs/SOURCES.md`](docs/SOURCES.md)): a job in Cambodia or Myanmar (not placement countries, KP2MI), a tourist or visit visa for work, a fee before a contract and a held passport are `NEVER` rules (STOP); the police checklist's fast departure, high pay for light work, costs advanced then deducted, no company named, and any fee are `CAUTION` (VERIFY FIRST). A named Indonesian company is looked up in a dated snapshot of the official licensed-agency (P3MI) list.
-3. **Search** — Tavily looks for published pages naming this exact company or number, and for reporting on job scams to the same destination — context for the family, never an input to a rule.
+2. **Rubric** — fixed rules, each quoting an official page ([`src/lib/rule-sources.ts`](src/lib/rule-sources.ts), [`docs/SOURCES.md`](docs/SOURCES.md)): a job in Cambodia or Myanmar (not placement countries, KP2MI), a tourist or visit visa for work, a fee before a contract and a held passport are `NEVER` rules (STOP); the police checklist's fast departure, high pay for light work, costs advanced then deducted, no company named, and any fee are `CAUTION` (VERIFY FIRST). A named Indonesian company is looked up in a dated snapshot of the official licensed-agency (P3MI) list. In all there are 16 rules (4 `NEVER`, 12 `CAUTION`; the list is the `FLAG_REASON` table in [`src/lib/verdict.ts`](src/lib/verdict.ts)), 14 quoting an official page and 2 checking the licence list.
+3. **Search** — Tavily looks for published pages naming this exact company or number, and for reporting on job scams to the same destination — context for the family, never an input to a rule flag. A verified line about the offer's own company or phone number can change the verdict: to STOP when it sits beside a harm word and no denial (once in the 25 held-out cases), otherwise to VERIFY FIRST.
 4. **Propose** — the model proposes evidence lines `{url, quote, claim}` over the pages Tavily returned in this run.
 5. **Quote gate** — code accepts a quote only if it is a normalised verbatim substring of a chunk fetched in this run. A line that fails is dropped, visibly. Anyone can re-check with [`scripts/verify_quotes.py`](scripts/verify_quotes.py).
 6. **Verdict by code, not by model** — **STOP**, **VERIFY FIRST**, or **NO RED FLAGS FOUND** (explicitly "not a guarantee"; never "safe"), from the rubric flags, the verified lines and any failed step ([`src/lib/verdict.ts`](src/lib/verdict.ts)).
@@ -84,7 +84,7 @@ flowchart LR
 | App | Next.js 15, TypeScript, Tailwind 4 |
 | Models | NVIDIA Nemotron on Nebius Token Factory, routed per call: **Nemotron 3 Ultra** (`nvidia/Nemotron-3-Ultra-550b-a55b`) extracts the fields (84.8 % field accuracy on 25 Indonesian texts — 20 reporters' descriptions of scam offers and 5 licensed vacancies — vs Super 70.7 % and Lightning 59.6 %, against labels drafted by our build agent, not yet reviewed by a human: [`docs/proof/stage-t.json`](docs/proof/stage-t.json)); **Nemotron 3 Super** (`nvidia/nemotron-3-super-120b-a12b`) proposes evidence lines and writes the family message |
 | Retrieval | Tavily `/search` and `/extract` |
-| State | Nebius Object Storage (S3 API, SigV4): evidence packs (rewritten as each step completes), per-IP rate slots (conditional create); a 75-day expiry rule on `cases/` is intended, its receipt is pending |
+| State | Nebius Object Storage (S3 API, SigV4): evidence packs (rewritten as each step completes), per-IP rate slots (conditional create); a 75-day expiry rule on `cases/` (and 1 day on `rate/`), read back from the bucket on 2026-10-18: [`docs/proof/bucket-lifecycle-2026-10-18.json`](docs/proof/bucket-lifecycle-2026-10-18.json) |
 | Nebius libraries | `src/lib/nebius/` (SigV4, Object Storage, service-account auth, Serverless Jobs), copied from the same author's earlier project, [faultline](https://github.com/edycutjong/faultline) |
 
 ## 🏆 Nebius Token Factory + NVIDIA Nemotron + Tavily Integration
@@ -111,9 +111,9 @@ The one extension no sponsor ships is the **quote gate**: two generic APIs becom
 | Stage-T scoring rules | pre-registered before labels or model runs: [`bench/STAGE-T.md`](bench/STAGE-T.md) |
 | Reported cases (tranche 2, 25, out of sample) | **9 STOP · 15 VERIFY FIRST · 1 NO RED FLAGS FOUND** — 8 STOPs on cited rules; 1 on another outlet's report of the same case naming the company (x = 1: only one report names its company, so this is a single case, not a rate) |
 | Licensed agencies' vacancies wrongly stopped | **0 / 10** (NO RED FLAGS FOUND 9, VERIFY FIRST 1) |
-| Ablation, STOPs on the 25 cases | rules only 8 · rules + Nemotron extraction 8 · code sentence-picker 8 · full Awas 9 |
+| Ablation, STOPs on the 25 cases | rules only 8 · rules + Nemotron extraction 8 · code sentence-picker 8 · full Awas 9. The verdict is decided in code on purpose, so that a model cannot stamp STOP by itself; Nemotron's measured effect on the count is the one evidence-flipped STOP (8 → 9). What it supplies besides: the typed fields (the company name feeds the no-company rule, the licence-list lookup and the gate's company match), the 48 evidence lines with their quotes, and the Bahasa family message |
 | Evidence lines shown | 48, each a URL plus a quote found verbatim in code; 6 of 54 proposed dropped (11 %) |
-| Same verdict on a rerun | **20 / 20** on 10 reported cases (3 STOP, 7 VERIFY FIRST, each run twice more); 19 / 20 on 10 licensed vacancies |
+| Same verdict on a rerun | 19 / 20 on the pre-registered rerun (10 licensed vacancies); 20 / 20 on 10 reported cases (3 STOP, 7 VERIFY FIRST, each run twice more), a rerun added afterwards |
 | Seconds to verdict, p50 / p95 | **13.7 s / 31.7 s** |
 | Cost of a full check | median **$0.0078** in Token Factory tokens, 1–3 Tavily credits |
 
@@ -134,7 +134,7 @@ Two outlets (antaranews.com, kompas.com) were removed from the benchmark before 
 
 ### Prerequisites
 
-Node 20+, a Nebius Token Factory key, and a Tavily key (Tavily also documents keyless access for `/search` and `/extract`, free and rate-limited).
+Node 20+, a Nebius Token Factory key, and a Tavily key (Tavily's keyless mode, header `X-Tavily-Access-Mode: keyless`, returned HTTP 200 for one `/search` call: [`docs/proof/tavily-keyless-2026-10-17.json`](docs/proof/tavily-keyless-2026-10-17.json)).
 
 ### Installation
 
@@ -152,7 +152,7 @@ npm run typecheck && npm run lint
 npm run build && npm run e2e   # 56 Playwright tests, no credentials needed
 ```
 
-`.github/workflows/ci.yml` runs lint, typecheck, unit tests, `npm audit`, a gitleaks scan of pushed commits (full history is scanned before the repo goes public), the production build and the browser tests. Dependabot (grouped, monthly) and CodeQL are configured; CodeQL needs the repository to be public. Details: [`CONTRIBUTING.md`](CONTRIBUTING.md), [`SECURITY.md`](SECURITY.md).
+`.github/workflows/ci.yml` runs lint, typecheck, unit tests, `npm audit`, a gitleaks scan of pushed commits (the full history was scanned clean before the repo went public on 2026-10-17), the production build and the browser tests. Dependabot (grouped, monthly) and CodeQL run on the public repository. Details: [`CONTRIBUTING.md`](CONTRIBUTING.md), [`SECURITY.md`](SECURITY.md).
 
 The quote gate is also checkable by hand: `python3 scripts/verify_quotes.py <case.json>`.
 
