@@ -1,0 +1,24 @@
+{
+ "meta": {
+  "runId": "tranche2-20261017t063313z",
+  "jobId": "aijob-e03nhcfcwc4vnee33m",
+  "set": "tranche2",
+  "setSha256": "1e333cdfc9389fe0ab80331ef5ab7bde6d4fbd6b70e6df15ca594cab9d5965f1",
+  "benchPySha256": "35614ce46990035d2478fdd637d6cd6147cd8a6deeee1b14adaf7ff5001c2c7c",
+  "base": "https://awas-cek.vercel.app",
+  "region": "uk-south1",
+  "createdAt": "2026-10-17T06:33:19.107Z",
+  "variance": 10,
+  "n": 0,
+  "deployment": "dpl_Gr2QDBiEGcNyGdYMh4wg58U6JZrZ"
+ },
+ "job": {
+  "id": "aijob-e03nhcfcwc4vnee33m",
+  "name": "awas-bench-tranche2-20261017t063313z",
+  "parentId": "project-e03apddzlc00mx8xpjtfkx",
+  "createdAt": "2026-10-17T06:33:14.328732Z",
+  "state": "COMPLETED",
+  "startedAt": "2026-10-17T06:37:26.141954065Z",
+  "finishedAt": "2026-10-17T06:57:29.744592993Z"
+ }
+}

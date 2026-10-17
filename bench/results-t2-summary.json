@@ -1,0 +1,48 @@
+{
+ "file": "bench/results-t2.jsonl",
+ "rows": 35,
+ "positives": 25,
+ "negatives": 10,
+ "x_positives_naming_company": 1,
+ "headline_company_matched_stop": "1/1",
+ "stop_any_reason": {
+  "rubric": "8/25",
+  "extract": "8/25",
+  "picker": "8/25",
+  "full": "9/25"
+ },
+ "never_flag_only_stops": "8/25",
+ "evidence_flipped_stops": "1/1",
+ "negatives_wrongly_stopped": {
+  "rubric": "0/10",
+  "extract": "0/10",
+  "picker": "0/10",
+  "full": "0/10"
+ },
+ "negatives_distribution_full": {
+  "STOP": 0,
+  "VERIFY_FIRST": 1,
+  "NO_RED_FLAGS_FOUND": 9,
+  "null": 0
+ },
+ "positives_distribution_full": {
+  "STOP": 9,
+  "VERIFY_FIRST": 15,
+  "NO_RED_FLAGS_FOUND": 1,
+  "null": 0
+ },
+ "paraphrased_positives": 25,
+ "stop_any_reason_quoted_only": "0/0",
+ "lines_shown": 48,
+ "lines_proposed": 54,
+ "gate_drop_rate": "6/54 (11 %)",
+ "cited_line_invariant": "holds",
+ "seconds_full_p50": 13.7,
+ "seconds_full_p95": 31.7,
+ "bill": {
+  "tf_tokens": 269623,
+  "tavily_credits": 51
+ },
+ "retried_rows": 0,
+ "variance": "19/20 reruns agree with the first run"
+}
