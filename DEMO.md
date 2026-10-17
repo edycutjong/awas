@@ -141,7 +141,7 @@ Pooled with tranche 1 (mixed code versions — an appendix, not a headline): lic
 | EMBED | not run — optional; no embedding endpoint was deployed | — |
 
 **Dev set after Amendment 4 (in-sample — the rules were tuned on these rows; never a benchmark number):** reported
-cases, full pipeline, 3 STOP · 17 VERIFY FIRST · 0 NO RED FLAGS FOUND (before, full pipeline in stage V: 1 · 9 · 10 —
+cases, full pipeline, 3 STOP · 17 VERIFY FIRST · 0 NO RED FLAGS FOUND (before, full pipeline in the day-0 Tavily coverage check: 1 · 9 · 10 —
 stage R above is the rules-only column); licensed ads 0 stopped in any column; the
 destination-centred context search found a relevant item for 18/20 (before: 8/20; both are an agent's reading, not yet
 a human's). `docs/proof/dev-tune-2026-10-17.json`.
@@ -162,7 +162,7 @@ unmeasured.
 ```bash
 git clone https://github.com/edycutjong/awas && cd awas && npm ci
 python3 scripts/seed.py --check                                  # schema, hashes, no phone digits, dev ∩ tranches = ∅
-python3 scripts/verify_quotes.py --bench bench/results-t1.jsonl  # every shown quote, re-fetched, no key, no Awas code
+python3 scripts/verify_quotes.py --bench bench/results-t1.jsonl  # re-fetches each shown quote, no key, no Awas code; reports present / not checkable / changed (tranche 2: 33 of 48 present)
 # Re-run five rows with your own keys (no bucket env vars → packs go to ./data/):
 AWAS_BENCH_SECRET=pick-one TOKENFACTORY_API_KEY=… TAVILY_API_KEY=… MODEL_CALL_1=nvidia/Nemotron-3-Ultra-550b-a55b npm run dev
 AWAS_BENCH_SECRET=pick-one python3 scripts/bench.py --set bench/tranche1.jsonl --base http://localhost:3000 --out /tmp/r.jsonl --n 5

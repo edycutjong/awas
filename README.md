@@ -123,7 +123,7 @@ Every row comes from [`bench/results-t2-summary.json`](bench/results-t2-summary.
 
 1. **Our day-0 search-coverage gate failed** (8 of 20 known cases had a relevant item; we had set 12 in our own plan before the run, a threshold that first appears in this repository's history afterwards). The web evidence is therefore context; the verdict rests on the cited rules.
 2. **The benchmark's reported cases are reporters' descriptions of offers, not the ads.** Real ads carry more red-flag wording; and "no company named" fires on most descriptions partly because reports rarely name the company.
-3. **Indonesian is not a listed language** for the Nemotron models used (per their model cards); the stage-T accuracy above is measured against labels drafted by an agent and not yet reviewed by a human.
+3. **Indonesian is not a listed language** for the Nemotron models used (per their model cards); the 25-text extraction accuracy above (84.8 %) is measured against labels drafted by an agent and not yet reviewed by a human.
 4. **The phone path is unbenchmarked.** A phone number with no company name returns VERIFY FIRST, not a verdict.
 5. **Tavily's `end_date` also counts "last updated"**, so a "published before" test can leak.
 6. **The licensed-ad set is plainer than social-media ads** (official vacancy-board listings), so reassurance wording is under-sampled.
