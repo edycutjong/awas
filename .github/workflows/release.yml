@@ -1,3 +1,9 @@
+# Automatic semantic versioning. Every push to main that changes shipped code or pages
+# (src/, public/, worker/, package.json) cuts one release vX.Y.Z from the latest v-tag.
+#   MAJOR  "BREAKING CHANGE" in a message body, or "type!:" in a subject
+#   MINOR  a "feat:" / "feat(scope):" subject, or a "[minor]" marker
+#   PATCH  anything else
+# Docs / CI / test / community-file only pushes release nothing. Nothing is committed back.
 name: release
 
 on:
@@ -8,6 +14,11 @@ on:
 permissions:
   contents: write
 
+# One release at a time; queued runs wait (never cancel) so close pushes do not race on a tag.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -16,23 +27,35 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Compute next version from commit prefixes
+      - name: Compute next version
         id: ver
         run: |
           set -euo pipefail
-          LAST=$(git describe --tags --abbrev=0 --match 'v[0-9]*.[0-9]*.[0-9]*' 2>/dev/null || echo "")
-          if [ -z "$LAST" ]; then RANGE=""; CUR="0.0.0"; else RANGE="${LAST}..HEAD"; CUR="${LAST#v}"; fi
-          LOG=$(git log --format=%B $RANGE)
-          if [ -z "$(echo "$LOG" | tr -d '[:space:]')" ]; then echo "skip=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+          skip() { echo "$1"; echo "skip=true" >> "$GITHUB_OUTPUT"; exit 0; }
+          git fetch --tags --force --quiet
+          HEAD_SHA=$(git rev-parse HEAD)
 
-          BUMP=none
-          grep -qE '^(feat|fix|perf)(\(.+\))?!:|BREAKING CHANGE:' <<< "$LOG" && BUMP=major
-          [ "$BUMP" = none ] && grep -qE '^feat(\(.+\))?:' <<< "$LOG" && BUMP=minor
-          [ "$BUMP" = none ] && grep -qE '^(fix|perf)(\(.+\))?:' <<< "$LOG" && BUMP=patch
-          if [ "$BUMP" = none ]; then
-            echo "No releasable commits since ${LAST:-the beginning}."
-            echo "skip=true" >> "$GITHUB_OUTPUT"; exit 0
+          [ -z "$(git tag --points-at HEAD --list 'v[0-9]*.[0-9]*.[0-9]*')" ] || skip "HEAD is already tagged."
+
+          LAST=$(git tag --list 'v[0-9]*.[0-9]*.[0-9]*' --sort=-v:refname | head -n1)
+          if [ -z "$LAST" ]; then LAST_SHA=$(git rev-list --max-parents=0 HEAD | tail -n1); CUR="0.0.0"
+          else LAST_SHA=$(git rev-list -n1 "$LAST"); CUR="${LAST#v}"; fi
+
+          # A newer commit was already released by an earlier-queued run: nothing to do for an older sha.
+          if [ "$LAST_SHA" != "$HEAD_SHA" ] && git merge-base --is-ancestor "$HEAD_SHA" "$LAST_SHA"; then
+            skip "HEAD is already contained in $LAST."
           fi
+          git merge-base --is-ancestor "$LAST_SHA" "$HEAD_SHA" || skip "$LAST is not an ancestor of HEAD."
+
+          # Only shipped paths count (the diff since the last release, so close pushes are not lost).
+          SHIPPED=$(git diff --name-only "$LAST_SHA" HEAD -- src public worker package.json | head -n1)
+          [ -n "$SHIPPED" ] || skip "No shipped files changed since $LAST (docs/CI/tests only)."
+
+          SUBJECTS=$(git log --format=%s "$LAST_SHA..HEAD")
+          BODIES=$(git log --format=%b "$LAST_SHA..HEAD")
+          BUMP=patch
+          if grep -qE '^[a-zA-Z]+(\([^)]*\))?!:' <<< "$SUBJECTS" || grep -q 'BREAKING CHANGE' <<< "$BODIES"; then BUMP=major
+          elif grep -qE '^feat(\([^)]*\))?:' <<< "$SUBJECTS" || grep -qiF '[minor]' <<< "$SUBJECTS"; then BUMP=minor; fi
 
           IFS=. read -r MA MI PA <<< "$CUR"
           case "$BUMP" in
@@ -41,8 +64,9 @@ jobs:
             patch) PA=$((PA+1)) ;;
           esac
           NEXT="v${MA}.${MI}.${PA}"
-          echo "Bump: $BUMP  ${LAST:-none} -> $NEXT"
+          echo "Bump: $BUMP  $LAST -> $NEXT  (first shipped file: $SHIPPED)"
           echo "next=$NEXT" >> "$GITHUB_OUTPUT"
+          echo "prev=$LAST" >> "$GITHUB_OUTPUT"
           echo "skip=false" >> "$GITHUB_OUTPUT"
 
       - name: Tag and publish the release
@@ -50,10 +74,16 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NEXT: ${{ steps.ver.outputs.next }}
+          PREV: ${{ steps.ver.outputs.prev }}
         run: |
           set -euo pipefail
+          if git ls-remote --exit-code --tags origin "refs/tags/$NEXT" >/dev/null 2>&1; then
+            echo "$NEXT already exists; never rewriting tags."; exit 0
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag -a "$NEXT" -m "$NEXT"
-          git push origin "$NEXT"
-          gh release create "$NEXT" --generate-notes --title "$NEXT"
+          git tag -a "$NEXT" -m "$NEXT" HEAD
+          git push origin "refs/tags/$NEXT"
+          ARGS=(--generate-notes --title "$NEXT" --verify-tag)
+          [ -z "$PREV" ] || ARGS+=(--notes-start-tag "$PREV")
+          gh release create "$NEXT" "${ARGS[@]}"

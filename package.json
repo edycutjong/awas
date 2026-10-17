@@ -4,6 +4,14 @@
   "private": true,
   "description": "Paste a job ad; Awas builds an evidence file where every line is a URL plus a verbatim quote that code has verified against the fetched page, then says STOP or VERIFY FIRST.",
   "license": "MIT",
+  "homepage": "https://awas.edycu.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edycutjong/awas.git"
+  },
+  "bugs": {
+    "url": "https://github.com/edycutjong/awas/issues"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

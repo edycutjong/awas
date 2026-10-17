@@ -32,7 +32,7 @@ function fake(o: FakeOpts = {}): { fetchImpl: typeof fetch; calls: string[] } {
   const fetchImpl = (async (url: string | URL | Request, init?: RequestInit) => {
     const u = String(url);
     const body = JSON.parse(String(init?.body ?? "{}"));
-    if (u.startsWith("https://tf.test")) {
+    if (new URL(u).hostname === "tf.test") {
       const sys: string = body.messages[0].content;
       const call = sys.includes("copy out its key details") ? "extract" : sys.includes("Propose up to 6") ? "propose" : "message";
       calls.push(`tf:${call}`);
@@ -44,7 +44,7 @@ function fake(o: FakeOpts = {}): { fetchImpl: typeof fetch; calls: string[] } {
             : JSON.stringify(o.message ?? { explanation_en: "Explained.", intro_id: "Ditemukan laporan.", advice_id: "Jangan bayar dulu.", intro_en: "A report was found.", advice_en: "Do not pay yet.", glosses: [{ line: 1, gloss_en: "Police said the company allegedly recruited 12 victims" }] });
       return reply({ id: `chatcmpl-${call}`, model: body.model, choices: [{ finish_reason: "stop", message: { content } }], usage: { prompt_tokens: 100, completion_tokens: 50 } });
     }
-    if (u.startsWith("https://tv.test")) {
+    if (new URL(u).hostname === "tv.test") {
       calls.push(`tavily:${u.endsWith("/extract") ? "extract" : body.exact_match ? "exact" : "pattern"}`);
       if (o.tavilyDown) return reply({ error: "down" }, 500);
       if (o.tavilyMalformed && !u.endsWith("/extract")) return reply({ results: [null], usage: { credits: 1 } });
