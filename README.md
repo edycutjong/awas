@@ -23,7 +23,7 @@
   ![NVIDIA Nemotron](https://img.shields.io/badge/NVIDIA-Nemotron-76B900?style=flat)
   ![Tavily](https://img.shields.io/badge/Tavily-search_+_extract-0ea5e9?style=flat)
   ![Tests](https://img.shields.io/badge/tests-164_passing-10B981?style=flat)
-  [![CI](https://github.com/edycutjong/awas/actions/workflows/ci.yml/badge.svg)](https://github.com/edycutjong/awas/actions/workflows/ci.yml)
+  [![CI/CD](https://github.com/edycutjong/awas/actions/workflows/ci.yml/badge.svg)](https://github.com/edycutjong/awas/actions/workflows/ci.yml)
   [![CodeQL](https://github.com/edycutjong/awas/actions/workflows/codeql.yml/badge.svg)](https://github.com/edycutjong/awas/actions/workflows/codeql.yml)
   [![Release](https://img.shields.io/github/v/release/edycutjong/awas?style=flat&sort=semver)](https://github.com/edycutjong/awas/releases)
   [![License](https://img.shields.io/badge/License-MIT-yellow)](https://opensource.org/licenses/MIT)
