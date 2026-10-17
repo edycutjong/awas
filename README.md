@@ -115,7 +115,7 @@ The one extension no sponsor ships is the **quote gate**: two generic APIs becom
 | Metric | Value |
 |---|---|
 | Unit tests | **341 vitest passing** (`npm test`, 32 files) + **96 pytest passing** for the Python scripts (`python -m pytest`) |
-| Unit-test coverage | **100 %** statements, branches, functions and lines over all of `src/lib` (vitest v8, no exclusions, enforced by `coverage.thresholds`) and **100 %** statements and branches over `scripts/*.py` (pytest-cov); both enforced in CI |
+| Unit-test coverage | **100 %** statements, branches, functions and lines over all of `src/lib` (vitest v8; no path exclusions beyond test files; 3 pre-existing `v8 ignore` hints on defensive lines in `tavily.ts` and `nebius/config.ts`; enforced by `coverage.thresholds`) and **100 %** statements and branches over `scripts/*.py` (pytest-cov); both enforced in CI |
 | Browser tests | **56 passing** (`npm run e2e`: 28 checks × phone and desktop projects; credential-free paths only: home, `/judge`, `/integrations`, `/about`, `/pitch`, guards, the in-page quote gate and rules, no horizontal scroll at 375/768/1440 px) |
 | Benchmark protocol | written before any row was collected: [`bench/PROTOCOL.md`](bench/PROTOCOL.md), with four dated amendments, each committed before the runs it affects |
 | Stage-T scoring rules | pre-registered before labels or model runs: [`bench/STAGE-T.md`](bench/STAGE-T.md) |
