@@ -101,7 +101,7 @@ code {
   text-decoration: none;
 }
 .mast-sub {
-  font: 400 15px/1.35 var(--font-body);
+  font: 400 16px/1.35 var(--font-body);
   color: var(--muted);
 }
 .lede {
@@ -162,12 +162,13 @@ textarea.clip::placeholder {
 }
 .paste-row {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
 }
 .counter {
-  font: 500 13px/1 var(--font-data);
+  font: 500 13px/1.35 var(--font-data);
   color: var(--muted);
 }
 .hint {
@@ -177,6 +178,7 @@ textarea.clip::placeholder {
 }
 
 .btn {
+  white-space: nowrap;
   font: 700 16px/1 var(--font-body);
   min-height: 44px;
   padding: 13px 18px;
@@ -245,7 +247,7 @@ textarea.clip::placeholder {
   box-shadow: inset 0 -3px 0 var(--ink);
 }
 .chip-label {
-  font: 700 15px/1.2 var(--font-body);
+  font: 700 16px/1.25 var(--font-body);
 }
 .chip-meta {
   font: 500 12px/1.2 var(--font-data);
@@ -300,7 +302,7 @@ textarea.clip::placeholder {
   border-left: 3px solid var(--check);
   background: var(--card);
   color: var(--ink);
-  font-size: 0.95rem;
+  font-size: 16px;
   line-height: 1.45;
 }
 .registry a {
@@ -326,7 +328,7 @@ textarea.clip::placeholder {
   border-color: var(--check);
 }
 .flag .en {
-  font-size: 15px;
+  font-size: 16px;
 }
 .flag q {
   color: var(--ink);
@@ -486,7 +488,7 @@ a.mast:hover {
   overflow: hidden;
 }
 .card.dropped .why {
-  font: 500 13px/1.35 var(--font-data);
+  font: 400 16px/1.45 var(--font-body);
   color: var(--muted);
   margin-top: 4px;
 }
@@ -509,9 +511,12 @@ a.mast:hover {
   }
 }
 
+/* The product's core claim, said in the reading face, not as a footnote. */
 .gate-note {
-  font: 500 13px/1.45 var(--font-data);
-  color: var(--muted);
+  font: 400 16px/1.5 var(--font-body);
+  color: var(--ink);
+  border-left: 3px solid var(--ink);
+  padding: 2px 0 2px 10px;
 }
 .empty {
   font: 400 16px/1.5 var(--font-body);
@@ -566,6 +571,7 @@ a.mast:hover {
   letter-spacing: 0.08em;
 }
 .stamp .s {
+  text-wrap: balance;
   font: 700 11px/1.2 var(--font-data);
   letter-spacing: 0.06em;
   border-top: 2px solid currentColor;
@@ -628,8 +634,13 @@ a.mast:hover {
 }
 .steps {
   margin: 6px 0 0;
-  padding: 0 0 0 20px;
+  padding: 0 0 0 1.6em;
   font-size: 16px;
+  list-style: decimal;
+}
+.steps li::marker {
+  font: 700 14px var(--font-data);
+  color: var(--muted);
 }
 .steps li {
   margin: 4px 0;
@@ -668,7 +679,7 @@ a.mast:hover {
   color: var(--ink);
 }
 .retention {
-  font: 400 14px/1.5 var(--font-body);
+  font: 400 16px/1.5 var(--font-body);
   color: var(--muted);
   margin-top: 14px;
   border-top: 1px solid var(--rule);
@@ -723,14 +734,17 @@ a.mast:hover {
 
 .foot {
   margin-top: 28px;
-  font: 400 14px/1.6 var(--font-body);
+  font: 400 16px/1.6 var(--font-body);
   color: var(--muted);
   border-top: 1px solid var(--rule);
   padding-top: 10px;
 }
-.foot a {
-  display: inline-block;
-  padding: 8px 2px;
+.foot a,
+.back a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 2px;
 }
 .foot p {
   margin: 4px 0;
@@ -763,13 +777,16 @@ a.mast:hover {
   .stamp.none .w {
     font-size: 30px;
   }
+  .recorded {
+    max-width: calc(100% - 390px);
+  }
   /* The stamp lands on the clipping's corner, never on the ad's words: the first lines wrap around it, and the
      space kept free is as large as the stamp that landed. */
   .file:has(.stamp) .ad::before {
     content: "";
     float: right;
-    width: 210px;
-    height: 76px;
+    width: 370px;
+    height: 84px;
   }
   .file:has(.stamp.check) .ad::before {
     width: 340px;
@@ -787,7 +804,7 @@ a.mast:hover {
     position: sticky;
     top: 0;
     z-index: 2;
-    margin-bottom: 18px;
+    margin: 22px 0 18px;
   }
   .stamp .w {
     font-size: 26px;

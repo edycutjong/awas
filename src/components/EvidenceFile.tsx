@@ -123,6 +123,25 @@ function FlagRow({ flag, ad }: { flag: Flag; ad: string }) {
   );
 }
 
+const capitalise = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
+
+/** The verdict's reasons in Indonesian: the flags' own labels, and the evidence reasons the verdict code can add. */
+const REASON_ID: [RegExp, string][] = [
+  [/published reports? naming this company/, "laporan terbit yang menyebut perusahaan ini"],
+  [/a page says this name was used by others or denied/, "sebuah halaman menyebut nama ini dicatut atau dibantah"],
+  [/a page names this company without reporting harm/, "sebuah halaman menyebut perusahaan ini, tanpa laporan kerugian"],
+  [/a page mentions a similar or generic name/, "sebuah halaman menyebut nama yang mirip atau umum — cek nomor izinnya"],
+  [/a page mentions this phone number/, "sebuah halaman menyebut nomor telepon ini"],
+  [/^step not completed: (.*)$/, "langkah tidak selesai: $1"],
+];
+
+function ruleLineId(view: View): string {
+  if (view.verdict === "NO_RED_FLAGS_FOUND") return "Semua langkah selesai dan tidak ada aturan yang terpicu. Ini bukan jaminan.";
+  const parts = view.flags.map((f) => FLAG_LABELS[f.id].id);
+  for (const r of view.reasons) for (const [re, id] of REASON_ID) if (re.test(r)) parts.push(r.replace(re, id));
+  return capitalise(parts.join("; ")) + ".";
+}
+
 function chipFor(line: ViewLine, calls: TavilyReceipt[]): TavilyReceipt | undefined {
   return calls.find((c) => c.purpose === line.purpose && c.urls.includes(line.url)) ?? calls.find((c) => c.urls.includes(line.url));
 }
@@ -135,7 +154,7 @@ function TavilyChip({ call }: { call: TavilyReceipt }) {
     if (p.topic && p.topic !== "general") bits.push(`topic:${String(p.topic)}`);
     if (p.time_range) bits.push(`time_range:${String(p.time_range)}`);
     if (p.country) bits.push(`country:${String(p.country)}`);
-    if (typeof p.query === "string") bits.push(p.query.length > 48 ? `${p.query.slice(0, 46)}…` : p.query);
+    if (typeof p.query === "string") bits.push(p.query.length > 48 ? `${p.query.slice(0, p.query.lastIndexOf(" ", 46) > 20 ? p.query.lastIndexOf(" ", 46) : 46)}…` : p.query);
   } else {
     if (typeof p.query === "string") bits.push(`query:"${p.query.slice(0, 28)}…"`);
     bits.push(`chunks_per_source:${String(p.chunks_per_source ?? 3)}`);
@@ -279,7 +298,11 @@ function RunReceipt({ view, open }: { view: View; open: boolean }) {
           </li>
         ))}
         <li>baris dibuang oleh gerbang kutipan · lines dropped by the quote gate: {dropped}</li>
-        {r ? <li>total · {(r.ms / 1000).toFixed(1)} s · {r.tfTokens} TF tokens · {r.tavilyCredits} Tavily credits</li> : null}
+        {r ? (
+          <li>
+            total · {(r.ms / 1000).toFixed(1)}&nbsp;s · {r.tfTokens} TF tokens · {r.tavilyCredits}&nbsp;Tavily credit{r.tavilyCredits === 1 ? "" : "s"}
+          </li>
+        ) : null}
         <li>disimpan di Nebius Object Storage · stored in Nebius Object Storage (cases/, 75 days)</li>
       </ul>
     </details>
@@ -371,7 +394,12 @@ export function EvidenceFile({ view, judge = false }: { view: View; judge?: bool
           ) : null}
           {view.lines.length > 0 ? (
             <p className="gate-note">
-              {verifiedCount} kutipan ditemukan di halaman · {view.lines.length - verifiedCount} dibuang. Every quote shown was found verbatim, by code, in the page text Tavily returned in this run.
+              {verifiedCount} kutipan ditemukan kata demi kata di halaman, {view.lines.length - verifiedCount} dibuang — setiap kutipan diperiksa oleh kode pada teks
+              halaman yang dikembalikan Tavily dalam pemeriksaan ini ·{" "}
+              <span className="en">
+                {verifiedCount} quote{verifiedCount === 1 ? "" : "s"} found word for word, {view.lines.length - verifiedCount} dropped — code checked every quote against the
+                page text Tavily returned in this run.
+              </span>
             </p>
           ) : null}
         </section>
@@ -391,7 +419,9 @@ export function EvidenceFile({ view, judge = false }: { view: View; judge?: bool
       {finished && view.verdict ? (
         <section className={`verdict ${view.verdict === "STOP" ? "stop" : view.verdict === "VERIFY_FIRST" ? "check" : "nrf"}`} aria-labelledby="verdict-h">
           <h2 id="verdict-h">{STAMP_WORD[view.verdict]}</h2>
-          <p className="rule-line">{view.rule.replace(/^(STOP|VERIFY FIRST|NO RED FLAGS FOUND)\s+—\s+/, "")}</p>
+          <p className="rule-line">
+            {ruleLineId(view)} <span className="en">· {capitalise(view.rule.replace(/^(STOP|VERIFY FIRST|NO RED FLAGS FOUND)\s+—\s+/, ""))}</span>
+          </p>
           <ol className="steps">
             {bilingualSteps.id.map((s, i) => (
               <li key={i}>

@@ -129,7 +129,7 @@ export function Checker({ judgeCode = null, judge = false }: { judgeCode?: strin
           </button>
         </div>
         <p className="hint">Iklannya gambar? Salin teksnya dengan fitur salin-teks di ponselmu · ad is an image? Copy its text with your phone&apos;s copy-text feature.</p>
-        <p className="hint">Jangan tempel data pribadimu · do not paste your own personal data. Disimpan 75 hari, tidak diindeks mesin pencari, nomor telepon disamarkan.</p>
+        <p className="hint">Jangan tempel data pribadimu · do not paste your own personal data. Disimpan 75 hari, tidak diindeks mesin pencari, nomor telepon disamarkan · kept 75 days, not indexed by search engines, phone numbers masked.</p>
       </section>
 
       <section className="samples" aria-labelledby="samples-h">

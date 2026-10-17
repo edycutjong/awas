@@ -20,7 +20,7 @@ export default async function CasePage({ params }: { params: Promise<{ id: strin
   if (!shown) notFound();
   return (
     <main className="sheet">
-      <Masthead sub={`evidence file · ${shown.createdAt.slice(0, 10)}`} />
+      <Masthead sub={`berkas bukti · evidence file · ${shown.createdAt.slice(0, 10)}`} />
       {sample ? (
         <p className="back">
           <a href="/judge">← Coba kasus lain · try another recorded case</a>
