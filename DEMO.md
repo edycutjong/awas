@@ -135,7 +135,7 @@ Pooled with tranche 1 (mixed code versions — an appendix, not a headline): lic
 
 | Stage | Result | File |
 |---|---|---|
-| T — can Nemotron read the ads? (25 dev texts — 20 reporters' descriptions, 5 licensed vacancies — 6 fields, **vs labels drafted by the build agent, not yet reviewed by a human**) | Ultra 84.8 % · Super 70.7 % · Lightning 59.6 % (reasoning off; no answer with low_effort) · regex baseline 0/6 on the company field → gate (≥ 80 %) passed; Ultra does call 1 | `docs/proof/stage-t.json` |
+| T — can Nemotron read the ads? (25 dev texts — 20 reporters' descriptions, 5 licensed vacancies — 6 fields, **vs labels drafted by the build agent, reviewed by a human: 25/25 rows, none changed (`bench/stage-t-review.json`)**) | Ultra 84.8 % · Super 70.7 % · Lightning 59.6 % (reasoning off; no answer with low_effort) · regex baseline 0/6 on the company field → gate (≥ 80 %) passed; Ultra does call 1 | `docs/proof/stage-t.json` |
 | R — rules alone on the 20 dev positives (before Amendment 4) | 1 STOP · 8 VERIFY FIRST · 11 NO RED FLAGS FOUND | `docs/proof/stage-r.json` |
 | V — does Tavily surface a relevant item? | 8/20 → **gate failed** (≥ 12/20) | `docs/proof/stage-v.json`, `stage-v-relevance.json` |
 | V-time — published before the case? | inconclusive: 1 dev positive names a company (< 8) | `docs/proof/stage-v-time.json` |
@@ -175,7 +175,7 @@ AWAS_BENCH_SECRET=pick-one python3 scripts/bench.py --set bench/tranche1.jsonl -
 
 - Positives describe offers; they are not the ads. Real ads carry more red-flag wording than reporters keep, so the
   rules' recall on real ads is untested here; the "no company named" rule is partly an artefact of descriptions.
-- Stage-T accuracy is measured against labels drafted by the build agent and not yet reviewed by a human.
+- Stage-T accuracy is measured against labels drafted by the build agent and reviewed by one human, blind to the model outputs (25 of 25 rows, none changed; `bench/stage-t-review.json`).
 - Stage V's relevance count is an agent's reading, not a human's.
 - The phone-number search is unbenchmarked (live use only).
 - Tavily's `end_date` also counts "last updated", so a "published before" test can leak.

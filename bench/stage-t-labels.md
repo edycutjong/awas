@@ -15,3 +15,5 @@ choice open, the labels follow these conventions, fixed before any run:
 - **fees** — money the applicant pays, including a salary deduction or a loan to be repaid from wages.
 - **promises** — each distinct phrase stating a benefit (pay, a free ticket, documents arranged, a listed facility);
   the same benefit stated twice in different words is two items, because the text states it twice.
+
+**Reviewed 2026-10-18:** one human checked all 25 rows against their texts, with model outputs hidden, and changed none (`stage-t-review.json`). The `labeller` field inside the file is left as drafted, so its `MANIFEST.json` hash still matches.

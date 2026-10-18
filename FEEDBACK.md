@@ -22,7 +22,7 @@ Each measured item points at a recorded call in `docs/proof/` or `bench/`; the l
    adding `?verbose=true`. A model page with prices and supported languages would help.
 4. **Indonesian is on none of the model cards we could read — please publish multilingual results.** We measured it ourselves on 25
    Indonesian texts (20 reporters' descriptions of scam job offers, 5 licensed vacancies), 6 fields (labels drafted by
-   our build agent, not yet reviewed by a human): Ultra 84.8 %, Super
+   our build agent, reviewed by a human, none changed): Ultra 84.8 %, Super
    70.7 %, Lightning 59.6 % with reasoning off (`docs/proof/stage-t.json`). Ultra now does Awas's extraction. Published
    Bahasa Indonesia numbers would tell builders in Southeast Asia which model to start with.
 5. **Image input would change this product.** Awas asks a family to copy the text out of an image ad with the phone's

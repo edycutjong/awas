@@ -99,7 +99,7 @@ flowchart LR
 | Layer | Choice |
 |---|---|
 | App | Next.js 15, TypeScript, Tailwind 4 |
-| Models | NVIDIA Nemotron on Nebius Token Factory, routed per call: **Nemotron 3 Ultra** (`nvidia/Nemotron-3-Ultra-550b-a55b`) extracts the fields (84.8 % field accuracy on 25 Indonesian texts — 20 reporters' descriptions of scam offers and 5 licensed vacancies — vs Super 70.7 % and Lightning 59.6 %, against labels drafted by our build agent, not yet reviewed by a human: [`docs/proof/stage-t.json`](docs/proof/stage-t.json)); **Nemotron 3 Super** (`nvidia/nemotron-3-super-120b-a12b`) proposes evidence lines and writes the family message |
+| Models | NVIDIA Nemotron on Nebius Token Factory, routed per call: **Nemotron 3 Ultra** (`nvidia/Nemotron-3-Ultra-550b-a55b`) extracts the fields (84.8 % field accuracy on 25 Indonesian texts — 20 reporters' descriptions of scam offers and 5 licensed vacancies — vs Super 70.7 % and Lightning 59.6 %, against labels drafted by our build agent and reviewed by a human (25 of 25 rows, none changed): [`docs/proof/stage-t.json`](docs/proof/stage-t.json)); **Nemotron 3 Super** (`nvidia/nemotron-3-super-120b-a12b`) proposes evidence lines and writes the family message |
 | Retrieval | Tavily `/search` and `/extract` |
 | State | Nebius Object Storage (S3 API, SigV4): evidence packs (saved four times: after the rules, after the web search, after the quote gate, and when the check ends), per-IP rate slots (conditional create); a 75-day expiry rule on `cases/` (and 1 day on `rate/`), read back from the bucket on 2026-10-18: [`docs/proof/bucket-lifecycle-2026-10-18.json`](docs/proof/bucket-lifecycle-2026-10-18.json) |
 | Nebius libraries | `src/lib/nebius/` (SigV4, Object Storage, service-account auth, Serverless Jobs), copied from the same author's earlier project, [faultline](https://github.com/edycutjong/faultline) |
@@ -141,7 +141,7 @@ Every row comes from [`bench/results-t2-summary.json`](bench/results-t2-summary.
 
 1. **Our day-0 search-coverage gate failed** (8 of 20 known cases had a relevant item; we had set 12 in our own plan before the run, a threshold that first appears in this repository's history afterwards). The web evidence is therefore context; the verdict rests on the cited rules.
 2. **The benchmark's reported cases are reporters' descriptions of offers, not the ads.** Real ads carry more red-flag wording; and "no company named" fires on most descriptions partly because reports rarely name the company.
-3. **Indonesian is not a listed language** for the Nemotron models used (per their model cards); the 25-text extraction accuracy above (84.8 %) is measured against labels drafted by an agent and not yet reviewed by a human.
+3. **Indonesian is not a listed language** for the Nemotron models used (per their model cards); the 25-text extraction accuracy above (84.8 %) is measured against labels drafted by an agent and reviewed by one human, blind to the model outputs (25 of 25 rows, none changed: bench/stage-t-review.json).
 4. **The phone path is unbenchmarked.** A phone number with no company name returns VERIFY FIRST, not a verdict.
 5. **Tavily's `end_date` also counts "last updated"**, so a "published before" test can leak.
 6. **The licensed-ad set is plainer than social-media ads** (official vacancy-board listings), so reassurance wording is under-sampled.

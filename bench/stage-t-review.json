@@ -1,0 +1,11 @@
+{
+ "file": "bench/stage-t-labels.jsonl",
+ "file_sha256": "c05bfef992c3c896e856c6f07e05b366323b52389175d368bfdd18127322ad56",
+ "reviewed_at": "2026-10-18",
+ "reviewer": "human (the project author), one reviewer",
+ "method": "blind: each of the 25 dev texts shown with the agent's six draft labels, model outputs hidden; every edited value checked to be a verbatim substring of its text",
+ "rows_reviewed": 25,
+ "rows_total": 25,
+ "labels_changed": 0,
+ "effect": "none: the labels file is unchanged, so every stage-T score in docs/proof/stage-t.json stands as recorded"
+}

@@ -29,7 +29,7 @@ error, never a line to show (`src/lib/tf.ts`).
 `Llama-3_1-Nemotron-Ultra-253B-v1`. Prices are visible only through `GET /v1/models?verbose=true`.
 
 **4. Indonesian is not on any of the three model cards** (Super, Lightning, Ultra), so we measured it (stage T, 25
-dev texts — 20 reporters' descriptions of scam offers and 5 licensed vacancies — six fields, `docs/proof/stage-t.json`; labels drafted by the build agent and **not yet reviewed by a human**):
+dev texts — 20 reporters' descriptions of scam offers and 5 licensed vacancies — six fields, `docs/proof/stage-t.json`; labels drafted by the build agent and **reviewed by a human: 25/25 rows, none changed** (`bench/stage-t-review.json`)):
 
 | Model (reasoning setting) | Field accuracy vs the agent's labels |
 |---|---|

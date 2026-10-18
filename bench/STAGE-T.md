@@ -40,3 +40,5 @@ lowercase, ASCII quotes, one space; "PT." = "PT").
 
 - Best model field accuracy **< 80 % → kill** (no project swap is automatic; a human decides).
 - Call 1 runs on Lightning only if Lightning's **company** accuracy ≥ Super's − 5 points; otherwise Super.
+
+**Review (2026-10-18):** one human reviewed all 25 rows blind to the model outputs and changed no label (`stage-t-review.json`); the labels file and its hash are unchanged.
